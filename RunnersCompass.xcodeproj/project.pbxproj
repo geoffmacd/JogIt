@@ -26,6 +26,9 @@
 		67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B416A1205300491C97 /* CellBarsIcon.png */; };
 		67FC06B716A1247D00491C97 /* mapicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B616A1247D00491C97 /* mapicon.png */; };
 		67FC06BA16A1250500491C97 /* PaceChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06B916A1250500491C97 /* PaceChart.m */; };
+		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
+		67FC06C416A1D15900491C97 /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C316A1D15900491C97 /* RunEvent.m */; };
+		67FC06C716A1D4AF00491C97 /* RunType.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C616A1D4AE00491C97 /* RunType.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,12 @@
 		67FC06B616A1247D00491C97 /* mapicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapicon.png; path = Mockups/mapicon.png; sourceTree = SOURCE_ROOT; };
 		67FC06B816A1250500491C97 /* PaceChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaceChart.h; sourceTree = "<group>"; };
 		67FC06B916A1250500491C97 /* PaceChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaceChart.m; sourceTree = "<group>"; };
+		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
+		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
+		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
+		67FC06C316A1D15900491C97 /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
+		67FC06C516A1D4AE00491C97 /* RunType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunType.h; sourceTree = "<group>"; };
+		67FC06C616A1D4AE00491C97 /* RunType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunType.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +156,12 @@
 		67FC068116A10EE000491C97 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				67FC06BF16A1D14000491C97 /* DataController.h */,
+				67FC06C016A1D14000491C97 /* DataController.m */,
+				67FC06C216A1D15900491C97 /* RunEvent.h */,
+				67FC06C316A1D15900491C97 /* RunEvent.m */,
+				67FC06C516A1D4AE00491C97 /* RunType.h */,
+				67FC06C616A1D4AE00491C97 /* RunType.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -265,6 +280,9 @@
 				67FC068A16A1150C00491C97 /* HierarchicalButton.m in Sources */,
 				67FC068D16A117B800491C97 /* Constants.m in Sources */,
 				67FC06BA16A1250500491C97 /* PaceChart.m in Sources */,
+				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
+				67FC06C416A1D15900491C97 /* RunEvent.m in Sources */,
+				67FC06C716A1D4AF00491C97 /* RunType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
