@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MenuViewController : UITableViewController
+@protocol MenuViewControllerDelegate<NSObject>
+
+@end
+
+
+@interface MenuViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 

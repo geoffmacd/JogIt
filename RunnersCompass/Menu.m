@@ -10,11 +10,9 @@
 #import "HierarchicalButton.h"
 #import "Constants.h"
 
-@interface MenuViewController () <UITableViewDelegate>
-
-@end
-
 @implementation MenuViewController
+
+@synthesize MenuTable;
 
 
 #pragma mark -
@@ -50,7 +48,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [delegate themeSelectedAtIndex:[themes objectAtIndex:indexPath.row]];
 }
 
 
