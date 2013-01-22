@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
+		6721F88516AE3D4E00FE84C5 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88316AE3D4E00FE84C5 /* Log.m */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
 		67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0A16409B7700DD13C5 /* Foundation.framework */; };
 		67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0C16409B7700DD13C5 /* CoreGraphics.framework */; };
@@ -19,19 +21,33 @@
 		67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */; };
 		67236D2516409B7700DD13C5 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2416409B7700DD13C5 /* Menu.m */; };
 		67236D2C16409B7700DD13C5 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2B16409B7700DD13C5 /* Logger.m */; };
-		67FC068A16A1150C00491C97 /* HierarchicalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalButton.m */; };
+		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
+		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
+		6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F016ACDD40005F4F1B /* HUDCell.xib */; };
+		6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F316ACE09E005F4F1B /* HUDCell.m */; };
+		6745C7F716ACE259005F4F1B /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F616ACE259005F4F1B /* HUDView.m */; };
+		6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightArrow.png */; };
+		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC068D16A117B800491C97 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068C16A117B800491C97 /* Constants.m */; };
 		67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B016A11F5E00491C97 /* pause_logo_large.png */; };
-		67FC06B316A11FC700491C97 /* cc5fafdb4261686b9e17201100992e8e.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B216A11FC700491C97 /* cc5fafdb4261686b9e17201100992e8e.png */; };
+		67FC06B316A11FC700491C97 /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B216A11FC700491C97 /* hamburger.png */; };
 		67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B416A1205300491C97 /* CellBarsIcon.png */; };
 		67FC06B716A1247D00491C97 /* mapicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B616A1247D00491C97 /* mapicon.png */; };
 		67FC06BA16A1250500491C97 /* PaceChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06B916A1250500491C97 /* PaceChart.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC06C416A1D15900491C97 /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C316A1D15900491C97 /* RunEvent.m */; };
 		67FC06C716A1D4AF00491C97 /* RunType.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C616A1D4AE00491C97 /* RunType.m */; };
+		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
+		67FC070716ACD62B00491C97 /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */; };
+		67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070816ACD63300491C97 /* DownTriangleIcon.png */; };
+		67FC070B16ACD74300491C97 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070A16ACD74300491C97 /* HUDView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
+		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
+		6721F88316AE3D4E00FE84C5 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
+		6721F88416AE3D4E00FE84C5 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		67236D0416409B7700DD13C5 /* RunnersCompass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunnersCompass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67236D0816409B7700DD13C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67236D0A16409B7700DD13C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -50,12 +66,20 @@
 		67236D2416409B7700DD13C5 /* Menu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
 		67236D2A16409B7700DD13C5 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		67236D2B16409B7700DD13C5 /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
-		67FC068816A1150C00491C97 /* HierarchicalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalButton.h; sourceTree = "<group>"; };
-		67FC068916A1150C00491C97 /* HierarchicalButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalButton.m; sourceTree = "<group>"; };
+		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.JPG; sourceTree = "<group>"; };
+		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Mockups/hud.png; sourceTree = SOURCE_ROOT; };
+		6745C7F016ACDD40005F4F1B /* HUDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDCell.xib; sourceTree = "<group>"; };
+		6745C7F216ACE09E005F4F1B /* HUDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDCell.h; sourceTree = "<group>"; };
+		6745C7F316ACE09E005F4F1B /* HUDCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDCell.m; sourceTree = "<group>"; };
+		6745C7F516ACE259005F4F1B /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDView.h; sourceTree = "<group>"; };
+		6745C7F616ACE259005F4F1B /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDView.m; sourceTree = "<group>"; };
+		6745C7F816ACE54D005F4F1B /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../../../Downloads/RightArrow.png; sourceTree = "<group>"; };
+		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
+		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		67FC068C16A117B800491C97 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		67FC06B016A11F5E00491C97 /* pause_logo_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_logo_large.png; path = Mockups/pause_logo_large.png; sourceTree = SOURCE_ROOT; };
-		67FC06B216A11FC700491C97 /* cc5fafdb4261686b9e17201100992e8e.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cc5fafdb4261686b9e17201100992e8e.png; path = ../../../Downloads/cc5fafdb4261686b9e17201100992e8e.png; sourceTree = "<group>"; };
+		67FC06B216A11FC700491C97 /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = ../../../Downloads/hamburger.png; sourceTree = "<group>"; };
 		67FC06B416A1205300491C97 /* CellBarsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CellBarsIcon.png; path = ../../../Downloads/CellBarsIcon.png; sourceTree = "<group>"; };
 		67FC06B616A1247D00491C97 /* mapicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapicon.png; path = Mockups/mapicon.png; sourceTree = SOURCE_ROOT; };
 		67FC06B816A1250500491C97 /* PaceChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaceChart.h; sourceTree = "<group>"; };
@@ -66,6 +90,10 @@
 		67FC06C316A1D15900491C97 /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
 		67FC06C516A1D4AE00491C97 /* RunType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunType.h; sourceTree = "<group>"; };
 		67FC06C616A1D4AE00491C97 /* RunType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunType.m; sourceTree = "<group>"; };
+		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HierarchicalCell.xib; path = ../HierarchicalCell.xib; sourceTree = "<group>"; };
+		67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../../../Downloads/RightFillTriangleIcon.png; sourceTree = "<group>"; };
+		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../../../Downloads/DownTriangleIcon.png; sourceTree = "<group>"; };
+		67FC070A16ACD74300491C97 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +159,8 @@
 		67236D0F16409B7700DD13C5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6721F88316AE3D4E00FE84C5 /* Log.m */,
+				6721F88416AE3D4E00FE84C5 /* Log.h */,
 				67236D1016409B7700DD13C5 /* RunnersCompass-Info.plist */,
 				67236D1116409B7700DD13C5 /* InfoPlist.strings */,
 				67236D1416409B7700DD13C5 /* main.m */,
@@ -145,9 +175,14 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6745C7F816ACE54D005F4F1B /* RightArrow.png */,
+				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
+				6738D66916ACE7DE0044BA00 /* map.JPG */,
+				6745C7ED16ACDBB9005F4F1B /* hud.png */,
+				67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */,
 				67FC06B616A1247D00491C97 /* mapicon.png */,
 				67FC06B416A1205300491C97 /* CellBarsIcon.png */,
-				67FC06B216A11FC700491C97 /* cc5fafdb4261686b9e17201100992e8e.png */,
+				67FC06B216A11FC700491C97 /* hamburger.png */,
 				67FC06B016A11F5E00491C97 /* pause_logo_large.png */,
 			);
 			name = Graphics;
@@ -162,6 +197,8 @@
 				67FC06C316A1D15900491C97 /* RunEvent.m */,
 				67FC06C516A1D4AE00491C97 /* RunType.h */,
 				67FC06C616A1D4AE00491C97 /* RunType.m */,
+				6721F87F16AE39AB00FE84C5 /* RunMap.h */,
+				6721F88016AE39AB00FE84C5 /* RunMap.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -194,8 +231,15 @@
 		67FC068616A111A100491C97 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
-				67FC068816A1150C00491C97 /* HierarchicalButton.h */,
-				67FC068916A1150C00491C97 /* HierarchicalButton.m */,
+				67FC070A16ACD74300491C97 /* HUDView.xib */,
+				6745C7F516ACE259005F4F1B /* HUDView.h */,
+				6745C7F616ACE259005F4F1B /* HUDView.m */,
+				6745C7F016ACDD40005F4F1B /* HUDCell.xib */,
+				6745C7F216ACE09E005F4F1B /* HUDCell.h */,
+				6745C7F316ACE09E005F4F1B /* HUDCell.m */,
+				67FC070416ACD4F400491C97 /* HierarchicalCell.xib */,
+				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
+				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
 				67FC06B816A1250500491C97 /* PaceChart.h */,
 				67FC06B916A1250500491C97 /* PaceChart.m */,
 			);
@@ -260,9 +304,17 @@
 				67236D1F16409B7700DD13C5 /* Default-568h@2x.png in Resources */,
 				67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */,
 				67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */,
-				67FC06B316A11FC700491C97 /* cc5fafdb4261686b9e17201100992e8e.png in Resources */,
+				67FC06B316A11FC700491C97 /* hamburger.png in Resources */,
 				67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */,
 				67FC06B716A1247D00491C97 /* mapicon.png in Resources */,
+				67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */,
+				67FC070716ACD62B00491C97 /* RightFillTriangleIcon.png in Resources */,
+				67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */,
+				67FC070B16ACD74300491C97 /* HUDView.xib in Resources */,
+				6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */,
+				6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */,
+				6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */,
+				6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,12 +329,16 @@
 				67236D1916409B7700DD13C5 /* AppDelegate.m in Sources */,
 				67236D2516409B7700DD13C5 /* Menu.m in Sources */,
 				67236D2C16409B7700DD13C5 /* Logger.m in Sources */,
-				67FC068A16A1150C00491C97 /* HierarchicalButton.m in Sources */,
+				67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */,
 				67FC068D16A117B800491C97 /* Constants.m in Sources */,
 				67FC06BA16A1250500491C97 /* PaceChart.m in Sources */,
 				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
 				67FC06C416A1D15900491C97 /* RunEvent.m in Sources */,
 				67FC06C716A1D4AF00491C97 /* RunType.m in Sources */,
+				6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */,
+				6745C7F716ACE259005F4F1B /* HUDView.m in Sources */,
+				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
+				6721F88516AE3D4E00FE84C5 /* Log.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

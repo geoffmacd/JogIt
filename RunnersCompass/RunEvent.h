@@ -7,12 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RunMap.h"
 
 @interface RunEvent : NSObject
-
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *location;
-@property (nonatomic, strong) NSDate *date;
 
 
 typedef enum {
@@ -22,7 +19,10 @@ typedef enum {
     Thrusday
 } RunType;
 
-
+@property (nonatomic, weak) NSString *name;
+@property (nonatomic, weak) NSString *location;
+@property (nonatomic, weak) NSDate *date;
+@property (nonatomic, weak) RunMap *map;
 @property (nonatomic) RunType type;
 
 -(id)initWithName:(NSString *)name location:(NSString *)location date:(NSDate *)date;

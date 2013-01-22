@@ -14,11 +14,6 @@
 {
     // Override point for customization after application launch.
     
-    //load database
-    
-    
-    //load runs
-    
     
     return YES;
 }

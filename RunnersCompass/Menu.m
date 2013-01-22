@@ -7,8 +7,10 @@
 //
 
 #import "Menu.h"
-#import "HierarchicalButton.h"
+#import "HierarchicalCell.h"
 #import "Constants.h"
+
+
 
 @implementation MenuViewController
 
@@ -32,16 +34,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MenuPrototypeCell];
+    HierarchicalCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
+                                                          owner:self
+                                                        options:nil]objectAtIndex:0];
     
-    if ( cell == nil ) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MenuPrototypeCell];
-    }
     
-    cell.textLabel.text = @"hi";
+    cell.headerLabel.text = @"10.1 Km ⧫  January 19th, 2013";
+    
     
     return cell;
 }
+
+
 
 #pragma mark -
 #pragma mark Table view delegate
@@ -54,9 +58,6 @@
 
 - (void) loadTable
 {
-    UITableView *table = self.MenuTable;
-    
-    HierarchicalButton *protoButton = [table dequeueReusableCellWithIdentifier:MenuPrototypeCell];
     
     
 }

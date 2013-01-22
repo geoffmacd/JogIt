@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MenuViewControllerDelegate<NSObject>
-
-@end
+@protocol MenuViewControllerDelegate;
 
 
-@interface MenuViewController : UIViewController
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 
