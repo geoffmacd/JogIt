@@ -15,9 +15,6 @@
 		67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1116409B7700DD13C5 /* InfoPlist.strings */; };
 		67236D1516409B7700DD13C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1416409B7700DD13C5 /* main.m */; };
 		67236D1916409B7700DD13C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1816409B7700DD13C5 /* AppDelegate.m */; };
-		67236D1B16409B7700DD13C5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1A16409B7700DD13C5 /* Default.png */; };
-		67236D1D16409B7700DD13C5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1C16409B7700DD13C5 /* Default@2x.png */; };
-		67236D1F16409B7700DD13C5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1E16409B7700DD13C5 /* Default-568h@2x.png */; };
 		67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */; };
 		67236D2516409B7700DD13C5 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2416409B7700DD13C5 /* Menu.m */; };
 		67236D2C16409B7700DD13C5 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2B16409B7700DD13C5 /* Logger.m */; };
@@ -58,9 +55,6 @@
 		67236D1616409B7700DD13C5 /* RunnersCompass-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RunnersCompass-Prefix.pch"; sourceTree = "<group>"; };
 		67236D1716409B7700DD13C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67236D1816409B7700DD13C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		67236D1A16409B7700DD13C5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		67236D1C16409B7700DD13C5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		67236D1E16409B7700DD13C5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		67236D2116409B7700DD13C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		67236D2316409B7700DD13C5 /* Menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
 		67236D2416409B7700DD13C5 /* Menu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
@@ -90,7 +84,7 @@
 		67FC06C316A1D15900491C97 /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
 		67FC06C516A1D4AE00491C97 /* RunType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunType.h; sourceTree = "<group>"; };
 		67FC06C616A1D4AE00491C97 /* RunType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunType.m; sourceTree = "<group>"; };
-		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HierarchicalCell.xib; path = ../HierarchicalCell.xib; sourceTree = "<group>"; };
+		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../../../Downloads/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../../../Downloads/DownTriangleIcon.png; sourceTree = "<group>"; };
 		67FC070A16ACD74300491C97 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDView.xib; sourceTree = "<group>"; };
@@ -165,9 +159,6 @@
 				67236D1116409B7700DD13C5 /* InfoPlist.strings */,
 				67236D1416409B7700DD13C5 /* main.m */,
 				67236D1616409B7700DD13C5 /* RunnersCompass-Prefix.pch */,
-				67236D1A16409B7700DD13C5 /* Default.png */,
-				67236D1C16409B7700DD13C5 /* Default@2x.png */,
-				67236D1E16409B7700DD13C5 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -299,9 +290,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */,
-				67236D1B16409B7700DD13C5 /* Default.png in Resources */,
-				67236D1D16409B7700DD13C5 /* Default@2x.png in Resources */,
-				67236D1F16409B7700DD13C5 /* Default-568h@2x.png in Resources */,
 				67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */,
 				67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */,
 				67FC06B316A11FC700491C97 /* hamburger.png in Resources */,
