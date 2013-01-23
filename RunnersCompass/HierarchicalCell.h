@@ -30,7 +30,7 @@ typedef enum
 //instance variables
 @property BOOL expanded;//for whether currently expanded
 @property (weak, nonatomic) HierarchicalCell *parent;
-@property (weak, nonatomic) RunEvent * associatedRun;
+@property (weak, nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
 
 @end

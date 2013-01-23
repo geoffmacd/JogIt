@@ -9,6 +9,7 @@
 #import "Menu.h"
 #import "HierarchicalCell.h"
 #import "Constants.h"
+#import "RunEvent.h"
 
 
 
@@ -27,7 +28,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 3;
 }
 
 // Customize the appearance of table view cells.
@@ -38,8 +39,8 @@
                                                           owner:self
                                                         options:nil]objectAtIndex:0];
     
+    [cell setAssociated:[runs objectAtIndex:0]];
     
-    cell.headerLabel.text = @"10.1 Km ⧫  January 19th, 2013";
     
     
     return cell;
@@ -69,11 +70,22 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    //update table with run, settings, history
+    runs = [[NSMutableArray alloc] initWithCapacity:3];
+      
+    RunMap * map = [RunMap alloc];
     
+    [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-    
-    
+     for(NSInteger i=0;i <3; i++)
+     {
+         
+         RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km  *  January 23rd, 2013" date:[NSDate date]];
+         
+         [run setMap:map];
+         
+         [runs addObject:run];
+         
+     }
     
     
     

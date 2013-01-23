@@ -21,6 +21,23 @@
 @synthesize expanded;
 @synthesize type;
 
+
+-(void) setAssociated:(RunEvent*) event
+{
+    
+    associatedRun = event;
+    
+    //set header
+    NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [associatedRun.date description]];
+    [headerLabel setText:header];
+    
+    //set thumbnail
+    [thumbnailImage setImage:associatedRun.map.thumbnail];
+    
+    [hud setHUDType:menuDisplay];
+    
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -45,8 +62,7 @@
         //set thumbnail
         [thumbnailImage setImage:associatedRun.map.thumbnail];
         
-        //set hud style to logger for now
-        [hud setHUDType:loggerDisplay];
+        [hud setHUDType:menuDisplay];
     }
     
 }

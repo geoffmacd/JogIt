@@ -12,6 +12,11 @@
 
 
 @interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    NSMutableArray * runs;
+    
+    
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 

@@ -13,7 +13,8 @@
 
 typedef enum
 {
-    loggerDisplay
+    loggerDisplay,
+    menuDisplay
 } HUDViewMode;
 
 @property (strong, nonatomic) HUDCell* quad1;

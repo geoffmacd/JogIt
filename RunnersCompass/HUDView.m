@@ -37,6 +37,13 @@
             quad3.mode = avgPace;
             quad4.mode = calories;
             break;
+    
+        case menuDisplay:
+            quad1.mode = avgPace;
+            quad2.mode = calories;
+            quad3 = nil;
+            quad4 = nil;
+            break;
         
         default:
             [Log logMessageOfType:LogWarning withFormat:@"Not correct parameter count sent to setHUDType"];
