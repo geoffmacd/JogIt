@@ -23,27 +23,46 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if(section == 0)
+        return 1;
+    if(section == 1)
+        return [runs count];
+    
+    return 0;
 }
 
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    HierarchicalCell *cell = [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
-                                                          owner:self
-                                                        options:nil]objectAtIndex:0];
     
-    [cell setAssociated:[runs objectAtIndex:0]];
+    HierarchicalCell * curCell = [cells objectAtIndex:[indexPath row]];
+    
+    return curCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    if([indexPath row] > [runs count])
+        return 0.0;
+    
+    CGFloat height;
+    NSUInteger row = [indexPath row];
+    
+    HierarchicalCell * cell = [cells objectAtIndex:row];
+    
+    height = [cell getHeightRequired];
     
     
+    return height;
     
-    return cell;
+    
 }
 
 
@@ -53,16 +72,22 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-}
-
-
-
-- (void) loadTable
-{
+    
+    if([indexPath row] > [runs count])
+        return;
     
     
+    NSUInteger row = [indexPath row];
+    
+    HierarchicalCell * cell = [cells objectAtIndex:row];
+    
+    if(!cell.expanded)
+    {
+        [cell setExpand:true];
+        
+        [tableView reloadData];
+    }
 }
-
 
 
 - (void)viewDidLoad
@@ -71,7 +96,8 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     runs = [[NSMutableArray alloc] initWithCapacity:3];
-      
+    cells = [[NSMutableArray alloc] initWithCapacity:3]; 
+    
     RunMap * map = [RunMap alloc];
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
@@ -87,7 +113,22 @@
          
      }
     
-    
+    for(NSInteger i=0;i <3; i++)
+    {
+        HierarchicalCell * cell  = [MenuTable dequeueReusableCellWithIdentifier:@"HierarchyTableCellPrototype"];
+        
+        if(cell == nil){
+            
+            cell = [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
+                                                 owner:self
+                                               options:nil]objectAtIndex:0];
+        }
+        
+        [cell setAssociated:[runs objectAtIndex:i]];
+        
+        [cells addObject:cell];
+        
+    }
     
 }
 

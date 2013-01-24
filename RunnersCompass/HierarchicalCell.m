@@ -36,6 +36,8 @@
     
     [hud setHUDType:menuDisplay];
     
+    [self setExpand:false];
+    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -80,15 +82,34 @@
         
     }
     
+    
+    
 }
 
-/*
+-(CGFloat)getHeightRequired
+{
+    
+    if(expanded)
+    {
+        return 40.0;
+    }else{
+        return 100.0;
+    }
+    
+    return 40.0;
+}
+
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    
+    [thumbnailImage setHidden:!expanded];
+    [selectButton setHidden:!expanded];
+    [hud setHidden:!expanded];
 }
-*/
+
 
 @end

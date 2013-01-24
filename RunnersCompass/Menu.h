@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HierarchicalCell.h"
 
 @protocol MenuViewControllerDelegate;
 
@@ -14,6 +15,8 @@
 @interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     NSMutableArray * runs;
+    NSMutableArray * start;
+    NSMutableArray * cells;
     
     
 }

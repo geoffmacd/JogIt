@@ -33,4 +33,7 @@ typedef enum
 @property (weak, nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
 
+-(CGFloat)getHeightRequired;
+-(void)setExpand:(BOOL)open;
+
 @end

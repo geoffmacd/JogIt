@@ -87,7 +87,7 @@
 								<string key="NSFrame">{{25, 7}, {270, 21}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="375926669"/>
+								<reference key="NSNextKeyView" ref="981189565"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -120,7 +120,7 @@
 								<string key="NSFrame">{{6, 48}, {160, 89}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="606328075"/>
+								<reference key="NSNextKeyView" ref="375926669"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -136,7 +136,7 @@
 								<string key="NSFrame">{{174, 48}, {108, 89}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="981189565"/>
+								<reference key="NSNextKeyView" ref="606328075"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -199,6 +199,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="648043000"/>
+				<string key="IBUIReuseIdentifier">HierarchyTableCellPrototype</string>
 				<real value="144" key="IBUIRowHeight"/>
 			</object>
 		</array>
