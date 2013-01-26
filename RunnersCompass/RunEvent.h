@@ -27,7 +27,7 @@ typedef enum {
 
 @property (nonatomic, weak) NSString *name;
 @property (nonatomic, weak) NSDate *date;
-@property (nonatomic, weak) RunMap *map;
+@property (nonatomic, strong) RunMap *map;
 @property (nonatomic) RunType type;
 
 -(id)initWithName:(NSString *)name date:(NSDate *)date;

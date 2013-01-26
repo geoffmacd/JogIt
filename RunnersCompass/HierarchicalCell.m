@@ -41,7 +41,14 @@
 -(void)setup
 {
     //set header
-    NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [associatedRun.date description]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    
+    NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //set thumbnail
@@ -49,7 +56,7 @@
     
     [hud setHUDType:menuDisplay];
     
-    [self setExpand:false];
+    [self setExpand:false withAnimation:false];
     
     
     buttonTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -62,30 +69,67 @@
 
 - (void)handleExpandTap:(UITapGestureRecognizer *)gestureRecognizer
 {
-    [self setExpand:!expanded];
+    [self setExpand:!expanded withAnimation:true];
 }
 
--(void)setExpand:(BOOL)open
+-(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
     
     expanded = open;
+    NSTimeInterval time = animate ? 0.25f : 0.01f;
     
     if(expanded){
-        [expandButton setImage:[UIImage imageNamed:@"DownTriangleIcon.png"] forState:UIControlStateNormal];
+        
+        
+        [self rotateImage:expandButton.imageView duration:time
+                    curve:UIViewAnimationCurveEaseIn degrees:90];
+        
+        expandedView.alpha = 0.0;
+        [UIView beginAnimations:@"Fade-in" context:NULL];
+        [UIView setAnimationDuration:0.4];//lags the button animation a bit
+        expandedView.alpha = 1.0;
+        [UIView commitAnimations];
+        
         
         
     }else{
-        [expandButton setImage:[UIImage imageNamed:@"RightFillTriangleIcon.png"] forState:UIControlStateNormal];
         
+        [self rotateImage:expandButton.imageView duration:time
+                    curve:UIViewAnimationCurveEaseIn degrees:0];
     }
+    
+    
+    
     
     [expandedView setHidden:!expanded];
     
     
     [delegate cellDidChangeHeight];
     
+    //animate hidden view
+    
+    
     
 }
+
+- (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
+              curve:(int)curve degrees:(CGFloat)degrees
+{
+    // Setup the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:duration];
+    [UIView setAnimationCurve:curve];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    // The transform matrix
+    CGAffineTransform transform =
+    CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees));
+    image.transform = transform;
+    
+    // Commit the changes
+    [UIView commitAnimations];
+}
+
 
 -(CGFloat)getHeightRequired
 {

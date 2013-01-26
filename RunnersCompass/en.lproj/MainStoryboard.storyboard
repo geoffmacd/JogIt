@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2840" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
@@ -12,15 +12,19 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-DD-PJJ">
+                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lbn-DD-PJJ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="contentInset" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="2" id="4Xc-gY-4RU"/>
                                     <outlet property="delegate" destination="2" id="Qgi-et-cjj"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="v9t-2u-eTR">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="v9t-2u-eTR">
+                                <rect key="frame" x="0.0" y="504" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.90251358699999995" green="0.78535504339999995" blue="0.5544219104" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <barButtonItem image="switch.png" style="plain" id="q30-BE-dIS"/>
@@ -32,15 +36,6 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="v9t-2u-eTR" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="0kr-YT-Rlk"/>
-                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="top" secondItem="16" secondAttribute="top" type="default" id="HQz-nG-R91"/>
-                            <constraint firstItem="v9t-2u-eTR" firstAttribute="top" secondItem="lbn-DD-PJJ" secondAttribute="bottom" type="default" id="Id0-Jr-iD9"/>
-                            <constraint firstItem="v9t-2u-eTR" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="JrL-xe-KUx"/>
-                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="aHg-oT-Pdk"/>
-                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="pYQ-jl-kFQ"/>
-                            <constraint firstItem="v9t-2u-eTR" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="zxb-sH-TyX"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="MenuTable" destination="lbn-DD-PJJ" id="5XS-Tj-s6j"/>
@@ -58,52 +53,36 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="pause_logo_large.png" translatesAutoresizingMaskIntoConstraints="NO" id="aJT-Ro-C4y">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="QMH-am-SPp"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="pause_logo_large.png" id="aJT-Ro-C4y">
+                                <rect key="frame" x="39" y="8" width="40" height="40"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="CellBarsIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="6vt-rj-Ld7">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="mLj-hO-Aqi"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="CellBarsIcon.png" id="6vt-rj-Ld7">
+                                <rect key="frame" x="87" y="8" width="40" height="40"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="hamburger.png" translatesAutoresizingMaskIntoConstraints="NO" id="LT7-sh-uA2">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="PtW-mW-YZ2"/>
-                                    <constraint firstAttribute="width" constant="40" id="rsR-wx-iZl"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="hamburger.png" id="LT7-sh-uA2">
+                                <rect key="frame" x="0.0" y="8" width="40" height="40"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Run Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSG-hk-jAG">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="170" id="9Ni-ew-Mbn"/>
-                                </constraints>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Run Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qSG-hk-jAG">
+                                <rect key="frame" x="150" y="17" width="170" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBH-1w-K6Z" customClass="PaceChart">
+                            <view contentMode="scaleToFill" id="VBH-1w-K6Z" customClass="PaceChart">
+                                <rect key="frame" x="0.0" y="259" width="320" height="191"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Current/Historical KM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UhH-L4-1h4">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="207" id="2jY-Xm-dNn"/>
-                                </constraints>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Current/Historical KM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UhH-L4-1h4">
+                                <rect key="frame" x="49" y="237" width="207" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dxd-3B-A3C">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="169" id="PYt-np-fRs"/>
-                                    <constraint firstAttribute="height" constant="85" id="UYZ-Jg-21L"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Dxd-3B-A3C">
+                                <rect key="frame" x="39" y="458" width="169" height="85"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1P-Hw-QOu">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="76" id="GZb-Pc-SCj"/>
-                                    <constraint firstAttribute="height" constant="76" id="r5U-B8-EK6"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="V1P-Hw-QOu">
+                                <rect key="frame" x="239" y="463" width="76" height="76"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" image="mapicon.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -115,28 +94,6 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6vt-rj-Ld7" firstAttribute="bottom" secondItem="aJT-Ro-C4y" secondAttribute="bottom" type="default" id="05q-wI-5Cw"/>
-                            <constraint firstItem="qSG-hk-jAG" firstAttribute="trailing" secondItem="fiX-7e-IqA" secondAttribute="trailing" type="default" id="5vk-lm-zv5"/>
-                            <constraint firstAttribute="trailing" secondItem="V1P-Hw-QOu" secondAttribute="trailing" constant="5" id="Aek-ci-Zv9"/>
-                            <constraint firstItem="UhH-L4-1h4" firstAttribute="top" secondItem="fiX-7e-IqA" secondAttribute="top" constant="237" id="Ayl-Yy-tEs"/>
-                            <constraint firstItem="LT7-sh-uA2" firstAttribute="bottom" secondItem="aJT-Ro-C4y" secondAttribute="bottom" type="default" id="DWd-0C-P5h"/>
-                            <constraint firstItem="LT7-sh-uA2" firstAttribute="top" secondItem="aJT-Ro-C4y" secondAttribute="top" type="default" id="Jkf-Co-omM"/>
-                            <constraint firstAttribute="bottom" secondItem="Dxd-3B-A3C" secondAttribute="bottom" constant="5" id="Mdg-CM-HYb"/>
-                            <constraint firstItem="V1P-Hw-QOu" firstAttribute="centerY" secondItem="Dxd-3B-A3C" secondAttribute="centerY" type="default" id="Oal-2x-5XQ"/>
-                            <constraint firstItem="UhH-L4-1h4" firstAttribute="leading" secondItem="fiX-7e-IqA" secondAttribute="leading" constant="49" id="SM4-cP-kul"/>
-                            <constraint firstItem="VBH-1w-K6Z" firstAttribute="trailing" secondItem="fiX-7e-IqA" secondAttribute="trailing" type="default" id="Th6-y9-5Hz"/>
-                            <constraint firstItem="Dxd-3B-A3C" firstAttribute="leading" secondItem="aJT-Ro-C4y" secondAttribute="leading" type="default" id="a3A-eC-e9p"/>
-                            <constraint firstItem="VBH-1w-K6Z" firstAttribute="leading" secondItem="fiX-7e-IqA" secondAttribute="leading" type="default" id="cs0-7K-b40"/>
-                            <constraint firstItem="LT7-sh-uA2" firstAttribute="leading" secondItem="fiX-7e-IqA" secondAttribute="leading" type="default" id="dJA-qy-hy2"/>
-                            <constraint firstItem="LT7-sh-uA2" firstAttribute="top" secondItem="fiX-7e-IqA" secondAttribute="top" constant="8" id="gQG-aG-L2z"/>
-                            <constraint firstItem="aJT-Ro-C4y" firstAttribute="leading" secondItem="fiX-7e-IqA" secondAttribute="leading" constant="39" id="jbh-EF-Qwh"/>
-                            <constraint firstItem="6vt-rj-Ld7" firstAttribute="top" secondItem="aJT-Ro-C4y" secondAttribute="top" type="default" id="nTF-51-3c4"/>
-                            <constraint firstItem="Dxd-3B-A3C" firstAttribute="top" secondItem="VBH-1w-K6Z" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="pKC-fR-4tj"/>
-                            <constraint firstItem="6vt-rj-Ld7" firstAttribute="leading" secondItem="aJT-Ro-C4y" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="qFt-NM-i3d"/>
-                            <constraint firstItem="VBH-1w-K6Z" firstAttribute="top" secondItem="fiX-7e-IqA" secondAttribute="top" constant="259" id="s34-6F-So9"/>
-                            <constraint firstItem="qSG-hk-jAG" firstAttribute="top" secondItem="fiX-7e-IqA" secondAttribute="top" constant="17" id="zKs-Qh-wA6"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vAJ-3m-zV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -152,23 +109,6 @@
         <image name="settings.png" width="32" height="32"/>
         <image name="switch.png" width="32" height="32"/>
     </resources>
-    <classes>
-        <class className="LoggerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoggerViewController.h"/>
-        </class>
-        <class className="MenuViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MenuViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="MenuTable" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PaceChart" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaceChart.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

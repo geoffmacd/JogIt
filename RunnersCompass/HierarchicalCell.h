@@ -10,6 +10,12 @@
 #import "HUDView.h"
 #import "RunEvent.h"
 
+// This is defined in Math.h
+#define M_PI   3.14159265358979323846264338327950288   /* pi */
+
+// Our conversion definition
+#define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
+
 
 @protocol HierarchicalCellDelegate <NSObject>
 
@@ -42,11 +48,11 @@ typedef enum
 //instance variables
 @property BOOL expanded;//for whether currently expanded
 @property (weak, nonatomic) HierarchicalCell *parent;
-@property (weak, nonatomic, setter = setAssociated:) RunEvent * associatedRun;
+@property (nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
 
 -(CGFloat)getHeightRequired;
--(void)setExpand:(BOOL)open;
+-(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
 
 
 @end

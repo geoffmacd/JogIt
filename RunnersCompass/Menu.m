@@ -35,27 +35,50 @@
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    if([indexPath row] >= [cells count])
+    {
+        HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
+                                                 owner:self
+                                               options:nil]objectAtIndex:0];
+        NSUInteger rows = [indexPath row];
+        [cell setAssociated:[runs objectAtIndex:rows]];
+        [cell setDelegate:self];
+        
+        [cells addObject:cell];
+        
+        return cell;
+    }
+    else{
+        
+        NSUInteger row = [indexPath row];
+        
+        HierarchicalCell * curCell = [cells objectAtIndex:row];
+        
+        return curCell;
+    }
     
-    NSUInteger row = [indexPath row];
-    NSUInteger section = [indexPath section];
     
-    HierarchicalCell * curCell = [cells objectAtIndex:row];
     
-    return curCell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
     if([indexPath row] > [runs count])
-        return 0.0;
+        return 0.0f;
     
     CGFloat height;
     NSUInteger row = [indexPath row];
+    if([indexPath row] < [cells count])
+    {
+        HierarchicalCell * cell = [cells objectAtIndex:row];
     
-    HierarchicalCell * cell = [cells objectAtIndex:row];
-    
-    height = [cell getHeightRequired];
+        height = [cell getHeightRequired];
+    }
+    else{
+        height = 45.0f;
+    }
     
     
     return height;
@@ -70,6 +93,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
     
     if([indexPath row] > [runs count])
         return;
@@ -80,15 +104,19 @@
     HierarchicalCell * cell = [cells objectAtIndex:row];
     
     if(!cell.expanded)
-        [cell setExpand:true];
+        [cell setExpand:true withAnimation:true];
+    
 }
 
 
 
 -(void) cellDidChangeHeight
 {
+    //animate with row belows move down nicely
+    [MenuTable beginUpdates];
+    [MenuTable endUpdates];
     
-    [MenuTable reloadData];
+    //still need to animate hidden expandedView
 }
 
 - (void)viewDidLoad
@@ -96,8 +124,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    
+    
     runs = [[NSMutableArray alloc] initWithCapacity:3];
-    cells = [[NSMutableArray alloc] initWithCapacity:3]; 
+    cells = [[NSMutableArray alloc] initWithCapacity:3];
     
     RunMap * map = [RunMap alloc];
     
@@ -106,34 +136,13 @@
      for(NSInteger i=0;i <3; i++)
      {
          
-         RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km  *  January 23rd, 2013" date:[NSDate date]];
+         RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
          
          [run setMap:map];
          
          [runs addObject:run];
          
      }
-    
-    for(NSInteger i=0;i <3; i++)
-    {
-        HierarchicalCell * cell  = [MenuTable dequeueReusableCellWithIdentifier:@"HierarchyTableCellPrototype"];
-        
-        if(cell == nil){
-            
-            cell = [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
-                                                 owner:self
-                                               options:nil]objectAtIndex:0];
-        }
-        
-        [cell setAssociated:[runs objectAtIndex:i]];
-        [cell setDelegate:self];
-        
-        [cells addObject:cell];
-        
-        
-        
-    }
-    
 }
 
 - (void)didReceiveMemoryWarning
