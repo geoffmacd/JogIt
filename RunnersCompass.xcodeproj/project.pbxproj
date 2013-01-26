@@ -24,6 +24,8 @@
 		6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F316ACE09E005F4F1B /* HUDCell.m */; };
 		6745C7F716ACE259005F4F1B /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F616ACE259005F4F1B /* HUDView.m */; };
 		6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightArrow.png */; };
+		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
+		6748647216B23890004D2B47 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748647116B23890004D2B47 /* settings.png */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC068D16A117B800491C97 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068C16A117B800491C97 /* Constants.m */; };
 		67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B016A11F5E00491C97 /* pause_logo_large.png */; };
@@ -68,6 +70,8 @@
 		6745C7F516ACE259005F4F1B /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDView.h; sourceTree = "<group>"; };
 		6745C7F616ACE259005F4F1B /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDView.m; sourceTree = "<group>"; };
 		6745C7F816ACE54D005F4F1B /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../../../Downloads/RightArrow.png; sourceTree = "<group>"; };
+		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
+		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6748647116B23890004D2B47 /* settings.png */,
+				6748646E16B237C2004D2B47 /* switch.png */,
 				6745C7F816ACE54D005F4F1B /* RightArrow.png */,
 				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
 				6738D66916ACE7DE0044BA00 /* map.JPG */,
@@ -303,6 +309,8 @@
 				6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */,
 				6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */,
 				6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */,
+				6748646F16B237C2004D2B47 /* switch.png in Resources */,
+				6748647216B23890004D2B47 /* settings.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

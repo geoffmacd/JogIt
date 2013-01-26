@@ -21,27 +21,25 @@
 #pragma mark -
 #pragma mark Table view data source
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return 2;
+    return 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0)
-        return 1;
-    if(section == 1)
-        return [runs count];
     
-    return 0;
+    return [runs count];
 }
 
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    NSUInteger row = [indexPath row];
+    NSUInteger section = [indexPath section];
     
-    HierarchicalCell * curCell = [cells objectAtIndex:[indexPath row]];
+    HierarchicalCell * curCell = [cells objectAtIndex:row];
     
     return curCell;
 }
@@ -82,13 +80,16 @@
     HierarchicalCell * cell = [cells objectAtIndex:row];
     
     if(!cell.expanded)
-    {
         [cell setExpand:true];
-        
-        [tableView reloadData];
-    }
 }
 
+
+
+-(void) cellDidChangeHeight
+{
+    
+    [MenuTable reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -125,8 +126,11 @@
         }
         
         [cell setAssociated:[runs objectAtIndex:i]];
+        [cell setDelegate:self];
         
         [cells addObject:cell];
+        
+        
         
     }
     

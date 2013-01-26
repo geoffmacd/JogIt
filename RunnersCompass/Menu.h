@@ -12,7 +12,7 @@
 @protocol MenuViewControllerDelegate;
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * start;

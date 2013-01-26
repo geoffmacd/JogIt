@@ -15,6 +15,11 @@
 @synthesize selectButton;
 @synthesize thumbnailImage;
 @synthesize headerLabel;
+@synthesize buttonTapGesture;
+@synthesize expandedView;
+@synthesize headerView;
+
+@synthesize delegate;
 
 @synthesize associatedRun;
 @synthesize parent;
@@ -24,9 +29,17 @@
 
 -(void) setAssociated:(RunEvent*) event
 {
+    if(event)
+    {
     
-    associatedRun = event;
+        associatedRun = event;
     
+        [self setup];
+    }
+}
+
+-(void)setup
+{
     //set header
     NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [associatedRun.date description]];
     [headerLabel setText:header];
@@ -38,35 +51,18 @@
     
     [self setExpand:false];
     
+    
+    buttonTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(handleExpandTap:)];
+    [buttonTapGesture setDelegate:self];
+    [headerView addGestureRecognizer:buttonTapGesture];
+    
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        [self setup];
-    }
-    return self;
-}
 
--(void)setup
+- (void)handleExpandTap:(UITapGestureRecognizer *)gestureRecognizer
 {
-    //unexpanded initially
-    [self setExpand:false];
-    
-    if(type == runHistory && associatedRun)
-    {
-        //set header
-        NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [associatedRun.date description]];
-        [headerLabel setText:header];
-        
-        //set thumbnail
-        [thumbnailImage setImage:associatedRun.map.thumbnail];
-        
-        [hud setHUDType:menuDisplay];
-    }
-    
+    [self setExpand:!expanded];
 }
 
 -(void)setExpand:(BOOL)open
@@ -74,14 +70,19 @@
     
     expanded = open;
     
-    if(open){
+    if(expanded){
         [expandButton setImage:[UIImage imageNamed:@"DownTriangleIcon.png"] forState:UIControlStateNormal];
+        
         
     }else{
         [expandButton setImage:[UIImage imageNamed:@"RightFillTriangleIcon.png"] forState:UIControlStateNormal];
         
     }
     
+    [expandedView setHidden:!expanded];
+    
+    
+    [delegate cellDidChangeHeight];
     
     
 }
@@ -89,27 +90,23 @@
 -(CGFloat)getHeightRequired
 {
     
-    if(expanded)
+    if(!expanded)
     {
-        return 40.0;
+        return headerView.frame.size.height;
     }else{
-        return 100.0;
+        return headerView.frame.size.height + 104;
     }
     
-    return 40.0;
 }
 
-
+/*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
     
-    [thumbnailImage setHidden:!expanded];
-    [selectButton setHidden:!expanded];
-    [hud setHidden:!expanded];
 }
-
+*/
 
 @end

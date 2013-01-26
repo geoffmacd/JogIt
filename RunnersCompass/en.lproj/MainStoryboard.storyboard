@@ -12,39 +12,33 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-DD-PJJ">
+                            <tableView autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="lbn-DD-PJJ">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Y88-WT-gfW" customClass="HierarchicalCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                    </tableViewCell>
-                                </prototypes>
                                 <sections/>
                                 <connections>
                                     <outlet property="dataSource" destination="2" id="4Xc-gY-4RU"/>
                                     <outlet property="delegate" destination="2" id="Qgi-et-cjj"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v9t-2u-eTR">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="v9t-2u-eTR">
+                                <color key="backgroundColor" red="0.90251358699999995" green="0.78535504339999995" blue="0.5544219104" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
-                                    <barButtonItem title="Item" id="q30-BE-dIS"/>
+                                    <barButtonItem image="switch.png" style="plain" id="q30-BE-dIS"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="9GX-g6-0Qv"/>
+                                    <barButtonItem image="CellBarsIcon.png" style="plain" id="uos-DL-LSS"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="6vJ-fA-PJF"/>
+                                    <barButtonItem image="settings.png" style="plain" id="nIb-hS-6zT"/>
                                 </items>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="v9t-2u-eTR" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="0kr-YT-Rlk"/>
+                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="top" secondItem="16" secondAttribute="top" type="default" id="HQz-nG-R91"/>
+                            <constraint firstItem="v9t-2u-eTR" firstAttribute="top" secondItem="lbn-DD-PJJ" secondAttribute="bottom" type="default" id="Id0-Jr-iD9"/>
                             <constraint firstItem="v9t-2u-eTR" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="JrL-xe-KUx"/>
-                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="VgD-7G-Uiq"/>
                             <constraint firstItem="lbn-DD-PJJ" firstAttribute="trailing" secondItem="16" secondAttribute="trailing" type="default" id="aHg-oT-Pdk"/>
                             <constraint firstItem="lbn-DD-PJJ" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="pYQ-jl-kFQ"/>
-                            <constraint firstItem="v9t-2u-eTR" firstAttribute="bottom" secondItem="16" secondAttribute="bottom" type="default" id="xlZ-3V-CY5"/>
-                            <constraint firstItem="lbn-DD-PJJ" firstAttribute="top" secondItem="16" secondAttribute="top" type="default" id="yAq-7z-Rgl"/>
                             <constraint firstItem="v9t-2u-eTR" firstAttribute="leading" secondItem="16" secondAttribute="leading" type="default" id="zxb-sH-TyX"/>
                         </constraints>
                     </view>
@@ -155,21 +149,10 @@
         <image name="hamburger.png" width="240" height="240"/>
         <image name="mapicon.png" width="150" height="150"/>
         <image name="pause_logo_large.png" width="600" height="600"/>
+        <image name="settings.png" width="32" height="32"/>
+        <image name="switch.png" width="32" height="32"/>
     </resources>
     <classes>
-        <class className="HUDView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HUDView.h"/>
-        </class>
-        <class className="HierarchicalCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/HierarchicalCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="expandButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="headerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="hud" candidateClass="HUDView"/>
-                <relationship kind="outlet" name="selectButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="thumbnailImage" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
         <class className="LoggerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LoggerViewController.h"/>
         </class>
