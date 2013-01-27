@@ -23,5 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 
+- (IBAction)settingsTapped:(id)sender;
+
 
 @end

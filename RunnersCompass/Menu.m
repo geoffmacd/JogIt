@@ -16,6 +16,12 @@
 
 @synthesize MenuTable;
 
+- (IBAction)settingsTapped:(id)sender
+{
+    [self performSegueWithIdentifier:@"SettingsSegue" sender:self];
+    
+}
+
 #pragma mark -
 #pragma mark Table view data source
 
