@@ -17,10 +17,11 @@ typedef enum
     menuDisplay
 } HUDViewMode;
 
-@property (strong, nonatomic) HUDCell* quad1;
-@property (strong, nonatomic) HUDCell* quad2;
-@property (strong, nonatomic) HUDCell* quad3;
-@property (strong, nonatomic) HUDCell* quad4;
+
+@property (strong, nonatomic) IBOutlet HUDCell *quad2;
+@property (strong, nonatomic) IBOutlet HUDCell *quad1;
+@property (strong, nonatomic) IBOutlet HUDCell *quad3;
+@property (strong, nonatomic) IBOutlet HUDCell *quad4;
 
 -(void)setHUDType:(HUDViewMode) mode;
 

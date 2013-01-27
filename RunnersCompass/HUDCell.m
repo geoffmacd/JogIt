@@ -10,6 +10,10 @@
 
 @implementation HUDCell
 
+@synthesize Value;
+@synthesize Unit;
+
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

@@ -1,14 +1,14 @@
 //
-//  HierarchicalButton.m
+//  FlatToolbar.m
 //  RunnersCompass
 //
-//  Created by Geoff MacDonald on 2013-01-11.
+//  Created by Geoff MacDonald on 2013-01-27.
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "HierarchicalButton.h"
+#import "FlatToolbar.h"
 
-@implementation HierarchicalButton
+@implementation FlatToolbar
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,13 +19,16 @@
     return self;
 }
 
-/*
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+ {
+    UIColor *color = [UIColor lightTextColor];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColor(context, CGColorGetComponents( [color CGColor]));
+    CGContextFillRect(context, rect);
 }
-*/
+
 
 @end

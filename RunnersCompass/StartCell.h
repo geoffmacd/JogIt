@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HUDView.h"
-#import "RunEvent.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -17,42 +15,40 @@
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
 
-@protocol HierarchicalCellDelegate <NSObject>
+@protocol StartCellDelegate <NSObject>
 
 -(void)cellDidChangeHeight:(id) sender;
 
 @end
 
-@interface HierarchicalCell : UITableViewCell
+@interface StartCell : UITableViewCell
 
-typedef enum
-{
-    startRun,
-    runHistory
-    
-} HierarchicalType;
 
 //UI connections
 @property (weak, nonatomic) IBOutlet UIView *expandedView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (weak, nonatomic) IBOutlet UIButton *selectButton;
 @property (strong, nonatomic) IBOutlet UITapGestureRecognizer *buttonTapGesture;
+@property (weak, nonatomic) IBOutlet UIView *justGoView;
+@property (weak, nonatomic) IBOutlet UIView *distanceView;
+@property (weak, nonatomic) IBOutlet UIView *paceView;
+@property (weak, nonatomic) IBOutlet UIView *timeView;
+@property (weak, nonatomic) IBOutlet UILabel *presetTimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pacePresetLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distancePresetLAbel;
+@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *expandedGesture;
 
 //delegate
-@property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;
+@property (weak, nonatomic) id <StartCellDelegate>delegate;
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
-@property (weak, nonatomic) HierarchicalCell *parent;
-@property (nonatomic, setter = setAssociated:) RunEvent * associatedRun;
-@property HierarchicalType type;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
-
+- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer;
+-(void)setup;
 
 @end
 

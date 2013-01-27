@@ -7,7 +7,6 @@
 //
 
 #import "Menu.h"
-#import "HierarchicalCell.h"
 #import "Constants.h"
 #import "RunEvent.h"
 
@@ -16,7 +15,6 @@
 @implementation MenuViewController
 
 @synthesize MenuTable;
-
 
 #pragma mark -
 #pragma mark Table view data source
@@ -28,21 +26,36 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
-    return [runs count];
+    //return number of historic runs plus start menu
+    return [runs count] + 1;
 }
 
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if([indexPath row] >= [cells count])
+    NSUInteger row = [indexPath row];
+    
+    if(row == 0)
     {
+        if(!start)
+        {
+            StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
+                                                                  owner:self
+                                                                options:nil]objectAtIndex:0];
+            [cell setup];
+            [cell setDelegate:self];
+        
+            start = cell;
+        }
+        
+        return start;
+    
+    }
+    else if(row > [cells count]){
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
                                                  owner:self
                                                options:nil]objectAtIndex:0];
-        NSUInteger rows = [indexPath row];
-        [cell setAssociated:[runs objectAtIndex:rows]];
+        [cell setAssociated:[runs objectAtIndex:row-1]];
         [cell setDelegate:self];
         
         [cells addObject:cell];
@@ -51,9 +64,8 @@
     }
     else{
         
-        NSUInteger row = [indexPath row];
         
-        HierarchicalCell * curCell = [cells objectAtIndex:row];
+        HierarchicalCell * curCell = [cells objectAtIndex:row-1];
         
         return curCell;
     }
@@ -64,20 +76,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if([indexPath row] > [runs count])
-        return 0.0f;
-    
     CGFloat height;
     NSUInteger row = [indexPath row];
-    if([indexPath row] < [cells count])
+    if(row == 0)
     {
-        HierarchicalCell * cell = [cells objectAtIndex:row];
+        height = [start getHeightRequired];
+        
+    }
+    else if(row-1< [cells count]){
+        HierarchicalCell * cell = [cells objectAtIndex:row-1];
     
         height = [cell getHeightRequired];
     }
     else{
-        height = 45.0f;
+        height = 48.0f;
     }
     
     
@@ -95,28 +107,42 @@
 {
 
     
-    if([indexPath row] > [runs count])
+    NSUInteger row = [indexPath row];
+    
+    if(row > ([cells count] + 1) || row == 0)
         return;
     
     
-    NSUInteger row = [indexPath row];
-    
-    HierarchicalCell * cell = [cells objectAtIndex:row];
+    HierarchicalCell * cell = [cells objectAtIndex:row-1];
     
     if(!cell.expanded)
+    {
         [cell setExpand:true withAnimation:true];
+        if(row == [cells count])
+        {
+            //scroll view to see rest of cell below
+            [MenuTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
+        }
+    }
     
 }
 
 
 
--(void) cellDidChangeHeight
+-(void) cellDidChangeHeight:(id) sender
 {
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
     
     //still need to animate hidden expandedView
+    
+    //if sender was last cell or second last, then scroll to show expanded view
+    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] -1)])
+    {
+        NSIndexPath *path = [MenuTable indexPathForCell:sender];
+        [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+    }
 }
 
 - (void)viewDidLoad
@@ -124,6 +150,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    
+    if(!start)
+    {
+        StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
+                                                           owner:self
+                                                         options:nil]objectAtIndex:0];
+        [cell setup];
+        [cell setDelegate:self];
+        
+        start = cell;
+    }
     
     
     runs = [[NSMutableArray alloc] initWithCapacity:3];
@@ -133,7 +170,7 @@
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-     for(NSInteger i=0;i <3; i++)
+     for(NSInteger i=0;i <12; i++)
      {
          
          RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];

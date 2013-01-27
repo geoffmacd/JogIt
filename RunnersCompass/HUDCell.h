@@ -25,7 +25,6 @@ typedef enum
     
 } HUDCellMode;
 
-@property (weak, nonatomic) IBOutlet UILabel *Parameter;
 @property (weak, nonatomic) IBOutlet UILabel *Value;
 @property (weak, nonatomic) IBOutlet UILabel *Unit;
 

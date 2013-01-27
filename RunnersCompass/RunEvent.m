@@ -10,23 +10,25 @@
 
 @implementation RunEvent
 
-@synthesize name = _name;
-@synthesize date = _date;
+@synthesize name;
+@synthesize date;
+@synthesize calories;
+@synthesize distance;
+@synthesize pace;
+@synthesize time;
 
 
 
--(id)initWithName:(NSString *)name date:(NSDate *)date
+-(id)initWithName:(NSString *)_name date:(NSDate *)_date
 {
     self = [super init];
     if (self) {
-        _name = name;
-        _date = date;
+        name = _name;
+        date = _date;
         distance = 4.1f;
-        avgPace = 273.6f;
         calories = 301.5f;
-        climb = 16.7f;
-        descend = 19.3f;
-        
+        pace = 264.3f;
+        time = 2063.0f;
         return self;
     }
     return nil;

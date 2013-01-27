@@ -6,52 +6,33 @@
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "HierarchicalCell.h"
+#import "StartCell.h"
 
-@implementation HierarchicalCell
+@implementation StartCell
 
 @synthesize expandButton;
-@synthesize selectButton;
-@synthesize thumbnailImage;
 @synthesize headerLabel;
 @synthesize buttonTapGesture;
 @synthesize expandedView;
 @synthesize headerView;
-
+@synthesize justGoView;
+@synthesize distancePresetLAbel;
+@synthesize distanceView;
+@synthesize pacePresetLabel;
+@synthesize paceView;
+@synthesize timeView;
+@synthesize presetTimeLabel;
+@synthesize expandedGesture;
 @synthesize delegate;
 
-@synthesize associatedRun;
-@synthesize parent;
 @synthesize expanded;
-@synthesize type;
-
-
--(void) setAssociated:(RunEvent*) event
-{
-    if(event)
-    {
-    
-        associatedRun = event;
-    
-        [self setup];
-    }
-}
 
 -(void)setup
 {
-    //set header
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
-    
-    NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [dateFormatter stringFromDate:associatedRun.date]];
-    [headerLabel setText:header];
-    
-    //set thumbnail
-    [thumbnailImage setImage:associatedRun.map.thumbnail];
+    [presetTimeLabel setText:@"40min"];
+    [pacePresetLabel setText:@"4:35 min/Km"];
+    [distancePresetLAbel setText:@"6.5 Km"];
+
     
     [self setExpand:false withAnimation:false];
     
@@ -61,12 +42,27 @@
     [buttonTapGesture setDelegate:self];
     [headerView addGestureRecognizer:buttonTapGesture];
     
+    
+    
+    
+    expandedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                               action:@selector(handleStartTap:)];
+    [expandedGesture setDelegate:self];
+    [expandedView addGestureRecognizer:expandedGesture];
+    
 }
 
 
 - (void)handleExpandTap:(UITapGestureRecognizer *)gestureRecognizer
 {
     [self setExpand:!expanded withAnimation:true];
+}
+
+
+
+- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+    //do something
 }
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
@@ -81,11 +77,10 @@
         [self rotateImage:expandButton.imageView duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:90];
         
-        
         CGRect rect = expandedView.frame;
         CGRect correct = rect;
         rect.origin.y = 20;
-
+        
         [expandedView setFrame:rect];
         
         expandedView.alpha = 0.0;
@@ -147,7 +142,6 @@
     }else{
         return headerView.frame.size.height + expandedView.frame.size.height;
     }
-    
     
 }
 

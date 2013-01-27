@@ -7,6 +7,7 @@
 //
 
 #import "HUDView.h"
+#import "HUDCell.h"
 #import "Log.h"
 
 @implementation HUDView
@@ -25,6 +26,24 @@
     return self;
 }
 
+-(void)awakeFromNib
+{
+    
+    [self setup];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    
+    [self setup];
+    
+}
+
+
+-(void)setup
+{
+    
+}
 
 -(void)setHUDType:(HUDViewMode) mode
 {
@@ -43,6 +62,8 @@
             quad2.mode = calories;
             quad3 = nil;
             quad4 = nil;
+            [quad3 setHidden:true];
+            [quad4 setHidden:true];
             break;
         
         default:

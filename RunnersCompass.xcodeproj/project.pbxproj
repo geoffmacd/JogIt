@@ -18,6 +18,10 @@
 		67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */; };
 		67236D2516409B7700DD13C5 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2416409B7700DD13C5 /* Menu.m */; };
 		67236D2C16409B7700DD13C5 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2B16409B7700DD13C5 /* Logger.m */; };
+		672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA39016B4C87E00B7DEE6 /* StartCell.m */; };
+		672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA39116B4C87E00B7DEE6 /* StartCell.xib */; };
+		672AA39616B4C9BA00B7DEE6 /* addbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 672AA39516B4C9BA00B7DEE6 /* addbutton.png */; };
+		672AA39D16B4F70300B7DEE6 /* FlatToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */; };
 		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
 		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
 		6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F016ACDD40005F4F1B /* HUDCell.xib */; };
@@ -62,6 +66,12 @@
 		67236D2416409B7700DD13C5 /* Menu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
 		67236D2A16409B7700DD13C5 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		67236D2B16409B7700DD13C5 /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
+		672AA38F16B4C87E00B7DEE6 /* StartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCell.h; sourceTree = "<group>"; };
+		672AA39016B4C87E00B7DEE6 /* StartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCell.m; sourceTree = "<group>"; };
+		672AA39116B4C87E00B7DEE6 /* StartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartCell.xib; sourceTree = "<group>"; };
+		672AA39516B4C9BA00B7DEE6 /* addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addbutton.png; sourceTree = "<group>"; };
+		672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatToolbar.h; sourceTree = "<group>"; };
+		672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatToolbar.m; sourceTree = "<group>"; };
 		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.JPG; sourceTree = "<group>"; };
 		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Mockups/hud.png; sourceTree = SOURCE_ROOT; };
 		6745C7F016ACDD40005F4F1B /* HUDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDCell.xib; sourceTree = "<group>"; };
@@ -170,6 +180,7 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				6748647116B23890004D2B47 /* settings.png */,
 				6748646E16B237C2004D2B47 /* switch.png */,
 				6745C7F816ACE54D005F4F1B /* RightArrow.png */,
@@ -228,6 +239,9 @@
 		67FC068616A111A100491C97 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
+				672AA39016B4C87E00B7DEE6 /* StartCell.m */,
+				672AA39116B4C87E00B7DEE6 /* StartCell.xib */,
 				67FC070A16ACD74300491C97 /* HUDView.xib */,
 				6745C7F516ACE259005F4F1B /* HUDView.h */,
 				6745C7F616ACE259005F4F1B /* HUDView.m */,
@@ -239,6 +253,8 @@
 				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
 				67FC06B816A1250500491C97 /* PaceChart.h */,
 				67FC06B916A1250500491C97 /* PaceChart.m */,
+				672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */,
+				672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -311,6 +327,8 @@
 				6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */,
 				6748646F16B237C2004D2B47 /* switch.png in Resources */,
 				6748647216B23890004D2B47 /* settings.png in Resources */,
+				672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */,
+				672AA39616B4C9BA00B7DEE6 /* addbutton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +353,8 @@
 				6745C7F716ACE259005F4F1B /* HUDView.m in Sources */,
 				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
 				6721F88516AE3D4E00FE84C5 /* Log.m in Sources */,
+				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,
+				672AA39D16B4F70300B7DEE6 /* FlatToolbar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
