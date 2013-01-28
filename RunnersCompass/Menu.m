@@ -16,6 +16,10 @@
 
 @synthesize MenuTable;
 
+- (IBAction)done:(UIStoryboardSegue *)segue {
+    // Optional place to read data from closing controller
+}
+
 - (IBAction)settingsTapped:(id)sender
 {
     [self performSegueWithIdentifier:@"SettingsSegue" sender:self];
