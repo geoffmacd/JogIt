@@ -51,9 +51,6 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <segue destination="6me-Xc-tfg" kind="custom" identifier="MenuToLogger" id="8N4-ei-n3I"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
@@ -419,61 +416,6 @@
             </objects>
             <point key="canvasLocation" x="964" y="666"/>
         </scene>
-        <!--Logger View Controller - Logger-->
-        <scene sceneID="TP8-JL-Tm6">
-            <objects>
-                <viewController title="Logger" id="6me-Xc-tfg" customClass="LoggerViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="fiX-7e-IqA">
-                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="pause_logo_large.png" id="aJT-Ro-C4y">
-                                <rect key="frame" x="39" y="8" width="40" height="40"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="CellBarsIcon.png" id="6vt-rj-Ld7">
-                                <rect key="frame" x="87" y="8" width="40" height="40"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="hamburger.png" id="LT7-sh-uA2">
-                                <rect key="frame" x="0.0" y="8" width="40" height="40"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Run Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qSG-hk-jAG">
-                                <rect key="frame" x="150" y="17" width="170" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" id="VBH-1w-K6Z" customClass="PaceChart">
-                                <rect key="frame" x="0.0" y="259" width="320" height="191"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Current/Historical KM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UhH-L4-1h4">
-                                <rect key="frame" x="49" y="237" width="207" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Dxd-3B-A3C">
-                                <rect key="frame" x="39" y="458" width="169" height="85"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="V1P-Hw-QOu">
-                                <rect key="frame" x="239" y="463" width="76" height="76"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="mapicon.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vAJ-3m-zV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="803" y="-273"/>
-        </scene>
         <!--Start View Controller - Start-->
         <scene sceneID="U6c-bB-sia">
             <objects>
@@ -541,7 +483,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Just Go" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pQw-0M-z8q">
-                                                    <rect key="frame" x="10" y="11" width="35" height="21"/>
+                                                    <rect key="frame" x="10" y="11" width="64" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -779,9 +721,6 @@
     </scenes>
     <resources>
         <image name="CellBarsIcon.png" width="48" height="48"/>
-        <image name="hamburger.png" width="240" height="240"/>
-        <image name="mapicon.png" width="150" height="150"/>
-        <image name="pause_logo_large.png" width="600" height="600"/>
         <image name="settings.png" width="32" height="32"/>
     </resources>
     <classes>
@@ -791,9 +730,6 @@
         <class className="GoalsViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GoalsViewController.h"/>
         </class>
-        <class className="LoggerViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoggerViewController.h"/>
-        </class>
         <class className="MenuViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/MenuViewController.h"/>
             <relationships>
@@ -801,9 +737,6 @@
                 <relationship kind="action" name="settingsTapped:"/>
                 <relationship kind="outlet" name="MenuTable" candidateClass="UITableView"/>
             </relationships>
-        </class>
-        <class className="PaceChart" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaceChart.h"/>
         </class>
         <class className="PerformanceViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PerformanceViewController.h"/>
