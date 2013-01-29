@@ -11,10 +11,8 @@
 @implementation HierarchicalCell
 
 @synthesize expandButton;
-@synthesize selectButton;
 @synthesize thumbnailImage;
 @synthesize headerLabel;
-@synthesize buttonTapGesture;
 @synthesize expandedView;
 @synthesize headerView;
 
@@ -56,18 +54,19 @@
     [self setExpand:false withAnimation:false];
     
     
-    buttonTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(handleExpandTap:)];
-    [buttonTapGesture setDelegate:self];
-    [headerView addGestureRecognizer:buttonTapGesture];
-    
 }
 
-
-- (void)handleExpandTap:(UITapGestureRecognizer *)gestureRecognizer
+- (IBAction)expandViewTap:(id)sender
 {
+    [delegate selectedRun:self];
+}
+
+- (IBAction)headerViewTap:(id)sender
+{
+    
     [self setExpand:!expanded withAnimation:true];
 }
+
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {

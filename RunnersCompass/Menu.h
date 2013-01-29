@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "HierarchicalCell.h"
 #import "StartCell.h"
+#import "JSSlidingViewController.h"
+#import "Logger.h"
 
 @protocol MenuViewControllerDelegate;
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate, LoggerViewControllerDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * cells;
@@ -23,7 +25,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 
-- (IBAction)settingsTapped:(id)sender;
 
 
 @end

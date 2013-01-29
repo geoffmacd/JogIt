@@ -8,13 +8,61 @@
 
 #import "AppDelegate.h"
 
+
 @implementation AppDelegate
+
+@synthesize window = _window;
+@synthesize viewController = _viewController;
+@synthesize frontVC, backVC;
+
+
+#pragma mark - JSSlidingViewControllerDelegate
+
+- (BOOL)slidingViewController:(JSSlidingViewController *)viewController shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientationsForSlidingViewController:(JSSlidingViewController *)viewController {
+    return UIInterfaceOrientationMaskAll;
+}
+
+#pragma mark - Convenience
+
+- (void)menuButtonPressed:(id)sender {
+    if (self.viewController.isOpen == NO) {
+        [self.viewController openSlider:YES completion:nil];
+    } else {
+        [self.viewController closeSlider:YES completion:nil];
+    }
+}
+
+- (void)lockSlider {
+    self.viewController.locked = YES;
+}
+
+- (void)unlockSlider {
+    self.viewController.locked = NO;
+}
+
+#pragma mark - App Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
     
     
+    self.frontVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
+    self.frontVC.delegate = self;
+    
+    self.backVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
+    
+    self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
+    self.viewController.delegate = self;
+    
+    
+    self.window.rootViewController = self.viewController;
+    [self.window makeKeyAndVisible];
+    
+    [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:60.0f];
     return YES;
 }
 							

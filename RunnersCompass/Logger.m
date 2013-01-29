@@ -14,6 +14,17 @@
 
 @implementation LoggerViewController
 
+@synthesize run;
+@synthesize runTitle;
+@synthesize delegate;
+
+-(void)setRun:(RunEvent *)_run
+{
+    run = _run;
+    
+    [runTitle setText:run.name];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,4 +39,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)hamburgerTapped:(id)sender {
+    [delegate menuButtonPressed:sender];
+}
 @end

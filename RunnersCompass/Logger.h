@@ -7,7 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RunEvent.h"
+#import "JSSlidingViewController.h"
 
-@interface LoggerViewController : UIViewController
+
+
+@protocol LoggerViewControllerDelegate <NSObject>
+
+- (void)menuButtonPressed:(id)sender;
+- (void)lockSlider;
+- (void)unlockSlider;
 
 @end
+
+
+
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate>
+
+
+//delegate
+@property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
+
+
+//UI
+@property (strong, nonatomic) IBOutlet UILabel *runTitle;
+
+//objects
+@property (nonatomic, weak, setter = setRun:) RunEvent * run;
+
+
+//IB
+- (IBAction)hamburgerTapped:(id)sender;
+
+@end
+

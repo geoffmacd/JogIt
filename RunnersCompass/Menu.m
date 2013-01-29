@@ -9,6 +9,8 @@
 #import "Menu.h"
 #import "Constants.h"
 #import "RunEvent.h"
+#import "Logger.h"
+#import "JSSlidingViewController.h"
 
 
 
@@ -25,6 +27,8 @@
     [self performSegueWithIdentifier:@"SettingsSegue" sender:self];
     
 }
+
+
 
 #pragma mark -
 #pragma mark Table view data source
@@ -138,6 +142,12 @@
 }
 
 
+-(void)selectedRun:(id)sender
+{
+    
+    
+    
+}
 
 -(void) cellDidChangeHeight:(id) sender
 {

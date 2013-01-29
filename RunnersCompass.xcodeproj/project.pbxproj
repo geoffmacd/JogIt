@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
+		6703F4E816B75F12006A8F88 /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E716B75F12006A8F88 /* Performance.xib */; };
+		6703F4EA16B75F4A006A8F88 /* Goals.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E916B75F4A006A8F88 /* Goals.xib */; };
+		6703F4EC16B75F57006A8F88 /* Start.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4EB16B75F57006A8F88 /* Start.xib */; };
+		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
 		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
 		6721F88516AE3D4E00FE84C5 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88316AE3D4E00FE84C5 /* Log.m */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
@@ -15,7 +20,6 @@
 		67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1116409B7700DD13C5 /* InfoPlist.strings */; };
 		67236D1516409B7700DD13C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1416409B7700DD13C5 /* main.m */; };
 		67236D1916409B7700DD13C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1816409B7700DD13C5 /* AppDelegate.m */; };
-		67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */; };
 		67236D2516409B7700DD13C5 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2416409B7700DD13C5 /* Menu.m */; };
 		67236D2C16409B7700DD13C5 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2B16409B7700DD13C5 /* Logger.m */; };
 		672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA39016B4C87E00B7DEE6 /* StartCell.m */; };
@@ -30,6 +34,10 @@
 		672AA4F216B602A500B7DEE6 /* ChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F116B602A400B7DEE6 /* ChartViewController.m */; };
 		672AA4F516B6128700B7DEE6 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F416B6128700B7DEE6 /* StartViewController.m */; };
 		672AA4F916B6150B00B7DEE6 /* GoalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */; };
+		672AA50B16B73DAE00B7DEE6 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */; };
+		672AA50C16B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */; };
+		672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */; };
+		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
 		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
 		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
 		6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F016ACDD40005F4F1B /* HUDCell.xib */; };
@@ -55,6 +63,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
+		6703F4E716B75F12006A8F88 /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
+		6703F4E916B75F4A006A8F88 /* Goals.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Goals.xib; sourceTree = "<group>"; };
+		6703F4EB16B75F57006A8F88 /* Start.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Start.xib; sourceTree = "<group>"; };
+		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
 		6721F88316AE3D4E00FE84C5 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
@@ -69,7 +82,6 @@
 		67236D1616409B7700DD13C5 /* RunnersCompass-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RunnersCompass-Prefix.pch"; sourceTree = "<group>"; };
 		67236D1716409B7700DD13C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67236D1816409B7700DD13C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		67236D2116409B7700DD13C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		67236D2316409B7700DD13C5 /* Menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
 		67236D2416409B7700DD13C5 /* Menu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
 		67236D2A16409B7700DD13C5 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
@@ -167,6 +179,11 @@
 		672AA4F416B6128700B7DEE6 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		672AA4F716B6150B00B7DEE6 /* GoalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsViewController.h; sourceTree = "<group>"; };
 		672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsViewController.m; sourceTree = "<group>"; };
+		672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frontViewControllerDropShadow.png; sourceTree = "<group>"; };
+		672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frontViewControllerDropShadow@2x.png"; sourceTree = "<group>"; };
+		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
+		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
+		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
 		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.JPG; sourceTree = "<group>"; };
 		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Mockups/hud.png; sourceTree = SOURCE_ROOT; };
 		6745C7F016ACDD40005F4F1B /* HUDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDCell.xib; sourceTree = "<group>"; };
@@ -218,6 +235,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
 				672AA45216B5B25900B7DEE6 /* CorePlotHeaders */,
 				672AA49D16B5B25A00B7DEE6 /* libCorePlot-CocoaTouch.a */,
 				67236D0E16409B7700DD13C5 /* RunnersCompass */,
@@ -252,7 +270,6 @@
 				67236D1816409B7700DD13C5 /* AppDelegate.m */,
 				67FC068B16A117B800491C97 /* Constants.h */,
 				67FC068C16A117B800491C97 /* Constants.m */,
-				67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */,
 				67FC068316A10F0600491C97 /* Menu */,
 				67FC068216A10EE800491C97 /* Logger */,
 				672AA3B116B598EA00B7DEE6 /* Settings */,
@@ -260,7 +277,6 @@
 				672AA4F616B614F300B7DEE6 /* Goals */,
 				67FC068616A111A100491C97 /* CustomUI */,
 				67FC068116A10EE000491C97 /* Data */,
-				67FC068516A10F5300491C97 /* Network */,
 				67FC067F16A10EBD00491C97 /* Graphics */,
 				67236D0F16409B7700DD13C5 /* Supporting Files */,
 			);
@@ -285,6 +301,7 @@
 			children = (
 				672AA3B216B5990700B7DEE6 /* Settings.h */,
 				672AA3B316B5990700B7DEE6 /* Settings.m */,
+				6703F4E416B75F07006A8F88 /* Settings.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -294,6 +311,7 @@
 			children = (
 				672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */,
 				672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */,
+				6703F4E716B75F12006A8F88 /* Performance.xib */,
 			);
 			name = Performance;
 			sourceTree = "<group>";
@@ -385,8 +403,20 @@
 			children = (
 				672AA4F716B6150B00B7DEE6 /* GoalsViewController.h */,
 				672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */,
+				6703F4E916B75F4A006A8F88 /* Goals.xib */,
 			);
 			name = Goals;
+			sourceTree = "<group>";
+		};
+		672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */ = {
+			isa = PBXGroup;
+			children = (
+				672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */,
+				672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */,
+				672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */,
+				672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */,
+			);
+			path = JSSlidingViewController;
 			sourceTree = "<group>";
 		};
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
@@ -430,6 +460,8 @@
 				67236D2B16409B7700DD13C5 /* Logger.m */,
 				672AA4F316B6128700B7DEE6 /* StartViewController.h */,
 				672AA4F416B6128700B7DEE6 /* StartViewController.m */,
+				672AA50E16B7437100B7DEE6 /* Logger.xib */,
+				6703F4EB16B75F57006A8F88 /* Start.xib */,
 			);
 			name = Logger;
 			sourceTree = "<group>";
@@ -439,15 +471,9 @@
 			children = (
 				67236D2316409B7700DD13C5 /* Menu.h */,
 				67236D2416409B7700DD13C5 /* Menu.m */,
+				6703F4ED16B75F63006A8F88 /* Menu.xib */,
 			);
 			name = Menu;
-			sourceTree = "<group>";
-		};
-		67FC068516A10F5300491C97 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Network;
 			sourceTree = "<group>";
 		};
 		67FC068616A111A100491C97 /* CustomUI */ = {
@@ -529,7 +555,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */,
-				67236D2216409B7700DD13C5 /* MainStoryboard.storyboard in Resources */,
 				67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */,
 				67FC06B316A11FC700491C97 /* hamburger.png in Resources */,
 				67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */,
@@ -547,6 +572,14 @@
 				672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */,
 				672AA39616B4C9BA00B7DEE6 /* addbutton.png in Resources */,
 				672AA4EB16B5BAAF00B7DEE6 /* ChartView.xib in Resources */,
+				672AA50B16B73DAE00B7DEE6 /* frontViewControllerDropShadow.png in Resources */,
+				672AA50C16B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png in Resources */,
+				672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */,
+				6703F4E516B75F07006A8F88 /* Settings.xib in Resources */,
+				6703F4E816B75F12006A8F88 /* Performance.xib in Resources */,
+				6703F4EA16B75F4A006A8F88 /* Goals.xib in Resources */,
+				6703F4EC16B75F57006A8F88 /* Start.xib in Resources */,
+				6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +611,7 @@
 				672AA4F216B602A500B7DEE6 /* ChartViewController.m in Sources */,
 				672AA4F516B6128700B7DEE6 /* StartViewController.m in Sources */,
 				672AA4F916B6150B00B7DEE6 /* GoalsViewController.m in Sources */,
+				672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,14 +624,6 @@
 				67236D1216409B7700DD13C5 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		67236D2016409B7700DD13C5 /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				67236D2116409B7700DD13C5 /* en */,
-			);
-			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

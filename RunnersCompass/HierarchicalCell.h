@@ -20,6 +20,7 @@
 @protocol HierarchicalCellDelegate <NSObject>
 
 -(void)cellDidChangeHeight:(id) sender;
+-(void)selectedRun:(id)sender;
 
 @end
 
@@ -38,8 +39,6 @@ typedef enum
 @property (weak, nonatomic) IBOutlet UIButton *expandButton;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (weak, nonatomic) IBOutlet UIButton *selectButton;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *buttonTapGesture;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;
@@ -52,6 +51,10 @@ typedef enum
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
+
+//IB actions
+- (IBAction)expandViewTap:(id)sender;
+- (IBAction)headerViewTap:(id)sender;
 
 
 @end
