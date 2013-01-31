@@ -17,6 +17,7 @@
 @implementation MenuViewController
 
 @synthesize MenuTable;
+@synthesize pauseImage;
 
 - (IBAction)done:(UIStoryboardSegue *)segue {
     // Optional place to read data from closing controller
@@ -208,4 +209,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)isBouncing:(CGFloat)differential{
+    
+    NSLog(@"%f", differential);
+    
+    CGFloat percent = differential / 100.0f;
+    
+    [UIView animateWithDuration:0.0f
+                     animations:^
+     {
+         pauseImage.transform = CGAffineTransformMakeScale(percent,percent);
+     }];
+    
+    [MenuTable setHidden:true];
+    
+    
+}
+
+-(void)resetViewFromSlider
+{
+    [MenuTable setHidden:false];
+}
 @end

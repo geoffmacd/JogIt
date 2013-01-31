@@ -24,6 +24,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
+@property (strong, nonatomic) IBOutlet UIImageView *pauseImage;
 
 
 

@@ -26,7 +26,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         self.clipsToBounds = NO; // So that dropshadow along the sides of the frontViewController still appear when the slider is open.
         self.backgroundColor = [UIColor clearColor];
         self.pagingEnabled = YES;
-        self.bounces = NO;
+        self.bounces = YES;
         self.scrollsToTop = NO;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
@@ -69,6 +69,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @synthesize slidingScrollView = _slidingScrollView;
 @synthesize invisibleCloseSliderButton = _invisibleCloseSliderButton;
 @synthesize delegate;
+@synthesize menuDelegate;
 @synthesize sliderOpeningWidth = _sliderOpeningWidth;
 @synthesize allowManualSliding = _allowManualSliding;
 
@@ -169,7 +170,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     if (self.isOpen) {
         targetOriginForSlidingScrollView = _sliderOpeningWidth;
     }
-    self.slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth, frame.size.height);
+    self.slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
     self.frontViewControllerDropShadow.frame = CGRectMake(_sliderOpeningWidth - 20.0f, 0.0f, 20.0f, frame.size.height);
     self.frontViewControllerDropShadow_right.frame = CGRectMake(_sliderOpeningWidth + frame.size.width, 0.0f, 20.0f, frame.size.height);
     _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
@@ -490,14 +491,24 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     // We need to disable this bug correction during autorotation, since scrollViewDidScroll
     // is called as the slidingScrollView updates it's layout for a new interfaceOrientation. ~ JTS.
     
+    CGPoint co = scrollView.contentOffset;
+    
     if (self.isOpen == NO && self.isAnimatingInterfaceOrientation == NO) {
-        CGPoint co = scrollView.contentOffset;
         if (co.x != self.sliderOpeningWidth) {
             [self scrollViewWillBeginDragging:scrollView];
             [self willOpen];
             _isOpen = YES;
             [self didOpen];
         }
+    }
+    
+    
+    if(co.x > _sliderOpeningWidth)
+    {
+        [self.menuDelegate isBouncing:co.x - _sliderOpeningWidth];
+    }
+    else{
+        [self.menuDelegate resetViewFromSlider];
     }
 }
 
@@ -518,6 +529,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                 _slidingScrollView.frame = rect;
                 _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
                 _isOpen = YES;
+                _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
             } else {
                 if (self.invisibleCloseSliderButton) {
                     [self.invisibleCloseSliderButton removeFromSuperview];
@@ -544,6 +556,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             _slidingScrollView.frame = rect;
             _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
             _isOpen = YES;
+            _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
         } else {
             if (self.invisibleCloseSliderButton) {
                 [self.invisibleCloseSliderButton removeFromSuperview];
@@ -609,7 +622,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:kDefaultVisiblePortion];
     self.slidingScrollView = [[SlidingScrollView alloc] initWithFrame:frame];
     _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
-    _slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth, frame.size.height);
+    _slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
     _slidingScrollView.delegate = self;
     [self.view insertSubview:_slidingScrollView atIndex:0];
     _isOpen = NO;
@@ -746,6 +759,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         [self.delegate slidingViewControllerDidClose:self];
     }
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:JSSlidingViewControllerDidCloseNotification object:self]];
+    
+    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth , self.view.bounds.size.height);
 }
 
 #pragma mark - Accessiblility
