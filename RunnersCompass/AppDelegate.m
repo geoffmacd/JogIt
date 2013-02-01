@@ -16,7 +16,19 @@
 @synthesize frontVC, backVC;
 
 
+#pragma mark - Logger Delegate Methods
 
+- (void)menuButtonPressed:(id)sender{
+    if(self.viewController.isOpen)
+        [self.viewController closeSlider:true completion:nil];
+    else
+        [self.viewController openSlider:true completion:nil];
+}
+
+- (void)lockSlider
+{
+    [self.viewController setLocked:true];
+}
 
 #pragma mark - App Delegate
 

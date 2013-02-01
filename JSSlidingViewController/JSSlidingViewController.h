@@ -29,6 +29,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 
 @property (nonatomic, assign) BOOL allowManualSliding;
 @property (assign, nonatomic) BOOL useBouncyAnimations;
+@property (assign, nonatomic) BOOL toggledState;
 @property (assign, nonatomic) BOOL shouldTemporarilyRemoveBackViewControllerWhenClosed;
 
 - (id)initWithFrontViewController:(UIViewController *)frontVC backViewController:(UIViewController *)backVC;
@@ -50,7 +51,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)slidingViewControllerWillClose:(JSSlidingViewController *)viewController;
 - (void)slidingViewControllerDidOpen:(JSSlidingViewController *)viewController;
 - (void)slidingViewControllerDidClose:(JSSlidingViewController *)viewController;
-- (void)isBouncing:(CGFloat)differential;
+- (void)isBouncing:(CGFloat)differential changeState:(BOOL)changeState;
 -(void)resetViewFromSlider;
 
 // If these are not implemented by the delegate, they return UIInterfaceOrientationPortrait for iPhone and all 4 orientations for iPad.

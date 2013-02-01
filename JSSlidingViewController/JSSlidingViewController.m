@@ -72,6 +72,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @synthesize menuDelegate;
 @synthesize sliderOpeningWidth = _sliderOpeningWidth;
 @synthesize allowManualSliding = _allowManualSliding;
+@synthesize toggledState;
 
 #define kDefaultVisiblePortion 58.0f
 
@@ -109,6 +110,19 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self addChildViewController:self.frontViewController];
     [_slidingScrollView addSubview:self.frontViewController.view];
     [self.frontViewController didMoveToParentViewController:self];
+    
+    toggledState = false;
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(didReceivePause:)
+                                                name:@"pauseToggleNotification" object:nil];
+
+    
+}
+
+- (void)didReceivePause:(NSNotification *)notification
+{
+    toggledState = true;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -505,10 +519,11 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     
     if(co.x > _sliderOpeningWidth)
     {
-        [self.menuDelegate isBouncing:co.x - _sliderOpeningWidth];
+        [self.menuDelegate isBouncing:co.x - _sliderOpeningWidth changeState:!toggledState];
     }
     else{
         [self.menuDelegate resetViewFromSlider];
+        toggledState = false;
     }
 }
 

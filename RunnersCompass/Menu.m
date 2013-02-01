@@ -210,7 +210,7 @@
 }
 
 
-- (void)isBouncing:(CGFloat)differential{
+- (void)isBouncing:(CGFloat)differential changeState:(BOOL)changeState{
     
     NSLog(@"%f", differential);
     
@@ -221,6 +221,16 @@
      {
          pauseImage.transform = CGAffineTransformMakeScale(percent,percent);
      }];
+    
+    if(percent > 0.8f)
+    {
+        if(changeState){
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"pauseToggleNotification"
+             object:pauseImage];
+        }
+    }
     
     [MenuTable setHidden:true];
     

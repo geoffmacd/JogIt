@@ -28,16 +28,25 @@
 //delegate
 @property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
 
+//objects
+@property (nonatomic, weak, setter = setRun:) RunEvent * run;
+@property (assign, nonatomic) BOOL inMapView;
+@property (assign, nonatomic) BOOL paused;
+
 
 //UI
 @property (strong, nonatomic) IBOutlet UILabel *runTitle;
+@property (strong, nonatomic) IBOutlet UIView *mapView;
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) IBOutlet UIButton *dragMapButton;
+@property (strong, nonatomic) IBOutlet UIImageView *mapThumbnail;
+@property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
 
-//objects
-@property (nonatomic, weak, setter = setRun:) RunEvent * run;
 
 
 //IB
 - (IBAction)hamburgerTapped:(id)sender;
+- (IBAction)handlePanGesture:(id)sender;
 
 @end
 
