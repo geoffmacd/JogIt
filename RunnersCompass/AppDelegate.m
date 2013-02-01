@@ -25,21 +25,33 @@
         [self.viewController openSlider:true completion:nil];
 }
 
-- (void)lockSlider
+#pragma mark - Menu Delegate Methods
+
+- (void)loadRun:(RunEvent*) run
 {
-    [self.viewController setLocked:true];
+    //load this run into the logger and adjust width if it was closed
+    
+    if(run.live)
+        [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:40.0f];
+    else
+        [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:-20.0f];
+    [self.frontVC setRun:run];
+    [self.viewController closeSlider:true completion:nil];
 }
+
 
 #pragma mark - App Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.frontVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.frontVC.delegate = self;
     
     self.backVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
+    self.backVC.delegate = self;
+    
     
     self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
     //set the delegates to receive the messages
@@ -50,7 +62,9 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:60.0f];
+    [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:-20.0f];
+    [self.viewController openSlider:true completion:nil];
+    
     return YES;
 }
 							

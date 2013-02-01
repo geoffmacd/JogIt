@@ -11,7 +11,7 @@
 #import "Menu.h"
 #import "Logger.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

@@ -36,7 +36,7 @@ typedef enum
 //UI connections
 @property (weak, nonatomic) IBOutlet UIView *expandedView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UIButton *expandButton;
+@property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 

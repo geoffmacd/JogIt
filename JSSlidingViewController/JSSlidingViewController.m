@@ -702,6 +702,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     }
 }
 
+
 - (void)setLocked:(BOOL)locked {
     _locked = locked;
     if (_allowManualSliding && locked == NO) {

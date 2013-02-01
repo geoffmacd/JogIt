@@ -16,6 +16,7 @@
 @synthesize distance;
 @synthesize pace;
 @synthesize time;
+@synthesize live;
 
 
 
@@ -29,6 +30,7 @@
         calories = 301.5f;
         pace = 264.3f;
         time = 2063.0f;
+        live = false;
         return self;
     }
     return nil;

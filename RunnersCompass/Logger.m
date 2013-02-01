@@ -31,6 +31,11 @@
     run = _run;
     
     [runTitle setText:run.name];
+    
+    [statusIcon setHidden:!run.live];
+    
+    //lock slider if not live
+    
 }
 
 - (void)closeMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
@@ -205,6 +210,17 @@
             [self openMapWithSmoothAnimation:true completion:nil];
             inMapView = true;
         }
+    }
+}
+
+- (IBAction)mapIconTapped:(id)sender {
+    
+    if(inMapView){
+        [self closeMapWithSmoothAnimation:true completion:nil];
+        inMapView = false;
+    } else{
+        [self openMapWithSmoothAnimation:true completion:nil];
+        inMapView = true;
     }
 }
 @end

@@ -10,7 +10,7 @@
 
 @implementation HierarchicalCell
 
-@synthesize expandButton;
+@synthesize folderImage;
 @synthesize thumbnailImage;
 @synthesize headerLabel;
 @synthesize expandedView;
@@ -77,7 +77,7 @@
     if(expanded){
         
         
-        [self rotateImage:expandButton.imageView duration:time
+        [self rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:90];
         
         
@@ -100,7 +100,7 @@
         
     }else{
         
-        [self rotateImage:expandButton.imageView duration:time
+        [self rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
@@ -146,7 +146,6 @@
     }else{
         return headerView.frame.size.height + expandedView.frame.size.height;
     }
-    
     
 }
 

@@ -458,9 +458,9 @@
 			children = (
 				67236D2A16409B7700DD13C5 /* Logger.h */,
 				67236D2B16409B7700DD13C5 /* Logger.m */,
+				672AA50E16B7437100B7DEE6 /* Logger.xib */,
 				672AA4F316B6128700B7DEE6 /* StartViewController.h */,
 				672AA4F416B6128700B7DEE6 /* StartViewController.m */,
-				672AA50E16B7437100B7DEE6 /* Logger.xib */,
 				6703F4EB16B75F57006A8F88 /* Start.xib */,
 			);
 			name = Logger;

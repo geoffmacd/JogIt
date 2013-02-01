@@ -10,9 +10,8 @@
 
 @implementation StartCell
 
-@synthesize expandButton;
+@synthesize folderImage;
 @synthesize headerLabel;
-@synthesize buttonTapGesture;
 @synthesize expandedView;
 @synthesize headerView;
 @synthesize justGoView;
@@ -22,7 +21,6 @@
 @synthesize paceView;
 @synthesize timeView;
 @synthesize presetTimeLabel;
-@synthesize expandedGesture;
 @synthesize delegate;
 
 @synthesize expanded;
@@ -37,33 +35,10 @@
     [self setExpand:false withAnimation:false];
     
     
-    buttonTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(handleExpandTap:)];
-    [buttonTapGesture setDelegate:self];
-    [headerView addGestureRecognizer:buttonTapGesture];
-    
-    
-    
-    
-    expandedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                               action:@selector(handleStartTap:)];
-    [expandedGesture setDelegate:self];
-    [expandedView addGestureRecognizer:expandedGesture];
-    
-}
-
-
-- (void)handleExpandTap:(UITapGestureRecognizer *)gestureRecognizer
-{
-    [self setExpand:!expanded withAnimation:true];
 }
 
 
 
-- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer
-{
-    //do something
-}
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
@@ -74,7 +49,7 @@
     if(expanded){
         
         
-        [self rotateImage:expandButton.imageView duration:time
+        [self rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:90];
         
         CGRect rect = expandedView.frame;
@@ -96,7 +71,7 @@
         
     }else{
         
-        [self rotateImage:expandButton.imageView duration:time
+        [self rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
@@ -155,4 +130,13 @@
 }
 */
 
+- (IBAction)expandTapped:(id)sender {
+    RunEvent * new = [[RunEvent alloc] initWithName:@"geoff's run" date:[NSDate date]];
+    new.live = true;
+    [delegate selectedNewRun:new];
+}
+
+- (IBAction)headerTapped:(id)sender {
+    [self setExpand:!expanded withAnimation:true];
+}
 @end

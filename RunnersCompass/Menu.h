@@ -12,7 +12,11 @@
 #import "JSSlidingViewController.h"
 #import "Logger.h"
 
-@protocol MenuViewControllerDelegate;
+@protocol MenuViewControllerDelegate <NSObject>
+
+- (void)loadRun:(RunEvent*) run;
+
+@end
 
 
 @interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate, LoggerViewControllerDelegate>
@@ -23,9 +27,17 @@
     
 }
 
+//delegate
+@property (weak, nonatomic) id <MenuViewControllerDelegate>delegate;
+
+//UI
 @property (weak, nonatomic) IBOutlet UITableView *MenuTable;
 @property (strong, nonatomic) IBOutlet UIImageView *pauseImage;
 
+//actions
+- (IBAction)performanceNavPressed:(id)sender;
+- (IBAction)goalsNavPressed:(id)sender;
+- (IBAction)settingsNavPressed:(id)sender;
 
 
 @end

@@ -15,8 +15,6 @@
 @protocol LoggerViewControllerDelegate <NSObject>
 
 - (void)menuButtonPressed:(id)sender;
-- (void)lockSlider;
-- (void)unlockSlider;
 
 @end
 
@@ -47,6 +45,7 @@
 //IB
 - (IBAction)hamburgerTapped:(id)sender;
 - (IBAction)handlePanGesture:(id)sender;
+- (IBAction)mapIconTapped:(id)sender;
 
 @end
 

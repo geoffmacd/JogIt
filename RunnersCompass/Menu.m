@@ -11,6 +11,9 @@
 #import "RunEvent.h"
 #import "Logger.h"
 #import "JSSlidingViewController.h"
+#import "PerformanceViewController.h"
+#import "Settings.h"
+#import "GoalsViewController.h"
 
 
 
@@ -19,20 +22,56 @@
 @synthesize MenuTable;
 @synthesize pauseImage;
 
-- (IBAction)done:(UIStoryboardSegue *)segue {
-    // Optional place to read data from closing controller
-}
-
-- (IBAction)settingsTapped:(id)sender
-{
-    [self performSegueWithIdentifier:@"SettingsSegue" sender:self];
-    
-}
-
 
 
 #pragma mark -
-#pragma mark Table view data source
+#pragma mark View Lifecycle
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	// Do any additional setup after loading the view, typically from a nib.
+    
+    
+    if(!start)
+    {
+        StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
+                                                           owner:self
+                                                         options:nil]objectAtIndex:0];
+        [cell setup];
+        [cell setDelegate:self];
+        
+        start = cell;
+    }
+    
+    
+    runs = [[NSMutableArray alloc] initWithCapacity:3];
+    cells = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    RunMap * map = [RunMap alloc];
+    
+    [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
+    
+    for(NSInteger i=0;i <12; i++)
+    {
+        
+        RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
+        
+        [run setMap:map];
+        
+        [runs addObject:run];
+        
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark Menu Table data source
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
@@ -114,9 +153,8 @@
 }
 
 
-
 #pragma mark -
-#pragma mark Table view delegate
+#pragma mark Menu Table delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -143,12 +181,8 @@
 }
 
 
--(void)selectedRun:(id)sender
-{
-    
-    
-    
-}
+#pragma mark -
+#pragma mark HierarchicalCellDelegate
 
 -(void) cellDidChangeHeight:(id) sender
 {
@@ -166,47 +200,32 @@
     }
 }
 
-- (void)viewDidLoad
+
+#pragma mark -
+#pragma mark StartCellDelegate
+
+-(void)selectedNewRun:(RunEvent *) run
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    //set logger with this run
+    [self.delegate loadRun:run];
     
-    
-    if(!start)
-    {
-        StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
-                                                           owner:self
-                                                         options:nil]objectAtIndex:0];
-        [cell setup];
-        [cell setDelegate:self];
-        
-        start = cell;
-    }
-    
-    
-    runs = [[NSMutableArray alloc] initWithCapacity:3];
-    cells = [[NSMutableArray alloc] initWithCapacity:3];
-    
-    RunMap * map = [RunMap alloc];
-    
-    [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
-    
-     for(NSInteger i=0;i <12; i++)
-     {
-         
-         RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
-         
-         [run setMap:map];
-         
-         [runs addObject:run];
-         
-     }
 }
 
-- (void)didReceiveMemoryWarning
+
+#pragma mark -
+#pragma mark Logger Interface
+
+
+-(void)selectedRun:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    HierarchicalCell * cell = (HierarchicalCell * )sender;
+    
+    
+    //set logger with this run
+    [self.delegate loadRun:cell.associatedRun];
+    
+    
 }
 
 
@@ -233,12 +252,59 @@
     }
     
     [MenuTable setHidden:true];
-    
+    [pauseImage setHidden:false];
+    [self.navigationController.navigationBar setHidden:true];
     
 }
 
 -(void)resetViewFromSlider
 {
     [MenuTable setHidden:false];
+    [pauseImage setHidden:true];
+    [self.navigationController.navigationBar setHidden:false];
+}
+
+#pragma mark -
+#pragma mark Nav Bar Action
+
+-(void)cleanupForNav
+{
+    //take down logger
+    
+    
+}
+
+
+- (IBAction)performanceNavPressed:(id)sender {
+    
+    //nav bar cleanup
+    [self cleanupForNav];
+    
+    PerformanceViewController * vc = [[PerformanceViewController alloc] initWithNibName:@"Performance" bundle:nil];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    [self.view addSubview: vc.view];
+}
+
+- (IBAction)goalsNavPressed:(id)sender {
+    
+    //nav bar cleanup
+    [self cleanupForNav];
+    
+    GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    [self.view addSubview: vc.view];
+}
+
+- (IBAction)settingsNavPressed:(id)sender {
+    
+    //nav bar cleanup
+    [self cleanupForNav];
+    
+    Settings * vc = [[Settings alloc] initWithNibName:@"Settings" bundle:nil];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    [self.view addSubview: vc.view];
 }
 @end

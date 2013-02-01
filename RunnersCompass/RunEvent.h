@@ -27,6 +27,7 @@ typedef enum {
 @property (nonatomic) float calories;
 @property (nonatomic, strong) RunMap *map;
 @property (nonatomic) RunType type;
+@property (nonatomic, assign) BOOL live;
 
 -(id)initWithName:(NSString *)name date:(NSDate *)date;
 

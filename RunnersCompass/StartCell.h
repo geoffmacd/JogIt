@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RunEvent.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -18,6 +19,7 @@
 @protocol StartCellDelegate <NSObject>
 
 -(void)cellDidChangeHeight:(id) sender;
+-(void)selectedNewRun:(RunEvent *) run;
 
 @end
 
@@ -27,9 +29,8 @@
 //UI connections
 @property (weak, nonatomic) IBOutlet UIView *expandedView;
 @property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UIButton *expandButton;
+@property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *buttonTapGesture;
 @property (weak, nonatomic) IBOutlet UIView *justGoView;
 @property (weak, nonatomic) IBOutlet UIView *distanceView;
 @property (weak, nonatomic) IBOutlet UIView *paceView;
@@ -37,8 +38,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *presetTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pacePresetLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distancePresetLAbel;
-@property (strong, nonatomic) IBOutlet UITapGestureRecognizer *expandedGesture;
 
+- (IBAction)expandTapped:(id)sender;
+- (IBAction)headerTapped:(id)sender;
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;
 
