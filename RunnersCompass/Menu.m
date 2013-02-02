@@ -229,40 +229,6 @@
 }
 
 
-- (void)isBouncing:(CGFloat)differential changeState:(BOOL)changeState{
-    
-    NSLog(@"%f", differential);
-    
-    CGFloat percent = differential / 100.0f;
-    
-    [UIView animateWithDuration:0.0f
-                     animations:^
-     {
-         pauseImage.transform = CGAffineTransformMakeScale(percent,percent);
-     }];
-    
-    if(percent > 0.8f)
-    {
-        if(changeState){
-            
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:@"pauseToggleNotification"
-             object:pauseImage];
-        }
-    }
-    
-    [MenuTable setHidden:true];
-    [pauseImage setHidden:false];
-    [self.navigationController.navigationBar setHidden:true];
-    
-}
-
--(void)resetViewFromSlider
-{
-    [MenuTable setHidden:false];
-    [pauseImage setHidden:true];
-    [self.navigationController.navigationBar setHidden:false];
-}
 
 #pragma mark -
 #pragma mark Nav Bar Action

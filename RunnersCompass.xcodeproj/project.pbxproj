@@ -43,7 +43,7 @@
 		6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F016ACDD40005F4F1B /* HUDCell.xib */; };
 		6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F316ACE09E005F4F1B /* HUDCell.m */; };
 		6745C7F716ACE259005F4F1B /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F616ACE259005F4F1B /* HUDView.m */; };
-		6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightArrow.png */; };
+		6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */; };
 		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
 		6748647216B23890004D2B47 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748647116B23890004D2B47 /* settings.png */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
@@ -57,7 +57,7 @@
 		67FC06C416A1D15900491C97 /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C316A1D15900491C97 /* RunEvent.m */; };
 		67FC06C716A1D4AF00491C97 /* RunType.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C616A1D4AE00491C97 /* RunType.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
-		67FC070716ACD62B00491C97 /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */; };
+		67FC070716ACD62B00491C97 /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070616ACD62B00491C97 /* RightArrow.png */; };
 		67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070816ACD63300491C97 /* DownTriangleIcon.png */; };
 		67FC070B16ACD74300491C97 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070A16ACD74300491C97 /* HUDView.xib */; };
 /* End PBXBuildFile section */
@@ -89,7 +89,7 @@
 		672AA38F16B4C87E00B7DEE6 /* StartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartCell.h; sourceTree = "<group>"; };
 		672AA39016B4C87E00B7DEE6 /* StartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartCell.m; sourceTree = "<group>"; };
 		672AA39116B4C87E00B7DEE6 /* StartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartCell.xib; sourceTree = "<group>"; };
-		672AA39516B4C9BA00B7DEE6 /* addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addbutton.png; sourceTree = "<group>"; };
+		672AA39516B4C9BA00B7DEE6 /* addbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addbutton.png; path = ../Graphics/addbutton.png; sourceTree = "<group>"; };
 		672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatToolbar.h; sourceTree = "<group>"; };
 		672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatToolbar.m; sourceTree = "<group>"; };
 		672AA3B216B5990700B7DEE6 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
@@ -184,24 +184,24 @@
 		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
 		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
-		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = map.JPG; sourceTree = "<group>"; };
-		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Mockups/hud.png; sourceTree = SOURCE_ROOT; };
+		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = map.JPG; path = ../Graphics/map.JPG; sourceTree = "<group>"; };
+		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Graphics/hud.png; sourceTree = SOURCE_ROOT; };
 		6745C7F016ACDD40005F4F1B /* HUDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDCell.xib; sourceTree = "<group>"; };
 		6745C7F216ACE09E005F4F1B /* HUDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDCell.h; sourceTree = "<group>"; };
 		6745C7F316ACE09E005F4F1B /* HUDCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDCell.m; sourceTree = "<group>"; };
 		6745C7F516ACE259005F4F1B /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDView.h; sourceTree = "<group>"; };
 		6745C7F616ACE259005F4F1B /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDView.m; sourceTree = "<group>"; };
-		6745C7F816ACE54D005F4F1B /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../../../Downloads/RightArrow.png; sourceTree = "<group>"; };
-		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
-		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
+		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
+		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../Graphics/settings.png; sourceTree = "<group>"; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		67FC068C16A117B800491C97 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		67FC06B016A11F5E00491C97 /* pause_logo_large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause_logo_large.png; path = Mockups/pause_logo_large.png; sourceTree = SOURCE_ROOT; };
-		67FC06B216A11FC700491C97 /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = ../../../Downloads/hamburger.png; sourceTree = "<group>"; };
+		67FC06B216A11FC700491C97 /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = ../Graphics/hamburger.png; sourceTree = "<group>"; };
 		67FC06B416A1205300491C97 /* CellBarsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CellBarsIcon.png; path = ../../../Downloads/CellBarsIcon.png; sourceTree = "<group>"; };
-		67FC06B616A1247D00491C97 /* mapicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapicon.png; path = Mockups/mapicon.png; sourceTree = SOURCE_ROOT; };
+		67FC06B616A1247D00491C97 /* mapicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapicon.png; path = Graphics/mapicon.png; sourceTree = SOURCE_ROOT; };
 		67FC06B816A1250500491C97 /* PaceChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaceChart.h; sourceTree = "<group>"; };
 		67FC06B916A1250500491C97 /* PaceChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaceChart.m; sourceTree = "<group>"; };
 		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
@@ -211,8 +211,8 @@
 		67FC06C516A1D4AE00491C97 /* RunType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunType.h; sourceTree = "<group>"; };
 		67FC06C616A1D4AE00491C97 /* RunType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunType.m; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
-		67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../../../Downloads/RightFillTriangleIcon.png; sourceTree = "<group>"; };
-		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../../../Downloads/DownTriangleIcon.png; sourceTree = "<group>"; };
+		67FC070616ACD62B00491C97 /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../Graphics/RightArrow.png; sourceTree = "<group>"; };
+		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../Graphics/DownTriangleIcon.png; sourceTree = "<group>"; };
 		67FC070A16ACD74300491C97 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -425,11 +425,11 @@
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				6748647116B23890004D2B47 /* settings.png */,
 				6748646E16B237C2004D2B47 /* switch.png */,
-				6745C7F816ACE54D005F4F1B /* RightArrow.png */,
+				6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */,
 				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
 				6738D66916ACE7DE0044BA00 /* map.JPG */,
 				6745C7ED16ACDBB9005F4F1B /* hud.png */,
-				67FC070616ACD62B00491C97 /* RightFillTriangleIcon.png */,
+				67FC070616ACD62B00491C97 /* RightArrow.png */,
 				67FC06B616A1247D00491C97 /* mapicon.png */,
 				67FC06B416A1205300491C97 /* CellBarsIcon.png */,
 				67FC06B216A11FC700491C97 /* hamburger.png */,
@@ -560,12 +560,12 @@
 				67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */,
 				67FC06B716A1247D00491C97 /* mapicon.png in Resources */,
 				67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */,
-				67FC070716ACD62B00491C97 /* RightFillTriangleIcon.png in Resources */,
+				67FC070716ACD62B00491C97 /* RightArrow.png in Resources */,
 				67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */,
 				67FC070B16ACD74300491C97 /* HUDView.xib in Resources */,
 				6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */,
 				6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */,
-				6745C7F916ACE54D005F4F1B /* RightArrow.png in Resources */,
+				6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */,
 				6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */,
 				6748646F16B237C2004D2B47 /* switch.png in Resources */,
 				6748647216B23890004D2B47 /* settings.png in Resources */,

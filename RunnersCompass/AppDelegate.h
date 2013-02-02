@@ -16,7 +16,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) JSSlidingViewController *viewController;
-@property (strong, nonatomic) MenuViewController *backVC;
-@property (strong, nonatomic) LoggerViewController *frontVC;
+@property (strong, nonatomic) LoggerViewController *backVC;
+@property (strong, nonatomic) MenuViewController *frontVC;
 
 @end
