@@ -224,7 +224,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 
 - (void)closeSlider:(BOOL)animated completion:(void (^)(void))completion {
     [completion copy];
-    if (_animating == NO && _isOpen && _locked == NO) {
+    if (_animating == NO && _locked == NO) {
         [self willClose];
         _isOpen = NO; // Needs to be here to prevent bugs
         _animating = YES;
@@ -253,14 +253,18 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     }
     [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         CGRect rect = _slidingScrollView.frame;
-        rect.origin.x = -10.0f;
+        rect.origin.x = -320.0f;
         _slidingScrollView.frame = rect;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration: duration2 delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
             CGRect rect = _slidingScrollView.frame;
-            rect.origin.x = 0;
+            rect.origin.x = -330.0f;
             _slidingScrollView.frame = rect;
         } completion:^(BOOL finished) {
+            CGRect rect = _slidingScrollView.frame;
+            rect.origin.x = 0.0f;
+            _slidingScrollView.frame = rect;
+            _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
             _animating = NO;
             self.view.userInteractionEnabled = YES;
             [self didClose];
@@ -782,6 +786,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
     
     isSetupForPauseScroll = true;
+    changeState = false;
 }
 
 #pragma mark - Accessiblility

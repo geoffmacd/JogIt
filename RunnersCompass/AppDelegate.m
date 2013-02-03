@@ -19,9 +19,7 @@
 #pragma mark - Logger Delegate Methods
 
 - (void)menuButtonPressed:(id)sender{
-    if(self.viewController.isOpen)
-        [self.viewController closeSlider:true completion:nil];
-    else
+    if(!self.viewController.isOpen)
         [self.viewController openSlider:true completion:nil];
 }
 
@@ -31,11 +29,7 @@
 {
     //load this run into the logger and adjust width if it was closed
     
-    if(run.live)/*
-        [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:40.0f];
-    else
-        [self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:-20.0f];*/
-    //[self.frontVC setRun:run];
+    [self.backVC setRun:run];
     [self.viewController closeSlider:true completion:nil];
 }
 
