@@ -26,7 +26,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         self.clipsToBounds = NO; // So that dropshadow along the sides of the frontViewController still appear when the slider is open.
         self.backgroundColor = [UIColor clearColor];
         self.pagingEnabled = YES;
-        self.bounces = YES;
+        self.bounces = NO;
         self.scrollsToTop = NO;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
@@ -501,7 +501,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     CGPoint co = scrollView.contentOffset;
     
     if (self.isOpen == NO && self.isAnimatingInterfaceOrientation == NO) {
-        if (co.x != self.sliderOpeningWidth) {
+        if (co.x < self.sliderOpeningWidth) {
             [self scrollViewWillBeginDragging:scrollView];
             [self willOpen];
             _isOpen = YES;
@@ -540,16 +540,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         }
     }
     
-    /*
-    if(co.x < _sliderOpeningWidth)
-    {
-        [self.menuDelegate isBouncing:co.x - _sliderOpeningWidth changeState:!toggledState];
-    }
-    else{
-        [self.menuDelegate resetViewFromSlider];
-        toggledState = false;
-    }*/
-    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -567,7 +557,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                 _slidingScrollView.frame = rect;
                 _slidingScrollView.contentOffset = CGPointMake(0, 0);
                 _isOpen = YES;
-            } else {
+            } else if(_isOpen){
                 [self willClose];
                 _isOpen = NO;
                 [self didClose];
@@ -587,7 +577,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             _slidingScrollView.frame = rect;
             _slidingScrollView.contentOffset = CGPointMake(0, 0);
             _isOpen = YES;
-        } else {
+        } else if(_isOpen){
             [self willClose];
             _isOpen = NO;
             [self didClose];
@@ -657,7 +647,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     
     
     self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause_logo_large.png"]];
-    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 0.0f, 50.0f, 50.0f);
+    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 200.0f, 50.0f, 50.0f);
     [_slidingScrollView addSubview:self.pauseImage];
 }
 
@@ -767,6 +757,9 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self.view insertSubview:self.backViewController.view atIndex:0];
     _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
     
+    //disable this so that the menu view can be scrolled left
+    _slidingScrollView.bounces = false;
+    
     isSetupForPauseScroll = false;
     changeState = false;
 }
@@ -783,8 +776,10 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     self.backViewController.view.frame = frame;
     [_slidingScrollView addSubview:self.backViewController.view];
     
+    //set bounces to true to enable this to be possible
+    _slidingScrollView.bounces = true;
 
-    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth + 50.0f, self.view.bounds.size.height);
+    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
     
     isSetupForPauseScroll = true;
 }
