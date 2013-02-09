@@ -7,12 +7,15 @@
 //
 
 #import "SettingsViewController.h"
+#import "EditTableCell.h"
 
 @interface SettingsViewController()
 
 @end
 
 @implementation SettingsViewController
+
+@synthesize tmpCell,cellNib,table,datePicker;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,11 +30,11 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSDate *now = [NSDate date];
+	[datePicker setDate:now animated:YES];
+    
+	cellNib = [UINib nibWithNibName:@"EditTableCell" bundle:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,6 +44,76 @@
 }
 
 #pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch(section)
+    {
+        case 0:
+            return 1;
+        case 1:
+            return 2;
+        case 2:
+            return 2;
+        case 3:
+            return 2;
+    }
+    return 0;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSUInteger row = [indexPath row];
+    NSUInteger section = [indexPath section];
+    
+    if(section == 0)
+    {
+        
+        UITableViewCell * cell;
+        
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ButtonTableCell" owner:self options:nil];
+    	cell = (UITableViewCell *)[nib objectAtIndex:0];
+        
+        return cell;
+    }
+    else if(section == 1)
+    {
+        if(row == 0)
+        {   //full name
+            EditTableCell * cell;
+            
+            [self.cellNib instantiateWithOwner:self options:nil];
+            cell = tmpCell;
+            self.tmpCell = nil;
+            
+            cell.cusField.text = @"geoff";
+            cell.cusLabel.text = @"ds";
+            
+            return cell;
+        }
+        else if(row == 1)
+        {   //birthdate
+            UITableViewCell * cell;
+            
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"datecell"];
+            
+            cell.textLabel.text = @"Birthdate";
+            cell.detailTextLabel.text = [[NSDate date] description];
+            
+            
+            return cell;
+        }
+        
+    }
+    
+    
+    
+    
+    return nil;
+}
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -100,14 +173,45 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSUInteger row = [indexPath row];
+    NSUInteger section = [indexPath section];
+    
+    if(section == 0)
+    {
+        [self dismissViewControllerAnimated:true completion:nil];
+    }
+    else if(section == 1)
+    {
+        if(row == 1)
+        {
+            //date picker show
+            
+            DatePickViewController * vc = [[DatePickViewController alloc] initWithNibName:@"DatePickViewController" bundle:nil];
+            
+            vc.modalTransitionStyle = UIModalPresentationPageSheet;
+            
+            [self presentViewController:vc animated:true completion:nil];
+        }
+    }
+    
+    
+    
+}
+#pragma mark - date picker delegate
+
+-(void)finishedWithDate:(NSDate *) date
+{
+    //update date
+    [table reloadData];
+    
     
 }
 
+
+
+#pragma mark - submission forms
+- (IBAction)changedDate:(id)sender {
+    
+    
+}
 @end

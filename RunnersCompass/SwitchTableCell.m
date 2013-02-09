@@ -1,14 +1,14 @@
 //
-//  EditTableCell.m
+//  SwitchTableCell.m
 //  RunnersCompass
 //
-//  Created by Geoff MacDonald on 2013-02-06.
+//  Created by Geoff MacDonald on 2013-02-08.
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "EditTableCell.h"
+#import "SwitchTableCell.h"
 
-@implementation EditTableCell
+@implementation SwitchTableCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -19,5 +19,11 @@
     return self;
 }
 
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
 
 @end

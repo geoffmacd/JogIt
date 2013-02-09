@@ -10,4 +10,8 @@
 
 @interface EditTableCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UITextField *cusField;
+@property (strong, nonatomic) IBOutlet UILabel *cusLabel;
+
+
 @end

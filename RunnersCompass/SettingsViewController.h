@@ -7,7 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EditTableCell.h"
+#import "DatePickViewController.h"
 
-@interface SettingsViewController : UITableViewController
+@interface SettingsViewController : UITableViewController<UITextFieldDelegate,DatePickViewControllerDelegate>
+{
+    // referring to our xib-based UITableViewCell ('IndividualSubviewsBasedApplicationCell')
+	UINib *cellNib;
+    
+	EditTableCell *tmpCell;
+}
+
+@property (nonatomic, retain) IBOutlet EditTableCell *tmpCell;
+
+@property (strong, nonatomic) IBOutlet UITableView *table;
+@property (nonatomic, retain) UINib *cellNib;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)changedDate:(id)sender;
 
 @end
