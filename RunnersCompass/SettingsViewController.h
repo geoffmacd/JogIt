@@ -9,20 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "EditTableCell.h"
 #import "DatePickViewController.h"
+#import "UserPrefs.h"
 
-@interface SettingsViewController : UITableViewController<UITextFieldDelegate,DatePickViewControllerDelegate>
-{
-    // referring to our xib-based UITableViewCell ('IndividualSubviewsBasedApplicationCell')
-	UINib *cellNib;
-    
-	EditTableCell *tmpCell;
-}
+@class FKFormModel;
 
-@property (nonatomic, retain) IBOutlet EditTableCell *tmpCell;
+@interface SettingsViewController : UITableViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *table;
-@property (nonatomic, retain) UINib *cellNib;
-@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
-- (IBAction)changedDate:(id)sender;
+
+@property (nonatomic, strong) FKFormModel *formModel;
+@property (nonatomic,strong) UserPrefs *prefs;
 
 @end

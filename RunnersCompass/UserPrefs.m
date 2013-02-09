@@ -10,4 +10,16 @@
 
 @implementation UserPrefs
 
+@synthesize title, content, releaseDate, numberOfActor, suitAllAges, password, shortName, choice, rate;
+
++ (id)movieWithTitle:(NSString *)newTitle content:(NSString *)newContent {
+    UserPrefs *movie = [[UserPrefs alloc] init];
+    
+    movie.title = newTitle;
+    movie.content = newContent;
+    
+    return movie;
+}
+
+
 @end

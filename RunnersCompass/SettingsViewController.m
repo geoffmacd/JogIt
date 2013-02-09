@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "EditTableCell.h"
+#import "FormKit.h"
 
 @interface SettingsViewController()
 
@@ -15,7 +16,7 @@
 
 @implementation SettingsViewController
 
-@synthesize tmpCell,cellNib,table,datePicker;
+@synthesize formModel,prefs;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -30,10 +31,68 @@
 {
     [super viewDidLoad];
 
-    NSDate *now = [NSDate date];
-	[datePicker setDate:now animated:YES];
     
-	cellNib = [UINib nibWithNibName:@"EditTableCell" bundle:nil];
+    self.formModel = [FKFormModel formTableModelForTableView:self.tableView
+                                        navigationController:self.navigationController];
+    
+    UserPrefs *movie = [UserPrefs movieWithTitle:@"Full name"
+                                 content:@"After rescuing Han Solo from the palace of Jabba the Hutt, the Rebels attempt to destroy the Second Death Star, while Luke Skywalker tries to bring his father back to the Light Side of the Force."];
+    
+    movie.shortName = @"SWEVI";
+    movie.suitAllAges = [NSNumber numberWithBool:YES];
+    movie.numberOfActor = [NSNumber numberWithInt:4];
+    movie.releaseDate = [NSDate date];
+    movie.rate = [NSNumber numberWithFloat:5];
+    
+    self.prefs = movie;
+    
+    [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
+        [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
+        
+        [formMapping buttonSave:@"Done" handler:^{
+            NSLog(@"save pressed");
+            NSLog(@"%@", self.prefs);
+            [self.formModel save];
+            [self dismissViewControllerAnimated:true completion:nil];
+        }];
+        
+        
+        [formMapping sectionWithTitle:@"Personal"  identifier:@"info"];
+        
+        [formMapping mapAttribute:@"title" title:@"Full name" type:FKFormAttributeMappingTypeText];
+        [formMapping mappingForAttribute:@"releaseDate"
+                                   title:@"Birthdate"
+                                    type:FKFormAttributeMappingTypeDate
+                        attributeMapping:^(FKFormAttributeMapping *mapping) {
+                            
+                            mapping.dateFormat = @"yyyy-MM-dd";
+                        }];
+        [formMapping mapAttribute:@"numberOfActor" title:@"Weight" type:FKFormAttributeMappingTypeInteger];
+        [formMapping mapAttribute:@"suitAllAges" title:@"Gender" type:FKFormAttributeMappingTypeBoolean];
+        
+        
+        [formMapping sectionWithTitle:@"Measurement" identifier:@"bob"];
+        
+        [formMapping mapAttribute:@"suitAllAges" title:@"Auto-Pause" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"suitAllAges" title:@"Metric Units" type:FKFormAttributeMappingTypeBoolean];
+
+        
+        [formMapping sectionWithTitle:@"Sharing" identifier:@"sdf"];
+        
+        [formMapping mapAttribute:@"suitAllAges" title:@"Facebook" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"suitAllAges" title:@"Twitter" type:FKFormAttributeMappingTypeBoolean];
+        
+        
+        
+        
+        [self.formModel registerMapping:formMapping];
+    }];
+    
+    [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
+        NSLog(@"did change model value");
+    }];
+    
+    [self.formModel loadFieldsWithObject:movie];
     
 }
 
@@ -43,175 +102,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch(section)
-    {
-        case 0:
-            return 1;
-        case 1:
-            return 2;
-        case 2:
-            return 2;
-        case 3:
-            return 2;
-    }
-    return 0;
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSUInteger row = [indexPath row];
-    NSUInteger section = [indexPath section];
-    
-    if(section == 0)
-    {
-        
-        UITableViewCell * cell;
-        
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ButtonTableCell" owner:self options:nil];
-    	cell = (UITableViewCell *)[nib objectAtIndex:0];
-        
-        return cell;
-    }
-    else if(section == 1)
-    {
-        if(row == 0)
-        {   //full name
-            EditTableCell * cell;
-            
-            [self.cellNib instantiateWithOwner:self options:nil];
-            cell = tmpCell;
-            self.tmpCell = nil;
-            
-            cell.cusField.text = @"geoff";
-            cell.cusLabel.text = @"ds";
-            
-            return cell;
-        }
-        else if(row == 1)
-        {   //birthdate
-            UITableViewCell * cell;
-            
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"datecell"];
-            
-            cell.textLabel.text = @"Birthdate";
-            cell.detailTextLabel.text = [[NSDate date] description];
-            
-            
-            return cell;
-        }
-        
-    }
-    
-    
-    
-    
-    return nil;
-}
-
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 30)];
-    label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
-    label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont boldSystemFontOfSize:14];
-    
-    [headerView addSubview:label];
-    return headerView;
-}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSUInteger row = [indexPath row];
-    NSUInteger section = [indexPath section];
-    
-    if(section == 0)
-    {
-        [self dismissViewControllerAnimated:true completion:nil];
-    }
-    else if(section == 1)
-    {
-        if(row == 1)
-        {
-            //date picker show
-            
-            DatePickViewController * vc = [[DatePickViewController alloc] initWithNibName:@"DatePickViewController" bundle:nil];
-            
-            vc.modalTransitionStyle = UIModalPresentationPageSheet;
-            
-            [self presentViewController:vc animated:true completion:nil];
-        }
-    }
-    
-    
-    
-}
-#pragma mark - date picker delegate
-
--(void)finishedWithDate:(NSDate *) date
-{
-    //update date
-    [table reloadData];
-    
-    
-}
-
-
-
-#pragma mark - submission forms
-- (IBAction)changedDate:(id)sender {
-    
-    
-}
 @end
