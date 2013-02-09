@@ -531,7 +531,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
              self.pauseImage.transform = CGAffineTransformMakeScale(percent,percent);
          }];
         
-        if(percent > 0.8f)
+        if(percent > 0.5f)
         {
             if(!changeState){
                 
@@ -565,6 +565,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                 [self willClose];
                 _isOpen = NO;
                 [self didClose];
+            }else if(!_isOpen && origin.x <= -_sliderOpeningWidth){
+                changeState = false;
             }
         }
     }
@@ -585,6 +587,9 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             [self willClose];
             _isOpen = NO;
             [self didClose];
+            changeState = false;
+        } else if(!_isOpen && origin.x <= -_sliderOpeningWidth){
+            changeState = false;
         }
         self.view.userInteractionEnabled = YES;
     }

@@ -12,7 +12,7 @@
 #import "Logger.h"
 #import "JSSlidingViewController.h"
 #import "PerformanceViewController.h"
-#import "Settings.h"
+#import "SettingsViewController.h"
 #import "GoalsViewController.h"
 
 
@@ -20,7 +20,6 @@
 @implementation MenuViewController
 
 @synthesize MenuTable;
-@synthesize pauseImage;
 
 
 
@@ -78,10 +77,42 @@
     return 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+
+    CGFloat height = [start getHeightRequired];
+    
+    
+    return height;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 0)
+    {
+        if(!start)
+        {
+            StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
+                                                               owner:self
+                                                             options:nil]objectAtIndex:0];
+            [cell setup];
+            [cell setDelegate:self];
+            
+            start = cell;
+        }
+        
+        return start;
+        
+    }
+    
+    return nil;
+    
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return number of historic runs plus start menu
-    return [runs count] + 1;
+    //return number of historic runs 
+    return [runs count];
 }
 
 // Customize the appearance of table view cells.
@@ -89,27 +120,12 @@
 {
     NSUInteger row = [indexPath row];
     
-    if(row == 0)
-    {
-        if(!start)
-        {
-            StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
-                                                                  owner:self
-                                                                options:nil]objectAtIndex:0];
-            [cell setup];
-            [cell setDelegate:self];
-        
-            start = cell;
-        }
-        
-        return start;
-    
-    }
-    else if(row > [cells count]){
+
+    if(row >= [cells count]){
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
                                                  owner:self
                                                options:nil]objectAtIndex:0];
-        [cell setAssociated:[runs objectAtIndex:row-1]];
+        [cell setAssociated:[runs objectAtIndex:row]];
         [cell setDelegate:self];
         
         [cells addObject:cell];
@@ -119,7 +135,7 @@
     else{
         
         
-        HierarchicalCell * curCell = [cells objectAtIndex:row-1];
+        HierarchicalCell * curCell = [cells objectAtIndex:row];
         
         return curCell;
     }
@@ -132,13 +148,8 @@
 {
     CGFloat height;
     NSUInteger row = [indexPath row];
-    if(row == 0)
-    {
-        height = [start getHeightRequired];
-        
-    }
-    else if(row-1< [cells count]){
-        HierarchicalCell * cell = [cells objectAtIndex:row-1];
+    if(row< [cells count]){
+        HierarchicalCell * cell = [cells objectAtIndex:row];
     
         height = [cell getHeightRequired];
     }
@@ -162,11 +173,11 @@
     
     NSUInteger row = [indexPath row];
     
-    if(row > ([cells count] + 1) || row == 0)
+    if(row > ([cells count]) || row == 0)
         return;
     
     
-    HierarchicalCell * cell = [cells objectAtIndex:row-1];
+    HierarchicalCell * cell = [cells objectAtIndex:row];
     
     if(!cell.expanded)
     {
@@ -193,7 +204,7 @@
     //still need to animate hidden expandedView
     
     //if sender was last cell or second last, then scroll to show expanded view
-    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] -1)])
+    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] - 2)])
     {
         NSIndexPath *path = [MenuTable indexPathForCell:sender];
         [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
@@ -248,8 +259,7 @@
     
     PerformanceViewController * vc = [[PerformanceViewController alloc] initWithNibName:@"Performance" bundle:nil];
     
-    [self.navigationController pushViewController:vc animated:YES];
-    [self.view addSubview: vc.view];
+    [self presentViewController:vc animated:true completion:nil];
 }
 
 - (IBAction)goalsNavPressed:(id)sender {
@@ -259,8 +269,7 @@
     
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
     
-    [self.navigationController pushViewController:vc animated:YES];
-    [self.view addSubview: vc.view];
+    [self presentViewController:vc animated:true completion:nil];
 }
 
 - (IBAction)settingsNavPressed:(id)sender {
@@ -268,9 +277,8 @@
     //nav bar cleanup
     [self cleanupForNav];
     
-    Settings * vc = [[Settings alloc] initWithNibName:@"Settings" bundle:nil];
+    SettingsViewController * vc = [[SettingsViewController alloc] initWithNibName:@"Settings" bundle:nil];
     
-    [self.navigationController pushViewController:vc animated:YES];
-    [self.view addSubview: vc.view];
+    [self presentViewController:vc animated:true completion:nil];
 }
 @end

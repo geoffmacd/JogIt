@@ -221,7 +221,7 @@
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 49}, {320, 100}}</string>
+								<string key="NSFrame">{{0, 48}, {320, 100}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="981189565"/>
@@ -389,20 +389,16 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">349</int>
-						<reference key="object" ref="245450979"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="18694754"/>
-							<reference ref="174088637"/>
-						</array>
-						<reference key="parent" ref="438365395"/>
-						<string key="objectName">HeaderView</string>
+						<int key="objectID">526</int>
+						<reference key="object" ref="468913213"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Tap Gesture Recognizer - Expand</string>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">41</int>
-						<reference key="object" ref="18694754"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="245450979"/>
+						<int key="objectID">346</int>
+						<reference key="object" ref="849384263"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Tap Gesture Recognizer - Header</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">359</int>
@@ -416,6 +412,11 @@
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">ExpandedView</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">49</int>
+						<reference key="object" ref="981189565"/>
+						<reference key="parent" ref="941116554"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">525</int>
@@ -438,25 +439,23 @@
 						<reference key="parent" ref="941116554"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">49</int>
-						<reference key="object" ref="981189565"/>
-						<reference key="parent" ref="941116554"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">526</int>
-						<reference key="object" ref="468913213"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Tap Gesture Recognizer - Expand</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">346</int>
-						<reference key="object" ref="849384263"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Tap Gesture Recognizer - Header</string>
+						<int key="objectID">349</int>
+						<reference key="object" ref="245450979"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="18694754"/>
+							<reference ref="174088637"/>
+						</array>
+						<reference key="parent" ref="438365395"/>
+						<string key="objectName">HeaderView</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">542</int>
 						<reference key="object" ref="174088637"/>
+						<reference key="parent" ref="245450979"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">41</int>
+						<reference key="object" ref="18694754"/>
 						<reference key="parent" ref="245450979"/>
 					</object>
 				</array>
@@ -483,7 +482,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">544</int>
+			<int key="maxID">546</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

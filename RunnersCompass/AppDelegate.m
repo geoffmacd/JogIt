@@ -15,6 +15,28 @@
 @synthesize viewController = _viewController;
 @synthesize frontVC, backVC;
 
+#pragma - Settings
+
+- (void)setUserDefaults
+{
+    NSMutableDictionary *defaults = [[NSMutableDictionary alloc]initWithCapacity:10];
+    
+
+    [defaults setValue:@"Geoff MacDonald"  forKey:@"name"];
+    [defaults setValue:@"Toronto" forKey:@"location"];
+    [defaults setValue:@"6'2" forKey:@"height"];
+    [defaults setValue:[NSDate date]
+                forKey:@"age"];
+    [defaults setValue:[NSNumber numberWithInt:192]
+                forKey:@"weight"];
+
+    
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
 
 #pragma mark - Logger Delegate Methods
 
@@ -56,12 +78,13 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    //[self.viewController setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:-20.0f];
-    //[self.viewController openSlider:true completion:nil];
-    
+    //set user defaults
+    [self setUserDefaults];
+ 
+
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

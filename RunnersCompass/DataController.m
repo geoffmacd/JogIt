@@ -13,7 +13,7 @@
 @synthesize historyList = _historyList;
 
 //replace setter accessor method
-- (void)setHistoryList:(NSMutableArray *)historyList:(NSMutableArray *)newList
+- (void)setHistoryList:(NSMutableArray *)newList
 {
     if (_historyList != newList) {
         _historyList = [newList mutableCopy];

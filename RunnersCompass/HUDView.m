@@ -37,6 +37,8 @@
     
     [self setup];
     
+    return self;
+    
 }
 
 

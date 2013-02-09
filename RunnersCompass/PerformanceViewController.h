@@ -21,4 +21,7 @@
 
 - (IBAction) changePage:(id)sender;
 - (void) animateToView:(UIView *)newView;
+- (IBAction)doneTapped:(id)sender;
+- (IBAction)predictTapped:(id)sender;
+- (IBAction)timeChanged:(id)sender;
 @end

@@ -13,10 +13,10 @@
 
 
 typedef enum {
-    Monday=1,
-    Tuesday,
-    Wednesday,
-    Thursday
+    EventTypeRun,
+    EventTypeBike,
+    EventTypeWalk,
+    EventTypeHike
 } RunType;
 
 @property (nonatomic, weak) NSString *name;

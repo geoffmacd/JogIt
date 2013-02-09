@@ -53,5 +53,15 @@
     
 }
 
+- (IBAction)doneTapped:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (IBAction)predictTapped:(id)sender {
+}
+
+- (IBAction)timeChanged:(id)sender {
+}
+
 
 @end

@@ -53,6 +53,8 @@
     
     [self setExpand:false withAnimation:false];
     
+    [headerView setBackgroundColor:[UIColor cyanColor]];
+    
     
 }
 
