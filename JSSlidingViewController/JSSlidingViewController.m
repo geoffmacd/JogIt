@@ -567,6 +567,9 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                 [self didClose];
             }else if(!_isOpen && origin.x <= -_sliderOpeningWidth){
                 changeState = false;
+                _isOpen = NO;
+            }else{
+                _isOpen = NO;
             }
         }
     }
@@ -590,6 +593,9 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             changeState = false;
         } else if(!_isOpen && origin.x <= -_sliderOpeningWidth){
             changeState = false;
+            _isOpen = NO;
+        }else{
+            _isOpen = NO;
         }
         self.view.userInteractionEnabled = YES;
     }

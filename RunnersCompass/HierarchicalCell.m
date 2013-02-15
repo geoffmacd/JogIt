@@ -53,7 +53,13 @@
     
     [self setExpand:false withAnimation:false];
     
-    [headerView setBackgroundColor:[UIColor cyanColor]];
+    UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    
+    [headerView setBackgroundColor:col];
+    
+    UIColor *col2 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
+    
+    [expandedView setBackgroundColor:col2];
     
     
 }
@@ -93,7 +99,6 @@
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationDuration:0.4];//lags the button animation a bit
         expandedView.alpha = 1.0;
-        //expandedView.transform = CGAffineTransformMakeScale(1.0f, 3.0f);
         
         expandedView.frame = correct;
         [UIView commitAnimations];
