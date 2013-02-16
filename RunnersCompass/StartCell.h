@@ -9,11 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
 
-// This is defined in Math.h
-#define M_PI   3.14159265358979323846264338327950288   /* pi */
 
-// Our conversion definition
-#define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
 
 @protocol StartCellDelegate <NSObject>

@@ -7,6 +7,7 @@
 //
 
 #import "HierarchicalCell.h"
+#import "AnimationUtil.h"
 
 @implementation HierarchicalCell
 
@@ -85,62 +86,40 @@
     if(expanded){
         
         
-        [self rotateImage:folderImage duration:time
+        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f
                     curve:UIViewAnimationCurveEaseIn degrees:90];
         
         
-        CGRect rect = expandedView.frame;
-        CGRect correct = rect;
-        rect.origin.y = 20;
-
-        [expandedView setFrame:rect];
-        
-        expandedView.alpha = 0.0;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.4];//lags the button animation a bit
-        expandedView.alpha = 1.0;
-        
-        expandedView.frame = correct;
-        [UIView commitAnimations];
+        if(animate)
+        {
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true];
+            
+        }
         
         
         
     }else{
         
-        [self rotateImage:folderImage duration:time
+        if(animate)
+        {
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
+            
+        }
+        
+        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f
                     curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
     
     
-    
-    [expandedView setHidden:!expanded];
+    if(!animate)
+    {
+        [expandedView setHidden:!open];
+    }
     
     
     [delegate cellDidChangeHeight:self];
     
-    //animate hidden view
-    
-    
-    
-}
-
-- (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
-              curve:(int)curve degrees:(CGFloat)degrees
-{
-    // Setup the animation
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:duration];
-    [UIView setAnimationCurve:curve];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    
-    // The transform matrix
-    CGAffineTransform transform =
-    CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees));
-    image.transform = transform;
-    
-    // Commit the changes
-    [UIView commitAnimations];
 }
 
 

@@ -49,6 +49,12 @@
     
     RunMap * map = [RunMap alloc];
     
+    /*
+    UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    
+    [MenuTable setBackgroundColor:col];
+     */
+    
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
     for(NSInteger i=0;i <12; i++)
@@ -200,6 +206,7 @@
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
+    [MenuTable reloadData];
     
     //still need to animate hidden expandedView
     
