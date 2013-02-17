@@ -33,7 +33,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _switchControl = [[UISwitch alloc] init];
+        _switchControl.onTintColor = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
         self.accessoryView = self.switchControl;
+        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
     }
     return self;
 }

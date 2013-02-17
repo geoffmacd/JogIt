@@ -56,8 +56,6 @@
 		67B2EF2316CDE0E3009F6BD0 /* addrunicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */; };
 		67B2EF2516CDE51D009F6BD0 /* whiteaddrun.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */; };
 		67B2FC9616C5DCD1008694F1 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FC9516C5DCD1008694F1 /* SwitchTableCell.m */; };
-		67B2FC9F16C5F6BC008694F1 /* DatePickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FC9D16C5F6BC008694F1 /* DatePickViewController.m */; };
-		67B2FCA016C5F6BC008694F1 /* DatePickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B2FC9E16C5F6BC008694F1 /* DatePickViewController.xib */; };
 		67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */; };
 		67B2FCDA16C5FDFA008694F1 /* FKButtonField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA616C5FDFA008694F1 /* FKButtonField.m */; };
 		67B2FCDB16C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA816C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m */; };
@@ -254,9 +252,6 @@
 		67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteaddrun.png; path = Graphics/whiteaddrun.png; sourceTree = SOURCE_ROOT; };
 		67B2FC9416C5DCD1008694F1 /* SwitchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTableCell.h; sourceTree = "<group>"; };
 		67B2FC9516C5DCD1008694F1 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
-		67B2FC9C16C5F6BC008694F1 /* DatePickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickViewController.h; sourceTree = "<group>"; };
-		67B2FC9D16C5F6BC008694F1 /* DatePickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickViewController.m; sourceTree = "<group>"; };
-		67B2FC9E16C5F6BC008694F1 /* DatePickViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickViewController.xib; sourceTree = "<group>"; };
 		67B2FCA316C5FDFA008694F1 /* FKBadgeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKBadgeField.h; sourceTree = "<group>"; };
 		67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKBadgeField.m; sourceTree = "<group>"; };
 		67B2FCA516C5FDFA008694F1 /* FKButtonField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKButtonField.h; sourceTree = "<group>"; };
@@ -446,9 +441,6 @@
 				672AA3B216B5990700B7DEE6 /* SettingsViewController.h */,
 				672AA3B316B5990700B7DEE6 /* SettingsViewController.m */,
 				6703F4E416B75F07006A8F88 /* Settings.xib */,
-				67B2FC9C16C5F6BC008694F1 /* DatePickViewController.h */,
-				67B2FC9D16C5F6BC008694F1 /* DatePickViewController.m */,
-				67B2FC9E16C5F6BC008694F1 /* DatePickViewController.xib */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -866,7 +858,6 @@
 				6732C6F616BEF58900225225 /* ButtonTableCell.xib in Resources */,
 				6732C6FA16BEF7DD00225225 /* EditTableCell.xib in Resources */,
 				6732C6FC16BEF7FE00225225 /* SwitchTableCell.xib in Resources */,
-				67B2FCA016C5F6BC008694F1 /* DatePickViewController.xib in Resources */,
 				67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */,
 				67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */,
 				67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */,
@@ -910,7 +901,6 @@
 				67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */,
 				67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */,
 				67B2FC9616C5DCD1008694F1 /* SwitchTableCell.m in Sources */,
-				67B2FC9F16C5F6BC008694F1 /* DatePickViewController.m in Sources */,
 				67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */,
 				67B2FCDA16C5FDFA008694F1 /* FKButtonField.m in Sources */,
 				67B2FCDB16C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m in Sources */,

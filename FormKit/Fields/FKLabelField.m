@@ -29,6 +29,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
+        self.detailTextLabel.textColor = [UIColor whiteColor];
+        self.detailTextLabel.font = [UIFont fontWithName:@"Georgia" size:16.0];
     }
     return self;
 }

@@ -26,8 +26,8 @@
     [self weeklyTapped:nil];
     
     //set rounded corners on buttons
-    [predictBut.layer setCornerRadius:5.0f];
-    [doneBut.layer setCornerRadius:5.0f];
+    [predictBut.layer setCornerRadius:8.0f];
+    [doneBut.layer setCornerRadius:8.0f];
     
     
     //add ChartViewControllers to views
@@ -147,7 +147,7 @@
 - (IBAction)weeklyTapped:(id)sender {
     if(!weekly)
     {
-        UIColor *col1 = [UIColor grayColor];
+        UIColor *col1 = [UIColor lightGrayColor];
         UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
         
         [monthlyBut setBackgroundColor:col1];
@@ -161,7 +161,7 @@
     if(weekly)
     {
         
-        UIColor *col1 = [UIColor grayColor];
+        UIColor *col1 = [UIColor lightGrayColor];
         UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
         
         [monthlyBut setBackgroundColor:col2];

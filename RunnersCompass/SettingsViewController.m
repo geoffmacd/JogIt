@@ -30,7 +30,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
@@ -49,7 +48,7 @@
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:@"Done" handler:^{
+        [formMapping buttonSave:@"DONE" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", self.prefs);
             [self.formModel save];
@@ -81,8 +80,6 @@
         
         [formMapping mapAttribute:@"suitAllAges" title:@"Facebook" type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"suitAllAges" title:@"Twitter" type:FKFormAttributeMappingTypeBoolean];
-        
-        
         
         
         [self.formModel registerMapping:formMapping];

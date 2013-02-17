@@ -33,10 +33,17 @@
         _textField = [[UITextField alloc] init];
         
         self.textField.textAlignment = UITextAlignmentRight;
+        self.textField.font = [UIFont fontWithName:@"Georgia" size:16.0];
+        self.textField.textColor = [UIColor whiteColor];
         
         [self.textField addTarget:self
                            action:@selector(textFieldDidChangeValue)
                  forControlEvents:UIControlEventAllEditingEvents];
+   
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
         
         self.valueView = self.textField;
     }

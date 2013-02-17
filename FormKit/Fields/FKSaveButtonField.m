@@ -31,7 +31,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleBlue;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.textLabel.textColor = [UIColor whiteColor];
+        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
+        self.textLabel.textAlignment = UITextAlignmentCenter;
     }
     
     return self;

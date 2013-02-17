@@ -100,7 +100,8 @@
         self.longTextControllerClass = [BWLongTextViewController class];
         self.validationErrorColor = [UIColor colorWithRed:216/255.0f green:98/255.0f blue:98/255.0f alpha:1];
         self.validationErrorCellBackgroundColor = [UIColor colorWithRed:255/255.0f green:235/255.0f blue:235/255.0f alpha:1];
-        self.validationNormalCellBackgroundColor = [UIColor colorWithRed:250/255.0f green:250/255.0f blue:250/255.0f alpha:1];
+        self.validationNormalCellBackgroundColor = [UIColor lightGrayColor];//[UIColor colorWithRed:250/255.0f green:250/255.0f blue:250/255.0f alpha:1];
+
     }
     return self;
 }
@@ -326,9 +327,38 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 0 || section == 1)
+        return nil;
+    
+    
+    UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    UILabel * newlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 20)];
+    newlabel.text = [self titleForHeaderInSection:section];
+    newlabel.textColor = [UIColor whiteColor];
+    newlabel.font = [UIFont fontWithName:@"Georgia" size:14.0];
+    newlabel.backgroundColor = [UIColor blackColor];
+    
+    [newView addSubview:newlabel];
+    
+    return newView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(section == 0 || section == 1)
+        return 0.0f;
+    
+    
+    return 20.0f;
+}
+
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return [self titleForHeaderInSection:section];
-}
+ }
+ */
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
