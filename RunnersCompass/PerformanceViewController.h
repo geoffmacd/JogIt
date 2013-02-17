@@ -8,20 +8,25 @@
 
 #import "CorePlot-CocoaTouch.h"
 #import <UIKit/UIKit.h>
+#import "ChartCell.h"
 
-@interface PerformanceViewController : UIViewController
+@interface PerformanceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
-    NSMutableArray * views;
-    UIPageControl *pageControl;
+    NSMutableArray * charts;
+    NSMutableArray * cells;
     
 }
 
-@property (nonatomic, retain) IBOutlet UIPageControl * pageControl;
-@property (strong, nonatomic) IBOutlet UIView *chartView;
+@property (weak, nonatomic) IBOutlet UITableView *table;
 
-- (IBAction) changePage:(id)sender;
-- (void) animateToView:(UIView *)newView;
+@property (nonatomic, assign) BOOL weekly;
+
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)predictTapped:(id)sender;
-- (IBAction)timeChanged:(id)sender;
+- (IBAction)weeklyTapped:(id)sender;
+- (IBAction)monthlyTapped:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *weeklyBut;
+@property (strong, nonatomic) IBOutlet UIButton *monthlyBut;
+@property (strong, nonatomic) IBOutlet UIButton *predictBut;
+@property (strong, nonatomic) IBOutlet UIButton *doneBut;
 @end

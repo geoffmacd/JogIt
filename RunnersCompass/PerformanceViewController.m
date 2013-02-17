@@ -7,51 +7,135 @@
 //
 
 #import "PerformanceViewController.h"
-#import "ChartViewController.h"
 
 @implementation PerformanceViewController
 
-@synthesize pageControl;
-@synthesize chartView;
+@synthesize table;
+@synthesize weekly;
+@synthesize weeklyBut;
+@synthesize monthlyBut;
+@synthesize predictBut;
+@synthesize doneBut;
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
-    //add ChartViewControllers to views
+    //initially on weekly view, more popular methinks
+    weekly = false;
+    [self weeklyTapped:nil];
     
-    views = [[NSMutableArray alloc] initWithCapacity:6];
+    //set rounded corners on buttons
+    [predictBut.layer setCornerRadius:5.0f];
+    [doneBut.layer setCornerRadius:5.0f];
+    
+    
+    //add ChartViewControllers to views
+    cells = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    charts = [[NSMutableArray alloc] initWithCapacity:5];
     for(NSUInteger i = 0;i<6;i++)
     {
     
-        ChartViewController * test = [[ChartViewController alloc] initWithNibName:@"BarChart" bundle:nil];
+        ChartCell * test   =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
+                                                           owner:self
+                                                         options:nil]objectAtIndex:0];
+        
+        
+        [charts addObject:test];
+    }
     
-        [views addObject:test];
+}
+
+
+
+#pragma mark -
+#pragma mark Menu Table data source
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
+{
+    return 1;
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //return number of charts
+    return [charts count];
+}
+
+// Customize the appearance of table view cells.
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    
+    
+    if(row >= [cells count]){
+        ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
+                                                                  owner:self
+                                                                options:nil]objectAtIndex:0];
+        [cell setAssociated:[charts objectAtIndex:row]];
+        [cell setDelegate:self];
+        
+        [cells addObject:cell];
+        
+        return cell;
+    }
+    else{
+        
+        
+        ChartCell * curCell = [cells objectAtIndex:row];
+        
+        return curCell;
     }
     
     
-    pageControl.numberOfPages = [views count];
-    pageControl.currentPage = 0;
-    ChartViewController * first = [views objectAtIndex:0];
-    chartView = first.graphView;
     
-    // Either wire this up in Interface Builder or do it here.
-    [pageControl addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (IBAction) changePage:(id)sender {
-    ChartViewController * newChart = [views objectAtIndex:[pageControl currentPage]];
-    [self animateToView:newChart.graphView];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height;
+    NSUInteger row = [indexPath row];
+    if(row< [cells count]){
+        ChartCell * cell = [cells objectAtIndex:row];
+        
+        height = [cell getHeightRequired];
+    }
+    else{
+        height = 48.0f;
+    }
     
-    //change labels
+    
+    return height;
+    
+    
+    
 }
 
-- (void) animateToView:(UIView *)newView {
-    // You'd have to implement this yourself
+
+#pragma mark -
+#pragma mark ChartCellDelegate
+
+-(void) cellDidChangeHeight:(id) sender
+{
+    //animate with row belows move down nicely
+    [table beginUpdates];
+    [table endUpdates];
+    [table reloadData];
     
-    chartView = newView;
+    //still need to animate hidden expandedView
     
+    //if sender was last cell or second last, then scroll to show expanded view
+    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] - 2)])
+    {
+        NSIndexPath *path = [table indexPathForCell:sender];
+        [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+    }
 }
+
+
+#pragma mark - other actions
 
 - (IBAction)doneTapped:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
@@ -60,7 +144,31 @@
 - (IBAction)predictTapped:(id)sender {
 }
 
-- (IBAction)timeChanged:(id)sender {
+- (IBAction)weeklyTapped:(id)sender {
+    if(!weekly)
+    {
+        UIColor *col1 = [UIColor grayColor];
+        UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+        
+        [monthlyBut setBackgroundColor:col1];
+        [weeklyBut setBackgroundColor:col2];
+        
+        weekly = true;
+    }
+}
+
+- (IBAction)monthlyTapped:(id)sender {
+    if(weekly)
+    {
+        
+        UIColor *col1 = [UIColor grayColor];
+        UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+        
+        [monthlyBut setBackgroundColor:col2];
+        [weeklyBut setBackgroundColor:col1];
+        
+        weekly = false;
+    }
 }
 
 

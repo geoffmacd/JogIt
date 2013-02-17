@@ -20,6 +20,7 @@
 @property (readwrite, retain, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *graphView;
 
+
 -(void)timerFired;
 
 @end
