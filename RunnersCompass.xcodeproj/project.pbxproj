@@ -96,6 +96,7 @@
 		67C8E32316D1AC5400E4DE11 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32116D1AC5400E4DE11 /* record.png */; };
 		67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32416D1B3FC00E4DE11 /* dragmask.png */; };
 		67C8E34E16D1D4E300E4DE11 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C8E34B16D1D4D100E4DE11 /* libCorePlot-CocoaTouch.a */; };
+		67C8E35016D1E5A800E4DE11 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */; };
 		67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7416C3215A00C99BD6 /* EditTableCell.m */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
@@ -282,6 +283,7 @@
 		67C8E32116D1AC5400E4DE11 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = record.png; path = Graphics/record.png; sourceTree = SOURCE_ROOT; };
 		67C8E32416D1B3FC00E4DE11 /* dragmask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dragmask.png; path = Graphics/dragmask.png; sourceTree = SOURCE_ROOT; };
 		67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
+		67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		67CAFC7316C3215A00C99BD6 /* EditTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTableCell.h; sourceTree = "<group>"; };
 		67CAFC7416C3215A00C99BD6 /* EditTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableCell.m; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
 				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
@@ -773,6 +776,7 @@
 				67C8E32216D1AC5400E4DE11 /* pause.png in Resources */,
 				67C8E32316D1AC5400E4DE11 /* record.png in Resources */,
 				67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */,
+				67C8E35016D1E5A800E4DE11 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +891,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -907,6 +912,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -922,6 +928,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/RunnersCompass-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
 				INFOPLIST_FILE = "RunnersCompass/RunnersCompass-Info.plist";
 				OTHER_LDFLAGS = (
@@ -938,6 +945,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/RunnersCompass-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
 				INFOPLIST_FILE = "RunnersCompass/RunnersCompass-Info.plist";
 				OTHER_LDFLAGS = (

@@ -186,9 +186,10 @@
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(16.0f)];
     
     //set scrolling
-    plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
-    plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
+    //plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
+    //plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
     [plotSpace setAllowsUserInteraction:false];
+    
     
     //x-axis
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
@@ -196,11 +197,9 @@
     x.axisLineStyle               = nil;
     x.majorTickLineStyle          = nil;
     x.minorTickLineStyle          = nil;
-    x.majorIntervalLength         = CPTDecimalFromString(@"5");
-    x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
-    x.title                       = @"Calories";
-    x.titleLocation               = CPTDecimalFromFloat(7.5f);
-    x.titleOffset                 = 45.0f;
+    x.majorIntervalLength         = CPTDecimalFromString(@"10000");
+    x.labelingPolicy = CPTAxisLabelingPolicyNone;
+    //x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
     
     //y-axis
@@ -209,15 +208,18 @@
     y.axisConstraints = [CPTConstraints constraintWithLowerOffset:0.0];
     y.majorTickLineStyle          = nil;
     y.minorTickLineStyle          = nil;
-    y.majorIntervalLength         = CPTDecimalFromString(@"50");
+    y.majorIntervalLength         = CPTDecimalFromString(@"2000000");
+    y.labelingPolicy = CPTAxisLabelingPolicyNone;
     //y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
+     
     // First bar plot
     CPTBarPlot *barPlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor darkGrayColor] horizontalBars:NO];
     barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     //barPlot.barOffset  = CPTDecimalFromFloat(-0.25f);
     barPlot.identifier = @"Bar Plot 1";
+    
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
     
