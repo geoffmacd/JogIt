@@ -661,7 +661,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [_slidingScrollView addSubview:self.frontViewControllerDropShadow_right];
     
     
-    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause_logo_large.png"]];
+    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
     self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 200.0f, 50.0f, 50.0f);
     [_slidingScrollView addSubview:self.pauseImage];
 }

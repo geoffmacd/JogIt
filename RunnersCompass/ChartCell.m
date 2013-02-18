@@ -123,7 +123,7 @@
     
     // Create barChart from theme
     barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    CPTTheme *theme = [CPTTheme themeNamed:kCPTDarkGradientTheme];
+    CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainBlackTheme];
     [barChart applyTheme:theme];
     CPTGraphHostingView *hostingView = expandedView;
     hostingView.hostedGraph = barChart;
@@ -141,7 +141,7 @@
     barChart.plotAreaFrame.paddingLeft   = 40.0;
     barChart.plotAreaFrame.paddingTop    = 20.0;
     barChart.plotAreaFrame.paddingRight  = 10.0;
-    barChart.plotAreaFrame.paddingBottom = 60.0;
+    barChart.plotAreaFrame.paddingBottom = 20.0;
     
     
     // Add plot space for horizontal bar charts
@@ -162,9 +162,6 @@
     x.minorTickLineStyle          = nil;
     x.majorIntervalLength         = CPTDecimalFromString(@"5");
     x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
-    x.title                       = @"Calories";
-    x.titleLocation               = CPTDecimalFromFloat(7.5f);
-    x.titleOffset                 = 45.0f;
     
     
     //y-axis

@@ -26,6 +26,7 @@
 @synthesize paused;
 @synthesize statusIcon;
 @synthesize timer;
+@synthesize finishBut;
 
 
 -(void)setRun:(RunEvent *)_run
@@ -100,6 +101,9 @@
     
     paused = true;
     
+    //set rounded corners on buttons
+    [finishBut.layer setCornerRadius:8.0f];
+    
     CGRect mapRect;
     mapRect.origin = CGPointMake(0, 400);
     mapRect.size =  mapView.frame.size;
@@ -130,9 +134,11 @@
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            pauseImage.image = [UIImage imageNamed:@"pause.png"];
+                            pauseImage.image = [UIImage imageNamed:@"pause invert.png"];
                         } completion:NULL];
         [statusIcon setImage:[UIImage imageNamed:@"pause.png"]];
+        
+        [finishBut setHidden:false];
     }
     else
     {
@@ -143,6 +149,8 @@
                             pauseImage.image = [UIImage imageNamed:@"record.png"];
                         } completion:NULL];
         [statusIcon setImage:[UIImage imageNamed:@"record.png"]];
+        
+        [finishBut setHidden:true];
     }
 }
 
@@ -220,10 +228,34 @@
     //barPlot.barOffset  = CPTDecimalFromFloat(-0.25f);
     barPlot.identifier = @"Bar Plot 1";
     
+    /*
+    //adding animation here
+    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
+    [anim setDuration:2.5f];
+    anim.toValue = [NSNumber numberWithFloat:1];
+    anim.fromValue = [NSNumber numberWithFloat:0.0f];
+    anim.removedOnCompletion = NO;
+    anim.delegate = self;
+    anim.fillMode = kCAFillModeForwards;
+    
+    
+    barPlot.anchorPoint = CGPointMake(0.0, 0.0);
+    [barPlot addAnimation:anim forKey:@"grow"];
+    */
+    
+    
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
     
 }
+
+/*
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    NSLog(@"animation stopped");
+    
+}
+ */
 
 #pragma mark -
 #pragma mark Plot Data Source Methods
@@ -332,5 +364,10 @@
         [self openMapWithSmoothAnimation:true completion:nil];
         inMapView = true;
     }
+}
+
+- (IBAction)finishTapped:(id)sender {
+    [delegate menuButtonPressed:sender];
+    
 }
 @end

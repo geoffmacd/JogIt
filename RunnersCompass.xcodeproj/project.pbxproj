@@ -39,9 +39,6 @@
 		6732C6FC16BEF7FE00225225 /* SwitchTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6732C6FB16BEF7FE00225225 /* SwitchTableCell.xib */; };
 		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
 		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
-		6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F016ACDD40005F4F1B /* HUDCell.xib */; };
-		6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F316ACE09E005F4F1B /* HUDCell.m */; };
-		6745C7F716ACE259005F4F1B /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6745C7F616ACE259005F4F1B /* HUDView.m */; };
 		6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */; };
 		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
 		6748647216B23890004D2B47 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748647116B23890004D2B47 /* settings.png */; };
@@ -97,8 +94,10 @@
 		67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32416D1B3FC00E4DE11 /* dragmask.png */; };
 		67C8E34E16D1D4E300E4DE11 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C8E34B16D1D4D100E4DE11 /* libCorePlot-CocoaTouch.a */; };
 		67C8E35016D1E5A800E4DE11 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */; };
+		67C8E35416D1EBAA00E4DE11 /* pause invert.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E35316D1EBA900E4DE11 /* pause invert.png */; };
 		67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7416C3215A00C99BD6 /* EditTableCell.m */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
+		67F6356C16D207F600D51CA2 /* hudbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6356B16D207F600D51CA2 /* hudbackground.png */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC068D16A117B800491C97 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068C16A117B800491C97 /* Constants.m */; };
 		67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B016A11F5E00491C97 /* pause_logo_large.png */; };
@@ -112,7 +111,6 @@
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 		67FC070716ACD62B00491C97 /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070616ACD62B00491C97 /* RightArrow.png */; };
 		67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070816ACD63300491C97 /* DownTriangleIcon.png */; };
-		67FC070B16ACD74300491C97 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070A16ACD74300491C97 /* HUDView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,11 +178,6 @@
 		6732C6FB16BEF7FE00225225 /* SwitchTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchTableCell.xib; sourceTree = "<group>"; };
 		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = map.JPG; path = ../Graphics/map.JPG; sourceTree = "<group>"; };
 		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Graphics/hud.png; sourceTree = SOURCE_ROOT; };
-		6745C7F016ACDD40005F4F1B /* HUDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDCell.xib; sourceTree = "<group>"; };
-		6745C7F216ACE09E005F4F1B /* HUDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDCell.h; sourceTree = "<group>"; };
-		6745C7F316ACE09E005F4F1B /* HUDCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDCell.m; sourceTree = "<group>"; };
-		6745C7F516ACE259005F4F1B /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDView.h; sourceTree = "<group>"; };
-		6745C7F616ACE259005F4F1B /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDView.m; sourceTree = "<group>"; };
 		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
 		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../Graphics/settings.png; sourceTree = "<group>"; };
@@ -284,10 +277,12 @@
 		67C8E32416D1B3FC00E4DE11 /* dragmask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dragmask.png; path = Graphics/dragmask.png; sourceTree = SOURCE_ROOT; };
 		67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
 		67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		67C8E35316D1EBA900E4DE11 /* pause invert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause invert.png"; path = "Graphics/pause invert.png"; sourceTree = SOURCE_ROOT; };
 		67CAFC7316C3215A00C99BD6 /* EditTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTableCell.h; sourceTree = "<group>"; };
 		67CAFC7416C3215A00C99BD6 /* EditTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableCell.m; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
 		67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPrefs.m; sourceTree = "<group>"; };
+		67F6356B16D207F600D51CA2 /* hudbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hudbackground.png; path = Graphics/hudbackground.png; sourceTree = SOURCE_ROOT; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -307,7 +302,6 @@
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FC070616ACD62B00491C97 /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../Graphics/RightArrow.png; sourceTree = "<group>"; };
 		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../Graphics/DownTriangleIcon.png; sourceTree = "<group>"; };
-		67FC070A16ACD74300491C97 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HUDView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -567,6 +561,8 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67F6356B16D207F600D51CA2 /* hudbackground.png */,
+				67C8E35316D1EBA900E4DE11 /* pause invert.png */,
 				67C8E32416D1B3FC00E4DE11 /* dragmask.png */,
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
@@ -649,12 +645,6 @@
 				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
 				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
 				67FC070416ACD4F400491C97 /* HierarchicalCell.xib */,
-				6745C7F216ACE09E005F4F1B /* HUDCell.h */,
-				6745C7F316ACE09E005F4F1B /* HUDCell.m */,
-				6745C7F016ACDD40005F4F1B /* HUDCell.xib */,
-				6745C7F516ACE259005F4F1B /* HUDView.h */,
-				6745C7F616ACE259005F4F1B /* HUDView.m */,
-				67FC070A16ACD74300491C97 /* HUDView.xib */,
 				67FC06B816A1250500491C97 /* PaceChart.h */,
 				67FC06B916A1250500491C97 /* PaceChart.m */,
 				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
@@ -744,9 +734,7 @@
 				67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */,
 				67FC070716ACD62B00491C97 /* RightArrow.png in Resources */,
 				67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */,
-				67FC070B16ACD74300491C97 /* HUDView.xib in Resources */,
 				6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */,
-				6745C7F116ACDD40005F4F1B /* HUDCell.xib in Resources */,
 				6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */,
 				6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */,
 				6748646F16B237C2004D2B47 /* switch.png in Resources */,
@@ -777,6 +765,8 @@
 				67C8E32316D1AC5400E4DE11 /* record.png in Resources */,
 				67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */,
 				67C8E35016D1E5A800E4DE11 /* Default-568h@2x.png in Resources */,
+				67C8E35416D1EBAA00E4DE11 /* pause invert.png in Resources */,
+				67F6356C16D207F600D51CA2 /* hudbackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -797,8 +787,6 @@
 				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
 				67FC06C416A1D15900491C97 /* RunEvent.m in Sources */,
 				67FC06C716A1D4AF00491C97 /* RunType.m in Sources */,
-				6745C7F416ACE09E005F4F1B /* HUDCell.m in Sources */,
-				6745C7F716ACE259005F4F1B /* HUDView.m in Sources */,
 				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
 				6721F88516AE3D4E00FE84C5 /* Log.m in Sources */,
 				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,

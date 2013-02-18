@@ -20,7 +20,7 @@
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate>
 {
 @private
     CPTXYGraph *barChart;
@@ -47,6 +47,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *mapThumbnail;
 @property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
+@property (strong, nonatomic) IBOutlet UIButton *finishBut;
 
 
 
@@ -55,6 +56,7 @@
 - (IBAction)hamburgerTapped:(id)sender;
 - (IBAction)handlePanGesture:(id)sender;
 - (IBAction)mapIconTapped:(id)sender;
+- (IBAction)finishTapped:(id)sender;
 
 @end
 

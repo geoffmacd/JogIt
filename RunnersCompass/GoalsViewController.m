@@ -8,6 +8,7 @@
 
 #import "GoalsViewController.h"
 #import "CreateGoalViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface GoalsViewController ()
 
@@ -15,13 +16,19 @@
 
 @implementation GoalsViewController
 
-@synthesize table,doneBut,goalButton;
+@synthesize table;
+@synthesize goalButton;
+@synthesize doneBut;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
+    //set rounded corners on buttons
+    
+    //set rounded corners on buttons
+    [doneBut.layer setCornerRadius:8.0f];
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HUDView.h"
 #import "RunEvent.h"
 
 // This is defined in Math.h

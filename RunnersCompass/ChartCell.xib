@@ -46,7 +46,7 @@
 								<reference key="NSNextResponder" ref="344831267"/>
 								<int key="NSvFlags">292</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrame">{{0, 48}, {320, 166}}</string>
+								<string key="NSFrame">{{0, 48}, {320, 198}}</string>
 								<reference key="NSSuperview" ref="344831267"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -67,7 +67,7 @@
 									<object class="IBUILabel" id="1046342168">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{25, 13}, {270, 21}}</string>
+										<string key="NSFrame">{{33, 11}, {104, 21}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="56337422"/>
@@ -84,16 +84,15 @@
 										</object>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
-										<int key="IBUITextAlignment">1</int>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<string key="name">Georgia</string>
 											<string key="family">Georgia</string>
 											<int key="traits">0</int>
-											<double key="pointSize">17</double>
+											<double key="pointSize">18</double>
 										</object>
 										<object class="NSFont" key="IBUIFont">
 											<string key="NSName">Georgia</string>
-											<double key="NSSize">17</double>
+											<double key="NSSize">18</double>
 											<int key="NSfFlags">16</int>
 										</object>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -101,7 +100,7 @@
 									<object class="IBUILabel" id="411892738">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{-62, 20}, {270, 21}}</string>
+										<string key="NSFrame">{{125, 22}, {195, 21}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="1040237880"/>
@@ -118,16 +117,15 @@
 										</object>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
-										<int key="IBUITextAlignment">1</int>
-										<object class="IBUIFontDescription" key="IBUIFontDescription" id="548841511">
+										<object class="IBUIFontDescription" key="IBUIFontDescription" id="658933548">
 											<string key="name">Georgia</string>
 											<string key="family">Georgia</string>
 											<int key="traits">0</int>
-											<double key="pointSize">13</double>
+											<double key="pointSize">14</double>
 										</object>
-										<object class="NSFont" key="IBUIFont" id="409842778">
+										<object class="NSFont" key="IBUIFont" id="325939448">
 											<string key="NSName">Georgia</string>
-											<double key="NSSize">13</double>
+											<double key="NSSize">14</double>
 											<int key="NSfFlags">16</int>
 										</object>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -135,7 +133,7 @@
 									<object class="IBUILabel" id="56337422">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{116, 20}, {270, 21}}</string>
+										<string key="NSFrame">{{125, 0}, {195, 23}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="898969330"/>
@@ -152,9 +150,8 @@
 										</object>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
-										<int key="IBUITextAlignment">1</int>
-										<reference key="IBUIFontDescription" ref="548841511"/>
-										<reference key="IBUIFont" ref="409842778"/>
+										<reference key="IBUIFontDescription" ref="658933548"/>
+										<reference key="IBUIFont" ref="325939448"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 									<object class="IBUIImageView" id="1040237880">
@@ -188,7 +185,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 213}</string>
+						<string key="NSFrameSize">{320, 246}</string>
 						<reference key="NSSuperview" ref="1040117206"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="525973153"/>
@@ -204,7 +201,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 214}</string>
+				<string key="NSFrameSize">{320, 247}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="344831267"/>
@@ -214,6 +211,7 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="344831267"/>
 				<string key="IBUIReuseIdentifier">ChartCellPrototype</string>
+				<real value="247" key="IBUIRowHeight"/>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="233803313"/>
 			<object class="IBUITapGestureRecognizer" id="331462345"/>

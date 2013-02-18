@@ -10,7 +10,7 @@
 
 @interface CreateGoalViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *doneBut;
+@property (strong, nonatomic) IBOutlet UIButton *doneBut;
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property (weak, nonatomic) IBOutlet UILabel *currentGoalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *goalDescriptionLabel;
