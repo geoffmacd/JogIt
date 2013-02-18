@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
 #import "JSSlidingViewController.h"
-
+#import "CorePlot-CocoaTouch.h"
 
 
 @protocol LoggerViewControllerDelegate <NSObject>
@@ -20,7 +20,13 @@
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource>
+{
+@private
+    CPTXYGraph *barChart;
+    NSTimer *timer;
+    
+}
 
 
 //delegate
@@ -30,6 +36,7 @@
 @property (nonatomic, weak, setter = setRun:) RunEvent * run;
 @property (assign, nonatomic) BOOL inMapView;
 @property (assign, nonatomic) BOOL paused;
+@property (readwrite, retain, nonatomic) NSTimer *timer;
 
 
 //UI
@@ -39,6 +46,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *dragMapButton;
 @property (strong, nonatomic) IBOutlet UIImageView *mapThumbnail;
 @property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
+@property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
+
 
 
 

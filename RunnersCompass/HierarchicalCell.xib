@@ -100,7 +100,7 @@
 										<string key="NSFrame">{{205, 54}, {55, 21}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="87564895"/>
+										<reference key="NSNextKeyView" ref="82121814"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -144,7 +144,7 @@
 											<int key="traits">0</int>
 											<double key="pointSize">17</double>
 										</object>
-										<object class="NSFont" key="IBUIFont" id="227130717">
+										<object class="NSFont" key="IBUIFont" id="197016828">
 											<string key="NSName">Georgia</string>
 											<double key="NSSize">17</double>
 											<int key="NSfFlags">16</int>
@@ -172,8 +172,23 @@
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
 										<reference key="IBUIFontDescription" ref="487781530"/>
-										<reference key="IBUIFont" ref="227130717"/>
+										<reference key="IBUIFont" ref="197016828"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+									</object>
+									<object class="IBUIImageView" id="82121814">
+										<reference key="NSNextResponder" ref="941116554"/>
+										<int key="NSvFlags">292</int>
+										<string key="NSFrame">{{303, 40}, {15, 20}}</string>
+										<reference key="NSSuperview" ref="941116554"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="87564895"/>
+										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">selection.png</string>
+										</object>
 									</object>
 								</array>
 								<string key="NSFrame">{{0, 48}, {320, 100}}</string>
@@ -218,7 +233,7 @@
 										<int key="IBUIBaselineAdjustment">0</int>
 										<int key="IBUITextAlignment">1</int>
 										<reference key="IBUIFontDescription" ref="487781530"/>
-										<reference key="IBUIFont" ref="227130717"/>
+										<reference key="IBUIFont" ref="197016828"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 									<object class="IBUIImageView" id="174088637">
@@ -446,6 +461,7 @@
 							<reference ref="653990776"/>
 							<reference ref="524844911"/>
 							<reference ref="87564895"/>
+							<reference ref="82121814"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">ExpandedView</string>
@@ -475,6 +491,11 @@
 						<reference key="object" ref="981189565"/>
 						<reference key="parent" ref="941116554"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">548</int>
+						<reference key="object" ref="82121814"/>
+						<reference key="parent" ref="941116554"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -494,12 +515,13 @@
 				<string key="525.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="526.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="542.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="548.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">547</int>
+			<int key="maxID">548</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -563,6 +585,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="RightFillTriangleIcon.png">{30, 30}</string>
 			<string key="map.JPG">{476, 502}</string>
+			<string key="selection.png">{40, 40}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

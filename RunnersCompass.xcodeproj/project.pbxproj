@@ -10,7 +10,6 @@
 		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
 		6703F4E816B75F12006A8F88 /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E716B75F12006A8F88 /* Performance.xib */; };
 		6703F4EA16B75F4A006A8F88 /* Goals.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E916B75F4A006A8F88 /* Goals.xib */; };
-		6703F4EC16B75F57006A8F88 /* Start.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4EB16B75F57006A8F88 /* Start.xib */; };
 		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
 		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
 		6721F88516AE3D4E00FE84C5 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88316AE3D4E00FE84C5 /* Log.m */; };
@@ -31,7 +30,6 @@
 		672AA43816B5AE6700B7DEE6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */; };
 		672AA49E16B5B25B00B7DEE6 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AA49D16B5B25A00B7DEE6 /* libCorePlot-CocoaTouch.a */; };
 		672AA4F216B602A500B7DEE6 /* ChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F116B602A400B7DEE6 /* ChartViewController.m */; };
-		672AA4F516B6128700B7DEE6 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F416B6128700B7DEE6 /* StartViewController.m */; };
 		672AA4F916B6150B00B7DEE6 /* GoalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */; };
 		672AA50B16B73DAE00B7DEE6 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */; };
 		672AA50C16B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */; };
@@ -51,7 +49,6 @@
 		67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */; };
 		67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1616CDC6EE009F6BD0 /* goals.png */; };
 		67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1816CDC790009F6BD0 /* stopwatch.png */; };
-		67B2EF1B16CDCAA8009F6BD0 /* marcogear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1A16CDCAA8009F6BD0 /* marcogear.png */; };
 		67B2EF1F16CDDB4B009F6BD0 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1E16CDDB4B009F6BD0 /* gear.png */; };
 		67B2EF2316CDE0E3009F6BD0 /* addrunicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */; };
 		67B2EF2516CDE51D009F6BD0 /* whiteaddrun.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */; };
@@ -91,6 +88,14 @@
 		67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */; };
 		67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E30116D0740900E4DE11 /* ChartCell.m */; };
 		67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E30316D0742E00E4DE11 /* ChartCell.xib */; };
+		67C8E31216D19C4E00E4DE11 /* CreateGoalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E31016D19C4E00E4DE11 /* CreateGoalViewController.m */; };
+		67C8E31316D19C4E00E4DE11 /* CreateGoalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E31116D19C4E00E4DE11 /* CreateGoalViewController.xib */; };
+		67C8E31C16D1A1E500E4DE11 /* EditGoalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E31A16D1A1E400E4DE11 /* EditGoalViewController.m */; };
+		67C8E31D16D1A1E500E4DE11 /* EditGoalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E31B16D1A1E500E4DE11 /* EditGoalViewController.xib */; };
+		67C8E31F16D1A5ED00E4DE11 /* selection.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E31E16D1A5ED00E4DE11 /* selection.png */; };
+		67C8E32216D1AC5400E4DE11 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32016D1AC5400E4DE11 /* pause.png */; };
+		67C8E32316D1AC5400E4DE11 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32116D1AC5400E4DE11 /* record.png */; };
+		67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E32416D1B3FC00E4DE11 /* dragmask.png */; };
 		67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7416C3215A00C99BD6 /* EditTableCell.m */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
@@ -113,7 +118,6 @@
 		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		6703F4E716B75F12006A8F88 /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		6703F4E916B75F4A006A8F88 /* Goals.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Goals.xib; sourceTree = "<group>"; };
-		6703F4EB16B75F57006A8F88 /* Start.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Start.xib; sourceTree = "<group>"; };
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
@@ -221,8 +225,6 @@
 		672AA49D16B5B25A00B7DEE6 /* libCorePlot-CocoaTouch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libCorePlot-CocoaTouch.a"; sourceTree = "<group>"; };
 		672AA4F016B602A300B7DEE6 /* ChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartViewController.h; sourceTree = "<group>"; };
 		672AA4F116B602A400B7DEE6 /* ChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartViewController.m; sourceTree = "<group>"; };
-		672AA4F316B6128700B7DEE6 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
-		672AA4F416B6128700B7DEE6 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		672AA4F716B6150B00B7DEE6 /* GoalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsViewController.h; sourceTree = "<group>"; };
 		672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsViewController.m; sourceTree = "<group>"; };
 		672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frontViewControllerDropShadow.png; sourceTree = "<group>"; };
@@ -243,10 +245,9 @@
 		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
 		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../Graphics/settings.png; sourceTree = "<group>"; };
-		67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsgear.png; sourceTree = "<group>"; };
-		67B2EF1616CDC6EE009F6BD0 /* goals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = goals.png; sourceTree = "<group>"; };
-		67B2EF1816CDC790009F6BD0 /* stopwatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopwatch.png; sourceTree = "<group>"; };
-		67B2EF1A16CDCAA8009F6BD0 /* marcogear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marcogear.png; sourceTree = "<group>"; };
+		67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsgear.png; path = ../Graphics/settingsgear.png; sourceTree = "<group>"; };
+		67B2EF1616CDC6EE009F6BD0 /* goals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goals.png; path = ../Graphics/goals.png; sourceTree = "<group>"; };
+		67B2EF1816CDC790009F6BD0 /* stopwatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopwatch.png; path = ../Graphics/stopwatch.png; sourceTree = "<group>"; };
 		67B2EF1E16CDDB4B009F6BD0 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gear.png; path = Graphics/gear.png; sourceTree = SOURCE_ROOT; };
 		67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addrunicon.png; path = Graphics/addrunicon.png; sourceTree = SOURCE_ROOT; };
 		67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteaddrun.png; path = Graphics/whiteaddrun.png; sourceTree = SOURCE_ROOT; };
@@ -328,6 +329,16 @@
 		67C8E30016D0740900E4DE11 /* ChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartCell.h; sourceTree = "<group>"; };
 		67C8E30116D0740900E4DE11 /* ChartCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartCell.m; sourceTree = "<group>"; };
 		67C8E30316D0742E00E4DE11 /* ChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChartCell.xib; sourceTree = "<group>"; };
+		67C8E30F16D19C4D00E4DE11 /* CreateGoalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGoalViewController.h; sourceTree = "<group>"; };
+		67C8E31016D19C4E00E4DE11 /* CreateGoalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalViewController.m; sourceTree = "<group>"; };
+		67C8E31116D19C4E00E4DE11 /* CreateGoalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateGoalViewController.xib; sourceTree = "<group>"; };
+		67C8E31916D1A1E400E4DE11 /* EditGoalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditGoalViewController.h; sourceTree = "<group>"; };
+		67C8E31A16D1A1E400E4DE11 /* EditGoalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditGoalViewController.m; sourceTree = "<group>"; };
+		67C8E31B16D1A1E500E4DE11 /* EditGoalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditGoalViewController.xib; sourceTree = "<group>"; };
+		67C8E31E16D1A5ED00E4DE11 /* selection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selection.png; path = Graphics/selection.png; sourceTree = SOURCE_ROOT; };
+		67C8E32016D1AC5400E4DE11 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pause.png; path = Graphics/pause.png; sourceTree = SOURCE_ROOT; };
+		67C8E32116D1AC5400E4DE11 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = record.png; path = Graphics/record.png; sourceTree = SOURCE_ROOT; };
+		67C8E32416D1B3FC00E4DE11 /* dragmask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dragmask.png; path = Graphics/dragmask.png; sourceTree = SOURCE_ROOT; };
 		67CAFC7316C3215A00C99BD6 /* EditTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTableCell.h; sourceTree = "<group>"; };
 		67CAFC7416C3215A00C99BD6 /* EditTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableCell.m; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
@@ -542,6 +553,12 @@
 				672AA4F716B6150B00B7DEE6 /* GoalsViewController.h */,
 				672AA4F816B6150B00B7DEE6 /* GoalsViewController.m */,
 				6703F4E916B75F4A006A8F88 /* Goals.xib */,
+				67C8E30F16D19C4D00E4DE11 /* CreateGoalViewController.h */,
+				67C8E31016D19C4E00E4DE11 /* CreateGoalViewController.m */,
+				67C8E31116D19C4E00E4DE11 /* CreateGoalViewController.xib */,
+				67C8E31916D1A1E400E4DE11 /* EditGoalViewController.h */,
+				67C8E31A16D1A1E400E4DE11 /* EditGoalViewController.m */,
+				67C8E31B16D1A1E500E4DE11 /* EditGoalViewController.xib */,
 			);
 			name = Goals;
 			sourceTree = "<group>";
@@ -678,25 +695,28 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */,
-				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
-				67B2EF1E16CDDB4B009F6BD0 /* gear.png */,
-				67B2EF1A16CDCAA8009F6BD0 /* marcogear.png */,
-				67B2EF1816CDC790009F6BD0 /* stopwatch.png */,
-				67B2EF1616CDC6EE009F6BD0 /* goals.png */,
-				67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */,
+				67C8E32416D1B3FC00E4DE11 /* dragmask.png */,
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
-				6748647116B23890004D2B47 /* settings.png */,
-				6748646E16B237C2004D2B47 /* switch.png */,
-				6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */,
-				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
-				6738D66916ACE7DE0044BA00 /* map.JPG */,
-				6745C7ED16ACDBB9005F4F1B /* hud.png */,
-				67FC070616ACD62B00491C97 /* RightArrow.png */,
-				67FC06B616A1247D00491C97 /* mapicon.png */,
+				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
 				67FC06B416A1205300491C97 /* CellBarsIcon.png */,
+				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
+				67B2EF1E16CDDB4B009F6BD0 /* gear.png */,
+				67B2EF1616CDC6EE009F6BD0 /* goals.png */,
 				67FC06B216A11FC700491C97 /* hamburger.png */,
+				6745C7ED16ACDBB9005F4F1B /* hud.png */,
+				6738D66916ACE7DE0044BA00 /* map.JPG */,
+				67FC06B616A1247D00491C97 /* mapicon.png */,
+				67C8E32016D1AC5400E4DE11 /* pause.png */,
 				67FC06B016A11F5E00491C97 /* pause_logo_large.png */,
+				67C8E32116D1AC5400E4DE11 /* record.png */,
+				67FC070616ACD62B00491C97 /* RightArrow.png */,
+				6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */,
+				67C8E31E16D1A5ED00E4DE11 /* selection.png */,
+				6748647116B23890004D2B47 /* settings.png */,
+				67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */,
+				67B2EF1816CDC790009F6BD0 /* stopwatch.png */,
+				6748646E16B237C2004D2B47 /* switch.png */,
+				67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -724,9 +744,6 @@
 				67236D2A16409B7700DD13C5 /* Logger.h */,
 				67236D2B16409B7700DD13C5 /* Logger.m */,
 				672AA50E16B7437100B7DEE6 /* Logger.xib */,
-				672AA4F316B6128700B7DEE6 /* StartViewController.h */,
-				672AA4F416B6128700B7DEE6 /* StartViewController.m */,
-				6703F4EB16B75F57006A8F88 /* Start.xib */,
 			);
 			name = Logger;
 			sourceTree = "<group>";
@@ -853,7 +870,6 @@
 				6703F4E516B75F07006A8F88 /* Settings.xib in Resources */,
 				6703F4E816B75F12006A8F88 /* Performance.xib in Resources */,
 				6703F4EA16B75F4A006A8F88 /* Goals.xib in Resources */,
-				6703F4EC16B75F57006A8F88 /* Start.xib in Resources */,
 				6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */,
 				6732C6F616BEF58900225225 /* ButtonTableCell.xib in Resources */,
 				6732C6FA16BEF7DD00225225 /* EditTableCell.xib in Resources */,
@@ -861,11 +877,16 @@
 				67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */,
 				67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */,
 				67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */,
-				67B2EF1B16CDCAA8009F6BD0 /* marcogear.png in Resources */,
 				67B2EF1F16CDDB4B009F6BD0 /* gear.png in Resources */,
 				67B2EF2316CDE0E3009F6BD0 /* addrunicon.png in Resources */,
 				67B2EF2516CDE51D009F6BD0 /* whiteaddrun.png in Resources */,
 				67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */,
+				67C8E31316D19C4E00E4DE11 /* CreateGoalViewController.xib in Resources */,
+				67C8E31D16D1A1E500E4DE11 /* EditGoalViewController.xib in Resources */,
+				67C8E31F16D1A5ED00E4DE11 /* selection.png in Resources */,
+				67C8E32216D1AC5400E4DE11 /* pause.png in Resources */,
+				67C8E32316D1AC5400E4DE11 /* record.png in Resources */,
+				67C8E32516D1B3FC00E4DE11 /* dragmask.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,7 +916,6 @@
 				672AA3B416B5990700B7DEE6 /* SettingsViewController.m in Sources */,
 				672AA3C716B5A6D300B7DEE6 /* PerformanceViewController.m in Sources */,
 				672AA4F216B602A500B7DEE6 /* ChartViewController.m in Sources */,
-				672AA4F516B6128700B7DEE6 /* StartViewController.m in Sources */,
 				672AA4F916B6150B00B7DEE6 /* GoalsViewController.m in Sources */,
 				672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */,
 				67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */,
@@ -935,6 +955,8 @@
 				67B2FD0D16C60013008694F1 /* BWSelectViewController.m in Sources */,
 				67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */,
 				67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */,
+				67C8E31216D19C4E00E4DE11 /* CreateGoalViewController.m in Sources */,
+				67C8E31C16D1A1E500E4DE11 /* EditGoalViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

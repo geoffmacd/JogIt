@@ -1,21 +1,21 @@
 //
-//  Settings.m
+//  EditGoalViewController.m
 //  RunnersCompass
 //
-//  Created by Geoff MacDonald on 2013-01-27.
+//  Created by Geoff MacDonald on 2013-02-17.
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "EditGoalViewController.h"
 #import "FormKit.h"
 
-@interface SettingsViewController()
+@interface EditGoalViewController ()
 
 @end
 
-@implementation SettingsViewController
+@implementation EditGoalViewController
 
-@synthesize formModel,prefs;
+@synthesize prefs, formModel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,12 +29,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
     
     UserPrefs *movie = [UserPrefs movieWithTitle:@"Full name"
-                                 content:@"After rescuing Han Solo from the palace of Jabba the Hutt, the Rebels attempt to destroy the Second Death Star, while Luke Skywalker tries to bring his father back to the Light Side of the Force."];
+                                         content:@"After rescuing Han Solo from the palace of Jabba the Hutt, the Rebels attempt to destroy the Second Death Star, while Luke Skywalker tries to bring his father back to the Light Side of the Force."];
     
     movie.shortName = @"SWEVI";
     movie.suitAllAges = [NSNumber numberWithBool:YES];
@@ -45,9 +45,10 @@
     self.prefs = movie;
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
+        
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:@"DONE" handler:^{
+        [formMapping buttonSave:@"Create Goal!" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", self.prefs);
             [self.formModel save];
@@ -55,30 +56,26 @@
         }];
         
         
-        [formMapping sectionWithTitle:@"Personal"  identifier:@"info"];
         
-        [formMapping mapAttribute:@"title" title:@"Full name" type:FKFormAttributeMappingTypeText];
+        [formMapping sectionWithTitle:@""  identifier:@"info"];
+        
+        [formMapping mapAttribute:@"numberOfActor" title:@"Distance" type:FKFormAttributeMappingTypeInteger];
+        
         [formMapping mappingForAttribute:@"releaseDate"
-                                   title:@"Birthdate"
+                                   title:@"Start Date"
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
-        [formMapping mapAttribute:@"numberOfActor" title:@"Weight" type:FKFormAttributeMappingTypeInteger];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Gender" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mappingForAttribute:@"releaseDate"
+                                   title:@"End Date"
+                                    type:FKFormAttributeMappingTypeDate
+                        attributeMapping:^(FKFormAttributeMapping *mapping) {
+                            
+                            mapping.dateFormat = @"yyyy-MM-dd";
+                        }];
         
-        
-        [formMapping sectionWithTitle:@"Measurement" identifier:@"bob"];
-        
-        [formMapping mapAttribute:@"suitAllAges" title:@"Auto-Pause" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Metric Units" type:FKFormAttributeMappingTypeBoolean];
-
-        
-        [formMapping sectionWithTitle:@"Sharing" identifier:@"sdf"];
-        
-        [formMapping mapAttribute:@"suitAllAges" title:@"Facebook" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Twitter" type:FKFormAttributeMappingTypeBoolean];
         
         
         [self.formModel registerMapping:formMapping];
@@ -90,6 +87,7 @@
     
     [self.formModel loadFieldsWithObject:movie];
     
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -97,6 +95,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 @end

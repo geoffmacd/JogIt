@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GoalsViewController : UITableViewController
+@interface GoalsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
+
+@property (weak, nonatomic) IBOutlet UIButton *doneBut;
+@property (weak, nonatomic) IBOutlet UIButton *goalButton;
+@property (weak, nonatomic) IBOutlet UITableView *table;
+
+- (IBAction)done:(id)sender;
+- (IBAction)goalTapped:(id)sender;
 @end

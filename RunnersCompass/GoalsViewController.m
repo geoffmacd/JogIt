@@ -7,6 +7,7 @@
 //
 
 #import "GoalsViewController.h"
+#import "CreateGoalViewController.h"
 
 @interface GoalsViewController ()
 
@@ -14,24 +15,13 @@
 
 @implementation GoalsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize table,doneBut,goalButton;
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,4 +85,56 @@
      */
 }
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
+{
+    return 1;
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    //return number of  goals
+    return 4;
+}
+
+// Customize the appearance of table view cells.
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.textLabel.text = [NSString stringWithFormat:@"cell%i%i", indexPath.section, indexPath.row];
+    }
+    return cell;
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    return 44.0;
+    
+    
+    
+}
+
+
+#pragma mark - UI actions
+
+
+- (IBAction)done:(id)sender {
+    [self dismissViewControllerAnimated:true completion:nil];
+}
+
+- (IBAction)goalTapped:(id)sender {
+    
+    CreateGoalViewController  * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoalViewController" bundle:nil];
+    
+    [self presentViewController:vc animated:true completion:nil];
+    
+}
 @end

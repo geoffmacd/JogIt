@@ -1,8 +1,8 @@
 //
-//  Settings.h
+//  EditGoalViewController.h
 //  RunnersCompass
 //
-//  Created by Geoff MacDonald on 2013-01-27.
+//  Created by Geoff MacDonald on 2013-02-17.
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
@@ -11,8 +11,7 @@
 
 @class FKFormModel;
 
-@interface SettingsViewController : UITableViewController
-
+@interface EditGoalViewController : UITableViewController
 
 @property (nonatomic, strong) FKFormModel *formModel;
 @property (nonatomic,strong) UserPrefs *prefs;
