@@ -98,6 +98,7 @@
 		67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7416C3215A00C99BD6 /* EditTableCell.m */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
 		67F6356C16D207F600D51CA2 /* hudbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6356B16D207F600D51CA2 /* hudbackground.png */; };
+		67F6357016D496A700D51CA2 /* mapdropshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6356F16D496A700D51CA2 /* mapdropshadow.png */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC068D16A117B800491C97 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068C16A117B800491C97 /* Constants.m */; };
 		67FC06B116A11F5E00491C97 /* pause_logo_large.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B016A11F5E00491C97 /* pause_logo_large.png */; };
@@ -283,6 +284,7 @@
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
 		67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPrefs.m; sourceTree = "<group>"; };
 		67F6356B16D207F600D51CA2 /* hudbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hudbackground.png; path = Graphics/hudbackground.png; sourceTree = SOURCE_ROOT; };
+		67F6356F16D496A700D51CA2 /* mapdropshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapdropshadow.png; path = Graphics/mapdropshadow.png; sourceTree = SOURCE_ROOT; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67F6356F16D496A700D51CA2 /* mapdropshadow.png */,
 				67F6356B16D207F600D51CA2 /* hudbackground.png */,
 				67C8E35316D1EBA900E4DE11 /* pause invert.png */,
 				67C8E32416D1B3FC00E4DE11 /* dragmask.png */,
@@ -767,6 +770,7 @@
 				67C8E35016D1E5A800E4DE11 /* Default-568h@2x.png in Resources */,
 				67C8E35416D1EBAA00E4DE11 /* pause invert.png in Resources */,
 				67F6356C16D207F600D51CA2 /* hudbackground.png in Resources */,
+				67F6357016D496A700D51CA2 /* mapdropshadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

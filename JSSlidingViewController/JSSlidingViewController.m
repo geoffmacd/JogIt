@@ -139,6 +139,38 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self updateInterface];
 }
 
+#pragma mark - Setup
+
+- (void)setupSlidingScrollView {
+    CGRect frame = self.view.bounds;
+    [self setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:kDefaultVisiblePortion];
+    self.slidingScrollView = [[SlidingScrollView alloc] initWithFrame:frame];
+    _slidingScrollView.contentOffset = CGPointMake(0, 0);
+    _slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
+    _slidingScrollView.delegate = self;
+    //_slidingScrollView.backgroundColor = [UIColor greenColor];
+    [self.view insertSubview:_slidingScrollView atIndex:0];
+    _isOpen = NO;
+    _locked = NO;
+    _animating = NO;
+    _frontViewControllerHasOpenCloseNavigationBarButton = YES;
+    _allowManualSliding = YES;
+    
+    self.frontViewControllerDropShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
+    self.frontViewControllerDropShadow.frame = CGRectMake(20.0f, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
+    [_slidingScrollView addSubview:self.frontViewControllerDropShadow];
+    
+    self.frontViewControllerDropShadow_right = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
+    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
+    self.frontViewControllerDropShadow_right.transform = CGAffineTransformMakeRotation(M_PI);//to rotate drop shadow
+    [_slidingScrollView addSubview:self.frontViewControllerDropShadow_right];
+    
+    
+    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
+    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 200.0f, 50.0f, 50.0f);
+    [_slidingScrollView addSubview:self.pauseImage];
+}
+
 #pragma mark - AutoRotation
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -251,6 +283,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             duration2 = duration2 * 1.5f;
         }
     }
+    [self.pauseImage setHidden:true];
     [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         CGRect rect = _slidingScrollView.frame;
         rect.origin.x = -320.0f;
@@ -268,6 +301,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             _animating = NO;
             self.view.userInteractionEnabled = YES;
             [self didClose];
+            [self.pauseImage setHidden:false];
             if (completion) {
                 completion();
             }
@@ -635,36 +669,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [super touchesEnded:touches withEvent:event];
 }
 
-#pragma mark - Setup
-
-- (void)setupSlidingScrollView {
-    CGRect frame = self.view.bounds;
-    [self setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:kDefaultVisiblePortion];
-    self.slidingScrollView = [[SlidingScrollView alloc] initWithFrame:frame];
-    _slidingScrollView.contentOffset = CGPointMake(0, 0);
-    _slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
-    _slidingScrollView.delegate = self;
-    [self.view insertSubview:_slidingScrollView atIndex:0];
-    _isOpen = NO;
-    _locked = NO;
-    _animating = NO;
-    _frontViewControllerHasOpenCloseNavigationBarButton = YES;
-    _allowManualSliding = YES;
-    
-    self.frontViewControllerDropShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
-    self.frontViewControllerDropShadow.frame = CGRectMake(20.0f, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
-    [_slidingScrollView addSubview:self.frontViewControllerDropShadow];
-    
-    self.frontViewControllerDropShadow_right = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
-    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
-    self.frontViewControllerDropShadow_right.transform = CGAffineTransformMakeRotation(M_PI);//to rotate drop shadow
-    [_slidingScrollView addSubview:self.frontViewControllerDropShadow_right];
-    
-    
-    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
-    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 200.0f, 50.0f, 50.0f);
-    [_slidingScrollView addSubview:self.pauseImage];
-}
 
 #pragma mark - Convenience
 

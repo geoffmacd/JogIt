@@ -7,6 +7,7 @@
 //
 
 #import "Logger.h"
+#import "JSSlidingViewController.h"
 
 @interface LoggerViewController ()
 
@@ -27,7 +28,12 @@
 @synthesize statusIcon;
 @synthesize timer;
 @synthesize finishBut;
-
+@synthesize mapScroll;
+@synthesize scrollEnabled;
+@synthesize dragMask;
+@synthesize mapButton;
+@synthesize mapDropShadow;
+@synthesize mapFakeBut;
 
 -(void)setRun:(RunEvent *)_run
 {
@@ -49,15 +55,16 @@
             duration = 0.4f;
         }
     }
+    
     [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         
         //set back to start
         CGRect mapRect;
-        mapRect.origin = CGPointMake(0, 400);
+        mapRect.origin = CGPointMake(0, 375);
         mapRect.size =  mapView.frame.size;
         [mapView setFrame:mapRect];
-        
-        [mapThumbnail setAlpha:1.0f];
+        [mapDropShadow setAlpha:0.0f];
+        [mapButton setAlpha:1.0f];
     } completion:^(BOOL finished) {
         if (completion) {
             completion();
@@ -75,16 +82,18 @@
             duration = 0.4f;
         }
     }
+    
     [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         
         //open mapview and pin to top
         CGRect mapRect;
-        mapRect.origin = CGPointMake(0, 80);
+        mapRect.origin = CGPointMake(0, 115);
         mapRect.size =  mapView.frame.size;
         [mapView setFrame:mapRect];
         
         
-        [mapThumbnail setAlpha:0.0f];
+        [mapDropShadow setAlpha:1.0f];
+        [mapButton setAlpha:0.0f];
         
     } completion:^(BOOL finished) {
         if (completion) {
@@ -97,19 +106,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
     
     paused = true;
     
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
     
+    
     CGRect mapRect;
-    mapRect.origin = CGPointMake(0, 400);
+    mapRect.origin = CGPointMake(0, 375);
     mapRect.size =  mapView.frame.size;
     [mapView setFrame:mapRect];
     
     [self.view addSubview:mapView];
+     
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
@@ -131,26 +142,57 @@
     
     if(paused){
         [UIView transitionWithView:pauseImage
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
+                          duration:0.3f
+                           options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             pauseImage.image = [UIImage imageNamed:@"pause invert.png"];
                         } completion:NULL];
-        [statusIcon setImage:[UIImage imageNamed:@"pause.png"]];
         
+        [UIView transitionWithView:statusIcon
+                          duration:0.3f
+                           options:UIViewAnimationOptionCurveLinear
+                        animations:^{
+                            statusIcon.image = [UIImage imageNamed:@"pause.png"];
+                        } completion:NULL];
+        
+        finishBut.alpha = 0.0f;
         [finishBut setHidden:false];
+        [UIView transitionWithView:finishBut
+                          duration:0.2f
+                           options:UIViewAnimationOptionCurveLinear
+                        animations:^{
+                            finishBut.alpha = 1.0f;
+                        } completion:nil];
+        
     }
     else
     {
         [UIView transitionWithView:pauseImage
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
+                          duration:0.3f
+                           options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             pauseImage.image = [UIImage imageNamed:@"record.png"];
                         } completion:NULL];
-        [statusIcon setImage:[UIImage imageNamed:@"record.png"]];
         
-        [finishBut setHidden:true];
+        
+        [UIView transitionWithView:statusIcon
+                          duration:0.3f
+                           options:UIViewAnimationOptionCurveLinear
+                        animations:^{
+                            statusIcon.image = [UIImage imageNamed:@"record.png"];
+                        } completion:NULL];
+        
+        
+        finishBut.alpha = 1.0f;
+        [UIView transitionWithView:finishBut
+                          duration:0.2f
+                           options:UIViewAnimationOptionCurveLinear
+                        animations:^{
+                            finishBut.alpha = 0.0f;
+                        } completion:^(BOOL finish){
+                            [finishBut setHidden:true];
+                        }];
+        
     }
 }
 
@@ -290,18 +332,17 @@
 
 #pragma mark - UI Actions
 
-- (IBAction)hamburgerTapped:(id)sender {
-    [delegate menuButtonPressed:sender];
-    
-    
-}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if(gestureRecognizer == panGesture)
     {
         CGPoint pt = [touch locationInView:mapView];
-        CGRect rect = dragMapButton.frame;
+        CGRect rect = mapButton.frame;
+        if(inMapView)
+        {
+            rect = mapFakeBut.frame;
+        }
         if(CGRectContainsPoint(rect, pt))
         {
             return true;
@@ -334,13 +375,28 @@
             
             [self closeMapWithSmoothAnimation:true completion:nil];
             inMapView = false;
+        } else if (current.y < -250 && !inMapView){
+            
+            [pan setEnabled:FALSE];
+            [pan setEnabled:TRUE];
+            
+            [self openMapWithSmoothAnimation:true completion:nil];
+            inMapView = false;
+        }else if (current.y > 250 && inMapView){
+            
+            [pan setEnabled:FALSE];
+            [pan setEnabled:TRUE];
+            
+            [self closeMapWithSmoothAnimation:true completion:nil];
+            inMapView = false;
+        } else{
+            CGRect mapRect;
+            mapRect.origin = CGPointMake(0, (inMapView ? 115 : 375) + current.y);
+            mapRect.size =  mapView.frame.size;
+            
+            [mapView setFrame:mapRect];
+        
         }
-        
-        CGRect mapRect;
-        mapRect.origin = CGPointMake(0, (inMapView ? 80 : 400) + current.y);
-        mapRect.size =  mapView.frame.size;
-        
-        [mapView setFrame:mapRect];
     }
     else
     {
@@ -364,10 +420,19 @@
         [self openMapWithSmoothAnimation:true completion:nil];
         inMapView = true;
     }
+
 }
+
+
 
 - (IBAction)finishTapped:(id)sender {
     [delegate menuButtonPressed:sender];
+    
+}
+
+- (IBAction)hamburgerTapped:(id)sender {
+    [delegate menuButtonPressed:sender];
+    
     
 }
 @end

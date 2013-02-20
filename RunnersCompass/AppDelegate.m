@@ -42,7 +42,12 @@
 
 - (void)menuButtonPressed:(id)sender{
     if(!self.viewController.isOpen)
-        [self.viewController openSlider:true completion:nil];
+    {
+        [self.viewController.view setUserInteractionEnabled:false];
+        [self.viewController openSlider:true completion:^{
+            [self.viewController.view setUserInteractionEnabled:true];
+        }];
+    }
 }
 
 #pragma mark - Menu Delegate Methods
@@ -64,12 +69,14 @@
     
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
+    [self.backVC.view setClipsToBounds:true];
     
     self.frontVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
     self.frontVC.delegate = self;
     
     
     self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
+    
     //set the delegates to receive the messages
     self.viewController.delegate = self.backVC;
     self.viewController.menuDelegate = self.frontVC;
@@ -77,6 +84,9 @@
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    
+    [self.backVC.view.layer setCornerRadius:5.0f];
     
     //set user defaults
     [self setUserDefaults];

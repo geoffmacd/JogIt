@@ -20,7 +20,7 @@
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate>
 {
 @private
     CPTXYGraph *barChart;
@@ -36,7 +36,9 @@
 @property (nonatomic, weak, setter = setRun:) RunEvent * run;
 @property (assign, nonatomic) BOOL inMapView;
 @property (assign, nonatomic) BOOL paused;
+@property (assign, nonatomic) BOOL scrollEnabled;
 @property (readwrite, retain, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) UIScrollView *mapScroll;
 
 
 //UI
@@ -48,8 +50,12 @@
 @property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
 @property (strong, nonatomic) IBOutlet UIButton *finishBut;
+@property (strong, nonatomic) IBOutlet UIImageView *dragMask;
+@property (strong, nonatomic) IBOutlet UIButton *mapButton;
+@property (strong, nonatomic) IBOutlet UIImageView *mapDropShadow;
 
 
+@property (strong, nonatomic) IBOutlet UIButton *mapFakeBut;
 
 
 //IB
