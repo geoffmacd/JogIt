@@ -11,6 +11,10 @@
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
 
+#define mapViewYOffset 400
+#define mapDragCutoff 250
+#define mapDragPreventOpposite 5
+
 
 @protocol LoggerViewControllerDelegate <NSObject>
 
@@ -54,8 +58,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
 @property (strong, nonatomic) IBOutlet UIImageView *mapDropShadow;
 
+@property (strong, nonatomic) IBOutlet UIButton *graphButton;
+@property (strong, nonatomic) IBOutlet UIImageView *map;
 
-@property (strong, nonatomic) IBOutlet UIButton *mapFakeBut;
 
 
 //IB

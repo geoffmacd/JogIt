@@ -8,6 +8,7 @@
 
 #import "HierarchicalCell.h"
 #import "AnimationUtil.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation HierarchicalCell
 
@@ -46,7 +47,7 @@
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     
-    NSString * header = [NSString stringWithFormat:@"%@ - %@", associatedRun.name, [dateFormatter stringFromDate:associatedRun.date]];
+    NSString * header = [NSString stringWithFormat:@"%@ • %@", associatedRun.name, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //set thumbnail
@@ -62,6 +63,8 @@
     
     [expandedView setBackgroundColor:col2];
     
+    [thumbnailImage.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    [thumbnailImage.layer setBorderWidth: 1.0];
     
 }
 

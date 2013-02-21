@@ -33,7 +33,8 @@
 @synthesize dragMask;
 @synthesize mapButton;
 @synthesize mapDropShadow;
-@synthesize mapFakeBut;
+@synthesize graphButton;
+@synthesize map;
 
 -(void)setRun:(RunEvent *)_run
 {
@@ -60,11 +61,11 @@
         
         //set back to start
         CGRect mapRect;
-        mapRect.origin = CGPointMake(0, 375);
+        mapRect.origin = CGPointMake(0, mapViewYOffset);
         mapRect.size =  mapView.frame.size;
         [mapView setFrame:mapRect];
-        [mapDropShadow setAlpha:0.0f];
-        [mapButton setAlpha:1.0f];
+        
+        
     } completion:^(BOOL finished) {
         if (completion) {
             completion();
@@ -87,13 +88,11 @@
         
         //open mapview and pin to top
         CGRect mapRect;
-        mapRect.origin = CGPointMake(0, 115);
         mapRect.size =  mapView.frame.size;
+        mapRect.origin = CGPointMake(0, mapViewYOffset - map.frame.size.height);
         [mapView setFrame:mapRect];
         
         
-        [mapDropShadow setAlpha:1.0f];
-        [mapButton setAlpha:0.0f];
         
     } completion:^(BOOL finished) {
         if (completion) {
@@ -115,11 +114,18 @@
     
     
     CGRect mapRect;
-    mapRect.origin = CGPointMake(0, 375);
     mapRect.size =  mapView.frame.size;
+    mapRect.origin = CGPointMake(0, mapViewYOffset);
     [mapView setFrame:mapRect];
     
     [self.view addSubview:mapView];
+    
+    
+    [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+    [mapButton.layer setBorderWidth: 1.0];
+    
+    [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+    [map.layer setBorderWidth: 1.0];
      
     
     [[NSNotificationCenter defaultCenter]addObserver:self
@@ -338,11 +344,12 @@
     if(gestureRecognizer == panGesture)
     {
         CGPoint pt = [touch locationInView:mapView];
-        CGRect rect = mapButton.frame;
-        if(inMapView)
+        CGRect rect = graphButton.frame;
+        if(CGRectContainsPoint(rect, pt))
         {
-            rect = mapFakeBut.frame;
+            return true;
         }
+        rect = mapButton.frame;
         if(CGRectContainsPoint(rect, pt))
         {
             return true;
@@ -362,27 +369,27 @@
         
         CGPoint current = [pan translationInView:self.view];
         
-        if(current.y < 5 && inMapView){
+        if(current.y < mapDragPreventOpposite && inMapView){
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self openMapWithSmoothAnimation:true completion:nil];
             inMapView = true;
-        } else if (current.y > 5 && !inMapView){
+        } else if (current.y > mapDragPreventOpposite && !inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self closeMapWithSmoothAnimation:true completion:nil];
             inMapView = false;
-        } else if (current.y < -250 && !inMapView){
+        } else if (current.y < -mapDragCutoff && !inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self openMapWithSmoothAnimation:true completion:nil];
             inMapView = false;
-        }else if (current.y > 250 && inMapView){
+        }else if (current.y > mapDragCutoff && inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
@@ -390,9 +397,11 @@
             [self closeMapWithSmoothAnimation:true completion:nil];
             inMapView = false;
         } else{
+            
             CGRect mapRect;
-            mapRect.origin = CGPointMake(0, (inMapView ? 115 : 375) + current.y);
             mapRect.size =  mapView.frame.size;
+            mapRect.origin = CGPointMake(0, (inMapView ? (self.view.frame.size.height - mapView.frame.size.height)  : mapViewYOffset) + current.y);
+            
             
             [mapView setFrame:mapRect];
         
@@ -401,7 +410,7 @@
     else
     {
         
-        if(mapView.frame.origin.y > 200){
+        if(mapView.frame.origin.y > mapDragCutoff){
             [self closeMapWithSmoothAnimation:true completion:nil];
             inMapView = false;
         } else{

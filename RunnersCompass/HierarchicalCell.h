@@ -33,11 +33,11 @@ typedef enum
 } HierarchicalType;
 
 //UI connections
-@property (weak, nonatomic) IBOutlet UIView *expandedView;
-@property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UIImageView *folderImage;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImage;
-@property (weak, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong, nonatomic) IBOutlet UIView *expandedView;
+@property (strong, nonatomic) IBOutlet UIView *headerView;
+@property (strong, nonatomic) IBOutlet UIImageView *folderImage;
+@property (strong, nonatomic) IBOutlet UIImageView *thumbnailImage;
+@property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;
