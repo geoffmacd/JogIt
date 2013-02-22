@@ -15,6 +15,7 @@
 @protocol MenuViewControllerDelegate <NSObject>
 
 - (void)loadRun:(RunEvent*) run;
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
 
 @end
 

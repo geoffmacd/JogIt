@@ -40,13 +40,12 @@
 @synthesize countdownLabel;
 
 
--(void)setRun:(RunEvent *)_run
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate
 {
-    run = _run;
     
-    [runTitle setText:run.name];
+    [runTitle setText:@"New Run"];
     
-    [statusIcon setHidden:!run.live];
+    [statusIcon setHidden:false];
     
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
@@ -70,12 +69,14 @@
                                               [UIView animateWithDuration:1.0 animations:^{
                                                   
                                                   [countdownLabel setAlpha:0.7f];
-
+                                                  
                                                   [shadeView setAlpha:0.0f];
                                                   
                                               }
                                                                completion:^(BOOL finish){
                                                                    [shadeView setHidden:true];
+                                                                   [shadeView setAlpha:1.0f];
+                                                                   [countdownLabel setText:@"3"];
                                                                    
                                                                }];
                                               
@@ -83,9 +84,16 @@
                          
                      }];
     
-    //shadeTimer = [NSTimer scheduledTimerWithTimeInterval: 3.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
+}
+
+-(void)setRun:(RunEvent *)_run
+{
+    run = _run;
     
-    //lock slider if not live
+    [runTitle setText:run.name];
+    
+    [statusIcon setHidden:true];
+
     
 }
 

@@ -49,7 +49,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @property (nonatomic, assign) CGFloat sliderOpeningWidth;
 @property (assign, nonatomic) CGFloat desiredVisiblePortionOfFrontViewWhenOpen;
 @property (strong, nonatomic) UIImageView *frontViewControllerDropShadow;
-@property (strong, nonatomic) UIImageView *pauseImage;
 @property (strong, nonatomic) UIImageView *frontViewControllerDropShadow_right;
 @property (assign, nonatomic) BOOL isAnimatingInterfaceOrientation;
 
@@ -73,6 +72,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @synthesize toggledState;
 @synthesize isSetupForPauseScroll;
 @synthesize changeState;
+@synthesize liveRun;
+@synthesize pauseImage;
 
 #define kDefaultVisiblePortion 0.0f
 
@@ -100,6 +101,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [super viewDidLoad];
     [self setupSlidingScrollView];
     CGRect frame = self.view.bounds;
+    
+    liveRun = true;
     
     self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
     [self addChildViewController:self.backViewController];
@@ -796,8 +799,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [_slidingScrollView addSubview:self.backViewController.view];
     
     //set bounces to true to enable this to be possible
-    _slidingScrollView.bounces = true;
-
+    _slidingScrollView.bounces = liveRun;
+    
     _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
     
     isSetupForPauseScroll = true;

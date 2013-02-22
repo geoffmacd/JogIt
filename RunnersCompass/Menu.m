@@ -235,7 +235,7 @@
 -(void)selectedNewRun:(RunEvent *) run
 {
     //set logger with this run
-    [self.delegate loadRun:run];
+    [self.delegate newRun:0 withMetric:0 animate:true];
     
 }
 

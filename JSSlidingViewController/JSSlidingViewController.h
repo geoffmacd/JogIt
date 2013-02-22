@@ -33,6 +33,8 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 @property (assign, nonatomic) BOOL shouldTemporarilyRemoveBackViewControllerWhenClosed;
 @property (assign, nonatomic) BOOL isSetupForPauseScroll;
 @property (assign, nonatomic) BOOL changeState;
+@property (assign, nonatomic) BOOL liveRun;
+@property (strong, nonatomic) UIImageView *pauseImage;
 
 - (id)initWithFrontViewController:(UIViewController *)frontVC backViewController:(UIViewController *)backVC;
 - (void)closeSlider:(BOOL)animated completion:(void (^)(void))completion;

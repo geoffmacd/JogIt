@@ -699,16 +699,16 @@
 				<array key="IBUIGestureRecognizers" id="0"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUIView" id="385958213">
+			<object class="IBUIView" id="631474008">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">1316</int>
+				<int key="NSvFlags">-2147482332</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUILabel" id="628536893">
-						<reference key="NSNextResponder" ref="385958213"/>
+					<object class="IBUILabel" id="810036111">
+						<reference key="NSNextResponder" ref="631474008"/>
 						<int key="NSvFlags">1312</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{89, 229}, {143, 59}}</string>
-						<reference key="NSSuperview" ref="385958213"/>
+						<reference key="NSSuperview" ref="631474008"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -724,14 +724,14 @@
 						<reference key="IBUIFont" ref="898457161"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
-					<object class="IBUILabel" id="710957489">
-						<reference key="NSNextResponder" ref="385958213"/>
+					<object class="IBUILabel" id="991273031">
+						<reference key="NSNextResponder" ref="631474008"/>
 						<int key="NSvFlags">1312</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{88, 194}, {145, 21}}</string>
-						<reference key="NSSuperview" ref="385958213"/>
+						<reference key="NSSuperview" ref="631474008"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="628536893"/>
+						<reference key="NSNextKeyView" ref="810036111"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -763,7 +763,7 @@
 				<string key="NSFrameSize">{320, 548}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="710957489"/>
+				<reference key="NSNextKeyView" ref="991273031"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MAA</bytes>
@@ -917,7 +917,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">shadeView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="385958213"/>
+						<reference key="destination" ref="631474008"/>
 					</object>
 					<int key="connectionID">190</int>
 				</object>
@@ -925,7 +925,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">countdownLabel</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="628536893"/>
+						<reference key="destination" ref="810036111"/>
 					</object>
 					<int key="connectionID">191</int>
 				</object>
@@ -1201,22 +1201,22 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">160</int>
-						<reference key="object" ref="385958213"/>
+						<reference key="object" ref="631474008"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="628536893"/>
-							<reference ref="710957489"/>
+							<reference ref="810036111"/>
+							<reference ref="991273031"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">181</int>
-						<reference key="object" ref="710957489"/>
-						<reference key="parent" ref="385958213"/>
+						<reference key="object" ref="991273031"/>
+						<reference key="parent" ref="631474008"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">183</int>
-						<reference key="object" ref="628536893"/>
-						<reference key="parent" ref="385958213"/>
+						<reference key="object" ref="810036111"/>
+						<reference key="parent" ref="631474008"/>
 					</object>
 				</array>
 			</object>
@@ -1355,6 +1355,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="chart">CPTGraphHostingView</string>
+						<string key="countdownLabel">UILabel</string>
 						<string key="dragMapButton">UIButton</string>
 						<string key="dragMask">UIImageView</string>
 						<string key="finishBut">UIButton</string>
@@ -1373,6 +1374,10 @@
 						<object class="IBToOneOutletInfo" key="chart">
 							<string key="name">chart</string>
 							<string key="candidateClassName">CPTGraphHostingView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="countdownLabel">
+							<string key="name">countdownLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="dragMapButton">
 							<string key="name">dragMapButton</string>

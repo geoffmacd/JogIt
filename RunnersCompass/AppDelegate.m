@@ -54,10 +54,25 @@
 
 - (void)loadRun:(RunEvent*) run
 {
-    //load this run into the logger and adjust width if it was closed
+    //lock slider to  prevent pause
+    [self.viewController setLiveRun:false];
+    
+    //load this run into the logger
     
     [self.backVC setRun:run];
     [self.viewController closeSlider:true completion:nil];
+    
+}
+
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate
+{
+    //unlock slider
+    [self.viewController setLiveRun:true];
+    
+    [self.backVC newRun:value withMetric:metric animate:animate];
+    [self.viewController closeSlider:true completion:nil];
+    
+    
 }
 
 

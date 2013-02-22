@@ -84,7 +84,7 @@
 {
     
     expanded = open;
-    NSTimeInterval time = animate ? 0.25f : 0.01f;
+    NSTimeInterval time = animate ? 0.15f : 0.01f;
     
     if(expanded){
         

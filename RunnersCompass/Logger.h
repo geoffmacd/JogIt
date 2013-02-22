@@ -72,5 +72,7 @@
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
 
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
+
 @end
 
