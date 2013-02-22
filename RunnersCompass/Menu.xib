@@ -43,7 +43,6 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 504}</string>
 						<reference key="NSSuperview" ref="293323269"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="235024299"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -64,7 +63,6 @@
 						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{0, 504}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="293323269"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -109,7 +107,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 548}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="73888507"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -453,13 +450,34 @@
 					<string key="className">MenuViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="calorieTapped:">id</string>
+						<string key="distanceTapped:">id</string>
 						<string key="goalsNavPressed:">id</string>
+						<string key="justGoTapped:">id</string>
+						<string key="paceTapped:">id</string>
 						<string key="performanceNavPressed:">id</string>
 						<string key="settingsNavPressed:">id</string>
+						<string key="timeTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="calorieTapped:">
+							<string key="name">calorieTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="distanceTapped:">
+							<string key="name">distanceTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="goalsNavPressed:">
 							<string key="name">goalsNavPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="justGoTapped:">
+							<string key="name">justGoTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="paceTapped:">
+							<string key="name">paceTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="performanceNavPressed:">
@@ -468,6 +486,10 @@
 						</object>
 						<object class="IBActionInfo" key="settingsNavPressed:">
 							<string key="name">settingsNavPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="timeTapped:">
+							<string key="name">timeTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

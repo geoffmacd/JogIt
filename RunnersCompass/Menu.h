@@ -27,6 +27,8 @@
     
 }
 
+-(void)testNewRun;
+
 //delegate
 @property (weak, nonatomic) id <MenuViewControllerDelegate>delegate;
 

@@ -27,13 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (weak, nonatomic) IBOutlet UIView *justGoView;
-@property (weak, nonatomic) IBOutlet UIView *distanceView;
-@property (weak, nonatomic) IBOutlet UIView *paceView;
-@property (weak, nonatomic) IBOutlet UIView *timeView;
-@property (weak, nonatomic) IBOutlet UILabel *presetTimeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *pacePresetLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distancePresetLAbel;
 
 - (IBAction)expandTapped:(id)sender;
 - (IBAction)headerTapped:(id)sender;
@@ -47,6 +40,11 @@
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
 - (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer;
 -(void)setup;
+- (IBAction)justGoTapped:(id)sender;
+- (IBAction)distanceTapped:(id)sender;
+- (IBAction)paceTapped:(id)sender;
+- (IBAction)timeTapped:(id)sender;
+- (IBAction)calorieTapped:(id)sender;
 
 @end
 

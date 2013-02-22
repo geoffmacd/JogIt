@@ -36,19 +36,22 @@
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
 		6732C6F616BEF58900225225 /* ButtonTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6732C6F516BEF58900225225 /* ButtonTableCell.xib */; };
 		6732C6FA16BEF7DD00225225 /* EditTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6732C6F916BEF7DD00225225 /* EditTableCell.xib */; };
-		6732C6FC16BEF7FE00225225 /* SwitchTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6732C6FB16BEF7FE00225225 /* SwitchTableCell.xib */; };
+		6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6735780C16D71CE1004A92D1 /* TimePicker.m */; };
 		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
 		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
 		6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */; };
 		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
 		6748647216B23890004D2B47 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748647116B23890004D2B47 /* settings.png */; };
+		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
+		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
+		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
+		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
 		67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */; };
 		67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1616CDC6EE009F6BD0 /* goals.png */; };
 		67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1816CDC790009F6BD0 /* stopwatch.png */; };
 		67B2EF1F16CDDB4B009F6BD0 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1E16CDDB4B009F6BD0 /* gear.png */; };
 		67B2EF2316CDE0E3009F6BD0 /* addrunicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */; };
 		67B2EF2516CDE51D009F6BD0 /* whiteaddrun.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */; };
-		67B2FC9616C5DCD1008694F1 /* SwitchTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FC9516C5DCD1008694F1 /* SwitchTableCell.m */; };
 		67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */; };
 		67B2FCDA16C5FDFA008694F1 /* FKButtonField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA616C5FDFA008694F1 /* FKButtonField.m */; };
 		67B2FCDB16C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA816C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m */; };
@@ -97,6 +100,8 @@
 		67C8E35416D1EBAA00E4DE11 /* pause invert.png in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E35316D1EBA900E4DE11 /* pause invert.png */; };
 		67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7416C3215A00C99BD6 /* EditTableCell.m */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
+		67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059316D7150800A20B6F /* CaloriePicker.m */; };
+		67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059B16D71B5000A20B6F /* DistancePicker.m */; };
 		67F6356C16D207F600D51CA2 /* hudbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6356B16D207F600D51CA2 /* hudbackground.png */; };
 		67F6357016D496A700D51CA2 /* mapdropshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6356F16D496A700D51CA2 /* mapdropshadow.png */; };
 		67F6357216D5A06C00D51CA2 /* paceindicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6357116D5A06C00D51CA2 /* paceindicator.png */; };
@@ -184,20 +189,28 @@
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
 		6732C6F516BEF58900225225 /* ButtonTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ButtonTableCell.xib; sourceTree = "<group>"; };
 		6732C6F916BEF7DD00225225 /* EditTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditTableCell.xib; sourceTree = "<group>"; };
-		6732C6FB16BEF7FE00225225 /* SwitchTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchTableCell.xib; sourceTree = "<group>"; };
+		6735780B16D71CE1004A92D1 /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
+		6735780C16D71CE1004A92D1 /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
 		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = map.JPG; path = ../Graphics/map.JPG; sourceTree = "<group>"; };
 		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Graphics/hud.png; sourceTree = SOURCE_ROOT; };
 		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
 		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../Graphics/settings.png; sourceTree = "<group>"; };
+		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
+		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
+		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
+		676CA82216D70A5B00E4B121 /* RunFormStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormStringPicker.h; sourceTree = "<group>"; };
+		676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormStringPicker.m; sourceTree = "<group>"; };
+		676CA82D16D70D2E00E4B121 /* RunFormDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormDatePicker.h; sourceTree = "<group>"; };
+		676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormDatePicker.m; sourceTree = "<group>"; };
+		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
+		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
 		67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsgear.png; path = ../Graphics/settingsgear.png; sourceTree = "<group>"; };
 		67B2EF1616CDC6EE009F6BD0 /* goals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goals.png; path = ../Graphics/goals.png; sourceTree = "<group>"; };
 		67B2EF1816CDC790009F6BD0 /* stopwatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopwatch.png; path = ../Graphics/stopwatch.png; sourceTree = "<group>"; };
 		67B2EF1E16CDDB4B009F6BD0 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gear.png; path = Graphics/gear.png; sourceTree = SOURCE_ROOT; };
 		67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addrunicon.png; path = Graphics/addrunicon.png; sourceTree = SOURCE_ROOT; };
 		67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteaddrun.png; path = Graphics/whiteaddrun.png; sourceTree = SOURCE_ROOT; };
-		67B2FC9416C5DCD1008694F1 /* SwitchTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchTableCell.h; sourceTree = "<group>"; };
-		67B2FC9516C5DCD1008694F1 /* SwitchTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchTableCell.m; sourceTree = "<group>"; };
 		67B2FCA316C5FDFA008694F1 /* FKBadgeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKBadgeField.h; sourceTree = "<group>"; };
 		67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKBadgeField.m; sourceTree = "<group>"; };
 		67B2FCA516C5FDFA008694F1 /* FKButtonField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKButtonField.h; sourceTree = "<group>"; };
@@ -285,12 +298,16 @@
 		67C8E32116D1AC5400E4DE11 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = record.png; path = Graphics/record.png; sourceTree = SOURCE_ROOT; };
 		67C8E32416D1B3FC00E4DE11 /* dragmask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dragmask.png; path = Graphics/dragmask.png; sourceTree = SOURCE_ROOT; };
 		67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
-		67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		67C8E35316D1EBA900E4DE11 /* pause invert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause invert.png"; path = "Graphics/pause invert.png"; sourceTree = SOURCE_ROOT; };
 		67CAFC7316C3215A00C99BD6 /* EditTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTableCell.h; sourceTree = "<group>"; };
 		67CAFC7416C3215A00C99BD6 /* EditTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTableCell.m; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
 		67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPrefs.m; sourceTree = "<group>"; };
+		67D7059216D7150800A20B6F /* CaloriePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaloriePicker.h; sourceTree = "<group>"; };
+		67D7059316D7150800A20B6F /* CaloriePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaloriePicker.m; sourceTree = "<group>"; };
+		67D7059A16D71B5000A20B6F /* DistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePicker.h; sourceTree = "<group>"; };
+		67D7059B16D71B5000A20B6F /* DistancePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePicker.m; sourceTree = "<group>"; };
 		67F6356B16D207F600D51CA2 /* hudbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hudbackground.png; path = Graphics/hudbackground.png; sourceTree = SOURCE_ROOT; };
 		67F6356F16D496A700D51CA2 /* mapdropshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapdropshadow.png; path = Graphics/mapdropshadow.png; sourceTree = SOURCE_ROOT; };
 		67F6357116D5A06C00D51CA2 /* paceindicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = paceindicator.png; path = Graphics/paceindicator.png; sourceTree = SOURCE_ROOT; };
@@ -341,8 +358,8 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
+				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
 				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
 				67236D0E16409B7700DD13C5 /* RunnersCompass */,
@@ -448,6 +465,28 @@
 				672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */,
 			);
 			path = JSSlidingViewController;
+			sourceTree = "<group>";
+		};
+		676CA81A16D70A5B00E4B121 /* Pickers */ = {
+			isa = PBXGroup;
+			children = (
+				67AED68816D72069007F6943 /* PacePicker.h */,
+				67AED68916D72069007F6943 /* PacePicker.m */,
+				6735780B16D71CE1004A92D1 /* TimePicker.h */,
+				6735780C16D71CE1004A92D1 /* TimePicker.m */,
+				67D7059A16D71B5000A20B6F /* DistancePicker.h */,
+				67D7059B16D71B5000A20B6F /* DistancePicker.m */,
+				67D7059216D7150800A20B6F /* CaloriePicker.h */,
+				67D7059316D7150800A20B6F /* CaloriePicker.m */,
+				676CA82D16D70D2E00E4B121 /* RunFormDatePicker.h */,
+				676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */,
+				676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */,
+				676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */,
+				676CA82116D70A5B00E4B121 /* RunFormPicker.h */,
+				676CA82216D70A5B00E4B121 /* RunFormStringPicker.h */,
+				676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */,
+			);
+			path = Pickers;
 			sourceTree = "<group>";
 		};
 		67B2FCA116C5FDF9008694F1 /* FormKit */ = {
@@ -579,6 +618,7 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */,
 				67F635D016D6E8A900D51CA2 /* verticalpointer.png */,
 				67F635CC16D5F00200D51CA2 /* hud2.png */,
 				67F635CA16D5E53100D51CA2 /* pullstrap.png */,
@@ -677,9 +717,6 @@
 				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
 				672AA39016B4C87E00B7DEE6 /* StartCell.m */,
 				672AA39116B4C87E00B7DEE6 /* StartCell.xib */,
-				67B2FC9416C5DCD1008694F1 /* SwitchTableCell.h */,
-				67B2FC9516C5DCD1008694F1 /* SwitchTableCell.m */,
-				6732C6FB16BEF7FE00225225 /* SwitchTableCell.xib */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -777,7 +814,6 @@
 				6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */,
 				6732C6F616BEF58900225225 /* ButtonTableCell.xib in Resources */,
 				6732C6FA16BEF7DD00225225 /* EditTableCell.xib in Resources */,
-				6732C6FC16BEF7FE00225225 /* SwitchTableCell.xib in Resources */,
 				67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */,
 				67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */,
 				67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */,
@@ -834,7 +870,6 @@
 				672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */,
 				67CAFC7516C3215A00C99BD6 /* EditTableCell.m in Sources */,
 				67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */,
-				67B2FC9616C5DCD1008694F1 /* SwitchTableCell.m in Sources */,
 				67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */,
 				67B2FCDA16C5FDFA008694F1 /* FKButtonField.m in Sources */,
 				67B2FCDB16C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m in Sources */,
@@ -871,6 +906,13 @@
 				67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */,
 				67C8E31216D19C4E00E4DE11 /* CreateGoalViewController.m in Sources */,
 				67C8E31C16D1A1E500E4DE11 /* EditGoalViewController.m in Sources */,
+				676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */,
+				676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */,
+				676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */,
+				67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */,
+				67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */,
+				6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */,
+				67AED68A16D72069007F6943 /* PacePicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

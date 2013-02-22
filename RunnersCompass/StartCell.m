@@ -15,22 +15,12 @@
 @synthesize headerLabel;
 @synthesize expandedView;
 @synthesize headerView;
-@synthesize justGoView;
-@synthesize distancePresetLAbel;
-@synthesize distanceView;
-@synthesize pacePresetLabel;
-@synthesize paceView;
-@synthesize timeView;
-@synthesize presetTimeLabel;
 @synthesize delegate;
 
 @synthesize expanded;
 
 -(void)setup
 {
-    [presetTimeLabel setText:@"40min"];
-    [pacePresetLabel setText:@"4:35 min/Km"];
-    [distancePresetLAbel setText:@"6.5 Km"];
 
     
     [self setExpand:false withAnimation:false];
@@ -44,8 +34,6 @@
     [expandedView setBackgroundColor:col3];
     
 }
-
-
 
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
@@ -122,4 +110,22 @@
 - (IBAction)headerTapped:(id)sender {
     [self setExpand:!expanded withAnimation:true];
 }
+
+
+- (IBAction)paceTapped:(id)sender {
+}
+
+- (IBAction)timeTapped:(id)sender {
+}
+
+- (IBAction)calorieTapped:(id)sender {
+}
+
+- (IBAction)justGoTapped:(id)sender {
+}
+
+- (IBAction)distanceTapped:(id)sender {
+}
+
+
 @end

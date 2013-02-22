@@ -14,7 +14,7 @@
 #import "PerformanceViewController.h"
 #import "SettingsViewController.h"
 #import "GoalsViewController.h"
-
+#import "RunFormPicker.h"
 
 
 @implementation MenuViewController
@@ -297,5 +297,67 @@
     SettingsViewController * vc = [[SettingsViewController alloc] initWithNibName:@"Settings" bundle:nil];
     
     [self presentViewController:vc animated:true completion:nil];
+}
+
+
+
+
+#pragma mark -
+#pragma mark StartCell Actions
+
+-(void)testNewRun
+{
+    
+    
+    RunEvent * new = [[RunEvent alloc] initWithName:@"geoff's run" date:[NSDate date]];
+    new.live = true;
+    [self selectedNewRun:new];
+    
+}
+
+- (IBAction)paceTapped:(id)sender {
+    PacePicker *pace = [[PacePicker alloc] initWithTitle:@" Pace " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    [pace addCustomButtonWithTitle:@"PR" value:nil];
+    
+    [pace showRunFormPicker];
+    
+    //[PacePicker showPickerWithTitle:@"Select Pace Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+}
+
+- (IBAction)timeTapped:(id)sender {
+    //[TimePicker showPickerWithTitle:@"Select Time Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    
+    TimePicker *time = [[TimePicker alloc] initWithTitle:@" Time " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    [time addCustomButtonWithTitle:@"PR" value:nil];
+    
+    [time showRunFormPicker];
+}
+
+- (IBAction)calorieTapped:(id)sender {
+    
+    //[CaloriePicker showPickerWithTitle:@"Select Calorie Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    
+    CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    [cal addCustomButtonWithTitle:@"PR" value:nil];
+    
+    [cal showRunFormPicker];
+}
+
+- (IBAction)justGoTapped:(id)sender {
+}
+
+- (IBAction)distanceTapped:(id)sender {
+    //[DistancePicker showPickerWithTitle:@"Select Distance Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:@" Distance " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    [distance addCustomButtonWithTitle:@"PR" value:nil];
+    
+    [distance showRunFormPicker];
 }
 @end
