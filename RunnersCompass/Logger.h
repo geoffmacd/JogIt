@@ -43,6 +43,7 @@
 @property (assign, nonatomic) BOOL scrollEnabled;
 @property (readwrite, retain, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) UIScrollView *mapScroll;
+@property (assign, nonatomic) NSTimer * shadeTimer;
 
 
 //UI
@@ -57,9 +58,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *dragMask;
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
 @property (strong, nonatomic) IBOutlet UIImageView *mapDropShadow;
+@property (strong, nonatomic) IBOutlet UIView *shadeView;
 
 @property (strong, nonatomic) IBOutlet UIButton *graphButton;
 @property (strong, nonatomic) IBOutlet UIImageView *map;
+@property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
 
 
 

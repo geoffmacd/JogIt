@@ -35,6 +35,10 @@
 @synthesize mapDropShadow;
 @synthesize graphButton;
 @synthesize map;
+@synthesize shadeView;
+@synthesize shadeTimer;
+@synthesize countdownLabel;
+
 
 -(void)setRun:(RunEvent *)_run
 {
@@ -43,6 +47,43 @@
     [runTitle setText:run.name];
     
     [statusIcon setHidden:!run.live];
+    
+    [shadeView setHidden:false];
+    [countdownLabel setAlpha:1.0f];
+    
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        [countdownLabel setAlpha:0.7f];
+        
+    }
+                     completion:^(BOOL finish){
+                         
+                         [countdownLabel setText:@"2"];
+                         [UIView animateWithDuration:1.0 animations:^{
+                             
+                             [countdownLabel setAlpha:1.0f];
+                             
+                         }
+                                          completion:^(BOOL finish){
+                                              
+                                              [countdownLabel setText:@"1"];
+                                              [UIView animateWithDuration:1.0 animations:^{
+                                                  
+                                                  [countdownLabel setAlpha:0.7f];
+
+                                                  [shadeView setAlpha:0.0f];
+                                                  
+                                              }
+                                                               completion:^(BOOL finish){
+                                                                   [shadeView setHidden:true];
+                                                                   
+                                                               }];
+                                              
+                                          }];
+                         
+                     }];
+    
+    //shadeTimer = [NSTimer scheduledTimerWithTimeInterval: 3.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
     
     //lock slider if not live
     
@@ -119,6 +160,11 @@
     [mapView setFrame:mapRect];
     
     [self.view addSubview:mapView];
+    
+    CGRect shadeRect = self.view.frame;
+    [shadeView setFrame:shadeRect];
+    
+    [self.view addSubview:shadeView];
     
     
     [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
