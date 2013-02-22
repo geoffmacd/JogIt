@@ -73,8 +73,6 @@
     return self;
 }
 
-- (void)dealloc {
-}
 
 - (UIView *)configuredPickerView {
     CGRect datePickerFrame = CGRectMake(0, 40, self.viewSize.width, 216);
