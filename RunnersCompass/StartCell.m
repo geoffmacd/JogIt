@@ -16,12 +16,14 @@
 @synthesize expandedView;
 @synthesize headerView;
 @synthesize delegate;
+@synthesize addRunButton;
 
-@synthesize expanded;
+@synthesize expanded,locked;
 
 -(void)setup
 {
 
+    locked = false;
     
     [self setExpand:false withAnimation:false];
     
@@ -101,14 +103,22 @@
 }
 */
 
-- (IBAction)expandTapped:(id)sender {
-    RunEvent * new = [[RunEvent alloc] initWithName:@"geoff's run" date:[NSDate date]];
-    new.live = true;
-    [delegate selectedNewRun:new];
+- (IBAction)headerTapped:(id)sender {
+    
+    //custom lock property for start cell
+    if(!locked)
+        [self setExpand:!expanded withAnimation:true];
+    else
+        [delegate selectedRunInProgress];
 }
 
-- (IBAction)headerTapped:(id)sender {
-    [self setExpand:!expanded withAnimation:true];
+- (IBAction)addRunTapped:(id)sender {
+    
+    //custom lock property for start cell
+    if(!locked)
+        [self setExpand:!expanded withAnimation:true];
+    else
+        [delegate selectedRunInProgress];
 }
 
 
@@ -126,6 +136,8 @@
 
 - (IBAction)distanceTapped:(id)sender {
 }
+
+
 
 
 @end

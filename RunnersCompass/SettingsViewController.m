@@ -33,16 +33,10 @@
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
     
-    UserPrefs *movie = [UserPrefs movieWithTitle:@"Full name"
-                                 content:@"After rescuing Han Solo from the palace of Jabba the Hutt, the Rebels attempt to destroy the Second Death Star, while Luke Skywalker tries to bring his father back to the Light Side of the Force."];
+    UserPrefs * newPrefs = [UserPrefs defaultUser];
     
-    movie.shortName = @"SWEVI";
-    movie.suitAllAges = [NSNumber numberWithBool:YES];
-    movie.numberOfActor = [NSNumber numberWithInt:4];
-    movie.releaseDate = [NSDate date];
-    movie.rate = [NSNumber numberWithFloat:5];
     
-    self.prefs = movie;
+    self.prefs = newPrefs;
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
@@ -57,28 +51,28 @@
         
         [formMapping sectionWithTitle:@"Personal"  identifier:@"info"];
         
-        [formMapping mapAttribute:@"title" title:@"Full name" type:FKFormAttributeMappingTypeText];
-        [formMapping mappingForAttribute:@"releaseDate"
+        [formMapping mapAttribute:@"fullname" title:@"Full name" type:FKFormAttributeMappingTypeText];
+        [formMapping mappingForAttribute:@"birthdate"
                                    title:@"Birthdate"
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
-        [formMapping mapAttribute:@"numberOfActor" title:@"Weight" type:FKFormAttributeMappingTypeInteger];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Gender" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"weight" title:@"Weight (lbs)" type:FKFormAttributeMappingTypeInteger];
         
         
         [formMapping sectionWithTitle:@"Measurement" identifier:@"bob"];
         
-        [formMapping mapAttribute:@"suitAllAges" title:@"Auto-Pause" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Metric Units" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"autopause" title:@"Auto-Pause" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"metric" title:@"Metric Units" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"countdown" title:@"Countdown (sec)" type:FKFormAttributeMappingTypeInteger];
 
         
         [formMapping sectionWithTitle:@"Sharing" identifier:@"sdf"];
         
-        [formMapping mapAttribute:@"suitAllAges" title:@"Facebook" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"suitAllAges" title:@"Twitter" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"facebook" title:@"Post to Facebook" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"twitter" title:@"Post to Twitter" type:FKFormAttributeMappingTypeBoolean];
         
         
         [self.formModel registerMapping:formMapping];
@@ -88,7 +82,7 @@
         NSLog(@"did change model value");
     }];
     
-    [self.formModel loadFieldsWithObject:movie];
+    [self.formModel loadFieldsWithObject:newPrefs];
     
 }
 

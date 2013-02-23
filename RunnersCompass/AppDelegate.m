@@ -48,10 +48,33 @@
     }
 }
 
+
+- (void)finishedRun
+{
+    [self.frontVC finishedRun];
+    
+    //lock slider to  prevent pause, other stuff is done in loggerviews finishRun method
+    [self.viewController setLiveRun:false];
+    
+    
+    if(!self.viewController.isOpen)
+    {
+        [self.viewController.view setUserInteractionEnabled:false];
+        [self.viewController openSlider:true completion:nil];
+    }
+    
+    
+    
+}
+
+
 #pragma mark - Menu Delegate Methods
 
 - (void)loadRun:(RunEvent*) run
 {
+    //slider unlocked from this point until app is exited
+    [self.viewController setLocked:false];
+    
     //lock slider to  prevent pause
     [self.viewController setLiveRun:false];
     
@@ -64,14 +87,39 @@
 
 - (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate
 {
+    //slider unlocked from this point until app is exited
+    [self.viewController setLocked:false];
+    
     //unlock slider
     [self.viewController setLiveRun:true];
     
-    [self.backVC newRun:value withMetric:metric animate:animate];
+    //if status is currently recording, send notification to change and modify image
+    if(!self.backVC.paused)
+    {
+        //notification with pause image
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"pauseToggleNotification"
+         object:self.viewController.pauseImage];
+        
+    }
+    
+    
+    
+    [self.backVC newRun:value withMetric:metric animate:animate pauseImage:self.viewController.pauseImage];
     [self.viewController closeSlider:true completion:nil];
     
     
 }
+
+- (void)selectedRunInProgress
+{
+    if(self.viewController.isOpen)
+    {
+        [self.viewController.view setUserInteractionEnabled:false];
+        [self.viewController closeSlider:true completion:nil];
+    }
+}
+
 
 
 #pragma mark - App Delegate
@@ -94,11 +142,13 @@
     self.viewController.delegate = self.backVC;
     self.viewController.menuDelegate = self.frontVC;
     
+    [self.viewController setLocked:true];//until a run is loaded/started
+    
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    
+    //to make corners same as those for the app
     [self.backVC.view.layer setCornerRadius:5.0f];
     
     //set user defaults

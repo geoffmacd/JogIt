@@ -6,16 +6,14 @@
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "PerformanceViewController.h"
 #import "PredictorViewController.h"
 
-@implementation PerformanceViewController
+@implementation PredictorViewController
 
 @synthesize table;
 @synthesize weekly;
 @synthesize weeklyBut;
 @synthesize monthlyBut;
-@synthesize predictBut;
 @synthesize doneBut;
 
 - (void)viewDidLoad {
@@ -27,7 +25,6 @@
     [self weeklyTapped:nil];
     
     //set rounded corners on buttons
-    [predictBut.layer setCornerRadius:8.0f];
     [doneBut.layer setCornerRadius:8.0f];
     
     
@@ -143,9 +140,6 @@
 }
 
 - (IBAction)predictTapped:(id)sender {
-    PredictorViewController * vc = [[PredictorViewController alloc] initWithNibName:@"Predictor" bundle:nil];
-    
-    [self presentViewController:vc animated:true completion:nil];
 }
 
 - (IBAction)weeklyTapped:(id)sender {

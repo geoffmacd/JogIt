@@ -33,14 +33,7 @@
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
     
-    UserPrefs *movie = [UserPrefs movieWithTitle:@"Full name"
-                                         content:@"After rescuing Han Solo from the palace of Jabba the Hutt, the Rebels attempt to destroy the Second Death Star, while Luke Skywalker tries to bring his father back to the Light Side of the Force."];
-    
-    movie.shortName = @"SWEVI";
-    movie.suitAllAges = [NSNumber numberWithBool:YES];
-    movie.numberOfActor = [NSNumber numberWithInt:4];
-    movie.releaseDate = [NSDate date];
-    movie.rate = [NSNumber numberWithFloat:5];
+    UserPrefs *movie = [UserPrefs defaultUser];
     
     self.prefs = movie;
     

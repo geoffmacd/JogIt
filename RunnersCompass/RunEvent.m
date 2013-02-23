@@ -30,7 +30,7 @@
         calories = 301.5f;
         pace = 264.3f;
         time = 2063.0f;
-        live = false;
+        live = true;
         return self;
     }
     return nil;

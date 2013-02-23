@@ -16,6 +16,7 @@
 
 - (void)loadRun:(RunEvent*) run;
 - (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
+- (void)selectedRunInProgress;
 
 @end
 
@@ -29,6 +30,8 @@
 }
 
 -(void)testNewRun;
+
+@property (assign, nonatomic) BOOL runInProgressAsFarAsICanTell;
 
 //delegate
 @property (weak, nonatomic) id <MenuViewControllerDelegate>delegate;

@@ -18,38 +18,89 @@
 @synthesize run;
 @synthesize runTitle;
 @synthesize delegate;
-@synthesize dragMapButton;
 @synthesize mapView;
 @synthesize chart;
 @synthesize panGesture;
 @synthesize inMapView;
-@synthesize mapThumbnail;
 @synthesize paused;
 @synthesize statusIcon;
 @synthesize timer;
 @synthesize finishBut;
 @synthesize mapScroll;
 @synthesize scrollEnabled;
-@synthesize dragMask;
 @synthesize mapButton;
-@synthesize mapDropShadow;
-@synthesize graphButton;
+@synthesize dragButton;
 @synthesize map;
 @synthesize shadeView;
 @synthesize shadeTimer;
 @synthesize countdownLabel;
 
 
-- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate
+#pragma mark - Lifecycle
+
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
     
-    [runTitle setText:@"New Run"];
+    
+    paused = true;
+    
+    //set rounded corners on buttons
+    [finishBut.layer setCornerRadius:8.0f];
+    
+    
+    CGRect mapRect;
+    mapRect.size =  mapView.frame.size;
+    mapRect.origin = CGPointMake(0, mapViewYOffset);
+    [mapView setFrame:mapRect];
+    
+    [self.view addSubview:mapView];
+    
+    CGRect shadeRect = self.view.frame;
+    [shadeView setFrame:shadeRect];
+    
+    [self.view addSubview:shadeView];
+    
+    
+    [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+    [mapButton.layer setBorderWidth: 1.0];
+    
+    [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+    [map.layer setBorderWidth: 1.0];
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(didReceivePause:)
+                                                name:@"pauseToggleNotification" object:nil];
+    
+    inMapView = false;
+    
+    
+    [self timerFired];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Managing runs
+
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate pauseImage:(UIImageView*)image
+{
+    [self setRun:[[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]]];
+    
     
     [statusIcon setHidden:false];
+    [finishBut setHidden:true];
     
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
     
+    //previous notification in app delegate has already changed status to paused
+    NSAssert(paused, @"not yet paused from appdelegate notification");
     
     [UIView animateWithDuration:1.0 animations:^{
         [countdownLabel setAlpha:0.7f];
@@ -69,11 +120,17 @@
                                               [UIView animateWithDuration:1.0 animations:^{
                                                   
                                                   [countdownLabel setAlpha:0.7f];
+                                                  [shadeView setAlpha:0.1f];
                                                   
-                                                  [shadeView setAlpha:0.0f];
                                                   
                                               }
                                                                completion:^(BOOL finish){
+                                                                   
+                                                                   //notification with pause image to start recording
+                                                                   [[NSNotificationCenter defaultCenter]
+                                                                    postNotificationName:@"pauseToggleNotification"
+                                                                    object:image];
+                                                                   
                                                                    [shadeView setHidden:true];
                                                                    [shadeView setAlpha:1.0f];
                                                                    [countdownLabel setText:@"3"];
@@ -90,9 +147,24 @@
 {
     run = _run;
     
-    [runTitle setText:run.name];
+    if(!run.live)
+    {
+        //set title
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        
+        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [dateFormatter setLocale:usLocale];
+        
+        [runTitle setText:[NSString stringWithFormat:@"%@ • %@", run.name, [dateFormatter stringFromDate:run.date]]];
+    }
+    else
+        [runTitle setText:run.name];
     
+    //hide these by default unless newrun overrides them
     [statusIcon setHidden:true];
+    [finishBut setHidden:true];
 
     
 }
@@ -149,47 +221,6 @@
         }
         
     }];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    
-    paused = true;
-    
-    //set rounded corners on buttons
-    [finishBut.layer setCornerRadius:8.0f];
-    
-    
-    CGRect mapRect;
-    mapRect.size =  mapView.frame.size;
-    mapRect.origin = CGPointMake(0, mapViewYOffset);
-    [mapView setFrame:mapRect];
-    
-    [self.view addSubview:mapView];
-    
-    CGRect shadeRect = self.view.frame;
-    [shadeView setFrame:shadeRect];
-    
-    [self.view addSubview:shadeView];
-    
-    
-    [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
-    [mapButton.layer setBorderWidth: 1.0];
-    
-    [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
-    [map.layer setBorderWidth: 1.0];
-     
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(didReceivePause:)
-                                                name:@"pauseToggleNotification" object:nil];
-    
-    inMapView = false;
-    
-    
-    [self timerFired];
 }
 
 
@@ -254,12 +285,6 @@
                         }];
         
     }
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - BarChart
@@ -397,17 +422,24 @@
 {
     if(gestureRecognizer == panGesture)
     {
+        //check the long drag button
         CGPoint pt = [touch locationInView:mapView];
-        CGRect rect = graphButton.frame;
+        //check the drag button
+        CGRect rect  = dragButton.frame;
         if(CGRectContainsPoint(rect, pt))
         {
             return true;
         }
+        
+        pt = [touch locationInView:self.view];
         rect = mapButton.frame;
         if(CGRectContainsPoint(rect, pt))
         {
             return true;
         }
+        
+        
+        
         
     }
     return false;
@@ -489,7 +521,10 @@
 
 
 - (IBAction)finishTapped:(id)sender {
-    [delegate menuButtonPressed:sender];
+    [delegate finishedRun];
+    
+    //convert current run to a historical run now that it is saved!
+    [self setRun:run];
     
 }
 

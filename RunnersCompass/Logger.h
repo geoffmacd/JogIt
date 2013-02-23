@@ -19,6 +19,7 @@
 @protocol LoggerViewControllerDelegate <NSObject>
 
 - (void)menuButtonPressed:(id)sender;
+- (void)finishedRun;
 
 @end
 
@@ -37,7 +38,7 @@
 @property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
 
 //objects
-@property (nonatomic, weak, setter = setRun:) RunEvent * run;
+@property (nonatomic, strong, setter = setRun:) RunEvent * run;
 @property (assign, nonatomic) BOOL inMapView;
 @property (assign, nonatomic) BOOL paused;
 @property (assign, nonatomic) BOOL scrollEnabled;
@@ -50,17 +51,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *runTitle;
 @property (strong, nonatomic) IBOutlet UIView *mapView;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
-@property (strong, nonatomic) IBOutlet UIButton *dragMapButton;
-@property (strong, nonatomic) IBOutlet UIImageView *mapThumbnail;
 @property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
 @property (strong, nonatomic) IBOutlet UIButton *finishBut;
-@property (strong, nonatomic) IBOutlet UIImageView *dragMask;
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
-@property (strong, nonatomic) IBOutlet UIImageView *mapDropShadow;
 @property (strong, nonatomic) IBOutlet UIView *shadeView;
 
-@property (strong, nonatomic) IBOutlet UIButton *graphButton;
+@property (strong, nonatomic) IBOutlet UIButton *dragButton;
 @property (strong, nonatomic) IBOutlet UIImageView *map;
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
 
@@ -72,7 +69,7 @@
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
 
-- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
+- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate pauseImage:(UIImageView*)image;
 
 @end
 

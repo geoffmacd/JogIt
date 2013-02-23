@@ -46,6 +46,9 @@
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
+		67AF65C916D88FF8004A484C /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65C616D88FF8004A484C /* Predictor.xib */; };
+		67AF65CA16D88FF8004A484C /* PredictorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65C816D88FF8004A484C /* PredictorViewController.m */; };
+		67AF65CE16D8A0EF004A484C /* garbagecan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65CD16D8A0EF004A484C /* garbagecan@2x.png */; };
 		67B2EF1316CDC1FC009F6BD0 /* settingsgear.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */; };
 		67B2EF1716CDC6EE009F6BD0 /* goals.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1616CDC6EE009F6BD0 /* goals.png */; };
 		67B2EF1916CDC790009F6BD0 /* stopwatch.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2EF1816CDC790009F6BD0 /* stopwatch.png */; };
@@ -205,6 +208,10 @@
 		676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormDatePicker.m; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
 		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
+		67AF65C616D88FF8004A484C /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
+		67AF65C716D88FF8004A484C /* PredictorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictorViewController.h; sourceTree = "<group>"; };
+		67AF65C816D88FF8004A484C /* PredictorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictorViewController.m; sourceTree = "<group>"; };
+		67AF65CD16D8A0EF004A484C /* garbagecan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "garbagecan@2x.png"; path = "Graphics/garbagecan@2x.png"; sourceTree = SOURCE_ROOT; };
 		67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsgear.png; path = ../Graphics/settingsgear.png; sourceTree = "<group>"; };
 		67B2EF1616CDC6EE009F6BD0 /* goals.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goals.png; path = ../Graphics/goals.png; sourceTree = "<group>"; };
 		67B2EF1816CDC790009F6BD0 /* stopwatch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopwatch.png; path = ../Graphics/stopwatch.png; sourceTree = "<group>"; };
@@ -433,6 +440,9 @@
 		672AA3C416B5A6B800B7DEE6 /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				67AF65C616D88FF8004A484C /* Predictor.xib */,
+				67AF65C716D88FF8004A484C /* PredictorViewController.h */,
+				67AF65C816D88FF8004A484C /* PredictorViewController.m */,
 				672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */,
 				672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */,
 				6703F4E716B75F12006A8F88 /* Performance.xib */,
@@ -618,31 +628,31 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */,
-				67F635D016D6E8A900D51CA2 /* verticalpointer.png */,
-				67F635CC16D5F00200D51CA2 /* hud2.png */,
-				67F635CA16D5E53100D51CA2 /* pullstrap.png */,
-				67F6357916D5D2D000D51CA2 /* graphbutton.png */,
-				67F6357716D5C99C00D51CA2 /* celldivision.png */,
-				67F6357516D5AA2400D51CA2 /* maptransistion.png */,
-				67F6357316D5A40500D51CA2 /* paceArrow.png */,
-				67F6357116D5A06C00D51CA2 /* paceindicator.png */,
-				67F6356F16D496A700D51CA2 /* mapdropshadow.png */,
-				67F6356B16D207F600D51CA2 /* hudbackground.png */,
-				67C8E35316D1EBA900E4DE11 /* pause invert.png */,
-				67C8E32416D1B3FC00E4DE11 /* dragmask.png */,
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
 				67FC06B416A1205300491C97 /* CellBarsIcon.png */,
+				67F6357716D5C99C00D51CA2 /* celldivision.png */,
+				67C8E34F16D1E5A200E4DE11 /* Default-568h@2x.png */,
 				67FC070816ACD63300491C97 /* DownTriangleIcon.png */,
+				67C8E32416D1B3FC00E4DE11 /* dragmask.png */,
+				67AF65CD16D8A0EF004A484C /* garbagecan@2x.png */,
 				67B2EF1E16CDDB4B009F6BD0 /* gear.png */,
 				67B2EF1616CDC6EE009F6BD0 /* goals.png */,
+				67F6357916D5D2D000D51CA2 /* graphbutton.png */,
 				67FC06B216A11FC700491C97 /* hamburger.png */,
 				6745C7ED16ACDBB9005F4F1B /* hud.png */,
+				67F635CC16D5F00200D51CA2 /* hud2.png */,
+				67F6356B16D207F600D51CA2 /* hudbackground.png */,
 				6738D66916ACE7DE0044BA00 /* map.JPG */,
+				67F6356F16D496A700D51CA2 /* mapdropshadow.png */,
 				67FC06B616A1247D00491C97 /* mapicon.png */,
+				67F6357516D5AA2400D51CA2 /* maptransistion.png */,
+				67F6357316D5A40500D51CA2 /* paceArrow.png */,
+				67F6357116D5A06C00D51CA2 /* paceindicator.png */,
+				67C8E35316D1EBA900E4DE11 /* pause invert.png */,
 				67C8E32016D1AC5400E4DE11 /* pause.png */,
 				67FC06B016A11F5E00491C97 /* pause_logo_large.png */,
+				67F635CA16D5E53100D51CA2 /* pullstrap.png */,
 				67C8E32116D1AC5400E4DE11 /* record.png */,
 				67FC070616ACD62B00491C97 /* RightArrow.png */,
 				6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */,
@@ -651,6 +661,7 @@
 				67B2EF1216CDC1FC009F6BD0 /* settingsgear.png */,
 				67B2EF1816CDC790009F6BD0 /* stopwatch.png */,
 				6748646E16B237C2004D2B47 /* switch.png */,
+				67F635D016D6E8A900D51CA2 /* verticalpointer.png */,
 				67B2EF2416CDE51D009F6BD0 /* whiteaddrun.png */,
 			);
 			name = Graphics;
@@ -839,6 +850,8 @@
 				67F635CB16D5E53100D51CA2 /* pullstrap.png in Resources */,
 				67F635CD16D5F00200D51CA2 /* hud2.png in Resources */,
 				67F635D116D6E8A900D51CA2 /* verticalpointer.png in Resources */,
+				67AF65C916D88FF8004A484C /* Predictor.xib in Resources */,
+				67AF65CE16D8A0EF004A484C /* garbagecan@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -913,6 +926,7 @@
 				67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */,
 				6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */,
 				67AED68A16D72069007F6943 /* PacePicker.m in Sources */,
+				67AF65CA16D88FF8004A484C /* PredictorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,7 @@
 
 -(void)cellDidChangeHeight:(id) sender;
 -(void)selectedNewRun:(RunEvent *) run;
+-(void)selectedRunInProgress;
 
 @end
 
@@ -27,24 +28,29 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong, nonatomic) IBOutlet UIButton *addRunButton;
 
-- (IBAction)expandTapped:(id)sender;
-- (IBAction)headerTapped:(id)sender;
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
+@property BOOL locked;//for whether currently expanded
 
--(CGFloat)getHeightRequired;
--(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
-- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer;
--(void)setup;
+//UI actions
 - (IBAction)justGoTapped:(id)sender;
 - (IBAction)distanceTapped:(id)sender;
 - (IBAction)paceTapped:(id)sender;
 - (IBAction)timeTapped:(id)sender;
 - (IBAction)calorieTapped:(id)sender;
+- (IBAction)addRunTapped:(id)sender;
+- (IBAction)headerTapped:(id)sender;
+
+
+-(CGFloat)getHeightRequired;
+-(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
+- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer;
+-(void)setup;
 
 @end
 

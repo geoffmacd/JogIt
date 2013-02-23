@@ -10,15 +10,23 @@
 
 @implementation UserPrefs
 
-@synthesize title, content, releaseDate, numberOfActor, suitAllAges, password, shortName, choice, rate;
+@synthesize facebook,twitter,autopause,weight,fullname,birthdate,metric,countdown;
 
-+ (id)movieWithTitle:(NSString *)newTitle content:(NSString *)newContent {
-    UserPrefs *movie = [[UserPrefs alloc] init];
++ (id)defaultUser{
+    UserPrefs * new = [[UserPrefs alloc] init];
     
-    movie.title = newTitle;
-    movie.content = newContent;
+    new.countdown = [NSNumber numberWithInt:3];
+    new.autopause = [NSNumber numberWithInt:0];
+    new.twitter = [NSNumber numberWithInt:0];
+    new.facebook = [NSNumber numberWithInt:0];
+    new.metric = [NSNumber numberWithInt:1];
+    new.weight = [NSNumber numberWithInt:150];
     
-    return movie;
+    //best to leave these blank so user does not have to backspace them
+    new.fullname = nil;
+    new.birthdate = nil;
+    
+    return new;
 }
 
 

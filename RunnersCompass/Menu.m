@@ -20,6 +20,7 @@
 @implementation MenuViewController
 
 @synthesize MenuTable;
+@synthesize runInProgressAsFarAsICanTell;
 
 
 
@@ -48,12 +49,7 @@
     cells = [[NSMutableArray alloc] initWithCapacity:3];
     
     RunMap * map = [RunMap alloc];
-    
-    /*
-    UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
-    
-    [MenuTable setBackgroundColor:col];
-     */
+
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
@@ -62,11 +58,16 @@
         
         RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
         
+        [run setLive:false];
+        
         [run setMap:map];
         
         [runs addObject:run];
         
     }
+    
+    
+    runInProgressAsFarAsICanTell = false;
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,7 +168,6 @@
     
     return height;
     
-    
 }
 
 
@@ -218,6 +218,7 @@
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
+    [MenuTable reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
     
     
     //still need to animate hidden expandedView
@@ -232,12 +233,29 @@
 
 
 #pragma mark -
-#pragma mark StartCellDelegate
+#pragma mark Start Cell Delegate
+
+-(void)selectedRunInProgress
+{
+    //selected the headerview of start cell when run is in progress, slide back to logger
+    [self.delegate selectedRunInProgress];
+    
+}
 
 -(void)selectedNewRun:(RunEvent *) run
 {
     //set logger with this run
     [self.delegate newRun:0 withMetric:0 animate:true];
+    
+    runInProgressAsFarAsICanTell = true;
+    
+    
+    start.headerLabel.text = @"Run In Progress";
+    [start setExpand:false withAnimation:true];
+    start.locked = true;//to prevent expanding
+    //[start.addRunImage setHidden:true];
+    [start.addRunButton setImage:[UIImage imageNamed:@"garbagecan.png"] forState:UIControlStateNormal];
+    [start.folderImage setHidden:true];
     
 }
 
@@ -245,19 +263,28 @@
 #pragma mark -
 #pragma mark Logger Interface
 
-
 -(void)selectedRun:(id)sender
 {
     
     HierarchicalCell * cell = (HierarchicalCell * )sender;
     
-    
     //set logger with this run
     [self.delegate loadRun:cell.associatedRun];
     
-    
 }
 
+-(void) finishedRun
+{
+    runInProgressAsFarAsICanTell = false;
+    
+    //refresh start cell
+    
+    start.headerLabel.text = @"Start Running!!";
+    start.locked = false;//to prevent expanding
+    //[start.addRunImage setHidden:false];
+    [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
+    [start.folderImage setHidden:false];
+}
 
 
 #pragma mark -
@@ -310,7 +337,6 @@
 -(void)testNewRun
 {
     
-    
     RunEvent * new = [[RunEvent alloc] initWithName:@"geoff's run" date:[NSDate date]];
     new.live = true;
     [self selectedNewRun:new];
@@ -324,12 +350,9 @@
     
     [pace showRunFormPicker];
     
-    //[PacePicker showPickerWithTitle:@"Select Pace Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
 }
 
 - (IBAction)timeTapped:(id)sender {
-    //[TimePicker showPickerWithTitle:@"Select Time Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
-    
     
     TimePicker *time = [[TimePicker alloc] initWithTitle:@" Time " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
@@ -340,7 +363,6 @@
 
 - (IBAction)calorieTapped:(id)sender {
     
-    //[CaloriePicker showPickerWithTitle:@"Select Calorie Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     
     CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
@@ -351,10 +373,12 @@
 }
 
 - (IBAction)justGoTapped:(id)sender {
+    
+    [self testNewRun];
+    
 }
 
 - (IBAction)distanceTapped:(id)sender {
-    //[DistancePicker showPickerWithTitle:@"Select Distance Target" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     DistancePicker *distance = [[DistancePicker alloc] initWithTitle:@" Distance " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     

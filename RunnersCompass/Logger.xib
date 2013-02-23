@@ -524,6 +524,7 @@
 						<string key="NSFrame">{{216, 394}, {114, 21}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -710,6 +711,7 @@
 						<string key="NSFrame">{{89, 229}, {143, 59}}</string>
 						<reference key="NSSuperview" ref="631474008"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -737,7 +739,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Swipe To Begin</string>
+						<string key="IBUIText">Swipe To Pause</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC43NTI5NDExNzY1IDAuMDk0MTE3NjQ3MDYgMC4xNDUwOTgwMzkyAA</bytes>
@@ -749,11 +751,11 @@
 							<string key="name">Georgia</string>
 							<string key="family">Georgia</string>
 							<int key="traits">0</int>
-							<double key="pointSize">17</double>
+							<double key="pointSize">20</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Georgia</string>
-							<double key="NSSize">17</double>
+							<double key="NSSize">20</double>
 							<int key="NSfFlags">16</int>
 						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -781,6 +783,7 @@
 						<string key="NSFrame">{{0, 59}, {320, 276}}</string>
 						<reference key="NSSuperview" ref="926182297"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -789,7 +792,7 @@
 					<object class="IBUIButton" id="64819510">
 						<reference key="NSNextResponder" ref="926182297"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{90, -1}, {140, 60}}</string>
+						<string key="NSFrame">{{0, 39}, {320, 20}}</string>
 						<reference key="NSSuperview" ref="926182297"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="704347416"/>
@@ -891,14 +894,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">graphButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="64819510"/>
-					</object>
-					<int key="connectionID">156</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">map</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="704347416"/>
@@ -928,6 +923,24 @@
 						<reference key="destination" ref="810036111"/>
 					</object>
 					<int key="connectionID">191</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dragButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="64819510"/>
+					</object>
+					<int key="connectionID">192</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
+						<string key="label">gestureRecognizers</string>
+						<reference key="source" ref="572499848"/>
+						<reference key="destination" ref="676284903"/>
+						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
+						<bool key="addsContentToExistingCollection">YES</bool>
+					</object>
+					<int key="connectionID">193</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -1314,7 +1327,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">191</int>
+			<int key="maxID">193</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1356,14 +1369,10 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="chart">CPTGraphHostingView</string>
 						<string key="countdownLabel">UILabel</string>
-						<string key="dragMapButton">UIButton</string>
-						<string key="dragMask">UIImageView</string>
+						<string key="dragButton">UIButton</string>
 						<string key="finishBut">UIButton</string>
-						<string key="graphButton">UIButton</string>
 						<string key="map">UIImageView</string>
 						<string key="mapButton">UIButton</string>
-						<string key="mapDropShadow">UIImageView</string>
-						<string key="mapThumbnail">UIImageView</string>
 						<string key="mapView">UIView</string>
 						<string key="panGesture">UIPanGestureRecognizer</string>
 						<string key="runTitle">UILabel</string>
@@ -1379,20 +1388,12 @@
 							<string key="name">countdownLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="dragMapButton">
-							<string key="name">dragMapButton</string>
+						<object class="IBToOneOutletInfo" key="dragButton">
+							<string key="name">dragButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="dragMask">
-							<string key="name">dragMask</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="finishBut">
 							<string key="name">finishBut</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="graphButton">
-							<string key="name">graphButton</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="map">
@@ -1402,14 +1403,6 @@
 						<object class="IBToOneOutletInfo" key="mapButton">
 							<string key="name">mapButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="mapDropShadow">
-							<string key="name">mapDropShadow</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="mapThumbnail">
-							<string key="name">mapThumbnail</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mapView">
 							<string key="name">mapView</string>

@@ -9,15 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface UserPrefs : NSObject
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSString *content;
-@property (nonatomic, retain) NSDate *releaseDate;
-@property (nonatomic, retain) NSNumber *numberOfActor;
-@property (nonatomic, retain) NSNumber *suitAllAges;
-@property (nonatomic, retain) NSString *password;
-@property (nonatomic, retain) NSString *shortName;
-@property (nonatomic, retain) NSString *choice;
-@property (nonatomic, retain) NSNumber *rate;
+@property (nonatomic, retain) NSString *fullname;
+@property (nonatomic, retain) NSDate *birthdate;
+@property (nonatomic, retain) NSNumber *weight;
+@property (nonatomic, retain) NSNumber *countdown;
+@property (nonatomic, retain) NSNumber *autopause;
+@property (nonatomic, retain) NSNumber *metric;
+@property (nonatomic, retain) NSNumber *facebook;
+@property (nonatomic, retain) NSNumber *twitter;
 
-+ (id)movieWithTitle:(NSString *)newTitle content:(NSString *)newContent;
++ (id)defaultUser;
 @end
