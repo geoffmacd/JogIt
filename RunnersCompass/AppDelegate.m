@@ -44,9 +44,7 @@
     if(!self.viewController.isOpen)
     {
         [self.viewController.view setUserInteractionEnabled:false];
-        [self.viewController openSlider:true completion:^{
-            [self.viewController.view setUserInteractionEnabled:true];
-        }];
+        [self.viewController openSlider:true completion:nil];
     }
 }
 

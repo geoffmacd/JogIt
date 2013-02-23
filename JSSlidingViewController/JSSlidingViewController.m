@@ -26,7 +26,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         self.clipsToBounds = NO; // So that dropshadow along the sides of the frontViewController still appear when the slider is open.
         self.backgroundColor = [UIColor clearColor];
         self.pagingEnabled = YES;
-        self.bounces = NO;
+        self.bounces = NO;//now customized so that it is on only during a live run
         self.scrollsToTop = NO;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
@@ -119,9 +119,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
     
-    
-    NSAssert(_slidingScrollView.contentOffset.x >  -20.0f, @"3");
-    NSAssert(_slidingScrollView.contentSize.width == 640.0f, @"5");
 
     
 }
@@ -151,26 +148,28 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     _slidingScrollView.contentOffset = CGPointMake(0, 0);
     _slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
     _slidingScrollView.delegate = self;
+    
     //_slidingScrollView.backgroundColor = [UIColor greenColor];
+    
     [self.view insertSubview:_slidingScrollView atIndex:0];
-    _isOpen = NO;
+    _isOpen = YES;
     _locked = NO;
     _animating = NO;
     _frontViewControllerHasOpenCloseNavigationBarButton = YES;
     _allowManualSliding = YES;
     
     self.frontViewControllerDropShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
-    self.frontViewControllerDropShadow.frame = CGRectMake(20.0f, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
+    self.frontViewControllerDropShadow.frame = CGRectMake(dropShadowXOffset, 0.0f, dropShadowXOffset, _slidingScrollView.bounds.size.height);
     [_slidingScrollView addSubview:self.frontViewControllerDropShadow];
     
     self.frontViewControllerDropShadow_right = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
-    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, 20.0f, _slidingScrollView.bounds.size.height);
+    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, dropShadowXOffset, _slidingScrollView.bounds.size.height);
     self.frontViewControllerDropShadow_right.transform = CGAffineTransformMakeRotation(M_PI);//to rotate drop shadow
     [_slidingScrollView addSubview:self.frontViewControllerDropShadow_right];
     
     
     self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
-    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, 200.0f, 50.0f, 50.0f);
+    self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, (frame.size.height - pauseImageSize)/2, pauseImageSize, pauseImageSize);
     [_slidingScrollView addSubview:self.pauseImage];
 }
 
@@ -219,18 +218,18 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 - (void)updateInterface {
     _sliderOpeningWidth = self.view.bounds.size.width - self.desiredVisiblePortionOfFrontViewWhenOpen;
     CGRect frame = self.view.bounds;
-    CGFloat targetOriginForSlidingScrollView = 0;
+    CGFloat targetOriginForSlidingScrollView = self.view.bounds.size.width;
     
     if (self.isOpen) {
-        targetOriginForSlidingScrollView = 320.0f;
+        targetOriginForSlidingScrollView = 0.0f;
     }
     
     self.slidingScrollView.contentSize = CGSizeMake(frame.size.width + _sliderOpeningWidth , frame.size.height);
-    self.frontViewControllerDropShadow.frame = CGRectMake( -20.0f, 0.0f, 20.0f, frame.size.height);
-    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, 20.0f, frame.size.height);
+    self.frontViewControllerDropShadow.frame = CGRectMake( -dropShadowXOffset, 0.0f, dropShadowXOffset, frame.size.height);
+    self.frontViewControllerDropShadow_right.frame = CGRectMake(frame.size.width, 0.0f, dropShadowXOffset, frame.size.height);
     _slidingScrollView.contentOffset = CGPointMake(0, 0);
-    _slidingScrollView.frame = CGRectMake(targetOriginForSlidingScrollView, 0, frame.size.width, frame.size.height);
-    self.frontViewController.view.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    _slidingScrollView.frame = CGRectMake(targetOriginForSlidingScrollView, 0.0f, frame.size.width, frame.size.height);
+    self.frontViewController.view.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
     
     NSLog(@"slider: %f, %f", _slidingScrollView.contentOffset.x, _slidingScrollView.contentSize.width);
 }
@@ -279,8 +278,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     CGFloat duration1 = 0.0f;
     CGFloat duration2 = 0.0f;
     if (animated) {
-        duration1 = 0.18f;
-        duration2 = 0.1f;
+        duration1 = firstStageAnimationClose;
+        duration2 = secondStageAnimationClose;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             duration1 = duration1 * 1.5f;
             duration2 = duration2 * 1.5f;
@@ -289,12 +288,12 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self.pauseImage setHidden:true];
     [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         CGRect rect = _slidingScrollView.frame;
-        rect.origin.x = -320.0f;
+        rect.origin.x = -self.view.bounds.size.width;
         _slidingScrollView.frame = rect;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration: duration2 delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
             CGRect rect = _slidingScrollView.frame;
-            rect.origin.x = -330.0f;
+            rect.origin.x = -self.view.bounds.size.width - bouncyOvershootX;
             _slidingScrollView.frame = rect;
         } completion:^(BOOL finished) {
             CGRect rect = _slidingScrollView.frame;
@@ -315,7 +314,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 - (void)closeWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
     CGFloat duration = 0;
     if (animated) {
-        duration = 0.25f;
+        duration = firstStageAnimationClose;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             duration = 0.4f;
         }
@@ -357,8 +356,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     CGFloat duration1 = 0.0f;
     CGFloat duration2 = 0.0f;
     if (animated) {
-        duration1 = 0.18f;
-        duration2 = 0.18f;
+        duration1 = firstStageAnimationClose;
+        duration2 = secondStageAnimationClose;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             duration1 = duration1 * 1.5f;
             duration2 = duration2 * 1.5f;
@@ -366,7 +365,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     }
     [UIView animateWithDuration:duration1  delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration  animations:^{
         CGRect aRect = _slidingScrollView.frame;
-        aRect.origin.x = _sliderOpeningWidth + 10;
+        aRect.origin.x = _sliderOpeningWidth + bouncyOvershootX;
         _slidingScrollView.frame = aRect;
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:duration2  delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
@@ -374,9 +373,9 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             rect.origin.x = _sliderOpeningWidth;
             _slidingScrollView.frame = rect;
         } completion:^(BOOL finished) {
+            self.view.userInteractionEnabled = YES;
             _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
             _animating = NO;
-            self.view.userInteractionEnabled = YES;
             [self didOpen];
             if (completion) {
                 completion();
@@ -388,7 +387,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 - (void)openWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
     CGFloat duration = 0.0f;
     if (animated) {
-        duration = 0.25f;
+        duration = firstStageAnimationClose;
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
             duration = 0.4f;
         }
@@ -418,7 +417,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [_slidingScrollView addSubview:newFrontViewController.view];
     CGFloat duration = 0.0f;
     if (animated) {
-        duration = 0.25f;
+        duration = firstStageAnimationClose;
     }
     [UIView animateWithDuration:duration animations:^{
         newFrontViewController.view.alpha = 1.0f;
@@ -439,7 +438,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self.view insertSubview:newBackViewController.view atIndex:0];
     CGFloat duration = 0.0f;
     if (animated) {
-        duration = 0.25f;
+        duration = firstStageAnimationClose;
     }
     [UIView animateWithDuration:duration animations:^{
         _backViewController.view.alpha = 0.0f;
@@ -550,16 +549,16 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         }
     }
     
-    if(co.x <  320 && isSetupForPauseScroll)
+    if(co.x <  self.view.bounds.size.width && isSetupForPauseScroll)
     {
         //remove view from scrollview
         [self resetScrollToPause];
     } else {
         //expand image instead
-        CGFloat differential = co.x - 320.0f;
+        CGFloat differential = co.x - self.view.bounds.size.width;
         NSLog(@"%f", differential);
         
-        CGFloat percent = differential / 100.0f;
+        CGFloat percent = differential / pauseImageAnimationXScale;
         
         [UIView animateWithDuration:0.0f
                          animations:^
@@ -568,7 +567,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
              self.pauseImage.transform = CGAffineTransformMakeScale(percent,percent);
          }];
         
-        if(percent > 0.5f)
+        if(percent > pauseDragChangeStateRatio)
         {
             if(!changeState){
                 
@@ -794,7 +793,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self.backViewController.view removeFromSuperview];
     //add to slider view instead and update frame
     CGRect frame = self.view.bounds;
-    frame.origin.x = 320;
+    frame.origin.x = self.view.bounds.size.width;
     self.backViewController.view.frame = frame;
     [_slidingScrollView addSubview:self.backViewController.view];
     

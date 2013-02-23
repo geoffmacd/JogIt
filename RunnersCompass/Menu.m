@@ -133,6 +133,7 @@
                                                options:nil]objectAtIndex:0];
         [cell setAssociated:[runs objectAtIndex:row]];
         [cell setDelegate:self];
+        [cell setIndex:indexPath];
         
         [cells addObject:cell];
         
@@ -198,6 +199,7 @@
     if(!cell.expanded)
     {
         [cell setExpand:true withAnimation:true];
+        
         if(row == [cells count])
         {
             //scroll view to see rest of cell below
@@ -216,7 +218,7 @@
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
-    [MenuTable reloadData];
+    
     
     //still need to animate hidden expandedView
     

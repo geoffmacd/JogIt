@@ -40,12 +40,12 @@
 {
     
     expanded = open;
-    NSTimeInterval time = animate ? 0.15f : 0.01f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
     
     if(expanded){
         
         
-        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f curve:UIViewAnimationCurveEaseIn degrees:90];
+        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];
         
         if(animate)
         {
@@ -63,7 +63,7 @@
             
         }
         
-        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f curve:UIViewAnimationCurveEaseIn degrees:0];
+        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
     if(!animate)

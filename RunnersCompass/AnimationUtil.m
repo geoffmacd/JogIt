@@ -44,7 +44,7 @@
         
         expandedView.alpha = 0.0;
         
-        [UIView animateWithDuration:0.4f
+        [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
                              expandedView.alpha = 1.0;
                              [expandedView setFrame:correct];
@@ -59,7 +59,7 @@
         rect.origin.y = 0;
         expandedView.alpha = 1.0;
         
-        [UIView animateWithDuration:0.2f
+        [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
                              expandedView.alpha = 0.0;
                              [expandedView setFrame:rect];

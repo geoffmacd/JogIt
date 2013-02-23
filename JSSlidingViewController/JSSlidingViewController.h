@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#define dropShadowXOffset 20.0f
+#define firstStageAnimationClose 0.2f
+#define secondStageAnimationClose 0.1f
+#define bouncyOvershootX 10.0f
+#define pauseImageAnimationXScale 100.0f
+#define pauseImageSize 50.0f
+#define pauseDragChangeStateRatio 0.5f
+
 @protocol JSSlidingViewControllerDelegate;
 
 extern NSString * const JSSlidingViewControllerWillOpenNotification;

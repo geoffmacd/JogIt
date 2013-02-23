@@ -247,7 +247,6 @@
 										<string key="NSFrame">{{11, 169}, {299, 36}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<reference key="IBUIBackgroundColor" ref="621836455"/>
 										<bool key="IBUIOpaque">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -274,11 +273,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="538372646"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
-									<reference key="NSCustomColorSpace" ref="232377523"/>
-								</object>
+								<reference key="IBUIBackgroundColor" ref="621836455"/>
 								<array key="IBUIGestureRecognizers" id="0"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -356,11 +351,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="534297443"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">3</int>
-									<bytes key="NSWhite">MQA</bytes>
-									<reference key="NSCustomColorSpace" ref="232377523"/>
-								</object>
+								<reference key="IBUIBackgroundColor" ref="621836455"/>
 								<int key="IBUIContentMode">5</int>
 								<reference key="IBUIGestureRecognizers" ref="0"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -385,6 +376,7 @@
 				<reference key="NSNextKeyView" ref="648043000"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSHuggingPriority">{250, 227}</string>
+				<reference key="IBUIBackgroundColor" ref="621836455"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="648043000"/>
@@ -394,7 +386,9 @@
 			<object class="IBUITapGestureRecognizer" id="924304487">
 				<bool key="IBUIEnabled">NO</bool>
 			</object>
-			<object class="IBUITapGestureRecognizer" id="849384263"/>
+			<object class="IBUITapGestureRecognizer" id="849384263">
+				<bool key="IBUIDelaysTouchesEnded">NO</bool>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">

@@ -47,6 +47,7 @@ typedef enum
 @property (weak, nonatomic) HierarchicalCell *parent;
 @property (nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
+@property (assign, nonatomic) NSIndexPath * index;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
