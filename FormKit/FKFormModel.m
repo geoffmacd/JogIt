@@ -473,7 +473,7 @@
     UIDatePickerMode datePickerMode = UIDatePickerModeDate;
     
     if (FKFormAttributeMappingTypeTime == attributeMapping.type) {
-        datePickerMode = UIDatePickerModeTime;
+        datePickerMode = UIDatePickerModeCountDownTimer; //UIDatePickerModeTime;
     } else if (FKFormAttributeMappingTypeDateTime == attributeMapping.type) {
         datePickerMode = UIDatePickerModeDateAndTime;
     }

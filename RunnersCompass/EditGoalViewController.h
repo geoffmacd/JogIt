@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UserPrefs.h"
+#import "Goal.h"
 
 @class FKFormModel;
 
 @interface EditGoalViewController : UITableViewController
 
 @property (nonatomic, strong) FKFormModel *formModel;
-@property (nonatomic,strong) UserPrefs *prefs;
+@property (nonatomic,strong) Goal *goal;
 
 @end

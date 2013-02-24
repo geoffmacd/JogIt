@@ -8,6 +8,7 @@
 
 #import "CreateGoalViewController.h"
 #import "EditGoalViewController.h"
+#import "CreateGoalCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface CreateGoalViewController ()
@@ -55,14 +56,14 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
-    static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.textLabel.text = [NSString stringWithFormat:@"cell%i%i", indexPath.section, indexPath.row];
-    }
+    CreateGoalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"CreateGoalCell"
+                                                      owner:self
+                                                    options:nil]objectAtIndex:0];
+    [cell setup:row];
+    
     return cell;
+    
     
 }
 
@@ -70,7 +71,7 @@
 {
   
     
-    return 44.0;
+    return 64.0;
     
     
     
@@ -83,6 +84,12 @@
 {
     EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
     
+    
+    Goal *goal = [Goal alloc];
+    [goal initWithType:[indexPath row] value:[NSNumber numberWithInt:0] start:[NSDate date] end:nil];
+    
+    [vc setGoal:goal];
+    
     [self presentViewController:vc animated:true completion:nil];
 }
 
@@ -91,8 +98,8 @@
 #pragma mark -
 #pragma mark  UI Actions
 
-
 - (IBAction)doneTapped:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
+
 @end

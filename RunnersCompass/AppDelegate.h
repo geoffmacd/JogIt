@@ -11,7 +11,10 @@
 #import "Menu.h"
 #import "Logger.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
+{
+    UIActionSheet *  sheet;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

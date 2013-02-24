@@ -12,9 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *doneBut;
 @property (weak, nonatomic) IBOutlet UITableView *table;
-@property (weak, nonatomic) IBOutlet UILabel *currentGoalLabel;
-@property (weak, nonatomic) IBOutlet UILabel *goalDescriptionLabel;
 
 - (IBAction)doneTapped:(id)sender;
-
 @end

@@ -14,14 +14,15 @@
 
 @protocol MenuViewControllerDelegate <NSObject>
 
-- (void)loadRun:(RunEvent*) run;
+- (void)loadRun:(RunEvent*) run close:(BOOL)close;
 - (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
 - (void)selectedRunInProgress;
+- (void)finishedRun:(RunEvent *)run;
 
 @end
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate, LoggerViewControllerDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate, LoggerViewControllerDelegate,UIActionSheetDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * cells;
@@ -37,7 +38,8 @@
 @property (weak, nonatomic) id <MenuViewControllerDelegate>delegate;
 
 //UI
-@property (weak, nonatomic) IBOutlet UITableView *MenuTable;
+@property (strong, nonatomic) IBOutlet UITableView *MenuTable;
+
 
 //actions
 - (IBAction)performanceNavPressed:(id)sender;

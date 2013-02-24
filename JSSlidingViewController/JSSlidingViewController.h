@@ -12,6 +12,8 @@
 #define firstStageAnimationClose 0.2f
 #define secondStageAnimationClose 0.1f
 #define bouncyOvershootX 10.0f
+#define pauseOvershootX 100.0f
+#define pauseSlideDuration 0.2f
 #define pauseImageAnimationXScale 100.0f
 #define pauseImageSize 50.0f
 #define pauseDragChangeStateRatio 0.5f
@@ -26,15 +28,10 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 
 @interface JSSlidingViewController : UIViewController
 
-@property (nonatomic, readonly) BOOL animating;
-@property (nonatomic, readonly) BOOL isOpen;
-@property (nonatomic, assign) BOOL locked;
 @property (nonatomic, assign) BOOL frontViewControllerHasOpenCloseNavigationBarButton; // Defaults to YES.
 @property (nonatomic, readonly) UIViewController *frontViewController;
 @property (nonatomic, readonly) UIViewController *backViewController;
-@property (nonatomic, weak) id <JSSlidingViewControllerDelegate> delegate;
-@property (nonatomic, weak) id <JSSlidingViewControllerDelegate> menuDelegate;
-
+@property (strong, nonatomic) UIImageView *pauseImage;
 @property (nonatomic, assign) BOOL allowManualSliding;
 @property (assign, nonatomic) BOOL useBouncyAnimations;
 @property (assign, nonatomic) BOOL toggledState;
@@ -42,7 +39,11 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 @property (assign, nonatomic) BOOL isSetupForPauseScroll;
 @property (assign, nonatomic) BOOL changeState;
 @property (assign, nonatomic) BOOL liveRun;
-@property (strong, nonatomic) UIImageView *pauseImage;
+@property (nonatomic, readonly) BOOL animating;
+@property (nonatomic, readonly) BOOL isOpen;
+@property (nonatomic, assign) BOOL locked;
+@property (nonatomic, weak) id <JSSlidingViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <JSSlidingViewControllerDelegate> menuDelegate;
 
 - (id)initWithFrontViewController:(UIViewController *)frontVC backViewController:(UIViewController *)backVC;
 - (void)closeSlider:(BOOL)animated completion:(void (^)(void))completion;
@@ -50,6 +51,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)setFrontViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setBackViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:(CGFloat)width;
+- (void)pauseWithBounceAnimation:(void(^)(void))completion;
 
 @end
 

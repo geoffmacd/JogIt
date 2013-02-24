@@ -27,6 +27,7 @@
 #pragma mark -
 #pragma mark View Lifecycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -68,6 +69,7 @@
     
     
     runInProgressAsFarAsICanTell = false;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -134,7 +136,6 @@
                                                options:nil]objectAtIndex:0];
         [cell setAssociated:[runs objectAtIndex:row]];
         [cell setDelegate:self];
-        [cell setIndex:indexPath];
         
         [cells addObject:cell];
         
@@ -168,15 +169,6 @@
     
     return height;
     
-}
-
-
-
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
 }
 
 
@@ -249,7 +241,6 @@
     
     runInProgressAsFarAsICanTell = true;
     
-    
     start.headerLabel.text = @"Run In Progress";
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
@@ -258,6 +249,8 @@
     [start.folderImage setHidden:true];
     
 }
+
+
 
 
 #pragma mark -
@@ -269,21 +262,48 @@
     HierarchicalCell * cell = (HierarchicalCell * )sender;
     
     //set logger with this run
-    [self.delegate loadRun:cell.associatedRun];
+    [self.delegate loadRun:cell.associatedRun close:true];
     
 }
 
--(void) finishedRun
+-(void) finishedRun:(RunEvent*)run
 {
-    runInProgressAsFarAsICanTell = false;
+    
+    //save run and add it to the menu if it exists
+    
+    if(run)
+    {
+        //must be at 0th index to be at top and reload correctly
+        [runs insertObject:run atIndex:0];
+        HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell" owner:self options:nil]objectAtIndex:0];
+        [cell setAssociated:run];
+        [cell setDelegate:self];
+        [cells insertObject:cell atIndex:0];
+        //reload table
+        [MenuTable reloadData];
+    }
+    
     
     //refresh start cell
     
+    runInProgressAsFarAsICanTell = false;
     start.headerLabel.text = @"Start Running!!";
     start.locked = false;//to prevent expanding
-    //[start.addRunImage setHidden:false];
     [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
     [start.folderImage setHidden:false];
+}
+
+#pragma mark -
+#pragma mark Action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button %d", buttonIndex);
+    
+    if(buttonIndex == 0)
+    {
+        [self.delegate finishedRun:nil];
+    }
 }
 
 

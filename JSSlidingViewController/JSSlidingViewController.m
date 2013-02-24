@@ -231,7 +231,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     _slidingScrollView.frame = CGRectMake(targetOriginForSlidingScrollView, 0.0f, frame.size.width, frame.size.height);
     self.frontViewController.view.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
     
-    NSLog(@"slider: %f, %f", _slidingScrollView.contentOffset.x, _slidingScrollView.contentSize.width);
 }
 
 #pragma mark - Status Bar Changes
@@ -451,10 +450,83 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     }];
 }
 
+#pragma mark - Pause control
+
+- (void)pauseWithBounceAnimation:(void(^)(void))completion {
+    
+    CGFloat duration1 = 0.0f;
+    CGFloat duration2 = 0.0f;
+    duration1 = pauseSlideDuration;
+    duration2 = pauseSlideDuration;
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        duration1 = duration1 * 1.5f;
+        duration2 = duration2 * 1.5f;
+    }
+    
+    //ensure pause can be seen
+    [self.pauseImage setHidden:false];
+    
+    self.view.userInteractionEnabled = NO;
+    _animating = YES;
+    
+    [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+        _slidingScrollView.contentOffset = CGPointMake(self.view.frame.size.width + pauseOvershootX, 0);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration: duration2 delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+            _slidingScrollView.contentOffset = CGPointMake(self.view.frame.size.width, 0);
+        } completion:^(BOOL finished) {
+            _animating = NO;
+            self.view.userInteractionEnabled = YES;
+            [self didClose];
+            if (completion) {
+                completion();
+            }
+        }];
+    }];
+}
+
+-(void)resetScrollToPause{
+    //remove first
+    [self.backViewController.view removeFromSuperview];
+    
+    CGRect frame = self.view.bounds;
+    
+    self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
+    [self.view insertSubview:self.backViewController.view atIndex:0];
+    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
+    
+    //disable this so that the menu view can be scrolled left
+    _slidingScrollView.bounces = false;
+    
+    isSetupForPauseScroll = false;
+    changeState = false;
+}
+
+-(void)enableScrollToPause{
+    
+    
+    
+    //remove from view first
+    [self.backViewController.view removeFromSuperview];
+    //add to slider view instead and update frame
+    CGRect frame = self.view.bounds;
+    frame.origin.x = self.view.bounds.size.width;
+    self.backViewController.view.frame = frame;
+    [_slidingScrollView addSubview:self.backViewController.view];
+    
+    //set bounces to true to enable this to be possible
+    _slidingScrollView.bounces = liveRun;
+    
+    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
+    
+    isSetupForPauseScroll = true;
+    changeState = false;
+}
+
 #pragma mark - Scroll View Delegate for the Sliding Scroll View
 
 /*
- 
  SLIDING SCROLL VIEW DISCUSSION
  
  Nota Bene:
@@ -556,7 +628,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     } else {
         //expand image instead
         CGFloat differential = co.x - self.view.bounds.size.width;
-        NSLog(@"%f", differential);
+        //NSLog(@"%f", differential);
         
         CGFloat percent = differential / pauseImageAnimationXScale;
         
@@ -768,43 +840,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self enableScrollToPause];
 }
 
--(void)resetScrollToPause{
-    //remove first
-    [self.backViewController.view removeFromSuperview];
-    
-    CGRect frame = self.view.bounds;
-    
-    self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
-    [self.view insertSubview:self.backViewController.view atIndex:0];
-    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
-    
-    //disable this so that the menu view can be scrolled left
-    _slidingScrollView.bounces = false;
-    
-    isSetupForPauseScroll = false;
-    changeState = false;
-}
-
--(void)enableScrollToPause{
-    
-    
-    
-    //remove from view first
-    [self.backViewController.view removeFromSuperview];
-    //add to slider view instead and update frame
-    CGRect frame = self.view.bounds;
-    frame.origin.x = self.view.bounds.size.width;
-    self.backViewController.view.frame = frame;
-    [_slidingScrollView addSubview:self.backViewController.view];
-    
-    //set bounces to true to enable this to be possible
-    _slidingScrollView.bounces = liveRun;
-    
-    _slidingScrollView.contentSize = CGSizeMake(self.view.bounds.size.width + _sliderOpeningWidth, self.view.bounds.size.height);
-    
-    isSetupForPauseScroll = true;
-    changeState = false;
-}
 
 #pragma mark - Accessiblility
 

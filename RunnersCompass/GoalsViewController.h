@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface GoalsViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    
+    NSMutableArray * runs;
+}
 
 @property (strong, nonatomic) IBOutlet UIButton *doneBut;
 @property (strong, nonatomic) IBOutlet UIButton *goalButton;

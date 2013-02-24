@@ -19,6 +19,14 @@ typedef enum {
     EventTypeHike
 } RunType;
 
+typedef enum 
+{
+    MetricTypeDistance,
+    MetricTypePace,
+    MetricTypeTime,
+    MetricTypeCalories
+} RunMetric;
+
 @property (nonatomic, weak) NSString *name;
 @property (nonatomic, strong) NSDate *date;
 @property (nonatomic) float distance;

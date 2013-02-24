@@ -34,7 +34,7 @@
 @synthesize shadeView;
 @synthesize shadeTimer;
 @synthesize countdownLabel;
-
+@synthesize countdown;
 
 #pragma mark - Lifecycle
 
@@ -88,6 +88,26 @@
 
 #pragma mark - Managing runs
 
+/*
+-(void) countdownCycle
+{
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         
+                         [countdownLabel setText:[NSString stringWithFormat:@"%.f", countdown]];
+                         
+                     }
+                     completion:^(BOOL finish){
+                         countdown -= 0.5;
+                         
+                        [self countdownCycle];
+                     }
+     ];
+}
+*/
+
+
+
 - (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate pauseImage:(UIImageView*)image
 {
     [self setRun:[[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]]];
@@ -102,46 +122,101 @@
     //previous notification in app delegate has already changed status to paused
     NSAssert(paused, @"not yet paused from appdelegate notification");
     
-    [UIView animateWithDuration:1.0 animations:^{
-        [countdownLabel setAlpha:0.7f];
-        
-    }
-                     completion:^(BOOL finish){
+    /*
+    countdown = 5.0f;
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
                          
-                         [countdownLabel setText:@"2"];
-                         [UIView animateWithDuration:1.0 animations:^{
+                         [countdownLabel setText:[NSString stringWithFormat:@"%f", countdown]];
+                         
+        }
+                     completion:^(BOOL finish){
+                         [self countdownCycle];
+                         
+                         //wait until recursive animation done
+                         while(countdown >= 0);
+                         
+                         [UIView animateWithDuration:0.5 animations:^{
                              
-                             [countdownLabel setAlpha:1.0f];
+                             [shadeView setAlpha:0.1f];
+                             
                              
                          }
                                           completion:^(BOOL finish){
                                               
-                                              [countdownLabel setText:@"1"];
-                                              [UIView animateWithDuration:1.0 animations:^{
-                                                  
-                                                  [countdownLabel setAlpha:0.7f];
-                                                  [shadeView setAlpha:0.1f];
-                                                  
-                                                  
-                                              }
-                                                               completion:^(BOOL finish){
-                                                                   
-                                                                   //notification with pause image to start recording
-                                                                   [[NSNotificationCenter defaultCenter]
-                                                                    postNotificationName:@"pauseToggleNotification"
-                                                                    object:image];
-                                                                   
-                                                                   [shadeView setHidden:true];
-                                                                   [shadeView setAlpha:1.0f];
-                                                                   [countdownLabel setText:@"3"];
-                                                                   
-                                                               }];
+                                              [shadeView setHidden:true];
+                                              [shadeView setAlpha:1.0f];
+                                              [countdownLabel setText:@"5"];
+                                              
+                                              //animate the view controller
+                                              //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
+                                              [delegate pauseAnimation];
                                               
                                           }];
+                     }
+     ];
+    */
+
+    [UIView animateWithDuration:1.0 animations:^{
+        [countdownLabel setAlpha:0.7f];
+     
+    }
+                     completion:^(BOOL finish){
                          
+                         //swipe early
+                         if(!self.paused)
+                         {
+                             [shadeView setHidden:true];
+                             [shadeView setAlpha:1.0f];
+                             [countdownLabel setText:@"3"];
+                         }
+                         else
+                         {
+                             [countdownLabel setText:@"2"];
+                             [UIView animateWithDuration:1.0 animations:^{
+                                 
+                                 [countdownLabel setAlpha:1.0f];
+                                 
+                             }
+                                              completion:^(BOOL finish){
+                                                  
+                                                  //swipe early
+                                                  if(!self.paused)
+                                                  {
+                                                      [shadeView setHidden:true];
+                                                      [shadeView setAlpha:1.0f];
+                                                      [countdownLabel setText:@"3"];
+                                                  }
+                                                  else
+                                                  {
+                                                      [countdownLabel setText:@"1"];
+                                                      [UIView animateWithDuration:1.0 animations:^{
+                                                          
+                                                          [countdownLabel setAlpha:0.7f];
+                                                          [shadeView setAlpha:0.1f];
+                                                          
+                                                          
+                                                      }
+                                                                       completion:^(BOOL finish){
+                                                                           
+                                                                           
+                                                                           [shadeView setHidden:true];
+                                                                           [shadeView setAlpha:1.0f];
+                                                                           [countdownLabel setText:@"3"];
+                                                                           
+                                                                           //animate the view controller
+                                                                           //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
+                                                                           [delegate pauseAnimation];
+                                                                           
+                                                                       }];
+                                                      
+                                                  }
+                                              }];
+                         }
                      }];
-    
 }
+
 
 -(void)setRun:(RunEvent *)_run
 {
@@ -168,6 +243,8 @@
 
     
 }
+
+
 
 - (void)closeMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
     CGFloat duration = 0.0f;
@@ -227,6 +304,7 @@
 
 - (void)didReceivePause:(NSNotification *)notification
 {
+    //assume it is not locked
     paused = !paused;
     
     UIImageView * pauseImage = (UIImageView *) [notification object];
@@ -521,7 +599,7 @@
 
 
 - (IBAction)finishTapped:(id)sender {
-    [delegate finishedRun];
+    [delegate finishedRun:run];
     
     //convert current run to a historical run now that it is saved!
     [self setRun:run];
@@ -530,7 +608,6 @@
 
 - (IBAction)hamburgerTapped:(id)sender {
     [delegate menuButtonPressed:sender];
-    
     
 }
 @end

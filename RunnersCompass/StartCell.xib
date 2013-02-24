@@ -287,7 +287,7 @@
 										<string key="NSFrame">{{25, 13}, {270, 21}}</string>
 										<reference key="NSSuperview" ref="245450979"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="963723708"/>
+										<reference key="NSNextKeyView" ref="1015228628"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -330,7 +330,7 @@
 											<string key="NSResourceName">RightFillTriangleIcon.png</string>
 										</object>
 									</object>
-									<object class="IBUIButton" id="963723708">
+									<object class="IBUIButton" id="1015228628">
 										<reference key="NSNextResponder" ref="245450979"/>
 										<int key="NSvFlags">292</int>
 										<string key="NSFrame">{{293, 12}, {24, 24}}</string>
@@ -380,7 +380,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 254}</string>
+						<string key="NSFrameSize">{320, 256}</string>
 						<reference key="NSSuperview" ref="438365395"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="245450979"/>
@@ -393,7 +393,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 255}</string>
+				<string key="NSFrameSize">{320, 257}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="648043000"/>
@@ -404,7 +404,7 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="648043000"/>
 				<string key="IBUIReuseIdentifier">StartTableCellPrototype</string>
-				<real value="255" key="IBUIRowHeight"/>
+				<real value="257" key="IBUIRowHeight"/>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="924304487">
 				<bool key="IBUIEnabled">NO</bool>
@@ -449,7 +449,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">addRunButton</string>
 						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="963723708"/>
+						<reference key="destination" ref="1015228628"/>
 					</object>
 					<int key="connectionID">630</int>
 				</object>
@@ -590,7 +590,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">addRunTapped:</string>
-						<reference key="source" ref="963723708"/>
+						<reference key="source" ref="1015228628"/>
 						<reference key="destination" ref="438365395"/>
 						<int key="IBEventType">7</int>
 					</object>
@@ -631,7 +631,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="18694754"/>
 							<reference ref="534297443"/>
-							<reference ref="963723708"/>
+							<reference ref="1015228628"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">HeaderView</string>
@@ -723,7 +723,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">629</int>
-						<reference key="object" ref="963723708"/>
+						<reference key="object" ref="1015228628"/>
 						<reference key="parent" ref="245450979"/>
 					</object>
 				</array>
