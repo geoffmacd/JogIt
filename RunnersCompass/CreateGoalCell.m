@@ -7,6 +7,7 @@
 //
 
 #import "CreateGoalCell.h"
+#import "DataTest.h"
 
 
 @implementation CreateGoalCell
@@ -16,6 +17,16 @@
 
 -(void)setup:(GoalType) metric
 {
+    DataTest * core = [DataTest sharedData];
+    if(core.curGoal)
+    {
+        if(core.curGoal.type == metric)
+        {
+            //grey out this cell
+            [self setHighlighted:true];
+        }
+    }
+    
     //set image and text
     switch(metric)
     {
@@ -36,6 +47,8 @@
             [goalImage setImage:[UIImage imageNamed:@"stopwatch.png"]];
             break;
     }
+    
+    
     
 }
 

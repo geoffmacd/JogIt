@@ -64,10 +64,12 @@
         
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:@"Save" handler:^{
+        [formMapping buttonSave:@"Create Goal" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", goal);
             [self.formModel save];
+            DataTest * user = [DataTest sharedData];
+            user.curGoal = goal;
             [self dismissViewControllerAnimated:true completion:nil];
         }];
         
@@ -75,12 +77,27 @@
         
         [formMapping sectionWithTitle:sectionForGoal  identifier:@"info"];
         
-        if(goal.type != GoalTypeOneDistance && goal.type != GoalTypeRace)
+        if(goal.type == GoalTypeTotalDistance)
             [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeInteger];
+        else if(goal.type == GoalTypeCalories)
+            [formMapping mapAttribute:@"race"//to be converted afterwards
+                                title:valueText
+                         showInPicker:YES
+                    selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
+                        *selectedValueIndex = 0;//1 lb
+                        return [NSArray arrayWithObjects:@"1 lb", @"2 lb",@"3 lb",@"4 lb",@"5 lb",@"6 lb", @"7 lb",@"8 lb",@"9 lb",@"10 lb", @"11 lb", @"12 lb",@"13 lb",@"14 lb",@"15 lb",@"16 lb", @"17 lb",@"18 lb",@"19 lb",@"20 lb",@"21 lb", @"22 lb",@"23 lb",@"24 lb",@"25 lb",@"26 lb", @"27 lb",@"28 lb",@"29 lb",@"30 lb", nil];
+                        
+                    } valueFromSelectBlock:^id(id value, id object, NSInteger selectedValueIndex) {
+                        return value;
+                        
+                    } labelValueBlock:^id(id value, id object) {
+                        return value;
+                        
+                    }];
         else//need the race selector for races
             [formMapping mapAttribute:@"race"
                             title:@"Race Type"
-                     showInPicker:NO
+                     showInPicker:YES
                 selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
                     *selectedValueIndex = 0;//1 mile
                     return [goal getRaceTypes];
@@ -116,12 +133,21 @@
                         }];
         
         
+        [formMapping sectionWithTitle:@"" identifier:@"cancelButSection"];
+        
+        [formMapping button:@"Cancel" identifier:@"cancelButton" handler:^(id object){
+            [self dismissViewControllerAnimated:true completion:nil];
+            //dont save
+            
+        }
+               accesoryType:UITableViewCellAccessoryNone];
         
         [self.formModel registerMapping:formMapping];
     }];
     
     [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
         NSLog(@"did change model value");
+        NSLog([value description]);
     }];
     
     [self.formModel loadFieldsWithObject:goal];

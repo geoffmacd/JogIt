@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataTest.h"
 
 @interface CreateGoalViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 

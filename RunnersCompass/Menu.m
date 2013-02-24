@@ -14,6 +14,7 @@
 #import "PerformanceViewController.h"
 #import "SettingsViewController.h"
 #import "GoalsViewController.h"
+#import "CreateGoalViewController.h"
 #import "RunFormPicker.h"
 
 
@@ -31,8 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
+    
+	core = [DataTest sharedData];
     
     if(!start)
     {
@@ -333,9 +335,20 @@
     //nav bar cleanup
     [self cleanupForNav];
     
-    GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
+    if(!core.curGoal)
+    {
+        
+        CreateGoalViewController * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
+        
+        [self presentViewController:vc animated:true completion:nil];
+    }
+    else
+    {
+        GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
+        
+        [self presentViewController:vc animated:true completion:nil];
     
-    [self presentViewController:vc animated:true completion:nil];
+    }
 }
 
 - (IBAction)settingsNavPressed:(id)sender {

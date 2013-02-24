@@ -30,7 +30,11 @@
 
 -(NSArray*)getRaceTypes
 {
-    return [NSArray arrayWithObjects:@"1 mile", @"3 mile",@"5 mile",@"10 mile",@"5 km",@"10 km",@"Half Marathon",@"Full Marathon", nil];
+    return [NSArray arrayWithObjects:@"1 mile", @"3 mile",@"5 mile",@"10 mile",@"1 km",@"3 km",@"5 km",@"10 km",@"Half Marathon",@"Full Marathon", nil];
 }
 
+-(void)save
+{
+    
+}
 @end

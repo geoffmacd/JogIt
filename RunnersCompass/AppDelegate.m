@@ -168,6 +168,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //set user defaults
+    [self setUserDefaults];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
@@ -193,8 +198,6 @@
     //to make corners same as those for the app
     [self.backVC.view.layer setCornerRadius:5.0f];
     
-    //set user defaults
-    [self setUserDefaults];
  
 
     return YES;

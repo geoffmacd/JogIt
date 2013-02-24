@@ -434,7 +434,10 @@
             NSString *dataFormat = attributeMapping.dateFormatBlock();
             convertedValue = [self formattedStringDate:value usingFormat:dataFormat];
         } else {
-            convertedValue = [value description];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"H:mm"];
+            convertedValue  = [formatter stringFromDate:value];
+            //convertedValue = [value description];
         }
         
     } else if (attributeMapping.type == FKFormAttributeMappingTypeSelect) {

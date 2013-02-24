@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Goal.h"
+#import "DataTest.h"
 
 @class FKFormModel;
 
 @interface EditGoalViewController : UITableViewController
 
 @property (nonatomic, strong) FKFormModel *formModel;
-@property (nonatomic,strong) Goal *goal;
+@property (nonatomic,retain) Goal *goal;
 
 @end

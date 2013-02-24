@@ -11,6 +11,7 @@
 #import "StartCell.h"
 #import "JSSlidingViewController.h"
 #import "Logger.h"
+#import "DataTest.h"
 
 @protocol MenuViewControllerDelegate <NSObject>
 
@@ -27,6 +28,8 @@
     NSMutableArray * runs;
     NSMutableArray * cells;
     StartCell * start;
+    
+    DataTest * core;
     
 }
 
