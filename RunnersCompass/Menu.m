@@ -18,6 +18,7 @@
 #import "RunFormPicker.h"
 
 
+
 @implementation MenuViewController
 
 @synthesize MenuTable;
@@ -326,7 +327,6 @@
     [self cleanupForNav];
     
     PerformanceViewController * vc = [[PerformanceViewController alloc] initWithNibName:@"Performance" bundle:nil];
-    
     [self presentViewController:vc animated:true completion:nil];
 }
 
@@ -337,10 +337,11 @@
     
     if(!core.curGoal)
     {
+        //go straight to create screen since their is no goal to show
         
-        CreateGoalViewController * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
+        CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
         
-        [self presentViewController:vc animated:true completion:nil];
+        [self presentViewController:vc2 animated:true completion:nil];
     }
     else
     {

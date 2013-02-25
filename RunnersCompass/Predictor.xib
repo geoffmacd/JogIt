@@ -44,16 +44,15 @@
 						<reference key="NSSuperview" ref="786147558"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="663631267"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="142595113">
+						<object class="NSColor" key="IBUIBackgroundColor" id="121069177">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<bool key="IBUIReversesTitleShadowWhenHighlighted">YES</bool>
-						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">DONE</string>
@@ -89,13 +88,12 @@
 						<reference key="NSSuperview" ref="786147558"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="735213304"/>
-						<reference key="IBUIBackgroundColor" ref="142595113"/>
+						<reference key="IBUIBackgroundColor" ref="121069177"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<bool key="IBUIReversesTitleShadowWhenHighlighted">YES</bool>
-						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Weekly</string>
@@ -124,13 +122,12 @@
 						<reference key="NSSuperview" ref="786147558"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="481462327"/>
-						<reference key="IBUIBackgroundColor" ref="142595113"/>
+						<reference key="IBUIBackgroundColor" ref="121069177"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<bool key="IBUIReversesTitleShadowWhenHighlighted">YES</bool>
-						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Monthly</string>
@@ -360,7 +357,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">58</int>
+			<int key="maxID">66</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -370,7 +367,6 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="doneTapped:">id</string>
 						<string key="monthlyTapped:">id</string>
-						<string key="predictTapped:">id</string>
 						<string key="weeklyTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -380,10 +376,6 @@
 						</object>
 						<object class="IBActionInfo" key="monthlyTapped:">
 							<string key="name">monthlyTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="predictTapped:">
-							<string key="name">predictTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="weeklyTapped:">

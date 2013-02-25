@@ -145,7 +145,7 @@
 - (IBAction)weeklyTapped:(id)sender {
     if(!weekly)
     {
-        UIColor *col1 = [UIColor lightGrayColor];
+        UIColor *col1 = [UIColor darkGrayColor];
         UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
         
         [monthlyBut setBackgroundColor:col1];
@@ -159,7 +159,7 @@
     if(weekly)
     {
         
-        UIColor *col1 = [UIColor lightGrayColor];
+        UIColor *col1 = [UIColor darkGrayColor];
         UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
         
         [monthlyBut setBackgroundColor:col2];

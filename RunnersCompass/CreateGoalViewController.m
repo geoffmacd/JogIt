@@ -9,15 +9,20 @@
 #import "CreateGoalViewController.h"
 #import "EditGoalViewController.h"
 #import "CreateGoalCell.h"
+#import "CreateGoalHeaderCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface CreateGoalViewController ()
+
+@property (nonatomic, retain) Goal * tempGoal;
 
 @end
 
 @implementation CreateGoalViewController
 
-@synthesize doneBut;
+@synthesize table,header;
+@synthesize tempGoal;
+
 
 
 - (void)viewDidLoad
@@ -25,8 +30,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    //set rounded corners on buttons
-    [doneBut.layer setCornerRadius:8.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -36,6 +39,42 @@
 }
 
 
+#pragma mark -
+#pragma mark Action sheet delegate methods
+
+-(void)shouldUserDiscardGoal
+{
+    UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"Do you want to discard the current goal?"
+                                        delegate:self
+                               cancelButtonTitle:@"Cancel"
+                          destructiveButtonTitle:@"Discard"
+                               otherButtonTitles:nil];
+    
+    // Show the sheet in view
+    
+    [sheet showInView:self.view];
+}
+
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button %d", buttonIndex);
+    
+    if(buttonIndex == 0)
+    {
+        //set curgoal
+        [[DataTest sharedData] setCurGoal:tempGoal];
+        
+        EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+        [self presentViewController:vc animated:true completion:nil];
+        
+    }
+    else if(buttonIndex == 1)
+    {
+        
+    }
+}
 
 #pragma mark -
 #pragma mark  Table data source
@@ -82,23 +121,68 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+    
+    tempGoal = [[Goal alloc] initWithType:[indexPath row]];
+    
+    if([[DataTest sharedData] curGoal])
+    {
+        
+        [self shouldUserDiscardGoal];
+    }
+    else{
+        [[DataTest sharedData] setCurGoal:tempGoal];
+        
+        EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+        [self presentViewController:vc animated:true completion:nil];
+    }
     
     
-    Goal *goal = [Goal alloc];
-    [goal initWithType:[indexPath row] value:[NSNumber numberWithInt:0] start:[NSDate date] end:nil];
     
-    [vc setGoal:goal];
     
-    [self presentViewController:vc animated:true completion:nil];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section != 0 || tableView != table)
+        return nil;
+    
+    //deliver goalheadercell
+    if(!header)
+    {
+        header = (CreateGoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"CreateGoalHeaderCell"
+                                                                 owner:self
+                                                               options:nil]objectAtIndex:0];
+        
+        //set rounded corners on button
+        [header.doneBut.layer setCornerRadius:8.0f];
+    }
+    
+    return header;
+    
+    
+}
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(!header)
+    {
+        header =  (CreateGoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"CreateGoalHeaderCell"
+                                                                  owner:self
+                                                                      options:nil]objectAtIndex:0];
+        //set rounded corners on button
+        [header.doneBut.layer setCornerRadius:8.0f];
+        
+    }
+    
+    //return height of header, does not change
+    return header.frame.size.height;
+    
+}
 
 #pragma mark -
 #pragma mark  UI Actions
 
-- (IBAction)doneTapped:(id)sender {
+- (IBAction)doneCreateGoalTapped:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 }
 

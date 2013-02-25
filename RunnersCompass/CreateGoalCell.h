@@ -16,5 +16,6 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *goalImage;
 @property (strong, nonatomic) IBOutlet UIButton *button;
+@property (strong, nonatomic) IBOutlet UIImageView *curCheckImage;
 
 @end

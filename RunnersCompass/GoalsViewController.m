@@ -18,30 +18,19 @@
 
 @implementation GoalsViewController
 
-@synthesize table;
-@synthesize goalButton;
-@synthesize doneBut;
-@synthesize goalActivitiesLabel,goalBeganLabel,goalTargetLabel,valueChangedDescription,progress;
-@synthesize beganDateLabel,targetDateLabel,activitiesCountLabel, valueLabel;
+@synthesize table,header;
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    //reload goal if one was created
+    header = nil;//to cause it to reload
+    [table reloadData];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
-    //set labels
-    [self setGoalLabels];
-    
-    //set rounded corners on button
-    [doneBut.layer setCornerRadius:8.0f];
-    
-    //set progress bar
-    UIImage *trackImg = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-    UIImage *progressImg = [[UIImage imageNamed:@"progress.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-    
-    [progress setTrackImage:trackImg];
-    [progress setProgressImage:progressImg];
     
     
     //fake data
@@ -62,58 +51,11 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)setGoalLabels
-{
-    DataTest * data = [DataTest sharedData];
-    if(data.curGoal)
-    {
-        [goalActivitiesLabel setHidden:false];
-        [goalBeganLabel setHidden:false];
-        [goalTargetLabel setHidden:false];
-        [valueChangedDescription setHidden:false];
-        
-        [beganDateLabel setHidden:false];
-        [targetDateLabel setHidden:false];
-        [activitiesCountLabel setHidden:false];
-        [valueLabel setHidden:false];
-        
-        [progress setHidden:false];
-        [table setHidden:false];
-        
-        [goalButton setTitle:@"Lose 8 lbs by January 21st" forState:UIControlStateNormal];
-        
-        //fake
-        [progress setProgress:0.7];
-        [beganDateLabel setText:@"January 19th, 2012"];
-        [targetDateLabel setText:@"August 13th, 2013"];
-        [activitiesCountLabel setText:@"13"];
-        [valueLabel setText:@"14,000 calories = 7 lbs"];
-        
-    }
-    else
-    {
-        //set labels to blank
-        [goalActivitiesLabel setHidden:true];
-        [goalBeganLabel setHidden:true];
-        [goalTargetLabel setHidden:true];
-        [valueChangedDescription setHidden:true];
-        
-        [beganDateLabel setHidden:true];
-        [targetDateLabel setHidden:true];
-        [activitiesCountLabel setHidden:true];
-        [valueLabel setHidden:true];
-        
-        [progress setHidden:true];
-        [table setHidden:true];
-        
-        [goalButton setTitle:@"Create Goal" forState:UIControlStateNormal];
-        
-    }
-}
+
 
 
 #pragma mark -
-#pragma mark Menu Table data source
+#pragma mark  Table data source
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
@@ -151,6 +93,45 @@
     
 }
 
+
+
+#pragma mark -
+#pragma mark  Table delegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section != 0 || tableView != table)
+        return nil;
+    
+    //deliver goalheadercell
+    if(!header)
+    {
+        header = (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
+                                                      owner:self
+                                                    options:nil]objectAtIndex:0];
+        [header setup];
+    }
+    
+    return header;
+    
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(!header)
+    {
+        header =  (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
+                                                owner:self
+                                              options:nil]objectAtIndex:0];
+        
+        [header setup];
+    }
+    
+    //return height of header, does not change
+    return header.frame.size.height;
+    
+}
 
 #pragma mark - UI actions
 

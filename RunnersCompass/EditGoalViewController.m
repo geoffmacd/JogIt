@@ -8,6 +8,7 @@
 
 #import "EditGoalViewController.h"
 #import "FormKit.h"
+#import "DataTest.h"
 
 @interface EditGoalViewController ()
 
@@ -15,7 +16,7 @@
 
 @implementation EditGoalViewController
 
-@synthesize goal, formModel;
+@synthesize  formModel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -36,6 +37,8 @@
     NSString * sectionForGoal;
     NSString * valueText;
     NSString * valueText2;
+    
+    Goal * goal = [[DataTest sharedData] curGoal];
     
     switch (goal.type) {
         case GoalTypeTotalDistance:
@@ -67,10 +70,22 @@
         [formMapping buttonSave:@"Create Goal" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", goal);
-            [self.formModel save];
+            //[self.formModel save];
+            if(goal.type == GoalTypeOneDistance)
+            {
+                goal.value = [NSNumber numberWithInt:4];
+
+            }
+            else if (goal.type == GoalTypeRace)
+            {
+                goal.value = [NSNumber numberWithInt:4];
+                
+                goal.value2 = [NSNumber numberWithInt:100];
+            }
+            
             DataTest * user = [DataTest sharedData];
             user.curGoal = goal;
-            [self dismissViewControllerAnimated:true completion:nil];
+            [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
         }];
         
         
@@ -94,7 +109,7 @@
                         return value;
                         
                     }];
-        else//need the race selector for races
+        else if(goal.type == GoalTypeOneDistance || goal.type == GoalTypeRace)//need the race selector for races
             [formMapping mapAttribute:@"race"
                             title:@"Race Type"
                      showInPicker:YES

@@ -12,23 +12,23 @@
 
 @implementation CreateGoalCell
 
-@synthesize goalImage,button;
+@synthesize goalImage,button,curCheckImage;
 
 
--(void)setup:(GoalType) metric
+-(void)setup:(GoalType) goalType
 {
     DataTest * core = [DataTest sharedData];
     if(core.curGoal)
     {
-        if(core.curGoal.type == metric)
+        if(core.curGoal.type == goalType)
         {
-            //grey out this cell
-            [self setHighlighted:true];
+            //show checkmark
+            [curCheckImage setHidden:false];
         }
     }
     
     //set image and text
-    switch(metric)
+    switch(goalType)
     {
         case GoalTypeCalories:
             [button setTitle:@"Lose Weight" forState:UIControlStateNormal];

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "DataTest.h"
+#import "CreateGoalHeaderCell.h"
 
-@interface CreateGoalViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface CreateGoalViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
-@property (strong, nonatomic) IBOutlet UIButton *doneBut;
+@property(retain) CreateGoalHeaderCell * header;
+
 @property (weak, nonatomic) IBOutlet UITableView *table;
 
-- (IBAction)doneTapped:(id)sender;
 @end
