@@ -39,5 +39,7 @@ typedef enum
 
 -(id)initWithName:(NSString *)name date:(NSDate *)date;
 
++(NSString * )stringForMetric:(RunMetric) metric;
+
 
 @end

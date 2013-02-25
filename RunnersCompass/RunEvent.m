@@ -37,4 +37,22 @@
 }
 
 
++(NSString * )stringForMetric:(RunMetric) metric
+{
+    switch(metric)
+    {
+        case MetricTypeCalories:
+            return @"Calories";
+        case MetricTypeDistance:
+            return @"Distance";
+        case MetricTypePace:
+            return @"Pace";
+        case MetricTypeTime:
+            return @"Duration";
+    }
+    
+    return @"UnknownMetric";
+}
+
+
 @end

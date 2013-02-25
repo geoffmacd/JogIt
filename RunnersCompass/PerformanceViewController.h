@@ -9,6 +9,7 @@
 #import "CorePlot-CocoaTouch.h"
 #import <UIKit/UIKit.h>
 #import "ChartCell.h"
+#import "RunEvent.h"//for metric
 
 @interface PerformanceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {

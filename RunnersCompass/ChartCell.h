@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ChartViewController.h"
+#import "RunEvent.h"
 
 @protocol ChartCellDelegate <NSObject>
 
@@ -29,6 +30,10 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *previousLabel;
+@property (strong, nonatomic) IBOutlet UILabel *currentLabel;
+@property (strong, nonatomic) IBOutlet UILabel *currentValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *previousValueLabel;
 
 
 
@@ -38,7 +43,7 @@
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
-@property (nonatomic, setter = setAssociated:) ChartViewController * associated;
+@property (nonatomic, setter = setAssociated:) RunMetric associated;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

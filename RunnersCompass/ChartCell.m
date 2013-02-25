@@ -15,6 +15,7 @@
 @synthesize headerLabel;
 @synthesize expandedView;
 @synthesize headerView;
+@synthesize currentLabel,currentValueLabel,previousLabel,previousValueLabel;
 @synthesize delegate;
 
 @synthesize associated;
@@ -22,7 +23,6 @@
 
 -(void)setup
 {
-    
     
     [self setExpand:false withAnimation:false];
     
@@ -33,6 +33,9 @@
     UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
     
     [expandedView setBackgroundColor:col3];
+    
+    //set title to match the metric
+    [headerLabel setText:[RunEvent stringForMetric:associated]];
     
 }
 
@@ -45,18 +48,14 @@
 }
 
 
--(void) setAssociated:(ChartViewController*) chart
+-(void) setAssociated:(RunMetric) chart
 {
-    if(chart)
-    {
-        
-        associated = chart;
-        
-        
-        [self setup];
-        
-        [self timerFired];
-    }
+    associated = chart;
+    
+    
+    [self setup];
+    
+    
 }
 
 
@@ -65,12 +64,12 @@
 {
     
     expanded = open;
-    NSTimeInterval time = animate ? 0.25f : 0.01f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
     
     if(expanded){
         
         
-        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f curve:UIViewAnimationCurveEaseIn degrees:90];
+        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];
         
         if(animate)
         {
@@ -82,13 +81,15 @@
         
     }else{
         
+        [self loadChart];
+        
         if(animate)
         {
             [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
             
         }
         
-        [AnimationUtil rotateImage:folderImage duration:animate ? time : 0.0f curve:UIViewAnimationCurveEaseIn degrees:0];
+        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
     if(!animate)
@@ -118,7 +119,7 @@
 
 #pragma mark - BarChart
 
--(void)timerFired
+-(void)loadChart
 {
     
     // Create barChart from theme
