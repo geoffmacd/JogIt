@@ -306,6 +306,8 @@
     if(buttonIndex == 0)
     {
         [self.delegate finishedRun:nil];
+        
+        
     }
 }
 

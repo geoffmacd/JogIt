@@ -44,6 +44,14 @@
     
     
     paused = true;
+    //hide status button until live run
+    [statusIcon setHidden:true];
+    
+    
+    //load most recent run on startup
+    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
+    loadRun.live = false;
+    [self setRun:loadRun];
     
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
@@ -121,42 +129,7 @@
     
     //previous notification in app delegate has already changed status to paused
     NSAssert(paused, @"not yet paused from appdelegate notification");
-    
-    /*
-    countdown = 5.0f;
-    
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         
-                         [countdownLabel setText:[NSString stringWithFormat:@"%f", countdown]];
-                         
-        }
-                     completion:^(BOOL finish){
-                         [self countdownCycle];
-                         
-                         //wait until recursive animation done
-                         while(countdown >= 0);
-                         
-                         [UIView animateWithDuration:0.5 animations:^{
-                             
-                             [shadeView setAlpha:0.1f];
-                             
-                             
-                         }
-                                          completion:^(BOOL finish){
-                                              
-                                              [shadeView setHidden:true];
-                                              [shadeView setAlpha:1.0f];
-                                              [countdownLabel setText:@"5"];
-                                              
-                                              //animate the view controller
-                                              //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
-                                              [delegate pauseAnimation];
-                                              
-                                          }];
-                     }
-     ];
-    */
+
 
     [UIView animateWithDuration:1.0 animations:^{
         [countdownLabel setAlpha:0.7f];

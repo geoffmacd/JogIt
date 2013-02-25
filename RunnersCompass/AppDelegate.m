@@ -15,28 +15,6 @@
 @synthesize viewController = _viewController;
 @synthesize frontVC, backVC;
 
-#pragma mark - Settings
-
-- (void)setUserDefaults
-{
-    NSMutableDictionary *defaults = [[NSMutableDictionary alloc]initWithCapacity:10];
-    
-
-    [defaults setValue:@"Geoff MacDonald"  forKey:@"name"];
-    [defaults setValue:@"Toronto" forKey:@"location"];
-    [defaults setValue:@"6'2" forKey:@"height"];
-    [defaults setValue:[NSDate date]
-                forKey:@"age"];
-    [defaults setValue:[NSNumber numberWithInt:192]
-                forKey:@"weight"];
-
-    
-    
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
 
 #pragma mark - Logger Delegate Methods
 
@@ -51,11 +29,10 @@
 //both menu and logger delegate method
 - (void)finishedRun:(RunEvent *)run
 {
+    //send run to menu to add it to list
     [self.frontVC finishedRun:run];
     
-    
-    
-    
+    //if it is in logger view
     if(!self.viewController.isOpen)
     {
         [self.viewController.view setUserInteractionEnabled:false];
@@ -64,6 +41,11 @@
             if(!run)
             {
                 //load previous run
+                RunEvent  * run = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
+                [self.backVC setRun:run];
+                
+                [self.viewController setLiveRun:false];
+                
             }
              
         }];
@@ -169,34 +151,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    //set user defaults
-    [self setUserDefaults];
-    
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
-    [self.backVC.view setClipsToBounds:true];
+    //to make corners same as those for the app
+    [self.backVC.view.layer setCornerRadius:5.0f];
+    
+    
     
     self.frontVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
     self.frontVC.delegate = self;
     
     
     self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
-    
     //set the delegates to receive the messages
     self.viewController.delegate = self.backVC;
     self.viewController.menuDelegate = self.frontVC;
     
-    [self.viewController setLocked:true];//until a run is loaded/started
+    //[self.viewController setLocked:true];//until a run is loaded/started
     
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    //to make corners same as those for the app
-    [self.backVC.view.layer setCornerRadius:5.0f];
     
  
 

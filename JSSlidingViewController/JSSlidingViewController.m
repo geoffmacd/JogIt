@@ -102,7 +102,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self setupSlidingScrollView];
     CGRect frame = self.view.bounds;
     
-    liveRun = true;
     
     self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
     [self addChildViewController:self.backViewController];
@@ -157,6 +156,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     _animating = NO;
     _frontViewControllerHasOpenCloseNavigationBarButton = YES;
     _allowManualSliding = YES;
+    liveRun = false;
     
     self.frontViewControllerDropShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
     self.frontViewControllerDropShadow.frame = CGRectMake(dropShadowXOffset, 0.0f, dropShadowXOffset, _slidingScrollView.bounds.size.height);
