@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import "FormKit.h"
+#import "DataTest.h"
 
 @interface SettingsViewController()
 
@@ -33,10 +34,7 @@
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
     
-    UserPrefs * newPrefs = [UserPrefs defaultUser];
-    
-    
-    self.prefs = newPrefs;
+    self.prefs = [[DataTest sharedData] prefs];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
@@ -44,7 +42,7 @@
         [formMapping buttonSave:@"DONE" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", self.prefs);
-            [self.formModel save];
+            [[DataTest sharedData] setPrefs:self.prefs];
             [self dismissViewControllerAnimated:true completion:nil];
         }];
         
@@ -82,7 +80,7 @@
         NSLog(@"did change model value");
     }];
     
-    [self.formModel loadFieldsWithObject:newPrefs];
+    [self.formModel loadFieldsWithObject:self.prefs ];
     
 }
 
