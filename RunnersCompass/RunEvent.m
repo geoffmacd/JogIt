@@ -49,6 +49,12 @@
             return @"Pace";
         case MetricTypeTime:
             return @"Duration";
+        case MetricTypeClimbed:
+            return @"Climbed";
+        case MetricTypeCadence:
+            return @"Cadence";
+        case MetricTypeStride:
+            return @"Stride";
     }
     
     return @"UnknownMetric";

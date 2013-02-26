@@ -35,7 +35,7 @@
     cells = [[NSMutableArray alloc] initWithCapacity:5];
     
     charts = [[NSMutableArray alloc] initWithCapacity:5];
-    for(NSUInteger i = 0;i<6;i++)
+    for(NSUInteger i = 0;i<7;i++)
     {
     
         ChartCell * test   =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
@@ -149,7 +149,16 @@
 - (IBAction)predictTapped:(id)sender {
     PredictorViewController * vc = [[PredictorViewController alloc] initWithNibName:@"Predictor" bundle:nil];
     
-    [self presentViewController:vc animated:true completion:nil];
+    
+    [self presentViewController:vc animated:true completion:^{
+        /*      doesnt work
+        if(weekly)
+            [vc weeklyTapped:nil];
+        else
+            [vc monthlyTapped:nil];
+         */
+        
+    }];
 }
 
 - (IBAction)weeklyTapped:(id)sender {

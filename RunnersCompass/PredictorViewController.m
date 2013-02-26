@@ -32,7 +32,7 @@
     cells = [[NSMutableArray alloc] initWithCapacity:5];
     
     charts = [[NSMutableArray alloc] initWithCapacity:5];
-    for(NSUInteger i = 0;i<6;i++)
+    for(NSUInteger i = 0;i<7;i++)
     {
     
         ChartCell * test   =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
@@ -72,7 +72,7 @@
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
                                                                   owner:self
                                                                 options:nil]objectAtIndex:0];
-        [cell setAssociated:[charts objectAtIndex:row]];
+        [cell setAssociated:row];
         [cell setDelegate:self];
         [cell setTimePeriod:weekly];
         

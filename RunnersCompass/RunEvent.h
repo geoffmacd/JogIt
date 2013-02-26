@@ -24,7 +24,10 @@ typedef enum
     MetricTypeDistance,
     MetricTypePace,
     MetricTypeTime,
-    MetricTypeCalories
+    MetricTypeCalories,
+    MetricTypeClimbed,
+    MetricTypeCadence,
+    MetricTypeStride
 } RunMetric;
 
 @property (nonatomic, weak) NSString *name;

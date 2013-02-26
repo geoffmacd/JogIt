@@ -62,7 +62,7 @@
     
     UIColor *col2 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
     
-    [expandedView setBackgroundColor:col2];
+    //[expandedView setBackgroundColor:col2];
     
     [thumbnailImage.layer setBorderColor: [[UIColor grayColor] CGColor]];
     [thumbnailImage.layer setBorderWidth: 1.0];

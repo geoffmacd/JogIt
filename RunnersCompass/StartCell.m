@@ -33,7 +33,7 @@
     
     UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
     
-    [expandedView setBackgroundColor:col3];
+    //[expandedView setBackgroundColor:col3];
     
 }
 

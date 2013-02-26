@@ -191,7 +191,7 @@
     y.axisConstraints = [CPTConstraints constraintWithLowerOffset:0.0];
     y.majorTickLineStyle          = nil;
     y.minorTickLineStyle          = nil;
-    y.majorIntervalLength         = CPTDecimalFromString(@"50");
+    y.majorIntervalLength         = CPTDecimalFromString(@"300");
     //y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
     // First bar plot
