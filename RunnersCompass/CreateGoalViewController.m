@@ -63,15 +63,17 @@
     
     if(buttonIndex == 0)
     {
-        //set curgoal
-        [[DataTest sharedData] setCurGoal:tempGoal];
+        //dump old goal, even if user cancels out
+        [[DataTest sharedData] setCurGoal:nil];
         
         EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+        [vc setTempGoal:tempGoal];
         [self presentViewController:vc animated:true completion:nil];
         
     }
     else if(buttonIndex == 1)
     {
+        //do nothing
         
     }
 }
@@ -123,16 +125,28 @@
 {
     
     tempGoal = [[Goal alloc] initWithType:[indexPath row]];
+    Goal * curGoal = [[DataTest sharedData] curGoal];
     
-    if([[DataTest sharedData] curGoal])
+    if(curGoal)
     {
-        
-        [self shouldUserDiscardGoal];
+        //only discard if the user is not trying to edit the current goal
+        if(curGoal.type != [indexPath row])
+        {
+            [self shouldUserDiscardGoal];
+        }
+        else{
+            //leave current goal in to be edited
+            
+            
+            EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+            [vc setTempGoal:tempGoal];
+            [self presentViewController:vc animated:true completion:nil];
+        }
     }
     else{
-        [[DataTest sharedData] setCurGoal:tempGoal];
         
         EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+        [vc setTempGoal:tempGoal];
         [self presentViewController:vc animated:true completion:nil];
     }
     

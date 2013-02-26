@@ -230,10 +230,11 @@
 #pragma mark -
 #pragma mark Start Cell Delegate
 
--(void)selectedRunInProgress
+-(void)selectedRunInProgress:(BOOL)shouldDiscard
 {
     //selected the headerview of start cell when run is in progress, slide back to logger
-    [self.delegate selectedRunInProgress];
+    [self.delegate selectedRunInProgress:shouldDiscard];
+
     
 }
 
@@ -290,7 +291,7 @@
     //refresh start cell
     
     runInProgressAsFarAsICanTell = false;
-    start.headerLabel.text = @"Start Running!!";
+    start.headerLabel.text = @"New Run";
     start.locked = false;//to prevent expanding
     [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
     [start.folderImage setHidden:false];
@@ -341,9 +342,20 @@
     {
         //go straight to create screen since their is no goal to show
         
+        //CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
+        
+        //[self presentViewController:vc2 animated:true completion:nil];
+        
+        
+        GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
         CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
         
-        [self presentViewController:vc2 animated:true completion:nil];
+        [self presentViewController:vc animated:true completion:^{
+            
+            [vc presentViewController:vc2 animated:true completion:nil];
+        }];
+        
+        
     }
     else
     {

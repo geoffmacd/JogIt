@@ -15,6 +15,7 @@
 @interface EditGoalViewController : UITableViewController
 
 @property (nonatomic, strong) FKFormModel *formModel;
-@property (nonatomic,retain) Goal *goal;
+@property (nonatomic, strong) Goal  *tempGoal;
+
 
 @end

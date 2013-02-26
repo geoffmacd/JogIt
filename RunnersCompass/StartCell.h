@@ -16,7 +16,7 @@
 
 -(void)cellDidChangeHeight:(id) sender;
 -(void)selectedNewRun:(RunEvent *) run;
--(void)selectedRunInProgress;
+-(void)selectedRunInProgress:(BOOL)shouldDiscard;
 
 @end
 

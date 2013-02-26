@@ -36,7 +36,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *previousValueLabel;
 
 
-
 //delegate
 @property (weak, nonatomic) id <ChartCellDelegate>delegate;
 
@@ -44,6 +43,7 @@
 //instance variables
 @property BOOL expanded;//for whether currently expanded
 @property (nonatomic, setter = setAssociated:) RunMetric associated;
+@property(setter = setTimePeriod:) BOOL weekly;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

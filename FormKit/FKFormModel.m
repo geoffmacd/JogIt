@@ -98,8 +98,8 @@
     if (self) {
         self.selectControllerClass = [BWSelectViewController class];
         self.longTextControllerClass = [BWLongTextViewController class];
-        self.validationErrorColor = [UIColor colorWithRed:216/255.0f green:98/255.0f blue:98/255.0f alpha:1];
-        self.validationErrorCellBackgroundColor = [UIColor colorWithRed:255/255.0f green:235/255.0f blue:235/255.0f alpha:1];
+        self.validationErrorColor = [UIColor colorWithRed:192/255.0f green:24/255.0f blue:37/255.0f alpha:1];
+        self.validationErrorCellBackgroundColor = [UIColor darkGrayColor];
         self.validationNormalCellBackgroundColor = [UIColor darkGrayColor];//[UIColor colorWithRed:250/255.0f green:250/255.0f blue:250/255.0f alpha:1];
 
     }
@@ -472,16 +472,27 @@
     ActionSheetDatePicker *actionSheetPicker;
     UIDatePickerMode datePickerMode = UIDatePickerModeDate;
     
+    NSDate *date = [NSDate date];
+    
     if (FKFormAttributeMappingTypeTime == attributeMapping.type) {
         datePickerMode = UIDatePickerModeCountDownTimer; //UIDatePickerModeTime;
+        
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
+        NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: date];
+        [components setHour: 0];
+        [components setMinute: 0];
+        [components setSecond: 0];
+        
+        date = [gregorian dateFromComponents: components];
     } else if (FKFormAttributeMappingTypeDateTime == attributeMapping.type) {
         datePickerMode = UIDatePickerModeDateAndTime;
     }
     
     __weak FKFormModel *weakRef = self;
+    
     actionSheetPicker = [ActionSheetDatePicker showPickerWithTitle:attributeMapping.title
                                                     datePickerMode:datePickerMode
-                                                      selectedDate:[NSDate date]
+                                                      selectedDate:date
                                                          doneBlock:^(ActionSheetDatePicker *picker, NSDate *selectedDate, id origin) {
                                                              FKFormAttributeMapping *formAttributeMapping = picker.formAttributeMapping;
                                                              [weakRef.formMapper setValue:selectedDate forAttributeMapping:formAttributeMapping];

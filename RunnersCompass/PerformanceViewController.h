@@ -18,7 +18,7 @@
     
 }
 
-@property (weak, nonatomic) IBOutlet UITableView *table;
+@property (strong, nonatomic) IBOutlet UITableView *table;
 
 @property (nonatomic, assign) BOOL weekly;
 

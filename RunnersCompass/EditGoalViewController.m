@@ -16,7 +16,7 @@
 
 @implementation EditGoalViewController
 
-@synthesize  formModel;
+@synthesize  formModel,tempGoal;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,104 +33,116 @@
 
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
+
     
-    NSString * sectionForGoal;
-    NSString * valueText;
-    NSString * valueText2;
+    NSString * sectionForGoal = [tempGoal stringForHeaderDescription];
+    NSString * valueText = [tempGoal stringForEdit1];
+    NSString * valueText2 = [tempGoal stringForEdit2];
     
-    Goal * goal = [[DataTest sharedData] curGoal];
-    
-    switch (goal.type) {
-        case GoalTypeTotalDistance:
-            sectionForGoal = @"Total Distance Over Time";
-            valueText = @"Cumulative Distance";
-            break;
-        case GoalTypeRace:
-            sectionForGoal = @"Fastest Race Time";
-            valueText2 = @"Time to Beat";
-            valueText = @"Race";
-            break;
-        case GoalTypeOneDistance:
-            sectionForGoal = @"Finish a Race";
-            valueText = @"Race";
-            break;
-        case GoalTypeCalories:
-            sectionForGoal = @"Burn Fat";
-            valueText = @"Weight Loss(3500cal/lb)";
-            break;
-            
-        default:
-            break;
-    }
     
     [FKFormMapping mappingForClass:[Goal class] block:^(FKFormMapping *formMapping) {
         
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
         [formMapping buttonSave:@"Create Goal" handler:^{
-            NSLog(@"save pressed");
-            NSLog(@"%@", goal);
-            //[self.formModel save];
-            if(goal.type == GoalTypeOneDistance)
-            {
-                goal.value = [NSNumber numberWithInt:4];
-
-            }
-            else if (goal.type == GoalTypeRace)
-            {
-                goal.value = [NSNumber numberWithInt:4];
-                
-                goal.value2 = [NSNumber numberWithInt:100];
-            }
             
-            DataTest * user = [DataTest sharedData];
-            user.curGoal = goal;
-            [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
+            //confirm goal is valid before saving, this will handle error validation as well
+            if([tempGoal validateGoalEntry])
+            {
+            
+                //[self.formModel save];//should process goal variable
+                [[DataTest sharedData] setCurGoal:tempGoal];
+            
+                [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
+            }
         }];
         
         
         
         [formMapping sectionWithTitle:sectionForGoal  identifier:@"info"];
         
-        if(goal.type == GoalTypeTotalDistance)
+        //all of the following use the value parameter
+        if(tempGoal.type == GoalTypeTotalDistance)
+        {
             [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeInteger];
-        else if(goal.type == GoalTypeCalories)
-            [formMapping mapAttribute:@"race"//to be converted afterwards
+            
+            //validationn
+            [formMapping validationForAttribute:@"value" validBlock:^BOOL(NSString *value, id object) {
+                return tempGoal.value;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return @"Must enter a weight loss.";
+            }];
+        }
+        else if(tempGoal.type == GoalTypeCalories)
+        {
+            [formMapping mapAttribute:@"weight"//to be converted afterwards
                                 title:valueText
                          showInPicker:YES
                     selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
                         *selectedValueIndex = 0;//1 lb
-                        return [NSArray arrayWithObjects:@"1 lb", @"2 lb",@"3 lb",@"4 lb",@"5 lb",@"6 lb", @"7 lb",@"8 lb",@"9 lb",@"10 lb", @"11 lb", @"12 lb",@"13 lb",@"14 lb",@"15 lb",@"16 lb", @"17 lb",@"18 lb",@"19 lb",@"20 lb",@"21 lb", @"22 lb",@"23 lb",@"24 lb",@"25 lb",@"26 lb", @"27 lb",@"28 lb",@"29 lb",@"30 lb", nil];
+                        return [tempGoal getWeightNames];
                         
                     } valueFromSelectBlock:^id(id value, id object, NSInteger selectedValueIndex) {
+                        tempGoal.value = [[tempGoal fatDictionary] objectForKey:value];
                         return value;
                         
                     } labelValueBlock:^id(id value, id object) {
                         return value;
                         
                     }];
-        else if(goal.type == GoalTypeOneDistance || goal.type == GoalTypeRace)//need the race selector for races
+            
+            //validationn
+            [formMapping validationForAttribute:@"weight" validBlock:^BOOL(NSString *value, id object) {
+                return tempGoal.weight;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return @"Must enter a weight loss.";
+            }];
+        }
+        else if(tempGoal.type == GoalTypeOneDistance || tempGoal.type == GoalTypeRace)//need the race selector for races
+        {
             [formMapping mapAttribute:@"race"
-                            title:@"Race Type"
+                            title:valueText
                      showInPicker:YES
                 selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
+
                     *selectedValueIndex = 0;//1 mile
-                    return [goal getRaceTypes];
+                    return [tempGoal getRaceNames];
                     
                 } valueFromSelectBlock:^id(id value, id object, NSInteger selectedValueIndex) {
+                    tempGoal.value = [[tempGoal raceDictionary] objectForKey:value];
                     return value;
                     
                 } labelValueBlock:^id(id value, id object) {
                     return value;
                     
                 }];
-                    
-                    
+            
+            //validationn
+            [formMapping validationForAttribute:@"race" validBlock:^BOOL(NSString *value, id object) {
+                return tempGoal.race;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return @"Must enter a time.";
+            }];
+        }
+        
                     
         
-        //only if it exists do we use this
+        //only if it exists do we use the time parameter
         if(valueText2)
-            [formMapping mapAttribute:@"value2" title:valueText2 type:FKFormAttributeMappingTypeTime];
+        {
+            [formMapping mapAttribute:@"time" title:valueText2 type:FKFormAttributeMappingTypeTime];
+            
+            //validationn
+            [formMapping validationForAttribute:@"time" validBlock:^BOOL(NSString *value, id object) {
+                return tempGoal.time;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return @"Must enter a time.";
+            }];
+        }
         
         [formMapping mappingForAttribute:@"startDate"
                                    title:@"Start Date"
@@ -139,6 +151,14 @@
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
+        //validationn
+        [formMapping validationForAttribute:@"endDate" validBlock:^BOOL(NSString *value, id object) {
+            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
+            
+        } errorMessageBlock:^NSString *(id value, id object) {
+            return @"Target date must be after start!";
+        }];
+        
         [formMapping mappingForAttribute:@"endDate"
                                    title:@"End Date"
                                     type:FKFormAttributeMappingTypeDate
@@ -146,6 +166,13 @@
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
+        //validationn
+        [formMapping validationForAttribute:@"endDate" validBlock:^BOOL(NSString *value, id object) {
+            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
+            
+        } errorMessageBlock:^NSString *(id value, id object) {
+            return @"Target date must be after start!";
+        }];
         
         
         [formMapping sectionWithTitle:@"" identifier:@"cancelButSection"];
@@ -156,16 +183,19 @@
             
         }
                accesoryType:UITableViewCellAccessoryNone];
+
+
         
+        //completion
         [self.formModel registerMapping:formMapping];
     }];
     
     [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
-        NSLog(@"did change model value");
-        NSLog([value description]);
+       // NSLog(@"did change model value");
+      //  NSLog([value description]);
     }];
     
-    [self.formModel loadFieldsWithObject:goal];
+    [self.formModel loadFieldsWithObject:tempGoal];
     
     
 }

@@ -17,7 +17,7 @@
 
 - (void)loadRun:(RunEvent*) run close:(BOOL)close;
 - (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate;
-- (void)selectedRunInProgress;
+-(void)selectedRunInProgress:(BOOL)shouldDiscard;
 - (void)finishedRun:(RunEvent *)run;
 
 @end

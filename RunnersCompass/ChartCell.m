@@ -20,6 +20,7 @@
 
 @synthesize associated;
 @synthesize expanded;
+@synthesize weekly;
 
 -(void)setup
 {
@@ -37,6 +38,25 @@
     //set title to match the metric
     [headerLabel setText:[RunEvent stringForMetric:associated]];
     
+}
+
+-(void)setTimePeriod:(BOOL) toWeekly
+{
+    weekly = toWeekly;
+    
+    //set weekly labels
+    if(toWeekly)
+    {
+        [previousLabel setText:@"Previous Week"];
+        [currentLabel setText:@"Current Week"];
+    }
+    else
+    {
+        [previousLabel setText:@"Previous Month"];
+        [currentLabel setText:@"Current Month"];
+    }
+    
+    //reload data
 }
 
 - (IBAction)expandTapped:(id)sender {

@@ -22,19 +22,26 @@ typedef enum
 @property (nonatomic, retain) NSDate *startDate;
 @property (nonatomic, retain) NSDate *endDate;
 @property (nonatomic, retain) NSNumber * value;
-@property (nonatomic, retain) NSNumber * value2;
+@property (nonatomic, retain) NSDate * time;
 @property (nonatomic, retain) NSNumber * activityCount;
 @property (nonatomic, retain) NSString * race;
-@property (nonatomic, retain) NSString * tempValueFromFK;
+@property (nonatomic, retain) NSString * weight;
 @property (nonatomic, retain) NSString * metricValueChange;
 @property (nonatomic) GoalType type;//also defines the metric to use
 @property (nonatomic) CGFloat progress;//also defines the metric to use
+@property (nonatomic, retain) NSDictionary * raceDictionary;
+@property (nonatomic, retain) NSDictionary * fatDictionary;
 
 -(id)initWithType:(GoalType)type;
 -(NSString*)getName;
--(NSArray*)getRaceTypes;
+-(NSArray*)getWeightNames;
+-(NSArray*)getRaceNames;
 -(void)save;
 -(NSString *)stringForDescription;
+-(NSString *)stringForHeaderDescription;
 -(NSString*)stringForSubtitle;
+-(NSString *)stringForEdit2;
+-(NSString *)stringForEdit1;
+-(BOOL)validateGoalEntry;
 
 @end

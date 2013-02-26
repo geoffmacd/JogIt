@@ -106,19 +106,23 @@
     
 }
 
-- (void)selectedRunInProgress
+- (void)selectedRunInProgress:(BOOL)shouldDiscard
 {
     if(self.viewController.isOpen)
     {
         if(self.viewController.liveRun)
         {
             //discard run since garbage can is showing
-            
-            [self.viewController.view setUserInteractionEnabled:false];
-            //show discard sheet on completion
-            [self.viewController closeSlider:true completion:^{
-                [self userDiscardTapped];
-            }];
+            if(shouldDiscard)
+            {
+                //show discard sheet on completion
+                [self.viewController closeSlider:true completion:^{
+                    [self userDiscardTapped];
+                }];
+            }
+            else{
+                [self.viewController closeSlider:true completion:nil];
+            }
         }
         else{
             //just go back to logger

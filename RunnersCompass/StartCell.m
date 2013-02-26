@@ -109,7 +109,8 @@
     if(!locked)
         [self setExpand:!expanded withAnimation:true];
     else
-        [delegate selectedRunInProgress];
+        [delegate selectedRunInProgress:false];     //do not want to discard run if header is hit
+    
 }
 
 - (IBAction)addRunTapped:(id)sender {
@@ -118,7 +119,7 @@
     if(!locked)
         [self setExpand:!expanded withAnimation:true];
     else
-        [delegate selectedRunInProgress];
+        [delegate selectedRunInProgress:true];
 }
 
 

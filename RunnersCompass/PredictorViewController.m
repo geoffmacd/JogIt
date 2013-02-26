@@ -74,6 +74,7 @@
                                                                 options:nil]objectAtIndex:0];
         [cell setAssociated:[charts objectAtIndex:row]];
         [cell setDelegate:self];
+        [cell setTimePeriod:weekly];
         
         [cells addObject:cell];
         
@@ -83,6 +84,7 @@
         
         
         ChartCell * curCell = [cells objectAtIndex:row];
+        [curCell setTimePeriod:weekly];
         
         return curCell;
     }
@@ -152,6 +154,10 @@
         [weeklyBut setBackgroundColor:col2];
         
         weekly = true;
+        
+        //to trigger setWeekly methods
+        if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
+            [table reloadData];
     }
 }
 
@@ -166,6 +172,10 @@
         [weeklyBut setBackgroundColor:col1];
         
         weekly = false;
+        
+        //to trigger setWeekly methods
+        if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
+            [table reloadData];
     }
 }
 

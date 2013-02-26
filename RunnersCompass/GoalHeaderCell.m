@@ -45,7 +45,7 @@
         
         [goalButton setTitle:[data.curGoal getName] forState:UIControlStateNormal];
         
-        
+        //dates
         NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
@@ -56,6 +56,8 @@
         [beganValue setText:beganString];
         NSString *targetString = [formatter stringFromDate:data.curGoal.endDate];
         [targetValue setText:targetString];
+        
+        
         [countValue setText:[NSString stringWithFormat:@"%d", [data.curGoal.activityCount integerValue]]];
         [metricValue setText:data.curGoal.metricValueChange];
         
@@ -67,6 +69,24 @@
         //progress bar
         [progress setProgress:data.curGoal.progress];
         
+    }else{
+        [goalButton setTitle:@"Create Goal" forState:UIControlStateNormal];
+        
+        //dates
+        [beganValue setText:@""];
+        [targetValue setText:@""];
+        
+        
+        [countValue setText:@""];
+        [metricValue setText:@""];
+        
+        
+        //both description labels to be updated
+        [metricDescriptionLabel setText:@""];
+        [metricDescriptionSubtitle setText:@""];
+        
+        //progress bar
+        [progress setProgress:0.0f];
     }
 }
 
