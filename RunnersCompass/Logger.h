@@ -11,10 +11,14 @@
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
 
-#define mapViewYOffset 400
+#define mapViewYOffset 180
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
-#define pauseSwipePolling 0.1;
+#define mapDragPullYOffset 20
+#define mapView4inchOffset 528
+#define mapView35inchOffset 440
+
+#define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
 
 @protocol LoggerViewControllerDelegate <NSObject>

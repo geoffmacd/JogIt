@@ -307,17 +307,8 @@
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
 										<int key="IBUITextAlignment">1</int>
-										<object class="IBUIFontDescription" key="IBUIFontDescription">
-											<string key="name">Georgia-Bold</string>
-											<string key="family">Georgia</string>
-											<int key="traits">2</int>
-											<double key="pointSize">18</double>
-										</object>
-										<object class="NSFont" key="IBUIFont">
-											<string key="NSName">Georgia-Bold</string>
-											<double key="NSSize">18</double>
-											<int key="NSfFlags">16</int>
-										</object>
+										<reference key="IBUIFontDescription" ref="402055824"/>
+										<reference key="IBUIFont" ref="518027899"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 									<object class="IBUIImageView" id="534297443">

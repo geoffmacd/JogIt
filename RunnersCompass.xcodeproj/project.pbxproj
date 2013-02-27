@@ -41,6 +41,7 @@
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
+		676DE8F916DDC20A00516C2A /* underPageBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 676DE8F816DDC20A00516C2A /* underPageBackground.png */; };
 		67902E5E16DAC900007D19BC /* Goals.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E5B16DAC8FF007D19BC /* Goals.xib */; };
 		67902E5F16DAC900007D19BC /* GoalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E5D16DAC900007D19BC /* GoalsViewController.m */; };
 		67902E6116DAC971007D19BC /* GoalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E6016DAC971007D19BC /* GoalHeaderCell.xib */; };
@@ -215,6 +216,7 @@
 		676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormStringPicker.m; sourceTree = "<group>"; };
 		676CA82D16D70D2E00E4B121 /* RunFormDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormDatePicker.h; sourceTree = "<group>"; };
 		676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormDatePicker.m; sourceTree = "<group>"; };
+		676DE8F816DDC20A00516C2A /* underPageBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = underPageBackground.png; path = Graphics/underPageBackground.png; sourceTree = SOURCE_ROOT; };
 		67902E5B16DAC8FF007D19BC /* Goals.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Goals.xib; sourceTree = "<group>"; };
 		67902E5C16DAC8FF007D19BC /* GoalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsViewController.h; sourceTree = "<group>"; };
 		67902E5D16DAC900007D19BC /* GoalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsViewController.m; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				676DE8F816DDC20A00516C2A /* underPageBackground.png */,
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
 				67FC06B416A1205300491C97 /* CellBarsIcon.png */,
@@ -913,6 +916,7 @@
 				67902E6116DAC971007D19BC /* GoalHeaderCell.xib in Resources */,
 				67902E6616DAE2AC007D19BC /* CreateGoalHeaderCell.xib in Resources */,
 				67D302E016DAF9FB00BC923F /* redgoal.png in Resources */,
+				676DE8F916DDC20A00516C2A /* underPageBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[HUDView awakeFromNib]:HUDView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HUDView initWithFrame:]:HUDView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MenuViewController tableView:heightForRowAtIndexPath:]:Menu.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HUDView initWithCoder:]:HUDView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MenuViewController cellDidChangeHeight:]:Menu.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(__NSArrayM *)self-&gt;cells">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HierarchicalCell setup]:HierarchicalCell.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

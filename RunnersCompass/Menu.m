@@ -268,6 +268,14 @@
     //set logger with this run
     [self.delegate loadRun:cell.associatedRun close:true];
     
+    //refresh start cell
+    
+    runInProgressAsFarAsICanTell = false;
+    start.headerLabel.text = @"New Run";
+    start.locked = false;//to prevent expanding
+    [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
+    [start.folderImage setHidden:false];
+    
 }
 
 -(void) finishedRun:(RunEvent*)run

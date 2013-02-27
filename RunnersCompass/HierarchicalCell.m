@@ -56,7 +56,7 @@
     
     [self setExpand:false withAnimation:false];
     
-    UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
     
     [headerView setBackgroundColor:col];
     

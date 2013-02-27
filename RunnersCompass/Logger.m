@@ -59,7 +59,14 @@
     
     CGRect mapRect;
     mapRect.size =  mapView.frame.size;
-    mapRect.origin = CGPointMake(0, mapViewYOffset);
+    
+    //must resize acc. to screen size to ensure bottom of map view is always bottom of view
+    //the self.view is resizing in JSSLider which prevents us from getting real height
+    if(IS_IPHONE5)
+        mapRect.origin = CGPointMake(0, mapView4inchOffset);
+    else
+        mapRect.origin = CGPointMake(0, mapView35inchOffset);
+    mapRect.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height  - mapViewYOffset - mapDragPullYOffset);
     [mapView setFrame:mapRect];
     
     [self.view addSubview:mapView];
@@ -219,61 +226,6 @@
 
 
 
-- (void)closeMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
-    CGFloat duration = 0.0f;
-    if (animated) {
-        duration = 0.25f;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            duration = 0.4f;
-        }
-    }
-    
-    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
-        
-        //set back to start
-        CGRect mapRect;
-        mapRect.origin = CGPointMake(0, mapViewYOffset);
-        mapRect.size =  mapView.frame.size;
-        [mapView setFrame:mapRect];
-        
-        
-    } completion:^(BOOL finished) {
-        if (completion) {
-            completion();
-        }
-        
-    }];
-}
-
-
-- (void)openMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
-    CGFloat duration = 0.0f;
-    if (animated) {
-        duration = 0.25f;
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            duration = 0.4f;
-        }
-    }
-    
-    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
-        
-        //open mapview and pin to top
-        CGRect mapRect;
-        mapRect.size =  mapView.frame.size;
-        mapRect.origin = CGPointMake(0, mapViewYOffset - map.frame.size.height);
-        [mapView setFrame:mapRect];
-        
-        
-        
-    } completion:^(BOOL finished) {
-        if (completion) {
-            completion();
-        }
-        
-    }];
-}
-
-
 
 - (void)didReceivePause:(NSNotification *)notification
 {
@@ -360,10 +312,10 @@
     barChart.paddingTop    = 0.0f;
     barChart.paddingBottom = 0.0f;
     
-    barChart.plotAreaFrame.paddingLeft   = 40.0;
-    barChart.plotAreaFrame.paddingTop    = 20.0;
-    barChart.plotAreaFrame.paddingRight  = 10.0;
-    barChart.plotAreaFrame.paddingBottom = 60.0;
+    barChart.plotAreaFrame.paddingLeft   = 20.0;
+    barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
+    barChart.plotAreaFrame.paddingRight  = 13.0;
+    barChart.plotAreaFrame.paddingBottom = 15.0;
     
     
     // Add plot space for horizontal bar charts
@@ -372,9 +324,9 @@
     plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(16.0f)];
     
     //set scrolling
-    //plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
-    //plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
-    [plotSpace setAllowsUserInteraction:false];
+    plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
+    plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
+    [plotSpace setAllowsUserInteraction:true];
     
     
     //x-axis
@@ -466,6 +418,67 @@
 }
 
 
+#pragma mark - Map opening
+
+
+
+- (void)closeMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
+    CGFloat duration = 0.0f;
+    if (animated) {
+        duration = 0.25f;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            duration = 0.4f;
+        }
+    }
+    
+    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+        
+        //set back to start
+        CGRect mapRect;
+        mapRect.origin = CGPointMake(0, self.view.frame.size.height - mapDragPullYOffset);//gaurentees position
+        mapRect.size =  mapView.frame.size;
+        [mapView setFrame:mapRect];
+        
+        
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+        
+    }];
+}
+
+
+- (void)openMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
+    CGFloat duration = 0.0f;
+    if (animated) {
+        duration = 0.25f;
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            duration = 0.4f;
+        }
+    }
+    
+    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+        
+        //open mapview and pin to top
+        CGRect mapRect;
+        mapRect.size =  mapView.frame.size;
+        mapRect.origin = CGPointMake(0, mapViewYOffset);//gauranteed position
+        [mapView setFrame:mapRect];
+        
+        
+        
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+        
+    }];
+}
+
+
+
+
 #pragma mark - UI Actions
 
 
@@ -535,9 +548,11 @@
             inMapView = false;
         } else{
             
+            //translate on the finger of the user with current.y
             CGRect mapRect;
             mapRect.size =  mapView.frame.size;
-            mapRect.origin = CGPointMake(0, (inMapView ? (self.view.frame.size.height - mapView.frame.size.height)  : mapViewYOffset) + current.y);
+            //mapRect.origin = CGPointMake(0, (inMapView ? (self.view.frame.size.height - mapView.frame.size.height)  : mapViewYOffset) + current.y);
+            mapRect.origin = CGPointMake(0, (inMapView ? mapViewYOffset : self.view.frame.size.height - mapDragPullYOffset) + current.y);
             
             
             [mapView setFrame:mapRect];
