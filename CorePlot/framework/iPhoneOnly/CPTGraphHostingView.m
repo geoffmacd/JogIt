@@ -144,28 +144,38 @@
     if ( [[event allTouches] count] > 1 ) {
         return;
     }
+    
 
-    CGPoint pointOfTouch = [[[event touchesForView:self] anyObject] locationInView:self];
-    if ( !self.collapsesLayers ) {
-        pointOfTouch = [self.layer convertPoint:pointOfTouch toLayer:self.hostedGraph];
-    }
-    else {
-        pointOfTouch.y = self.frame.size.height - pointOfTouch.y;
-    }
-    [self.hostedGraph pointingDeviceDownEvent:event atPoint:pointOfTouch];
+            
+            
+            
+            CGPoint pointOfTouch = [[[event touchesForView:self] anyObject] locationInView:self];
+            if ( !self.collapsesLayers ) {
+                pointOfTouch = [self.layer convertPoint:pointOfTouch toLayer:self.hostedGraph];
+            }
+            else {
+                pointOfTouch.y = self.frame.size.height - pointOfTouch.y;
+            }
+            [self.hostedGraph pointingDeviceDownEvent:event atPoint:pointOfTouch];
+     
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CGPoint pointOfTouch = [[[event touchesForView:self] anyObject] locationInView:self];
 
-    if ( !self.collapsesLayers ) {
-        pointOfTouch = [self.layer convertPoint:pointOfTouch toLayer:self.hostedGraph];
-    }
-    else {
-        pointOfTouch.y = self.frame.size.height - pointOfTouch.y;
-    }
-    [self.hostedGraph pointingDeviceDraggedEvent:event atPoint:pointOfTouch];
+            
+            CGPoint pointOfTouch = [[[event touchesForView:self] anyObject] locationInView:self];
+            
+            if ( !self.collapsesLayers ) {
+                pointOfTouch = [self.layer convertPoint:pointOfTouch toLayer:self.hostedGraph];
+            }
+            else {
+                pointOfTouch.y = self.frame.size.height - pointOfTouch.y;
+            }
+            [self.hostedGraph pointingDeviceDraggedEvent:event atPoint:pointOfTouch];
+            
+            
+
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event

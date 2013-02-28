@@ -56,15 +56,14 @@
     
     [self setExpand:false withAnimation:false];
     
-    UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    //UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
     
     [headerView setBackgroundColor:col];
     
-    UIColor *col2 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
+    [expandedView setBackgroundColor:[UIColor darkGrayColor]];
     
-    //[expandedView setBackgroundColor:col2];
-    
-    [thumbnailImage.layer setBorderColor: [[UIColor grayColor] CGColor]];
+    [thumbnailImage.layer setBorderColor: [[UIColor blackColor] CGColor]];
     [thumbnailImage.layer setBorderWidth: 1.0];
     
 }

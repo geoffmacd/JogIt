@@ -14,7 +14,7 @@
 // Our conversion definition
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
-#define cellDropAnimationTime 0.4f
+#define cellDropAnimationTime 0.3f
 #define folderRotationAnimationTime 0.2f
 
 @interface AnimationUtil : NSObject

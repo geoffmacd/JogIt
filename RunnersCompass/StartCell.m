@@ -31,7 +31,8 @@
     
     [headerView setBackgroundColor:col];
     
-    UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
+    //UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
+    UIColor *col3 = [UIColor darkGrayColor];
     
     //[expandedView setBackgroundColor:col3];
     

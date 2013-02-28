@@ -35,6 +35,7 @@
 @synthesize shadeTimer;
 @synthesize countdownLabel;
 @synthesize countdown;
+@synthesize paceScroll;
 
 #pragma mark - Lifecycle
 
@@ -90,6 +91,31 @@
     
     inMapView = false;
     
+    
+    
+
+
+    
+
+}
+
+-(void) viewDidLayoutSubviews
+{
+    //setup map here instead after view has possibly been resized
+    
+    
+    CGRect rect;
+    rect = paceScroll.frame;
+    rect.size.width = 1000;
+    rect.origin = CGPointMake(0, 0);
+    [chart setFrame:rect];
+    
+    
+    [paceScroll addSubview:chart];
+    
+    
+    [paceScroll setContentOffset:CGPointMake(0, 0)];
+    [paceScroll setContentSize:CGSizeMake(1000, rect.size.height)];
     
     [self timerFired];
 }
@@ -294,6 +320,7 @@
 
 -(void)timerFired
 {
+
     
     // Create barChart from theme
     barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
@@ -312,51 +339,39 @@
     barChart.paddingTop    = 0.0f;
     barChart.paddingBottom = 0.0f;
     
-    barChart.plotAreaFrame.paddingLeft   = 20.0;
+    barChart.plotAreaFrame.paddingLeft   = 0.0f;
     barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
-    barChart.plotAreaFrame.paddingRight  = 13.0;
-    barChart.plotAreaFrame.paddingBottom = 15.0;
+    barChart.plotAreaFrame.paddingRight  = 0.0f;
+    barChart.plotAreaFrame.paddingBottom = 10.0f;
     
     
     // Add plot space for horizontal bar charts
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(300.0f)];
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(16.0f)];
-    
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
+     
+    /*
     //set scrolling
-    plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
-    plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
-    [plotSpace setAllowsUserInteraction:true];
-    
+    //plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
+    //plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
+    //[plotSpace setAllowsUserInteraction:true];
+    */
     
     //x-axis
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
-    x.axisLineStyle               = nil;
-    x.majorTickLineStyle          = nil;
-    x.minorTickLineStyle          = nil;
-    x.majorIntervalLength         = CPTDecimalFromString(@"10000");
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
-    //x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
-    
     
     //y-axis
     CPTXYAxis *y = axisSet.yAxis;
-    y.axisLineStyle               = nil;
-    y.axisConstraints = [CPTConstraints constraintWithLowerOffset:0.0];
-    y.majorTickLineStyle          = nil;
-    y.minorTickLineStyle          = nil;
-    y.majorIntervalLength         = CPTDecimalFromString(@"2000000");
     y.labelingPolicy = CPTAxisLabelingPolicyNone;
-    //y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
      
     // First bar plot
     CPTBarPlot *barPlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor darkGrayColor] horizontalBars:NO];
     barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
-    //barPlot.barOffset  = CPTDecimalFromFloat(-0.25f);
-    barPlot.identifier = @"Bar Plot 1";
+    barPlot.identifier = @"Pace Chart";
     
     /*
     //adding animation here
@@ -392,7 +407,7 @@
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
-    return 24;
+    return 100;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
@@ -406,10 +421,9 @@
                 break;
                 
             case CPTBarPlotFieldBarTip:
-                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:(index + 1) * (index + 1)];
-                if ( [plot.identifier isEqual:@"Bar Plot 2"] ) {
-                    num = [num decimalNumberBySubtracting:[NSDecimalNumber decimalNumberWithString:@"10"]];
-                }
+                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:arc4random() % 100];
+                
+                
                 break;
         }
     }
@@ -501,10 +515,6 @@
         {
             return true;
         }
-        
-        
-        
-        
     }
     return false;
 }

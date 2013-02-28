@@ -33,6 +33,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         self.delaysContentTouches = NO;
         self.canCancelContentTouches = YES;
+        
     }
     return self;
 }

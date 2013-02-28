@@ -160,12 +160,13 @@
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
     //to make corners same as those for the app
-    [self.backVC.view.layer setCornerRadius:5.0f];
+    [self.backVC.view.layer setCornerRadius:15.0f];
     
     
     
     self.frontVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
     self.frontVC.delegate = self;
+    [self.frontVC.view.layer setCornerRadius:15.0f];
     
     
     self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
@@ -178,6 +179,7 @@
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    [self.window.rootViewController.view.layer setCornerRadius:15.0f];
     
     
  

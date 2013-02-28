@@ -67,6 +67,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *dragButton;
 @property (strong, nonatomic) IBOutlet UIImageView *map;
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *paceScroll;
 
 
 
