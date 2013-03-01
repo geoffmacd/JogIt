@@ -8,6 +8,23 @@
 
 #import "RunEvent.h"
 
+
+@implementation RunPos
+
+@synthesize pos,elevation,velocity;
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super init];
+    if (self) {
+
+        
+    }
+    return self;
+}
+
+@end
+
+
 @implementation RunEvent
 
 @synthesize name;
@@ -17,7 +34,7 @@
 @synthesize pace;
 @synthesize time;
 @synthesize live;
-
+@synthesize checkpoints,distanceCheckpoints,pos;
 
 
 -(id)initWithName:(NSString *)_name date:(NSDate *)_date
@@ -59,6 +76,7 @@
     
     return @"UnknownMetric";
 }
+
 
 
 @end

@@ -49,10 +49,28 @@
     [statusIcon setHidden:true];
     
     
-    //load most recent run on startup
+    //load most recent run on startup, but not intended any other time
     RunEvent * loadRun = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
     loadRun.live = false;
+    
+    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:10000];
+    
+    for(int i = 0; i < 10000; i ++)
+    {
+        RunPos *posToAdd = [[RunPos alloc] init];
+        
+        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
+        posToAdd.velocity =  arc4random() % 100;
+        posToAdd.elevation =  arc4random() % 100;
+        
+        
+        [loadPos addObject:posToAdd];
+    }
+    
+    [loadRun setPos:loadPos];
     [self setRun:loadRun];
+    
+    
     
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
@@ -91,7 +109,13 @@
     
     inMapView = false;
     
+
     
+    //set content offset here
+    [paceScroll setContentOffset:CGPointMake(0, 0)];
+    [paceScroll setDelegate:self];
+    
+    [self timerFired];
     
 
 
@@ -102,7 +126,7 @@
 -(void) viewDidLayoutSubviews
 {
     //setup map here instead after view has possibly been resized
-    
+    //only need a bigger width
     
     CGRect rect;
     rect = paceScroll.frame;
@@ -110,14 +134,8 @@
     rect.origin = CGPointMake(0, 0);
     [chart setFrame:rect];
     
-    
-    [paceScroll addSubview:chart];
-    
-    
-    [paceScroll setContentOffset:CGPointMake(0, 0)];
+    //need to set scroll width to be equal
     [paceScroll setContentSize:CGSizeMake(1000, rect.size.height)];
-    
-    [self timerFired];
 }
 
 - (void)didReceiveMemoryWarning
@@ -477,7 +495,7 @@
         //open mapview and pin to top
         CGRect mapRect;
         mapRect.size =  mapView.frame.size;
-        mapRect.origin = CGPointMake(0, mapViewYOffset);//gauranteed position
+        mapRect.origin = CGPointMake(0, mapViewYOffset - mapDragPullYOffset);//gauranteed position
         [mapView setFrame:mapRect];
         
         
@@ -562,7 +580,7 @@
             CGRect mapRect;
             mapRect.size =  mapView.frame.size;
             //mapRect.origin = CGPointMake(0, (inMapView ? (self.view.frame.size.height - mapView.frame.size.height)  : mapViewYOffset) + current.y);
-            mapRect.origin = CGPointMake(0, (inMapView ? mapViewYOffset : self.view.frame.size.height - mapDragPullYOffset) + current.y);
+            mapRect.origin = CGPointMake(0, (inMapView ? mapViewYOffset - mapDragPullYOffset : self.view.frame.size.height - mapDragPullYOffset) + current.y);
             
             
             [mapView setFrame:mapRect];

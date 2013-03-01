@@ -9,6 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "RunMap.h"
 
+@interface RunPos : NSObject{
+    CGPoint pos;
+    CGFloat elevation;
+    CGFloat velocity;
+}
+
+@property (nonatomic) CGPoint pos;
+@property (nonatomic) CGFloat elevation;
+@property (nonatomic) CGFloat velocity;
+
+
+@end
+
+
 @interface RunEvent : NSObject
 
 
@@ -39,6 +53,12 @@ typedef enum
 @property (nonatomic, strong) RunMap *map;
 @property (nonatomic) RunType type;
 @property (nonatomic, assign) BOOL live;
+
+//data
+@property (nonatomic, assign) NSMutableArray * pos; //actual positions
+@property (nonatomic, assign) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
+@property (nonatomic, assign) NSMutableArray * checkpoints; //metrics by time unit for graph
+
 
 -(id)initWithName:(NSString *)name date:(NSDate *)date;
 

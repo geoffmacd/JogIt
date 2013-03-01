@@ -139,7 +139,6 @@
 		67FC06BA16A1250500491C97 /* PaceChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06B916A1250500491C97 /* PaceChart.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC06C416A1D15900491C97 /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C316A1D15900491C97 /* RunEvent.m */; };
-		67FC06C716A1D4AF00491C97 /* RunType.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C616A1D4AE00491C97 /* RunType.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 		67FC070716ACD62B00491C97 /* RightArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070616ACD62B00491C97 /* RightArrow.png */; };
 		67FC070916ACD63300491C97 /* DownTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070816ACD63300491C97 /* DownTriangleIcon.png */; };
@@ -374,8 +373,6 @@
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC06C316A1D15900491C97 /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
-		67FC06C516A1D4AE00491C97 /* RunType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunType.h; sourceTree = "<group>"; };
-		67FC06C616A1D4AE00491C97 /* RunType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunType.m; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FC070616ACD62B00491C97 /* RightArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightArrow.png; path = ../Graphics/RightArrow.png; sourceTree = "<group>"; };
 		67FC070816ACD63300491C97 /* DownTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DownTriangleIcon.png; path = ../Graphics/DownTriangleIcon.png; sourceTree = "<group>"; };
@@ -733,8 +730,6 @@
 				67FC06C316A1D15900491C97 /* RunEvent.m */,
 				6721F87F16AE39AB00FE84C5 /* RunMap.h */,
 				6721F88016AE39AB00FE84C5 /* RunMap.m */,
-				67FC06C516A1D4AE00491C97 /* RunType.h */,
-				67FC06C616A1D4AE00491C97 /* RunType.m */,
 				67CAFC7916C3254D00C99BD6 /* UserPrefs.h */,
 				67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */,
 				67AF65F216D9E5C0004A484C /* DataTest.h */,
@@ -936,7 +931,6 @@
 				67FC06BA16A1250500491C97 /* PaceChart.m in Sources */,
 				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
 				67FC06C416A1D15900491C97 /* RunEvent.m in Sources */,
-				67FC06C716A1D4AF00491C97 /* RunType.m in Sources */,
 				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
 				6721F88516AE3D4E00FE84C5 /* Log.m in Sources */,
 				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,
