@@ -12,12 +12,14 @@
 @interface RunPos : NSObject{
     CGPoint pos;
     CGFloat elevation;
-    CGFloat velocity;
+    CGFloat pace;
+    NSTimeInterval time;
 }
 
 @property (nonatomic) CGPoint pos;
 @property (nonatomic) CGFloat elevation;
-@property (nonatomic) CGFloat velocity;
+@property (nonatomic) CGFloat pace;
+@property (nonatomic) NSTimeInterval time;//seconds after the pausePoint
 
 
 @end
@@ -44,20 +46,24 @@ typedef enum
     MetricTypeStride
 } RunMetric;
 
-@property (nonatomic, weak) NSString *name;
-@property (nonatomic, strong) NSDate *date;
+@property (nonatomic) NSString *name;
+@property (nonatomic) NSDate *date;
 @property (nonatomic) float distance;
 @property (nonatomic) float time;
 @property (nonatomic) float pace;
 @property (nonatomic) float calories;
 @property (nonatomic, strong) RunMap *map;
 @property (nonatomic) RunType type;
+@property (nonatomic) RunMetric metric;
+@property (nonatomic) NSNumber * metricGoal;
 @property (nonatomic, assign) BOOL live;
 
-//data
-@property (nonatomic, assign) NSMutableArray * pos; //actual positions
-@property (nonatomic, assign) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
-@property (nonatomic, assign) NSMutableArray * checkpoints; //metrics by time unit for graph
+//data ( all arrays of RunPos) , must be strong to retain
+@property (nonatomic, strong) NSMutableArray * pos; //actual positions
+@property (nonatomic, strong) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * checkpoints; //metrics by time unit for graph
+@property (nonatomic, strong) NSMutableArray * pausePoints; //NSDate for pauses
+
 
 
 -(id)initWithName:(NSString *)name date:(NSDate *)date;

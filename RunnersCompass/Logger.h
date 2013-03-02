@@ -17,6 +17,10 @@
 #define mapDragPullYOffset 20
 #define mapView4inchOffset 528
 #define mapView35inchOffset 440
+#define paceGraphBarWidth 22
+#define kSelectedPlot @"selected"
+#define kPlot @"plot"
+
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -34,10 +38,11 @@
 @interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate>
 {
     UIActionSheet *sheet;
-@private
+    NSUInteger selectedBarIndex;
     CPTXYGraph *barChart;
     NSTimer *timer;
-    
+    CPTBarPlot * selectedPlot;
+    CPTBarPlot *barPlot;
 }
 
 
@@ -72,6 +77,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *oldpace1;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace2;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace3;
+@property (strong, nonatomic) IBOutlet UILabel *currentPaceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *currentPaceValue;
 
 
 
@@ -81,7 +88,7 @@
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
 
-- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate pauseImage:(UIImageView*)image;
+- (void)newRun:(NSNumber *) value withMetric:(RunMetric) metric animate:(BOOL)animate;
 
 
 

@@ -34,12 +34,12 @@ NSString *const kCPTPlainWhiteTheme = @"Plain White";
 
 -(void)applyThemeToBackground:(CPTXYGraph *)graph
 {
-    graph.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    graph.fill = [CPTFill fillWithColor:[CPTColor whiteColor]];
 }
 
 -(void)applyThemeToPlotArea:(CPTPlotAreaFrame *)plotAreaFrame
 {
-    plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor whiteColor]];
 
     CPTMutableLineStyle *borderLineStyle = [CPTMutableLineStyle lineStyle];
     borderLineStyle.lineColor = [CPTColor blackColor];

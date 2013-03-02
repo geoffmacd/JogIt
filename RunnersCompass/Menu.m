@@ -59,14 +59,36 @@
     
     for(NSInteger i=0;i <12; i++)
     {
+    
         
-        RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
+        //load most recent run on startup, but not intended any other time
+        RunEvent * loadRun = [[RunEvent alloc] initWithName:@"10.5 km Run" date:[NSDate date]];
+        loadRun.live = false;
+        NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
+        //begin run now with no other pause points
+        [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
         
-        [run setLive:false];
+        for(int i = 0; i < 500; i ++)
+        {
+            RunPos *posToAdd = [[RunPos alloc] init];
+            
+            posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
+            posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
+            posToAdd.elevation =  arc4random() % 100;
+            posToAdd.time=  i;
+            
+            
+            [loadPos addObject:posToAdd];
+        }
         
-        [run setMap:map];
+        [loadRun setPos:loadPos];
+        [loadRun setCheckpoints:loadPos];
         
-        [runs addObject:run];
+        [loadRun setLive:false];
+        
+        [loadRun setMap:map];
+        
+        [runs addObject:loadRun];
         
     }
     

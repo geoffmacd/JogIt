@@ -36,6 +36,7 @@
 @synthesize countdownLabel;
 @synthesize countdown;
 @synthesize paceScroll;
+@synthesize currentPaceLabel,currentPaceValue;
 
 #pragma mark - Lifecycle
 
@@ -43,57 +44,8 @@
 {
     [super viewDidLoad];
     
-    
-    paused = true;
-    //hide status button until live run
-    [statusIcon setHidden:true];
-    
-    
-    //load most recent run on startup, but not intended any other time
-    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
-    loadRun.live = false;
-    
-    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:10000];
-    
-    for(int i = 0; i < 10000; i ++)
-    {
-        RunPos *posToAdd = [[RunPos alloc] init];
-        
-        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
-        posToAdd.velocity =  arc4random() % 100;
-        posToAdd.elevation =  arc4random() % 100;
-        
-        
-        [loadPos addObject:posToAdd];
-    }
-    
-    [loadRun setPos:loadPos];
-    [self setRun:loadRun];
-    
-    
-    
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
-    
-    
-    CGRect mapRect;
-    mapRect.size =  mapView.frame.size;
-    
-    //must resize acc. to screen size to ensure bottom of map view is always bottom of view
-    //the self.view is resizing in JSSLider which prevents us from getting real height
-    if(IS_IPHONE5)
-        mapRect.origin = CGPointMake(0, mapView4inchOffset);
-    else
-        mapRect.origin = CGPointMake(0, mapView35inchOffset);
-    mapRect.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height  - mapViewYOffset - mapDragPullYOffset);
-    [mapView setFrame:mapRect];
-    
-    [self.view addSubview:mapView];
-    
-    CGRect shadeRect = self.view.frame;
-    [shadeView setFrame:shadeRect];
-    
-    [self.view addSubview:shadeView];
     
     
     [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
@@ -103,39 +55,74 @@
     [map.layer setBorderWidth: 1.0];
     
     
+    //set original content offset here
+    [paceScroll setContentOffset:CGPointMake(0, 0)];
+    [paceScroll setDelegate:self];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
     
     inMapView = false;
-    
-
-    
-    //set content offset here
-    [paceScroll setContentOffset:CGPointMake(0, 0)];
-    [paceScroll setDelegate:self];
-    
-    [self timerFired];
-    
-
-
-    
+    paused = true;
 
 }
 
 -(void) viewDidLayoutSubviews
 {
-    //setup map here instead after view has possibly been resized
-    //only need a bigger width
     
-    CGRect rect;
-    rect = paceScroll.frame;
-    rect.size.width = 1000;
-    rect.origin = CGPointMake(0, 0);
-    [chart setFrame:rect];
+    CGRect mapRect;
+    mapRect.size =  mapView.frame.size;
+    /*
+    //must resize acc. to screen size to ensure bottom of map view is always bottom of view
+    //the self.view is resizing in JSSLider which prevents us from getting real height
+    if(IS_IPHONE5)
+        mapRect.origin = CGPointMake(0, mapView4inchOffset);
+    else
+        mapRect.origin = CGPointMake(0, mapView35inchOffset);
+     */
     
-    //need to set scroll width to be equal
-    [paceScroll setContentSize:CGSizeMake(1000, rect.size.height)];
+    mapRect.origin = CGPointMake(0, self.view.frame.size.height - mapDragPullYOffset);
+    //mapRect.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height  - mapViewYOffset - mapDragPullYOffset);
+    [mapView setFrame:mapRect];
+    //[self.view addSubview:mapView];
+    
+    
+    //add shaded view for start animation
+    CGRect shadeRect = self.view.frame;
+    [shadeView setFrame:shadeRect];
+    [self.view addSubview:shadeView];
+    
+    
+    [self setupGraph];
+    
+    
+    //load most recent run on startup, but not intended any other time
+    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
+    loadRun.live = false;
+    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:300];
+    //begin run now with no other pause points
+    [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
+    
+    for(int i = 0; i < 300; i ++)
+    {
+        RunPos *posToAdd = [[RunPos alloc] init];
+        
+        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
+        posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
+        posToAdd.elevation =  arc4random() % 100;
+        posToAdd.time=  i;
+        
+        
+        [loadPos addObject:posToAdd];
+    }
+    
+    [loadRun setPos:loadPos];
+    [loadRun setCheckpoints:loadPos];
+    
+    [self setRun:loadRun];
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,13 +154,38 @@
 
 
 
-- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate pauseImage:(UIImageView*)image
+- (void)newRun:(NSNumber *) value withMetric:(RunMetric) metric animate:(BOOL)animate
 {
-    [self setRun:[[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]]];
+    //configure new run with that metric and value if their is one
+
     
+    //load most recent run on startup, but not intended any other time
+    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
+    loadRun.live = true;
+    loadRun.metricGoal = value;
+    loadRun.metric = metric;
+    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
+    //begin run now with no other pause points
+    [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
     
-    [statusIcon setHidden:false];
-    [finishBut setHidden:true];
+    for(int i = 0; i < 300; i ++)
+    {
+        RunPos *posToAdd = [[RunPos alloc] init];
+        
+        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
+        posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
+        posToAdd.elevation =  arc4random() % 100;
+        posToAdd.time=  i;
+        
+        
+        [loadPos addObject:posToAdd];
+    }
+    
+    [loadRun setPos:loadPos];
+    [loadRun setCheckpoints:loadPos];
+    
+    [self setRun:loadRun];
+    
     
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
@@ -246,6 +258,11 @@
 {
     run = _run;
     
+    //hide these by default unless newrun overrides them
+    [statusIcon setHidden:!run.live];
+    [finishBut setHidden:!run.live];
+    
+    //set title
     if(!run.live)
     {
         //set title
@@ -261,13 +278,13 @@
     else
         [runTitle setText:run.name];
     
-    //hide these by default unless newrun overrides them
-    [statusIcon setHidden:true];
-    [finishBut setHidden:true];
+    
+    
+    //draw bar graph with new data from run
+    [self reloadPaceGraph];
 
     
 }
-
 
 
 
@@ -336,7 +353,7 @@
 
 #pragma mark - BarChart
 
--(void)timerFired
+-(void)setupGraph
 {
 
     
@@ -351,64 +368,105 @@
     barChart.plotAreaFrame.borderLineStyle = nil;
     barChart.plotAreaFrame.cornerRadius    = 0.0f;
     
-    // Paddings
+    // Paddings for view
     barChart.paddingLeft   = 0.0f;
     barChart.paddingRight  = 0.0f;
     barChart.paddingTop    = 0.0f;
     barChart.paddingBottom = 0.0f;
     
+    //plot area
     barChart.plotAreaFrame.paddingLeft   = 0.0f;
     barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
     barChart.plotAreaFrame.paddingRight  = 0.0f;
     barChart.plotAreaFrame.paddingBottom = 10.0f;
     
+    //look modification
+    barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    
+    
     
     // Add plot space for horizontal bar charts
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
-     
-    /*
-    //set scrolling
-    //plotSpace.globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(300.0f)];
-    //plotSpace.globalXRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0.0f) length:CPTDecimalFromInt(24.0f)];
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.5f) length:CPTDecimalFromFloat(300.5f)];
+    
     //[plotSpace setAllowsUserInteraction:true];
-    */
     
     //x-axis
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
     
+    
+    //axis line style
+    CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
+    majorLineStyle.lineCap   = kCGLineCapRound;
+    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.3)];
+    majorLineStyle.lineWidth = CPTFloat(0.0);
+    x.axisLineStyle                  = majorLineStyle;
+    
     //y-axis
     CPTXYAxis *y = axisSet.yAxis;
     y.labelingPolicy = CPTAxisLabelingPolicyNone;
     
      
-    // First bar plot
-    CPTBarPlot *barPlot = [CPTBarPlot tubularBarPlotWithColor:[CPTColor darkGrayColor] horizontalBars:NO];
-    barPlot.baseValue  = CPTDecimalFromString(@"0");
+    // add bar plot to view, all bar customization done here
+    CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
+    barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
+    barPlot.baseValue  = CPTDecimalFromString(@"2");
     barPlot.dataSource = self;
-    barPlot.identifier = @"Pace Chart";
-    
-    /*
-    //adding animation here
-    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
-    [anim setDuration:2.5f];
-    anim.toValue = [NSNumber numberWithFloat:1];
-    anim.fromValue = [NSNumber numberWithFloat:0.0f];
-    anim.removedOnCompletion = NO;
-    anim.delegate = self;
-    anim.fillMode = kCAFillModeForwards;
-    
-    
-    barPlot.anchorPoint = CGPointMake(0.0, 0.0);
-    [barPlot addAnimation:anim forKey:@"grow"];
-    */
-    
+    barPlot.identifier = kPlot;
+    barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
+    barPlot.barWidthsAreInViewCoordinates = NO;
+    barPlot.barCornerRadius               = CPTFloat(5.0);
+    barPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor darkGrayColor] endingColor:[CPTColor darkGrayColor]];
+    fillGradient.angle = 0.0f;
+    barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
+    barPlot.delegate = self;
     
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
+    
+    
+    
+    
+    //selected Plot
+    selectedPlot = [[CPTBarPlot alloc] init];
+    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
+    
+    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
+	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
+
+    
+    selectedPlot.lineStyle = selectedBorderLineStyle;
+    selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
+    selectedPlot.barCornerRadius               = CPTFloat(5.0);
+    selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    selectedPlot.baseValue  = CPTDecimalFromString(@"2");
+    
+    selectedPlot.dataSource = self;
+    selectedPlot.identifier = kSelectedPlot;
+    selectedPlot.delegate = self;
+    [selectedPlot reloadData];
+    [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
+    
+    
+    /*
+     //adding animation here
+     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
+     [anim setDuration:2.5f];
+     anim.toValue = [NSNumber numberWithFloat:1];
+     anim.fromValue = [NSNumber numberWithFloat:0.0f];
+     anim.removedOnCompletion = NO;
+     anim.delegate = self;
+     anim.fillMode = kCAFillModeForwards;
+     
+     
+     barPlot.anchorPoint = CGPointMake(0.0, 0.0);
+     [barPlot addAnimation:anim forKey:@"grow"];
+     */
     
 }
 
@@ -420,33 +478,90 @@
 }
  */
 
+-(void)reloadPaceGraph
+{
+    //set the width according to the num of checkpoints
+    CGFloat newWidth = [[run checkpoints] count] * paceGraphBarWidth;
+    CGRect rect;
+    rect = paceScroll.frame;
+    rect.size.width = newWidth;
+    rect.origin = CGPointMake(0, 0);
+    [chart setFrame:rect];
+    
+    //need to set scroll width to be equal
+    [paceScroll setContentSize:CGSizeMake(newWidth, rect.size.height)];
+    
+    //then redraw
+    [barPlot reloadData];
+}
+
 #pragma mark -
 #pragma mark Plot Data Source Methods
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
-    return 100;
+    //return number of checkpoints for run to determine # of bars
+    return [[run checkpoints] count];
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSDecimalNumber *num = nil;
+    RunPos * paceForTime;
+    NSInteger xCoord;
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
             case CPTBarPlotFieldBarLocation:
-                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:index];
+                //x location of index
+                
+                paceForTime = [[run checkpoints] objectAtIndex:index];
+                
+                xCoord = paceForTime.time;
+                
+                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:xCoord];
                 break;
                 
             case CPTBarPlotFieldBarTip:
-                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:arc4random() % 100];
-                
-                
+                //y location of bar
+                if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
+                {
+                    paceForTime = [[run checkpoints] objectAtIndex:index];
+                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                }
                 break;
         }
     }
     
     return num;
+}
+
+
+#pragma mark - Bar Plot deleget methods
+
+-(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
+{
+    selectedBarIndex = idx;
+    [selectedPlot reloadData];
+    
+    
+    //change "current pace" and value to respective value at checkpoint
+    RunPos * posAtIndex = [[run checkpoints] objectAtIndex:idx];
+    
+    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.2f",posAtIndex.time]];
+    [currentPaceValue setText:[NSString stringWithFormat:@"%.2f",posAtIndex.pace]];
+    
+}
+
+
+-(CPTFill *)barFillForBarPlot:(CPTBarPlot *)plot recordIndex:(NSUInteger)index
+{
+    if ([plot.identifier isEqual: kPlot] && index == selectedBarIndex)
+    {
+        CPTFill *fillColor = [CPTFill fillWithColor:[CPTColor clearColor]];
+        return fillColor;
+    }
+    return nil;
 }
 
 

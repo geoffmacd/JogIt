@@ -79,7 +79,7 @@
     
 }
 
-- (void)newRun:(NSInteger) value withMetric:(NSInteger) metric animate:(BOOL)animate
+- (void)newRun:(NSNumber*) value withMetric:(RunMetric) metric animate:(BOOL)animate
 {
     //slider unlocked from this point until app is exited
     [self.viewController setLocked:false];
@@ -99,7 +99,7 @@
     
     
     //animate new run
-    [self.backVC newRun:value withMetric:metric animate:animate pauseImage:self.viewController.pauseImage];
+    [self.backVC newRun:value withMetric:metric animate:animate];
     
     //also close slider 
     [self.viewController closeSlider:true completion:nil];

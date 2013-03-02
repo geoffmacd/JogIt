@@ -11,7 +11,7 @@
 
 @implementation RunPos
 
-@synthesize pos,elevation,velocity;
+@synthesize pos,elevation,pace,time;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super init];
@@ -33,8 +33,9 @@
 @synthesize distance;
 @synthesize pace;
 @synthesize time;
-@synthesize live;
-@synthesize checkpoints,distanceCheckpoints,pos;
+@synthesize live,metric;
+@synthesize checkpoints,distanceCheckpoints,pos,pausePoints;
+@synthesize metricGoal;
 
 
 -(id)initWithName:(NSString *)_name date:(NSDate *)_date
