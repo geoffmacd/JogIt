@@ -53,6 +53,11 @@
     
     //set thumbnail
     [thumbnailImage setImage:associatedRun.map.thumbnail];
+    [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+    [thumbnailImage.layer setBorderWidth: 1.0];
+    //corners to make map not look so square
+    [thumbnailImage.layer setCornerRadius:5.0f];
+    [thumbnailImage.layer setMasksToBounds:YES];
     
     [self setExpand:false withAnimation:false];
     
@@ -61,10 +66,8 @@
     
     [headerView setBackgroundColor:col];
     
-    [expandedView setBackgroundColor:[UIColor darkGrayColor]];
+    //[expandedView setBackgroundColor:[UIColor darkGrayColor]];
     
-    [thumbnailImage.layer setBorderColor: [[UIColor blackColor] CGColor]];
-    [thumbnailImage.layer setBorderWidth: 1.0];
     
 }
 
