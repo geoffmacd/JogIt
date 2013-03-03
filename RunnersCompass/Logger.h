@@ -15,9 +15,9 @@
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
 #define mapDragPullYOffset 20
-#define mapView4inchOffset 528
-#define mapView35inchOffset 440
 #define paceGraphBarWidth 22
+#define paceGraphSplitLoadOffset 15
+#define paceGraphSplitObjects 60
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 
@@ -42,7 +42,11 @@
     CPTXYGraph *barChart;
     NSTimer *timer;
     CPTBarPlot * selectedPlot;
-    CPTBarPlot *barPlot;
+    NSMutableArray * plots;//CPTBarPlot *barPlot;
+    CGFloat curCachedXMin,curCachedXMax;
+    CPTBarPlot * barPlot;
+    CPTXYPlotSpace *plotSpace;
+    NSInteger lastCacheMinute;
 }
 
 

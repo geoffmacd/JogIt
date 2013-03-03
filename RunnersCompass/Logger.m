@@ -54,10 +54,8 @@
     [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [map.layer setBorderWidth: 1.0];
     
-    
-    //set original content offset here
-    [paceScroll setContentOffset:CGPointMake(0, 0)];
     [paceScroll setDelegate:self];
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
@@ -70,31 +68,16 @@
 
 -(void) viewDidLayoutSubviews
 {
-    
+    //set correct position for mapview so that pulldrag is at bottom
     CGRect mapRect;
     mapRect.size =  mapView.frame.size;
-    /*
-    //must resize acc. to screen size to ensure bottom of map view is always bottom of view
-    //the self.view is resizing in JSSLider which prevents us from getting real height
-    if(IS_IPHONE5)
-        mapRect.origin = CGPointMake(0, mapView4inchOffset);
-    else
-        mapRect.origin = CGPointMake(0, mapView35inchOffset);
-     */
-    
     mapRect.origin = CGPointMake(0, self.view.frame.size.height - mapDragPullYOffset);
-    //mapRect.size = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height  - mapViewYOffset - mapDragPullYOffset);
     [mapView setFrame:mapRect];
-    //[self.view addSubview:mapView];
-    
     
     //add shaded view for start animation
     CGRect shadeRect = self.view.frame;
     [shadeView setFrame:shadeRect];
     [self.view addSubview:shadeView];
-    
-    
-    [self setupGraph];
     
     
     //load most recent run on startup, but not intended any other time
@@ -279,10 +262,25 @@
         [runTitle setText:run.name];
     
     
+
+    
+    //set size of view of graph to be equal to that of the split load
+    CGRect paceGraphRect = chart.frame;
+    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
+    //set origin so that view is drawn for split filling up the last possible view
+    paceGraphRect.origin = CGPointMake(([[run checkpoints] count] * paceGraphBarWidth) - paceGraphRect.size.width, 0.0);
+    [chart setFrame:paceGraphRect];
+    
     
     //draw bar graph with new data from run
-    [self reloadPaceGraph];
-
+    lastCacheMinute = [[run checkpoints] count] - paceGraphSplitObjects;
+    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+    [self setupGraphForView:chart withRange:firstRangeToShow];
+    
+    
+    //set scroll to be at the end of run
+    [paceScroll setContentSize:CGSizeMake([[run checkpoints] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
+    [paceScroll setContentOffset:CGPointMake(([[run checkpoints] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
     
 }
 
@@ -351,9 +349,217 @@
     }
 }
 
+#pragma mark - ScrollView Delegate
+
+
+
+-(CGFloat)convertToX:(NSInteger) minute
+{
+    CGFloat x =  paceGraphBarWidth * minute;
+    
+    return x;
+    
+}
+
+
+-(NSInteger)convertToCheckpointMinute:(CGFloat)x
+{
+    
+    NSInteger min =  x / paceGraphBarWidth;
+    
+    return min;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    
+    
+    CGFloat curViewOffset = paceScroll.contentOffset.x;
+    NSInteger curViewMinute = [self convertToCheckpointMinute:curViewOffset];
+    
+    NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.location];
+    NSInteger startLocationMinute = [startLocDecimal integerValue];
+    CGFloat startLocation = [self convertToX:startLocationMinute];
+    NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
+    NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
+    CGFloat endLocation = [self convertToX:endLocationMinute];
+    
+    
+    NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
+    
+    
+    if(curViewMinute <= lastCacheMinute + paceGraphSplitLoadOffset  && !(curViewMinute <= 0))
+    {
+        
+
+        //reload to the left
+        lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        
+        CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        
+        plotSpace.xRange = newRange;
+        
+        //move the view with the scroll view
+        CGRect newGraphViewRect = [chart frame];
+        newGraphViewRect.origin.x -= [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        [chart setFrame:newGraphViewRect];
+    }
+    else if(curViewMinute >= lastCacheMinute + paceGraphSplitObjects - paceGraphSplitLoadOffset &&
+            !(curViewMinute + paceGraphSplitLoadOffset >= [[run checkpoints] count]))
+    {
+        //reload to right
+        lastCacheMinute += paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        
+        CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        
+        plotSpace.xRange = newRange;
+        
+        //move the view with the scroll view
+        CGRect newGraphViewRect = [chart frame];
+        newGraphViewRect.origin.x += [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        [chart setFrame:newGraphViewRect];
+    }
+    else{
+        /*
+        
+        //move the view with the scroll view
+        CGRect newGraphViewRect = [chart frame];
+        newGraphViewRect.origin = paceScroll.contentOffset;
+        [chart setFrame:newGraphViewRect];
+         
+         */
+        
+    }
+    
+    
+    
+    /*
+    //if near the end of the first plot, create a new plot to left and add it to index 0 and draw
+    if(startLocation + paceGraphSplitLoadOffset > curViewOffset)
+    {
+        
+        //return if their is nothing to be added
+        if(startLocation == 0)
+            return;
+        
+        CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(startLocation - paceGraphSplitObjects) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        
+        plotSpace.xRange = newRange;
+        
+        [barPlot reloadData];
+        
+    }
+    //else if it within splitwidth of exceeding the last plot, add one to end of array
+    else if(endLocation - paceGraphSplitLoadOffset < curViewOffset + paceGraphSplitWidth)
+    {
+        //return if their is nothing to be added
+        if(endLocationMinute == [[run checkpoints] count])
+            return;
+        
+        NSInteger length = [[run checkpoints] count] - endLocationMinute;
+        
+        CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(endLocationMinute) length:CPTDecimalFromFloat(length)];
+        
+        plotSpace.xRange = newRange;
+        
+        [barPlot reloadData];
+    }
+    
+    */
+
+    
+    
+    
+    
+    //responsible for creating new views if necessary
+
+    
+    //determine what points to draw
+    //no need to have two charts at once
+    /*
+    if([plots count] < 3)
+    {
+        
+        CGFloat curViewOffset = paceScroll.contentOffset.x;
+        
+        
+        CPTBarPlot * startPlot;
+        CPTBarPlot * endPlot;
+        
+        //lowest plot always at beginning
+        startPlot = [plots objectAtIndex:0];
+        
+        //highest always at top
+        if( [plots count] > 1)
+        {
+            
+            endPlot = [plots objectAtIndex:([plots count]-1)];
+            
+        }
+        else{
+            
+            endPlot = [plots objectAtIndex:0];
+        }
+        
+        NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:startPlot.plotRange.location];
+        NSInteger startLocationMinute = [startLocDecimal integerValue];
+        CGFloat startLocation = [self convertScrollFrameTox:startLocationMinute];
+        NSDecimalNumber *endLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:endPlot.plotRange.location];
+        NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:endPlot.plotRange.length];
+        NSInteger endLocationMinute = [endLocDecimal integerValue] + [endLengthDecimal integerValue];
+        CGFloat endLocation = [self convertScrollFrameTox:endLocationMinute];
+    
+        
+        //if near the end of the first plot, create a new plot to left and add it to index 0 and draw
+        if(startLocation + paceGraphSplitLoadOffset > curViewOffset)
+        {
+            
+            //return if their is nothing to be added
+            if(startLocation == 0)
+                return;
+            
+            CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(startLocation - paceGraphSplitObjects) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+            
+            [self setupGraphForView:chart withRange:newRange];
+            
+        }
+        //else if it within splitwidth of exceeding the last plot, add one to end of array
+        else if(endLocation - paceGraphSplitLoadOffset < curViewOffset + paceGraphSplitWidth)
+        {
+            //return if their is nothing to be added
+            if(endLocationMinute == [[run checkpoints] count])
+                return;
+            
+            CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(endLocationMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+            
+            CPTBarPlot * newPlot = [self setupGraphForView:chart withRange:newRange];
+            
+            
+            //add plot to array to save
+            [plots addObject:newPlot];
+            
+            [barChart addPlot:newPlot toPlotSpace:plotSpace];
+            
+            [barChart c]
+        }
+            
+            
+    }
+     */
+    
+    
+    
+}
+
+
+
 #pragma mark - BarChart
 
--(void)setupGraph
+
+
+
+
+-(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {
 
     
@@ -361,7 +567,6 @@
     barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
     CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
     [barChart applyTheme:theme];
-    CPTGraphHostingView *hostingView = chart;
     hostingView.hostedGraph = barChart;
     
     // Border
@@ -387,9 +592,9 @@
     
     
     // Add plot space for horizontal bar charts
-    CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
+    plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
-    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.5f) length:CPTDecimalFromFloat(300.5f)];
+    plotSpace.xRange = range;
     
     //[plotSpace setAllowsUserInteraction:true];
     
@@ -426,13 +631,12 @@
     barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
     barPlot.delegate = self;
     
+    
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
     
-    
-    
-    
     //selected Plot
+    /*
     selectedPlot = [[CPTBarPlot alloc] init];
     selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
     
@@ -449,9 +653,8 @@
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
     selectedPlot.delegate = self;
-    [selectedPlot reloadData];
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
-    
+    */
     
     /*
      //adding animation here
@@ -480,19 +683,16 @@
 
 -(void)reloadPaceGraph
 {
-    //set the width according to the num of checkpoints
-    CGFloat newWidth = [[run checkpoints] count] * paceGraphBarWidth;
-    CGRect rect;
-    rect = paceScroll.frame;
-    rect.size.width = newWidth;
-    rect.origin = CGPointMake(0, 0);
-    [chart setFrame:rect];
+    /*
+    //redraw all graphs
+    for(int i= 0 ; i < [plots count]; i++)
+    {
+        CPTBarPlot * currentPlot = [plots objectAtIndex:i];
+        [currentPlot reloadData];
+    }
+     
+     */
     
-    //need to set scroll width to be equal
-    [paceScroll setContentSize:CGSizeMake(newWidth, rect.size.height)];
-    
-    //then redraw
-    [barPlot reloadData];
 }
 
 #pragma mark -
