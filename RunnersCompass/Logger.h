@@ -38,13 +38,21 @@
 @interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate>
 {
     UIActionSheet *sheet;
-    NSUInteger selectedBarIndex;
+    NSInteger selectedBarIndex;
     CPTXYGraph *barChart;
     NSTimer *timer;
     CPTBarPlot * selectedPlot;
     CPTBarPlot * barPlot;
     CPTXYPlotSpace *plotSpace;
     NSInteger lastCacheMinute;
+    BOOL scrollEnabled;
+    BOOL paused;
+    BOOL inMapView;
+    UIScrollView *mapScroll;
+    NSTimer * shadeTimer;
+    CGFloat countdown;
+    BOOL kmPaceShowMode;
+    NSUInteger numMinutesAtKmSelected;
 }
 
 
@@ -53,13 +61,8 @@
 
 //objects
 @property (nonatomic, strong, setter = setRun:) RunEvent * run;
-@property (assign, nonatomic) BOOL inMapView;
-@property (assign, nonatomic) BOOL paused;
-@property (assign, nonatomic) BOOL scrollEnabled;
-@property (readwrite, retain, nonatomic) NSTimer *timer;
-@property (strong, nonatomic) UIScrollView *mapScroll;
-@property (assign, nonatomic) NSTimer * shadeTimer;
-@property (assign, nonatomic) CGFloat countdown;
+@property (nonatomic) BOOL paused;
+
 
 
 //UI
@@ -81,6 +84,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *oldpace3;
 @property (strong, nonatomic) IBOutlet UILabel *currentPaceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *currentPaceValue;
+@property (strong, nonatomic) IBOutlet UIButton *invisibleLastKmButton;
+@property (strong, nonatomic) IBOutlet UILabel *lastKmLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lastKmPace;
 
 
 
@@ -89,6 +95,7 @@
 - (IBAction)handlePanGesture:(id)sender;
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
+- (IBAction)invisibleButtonTapped:(id)sender;
 
 - (void)newRun:(NSNumber *) value withMetric:(RunMetric) metric animate:(BOOL)animate;
 

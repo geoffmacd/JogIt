@@ -21,22 +21,17 @@
 @synthesize mapView;
 @synthesize chart;
 @synthesize panGesture;
-@synthesize inMapView;
-@synthesize paused;
 @synthesize statusIcon;
-@synthesize timer;
 @synthesize finishBut;
-@synthesize mapScroll;
-@synthesize scrollEnabled;
 @synthesize mapButton;
 @synthesize dragButton;
 @synthesize map;
 @synthesize shadeView;
-@synthesize shadeTimer;
 @synthesize countdownLabel;
-@synthesize countdown;
 @synthesize paceScroll;
 @synthesize currentPaceLabel,currentPaceValue;
+@synthesize paused;
+@synthesize lastKmLabel,oldpace1,oldpace2,oldpace3,nextpace,lastKmPace;
 
 #pragma mark - Lifecycle
 
@@ -60,7 +55,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
-    
+    kmPaceShowMode= false;
     inMapView = false;
     paused = true;
 
@@ -184,7 +179,7 @@
                      completion:^(BOOL finish){
                          
                          //swipe early
-                         if(!self.paused)
+                         if(!paused)
                          {
                              [shadeView setHidden:true];
                              [shadeView setAlpha:1.0f];
@@ -201,7 +196,7 @@
                                               completion:^(BOOL finish){
                                                   
                                                   //swipe early
-                                                  if(!self.paused)
+                                                  if(!paused)
                                                   {
                                                       [shadeView setHidden:true];
                                                       [shadeView setAlpha:1.0f];
@@ -506,15 +501,14 @@
     
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
+
+    
     
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
     selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
-    
     CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
 	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
-
-    
     selectedPlot.lineStyle = selectedBorderLineStyle;
     selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
     selectedPlot.barCornerRadius               = CPTFloat(5.0);
@@ -524,6 +518,7 @@
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
     selectedPlot.delegate = self;
+    
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
     
     /*
@@ -565,6 +560,25 @@
     
 }
 
+-(void)resetKmPaceShowMode
+{
+    kmPaceShowMode = false;
+    
+    selectedBarIndex = -1;
+    
+    
+    [lastKmLabel setHidden:false];
+    [nextpace setHidden:true];
+    
+    
+    //load fake values
+    [lastKmPace setText:nextpace.text];
+    [oldpace1 setText:lastKmPace.text];
+    [oldpace2 setText:oldpace1.text];
+    [oldpace3 setText:oldpace2.text];
+    
+}
+
 #pragma mark -
 #pragma mark Plot Data Source Methods
 
@@ -594,10 +608,20 @@
                 
             case CPTBarPlotFieldBarTip:
                 //y location of bar
-                if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
+                if(!kmPaceShowMode)
                 {
-                    paceForTime = [[run checkpoints] objectAtIndex:index];
-                    num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
+                    {
+                        paceForTime = [[run checkpoints] objectAtIndex:index];
+                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                    }
+                }
+                else{
+                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedBarIndex && index <= (selectedBarIndex + numMinutesAtKmSelected))))
+                    {
+                        paceForTime = [[run checkpoints] objectAtIndex:index];
+                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                    }
                 }
                 break;
         }
@@ -611,6 +635,8 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
+    [self resetKmPaceShowMode];
+    
     selectedBarIndex = idx;
     [selectedPlot reloadData];
     
@@ -805,6 +831,47 @@
     //convert current run to a historical run now that it is saved!
     [self setRun:run];
     
+}
+
+- (IBAction)invisibleButtonTapped:(id)sender {
+    
+    //if not already in the mode, just select current km/partial km and remove the label
+    if(!kmPaceShowMode)
+    {
+        kmPaceShowMode = true;
+        
+        selectedBarIndex = 285;
+        numMinutesAtKmSelected = 15;
+        
+        
+        [selectedPlot reloadData];
+        
+        [lastKmLabel setHidden:true];
+        //unhide nextpace
+        [nextpace setHidden:false];
+    }
+    else{
+        //already in this mode, cycle to next km
+        selectedBarIndex -= 15;
+        if(selectedBarIndex < 0)    //cycle to beginning if necessary
+            selectedBarIndex = [[run checkpoints] count] - 15;
+        
+        //reload both plot and selected plot to display above details
+        [selectedPlot reloadData];
+
+        
+        //load fake values
+        [nextpace setText:lastKmPace.text];
+        [lastKmPace setText:oldpace1.text];
+        [oldpace1 setText:oldpace2.text];
+        [oldpace2 setText:oldpace3.text];
+        [oldpace3 setText:@"4:22"];
+    }
+    
+    //scroll to selected index
+    CGRect rectToScroll = paceScroll.frame;
+    rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedBarIndex, 0.0);
+    [paceScroll scrollRectToVisible:rectToScroll animated:true];
 }
 
 - (IBAction)hamburgerTapped:(id)sender {
