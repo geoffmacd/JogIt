@@ -174,17 +174,12 @@
     self.viewController.delegate = self.backVC;
     self.viewController.menuDelegate = self.frontVC;
     
-    //[self.viewController setLocked:true];//until a run is loaded/started
-    
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     [self.window.rootViewController.view.layer setCornerRadius:15.0f];
     
-    
- 
-
-    return YES;
+    return YES;//to indicate success
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

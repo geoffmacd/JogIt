@@ -41,7 +41,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 @property (assign, nonatomic) BOOL liveRun;
 @property (nonatomic, readonly) BOOL animating;
 @property (nonatomic, readonly) BOOL isOpen;
-@property (nonatomic, assign) BOOL locked;
+@property (nonatomic, assign, setter = setLocked:) BOOL locked;
 @property (nonatomic, weak) id <JSSlidingViewControllerDelegate> delegate;
 @property (nonatomic, weak) id <JSSlidingViewControllerDelegate> menuDelegate;
 

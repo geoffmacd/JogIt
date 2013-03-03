@@ -103,7 +103,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self setupSlidingScrollView];
     CGRect frame = self.view.bounds;
     
-    
     self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
     [self addChildViewController:self.backViewController];
     [self.view insertSubview:self.backViewController.view atIndex:0];
@@ -118,9 +117,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
-    
 
-    
 }
 
 - (void)didReceivePause:(NSNotification *)notification
@@ -153,7 +150,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     
     [self.view insertSubview:_slidingScrollView atIndex:0];
     _isOpen = YES;
-    _locked = NO;
+    [self setLocked:YES];//begin locked until a new run or run is selected
     _animating = NO;
     _frontViewControllerHasOpenCloseNavigationBarButton = YES;
     _allowManualSliding = YES;
@@ -231,6 +228,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     _slidingScrollView.contentOffset = CGPointMake(0, 0);
     _slidingScrollView.frame = CGRectMake(targetOriginForSlidingScrollView, 0.0f, frame.size.width, frame.size.height);
     self.frontViewController.view.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
+
     
 }
 
@@ -613,6 +611,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     
     CGPoint co = scrollView.contentOffset;
     
+    
     if (self.isOpen == NO && self.isAnimatingInterfaceOrientation == NO) {
         if (co.x < self.sliderOpeningWidth) {
             [self scrollViewWillBeginDragging:scrollView];
@@ -626,7 +625,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     {
         //remove view from scrollview
         [self resetScrollToPause];
-    } else {
+    } else if(isSetupForPauseScroll)
+    {
         //expand image instead
         CGFloat differential = co.x - self.view.bounds.size.width;
         //NSLog(@"%f", differential);
@@ -768,15 +768,15 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 - (void)setLocked:(BOOL)locked {
     _locked = locked;
     if (_allowManualSliding && locked == NO) {
-        _slidingScrollView.scrollEnabled = YES;
+        [_slidingScrollView setScrollEnabled:true];
     } else {
-        _slidingScrollView.scrollEnabled = NO;
+        [_slidingScrollView setScrollEnabled:false];
     }
 }
 
 - (void)setAllowManualSliding:(BOOL)allowManualSliding {
     _allowManualSliding = allowManualSliding;
-    _slidingScrollView.scrollEnabled = allowManualSliding;
+    [_slidingScrollView setScrollEnabled:allowManualSliding];
 }
 
 - (UIViewController *)frontViewController {

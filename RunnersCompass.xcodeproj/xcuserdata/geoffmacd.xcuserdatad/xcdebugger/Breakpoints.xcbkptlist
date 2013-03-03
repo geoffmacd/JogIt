@@ -41,11 +41,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "133"
-         endingLineNumber = "133"
+         startingLineNumber = "130"
+         endingLineNumber = "130"
          landmarkName = "-viewWillAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -54,11 +54,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "138"
-         endingLineNumber = "138"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
          landmarkName = "-viewDidAppear:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -67,11 +67,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "225"
-         endingLineNumber = "225"
+         startingLineNumber = "222"
+         endingLineNumber = "222"
          landmarkName = "-updateInterface"
          landmarkType = "5">
       </FileBreakpoint>
@@ -262,11 +262,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "220"
-         endingLineNumber = "220"
+         startingLineNumber = "217"
+         endingLineNumber = "217"
          landmarkName = "-updateInterface"
          landmarkType = "5">
       </FileBreakpoint>
@@ -470,11 +470,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "315"
-         endingLineNumber = "315"
+         startingLineNumber = "313"
+         endingLineNumber = "313"
          landmarkName = "-closeWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -483,11 +483,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "338"
-         endingLineNumber = "338"
+         startingLineNumber = "336"
+         endingLineNumber = "336"
          landmarkName = "-openSlider:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -496,11 +496,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "260"
-         endingLineNumber = "260"
+         startingLineNumber = "258"
+         endingLineNumber = "258"
          landmarkName = "-closeSlider:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -509,11 +509,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "266"
-         endingLineNumber = "266"
+         startingLineNumber = "264"
+         endingLineNumber = "264"
          landmarkName = "-closeSlider:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -561,7 +561,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "699"
@@ -574,7 +574,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "697"
@@ -587,11 +587,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "222"
-         endingLineNumber = "222"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
          landmarkName = "-updateInterface"
          landmarkType = "5">
       </FileBreakpoint>
@@ -600,11 +600,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "343"
-         endingLineNumber = "343"
+         startingLineNumber = "341"
+         endingLineNumber = "341"
          landmarkName = "-openSlider:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -613,11 +613,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "246"
-         endingLineNumber = "246"
+         startingLineNumber = "244"
+         endingLineNumber = "244"
          landmarkName = "-statusBarFrameWillChange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -700,11 +700,11 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "773"
@@ -717,7 +717,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "728"
@@ -730,7 +730,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "715"
@@ -743,7 +743,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "771"
@@ -756,7 +756,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "779"
@@ -794,21 +794,8 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/AppDelegate.m"
-         timestampString = "383720141.268135"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "177"
-         endingLineNumber = "177"
-         landmarkName = "-application:didFinishLaunchingWithOptions:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "727"
@@ -821,7 +808,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "647"
@@ -847,11 +834,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383982404.97931"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
          landmarkName = "-didReceivePause:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -899,11 +886,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "308"
-         endingLineNumber = "308"
+         startingLineNumber = "306"
+         endingLineNumber = "306"
          landmarkName = "-closeWithBouncyAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -912,11 +899,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "332"
-         endingLineNumber = "332"
+         startingLineNumber = "330"
+         endingLineNumber = "330"
          landmarkName = "-closeWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1432,7 +1419,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "JSSlidingViewController/JSSlidingViewController.m"
-         timestampString = "383704597.193606"
+         timestampString = "383983857.921223"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "769"
@@ -2322,6 +2309,149 @@
          startingLineNumber = "623"
          endingLineNumber = "623"
          landmarkName = "-numberForPlot:field:recordIndex:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "615"
+         endingLineNumber = "615"
+         landmarkName = "-scrollViewDidScroll:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "616"
+         endingLineNumber = "616"
+         landmarkName = "-scrollViewDidScroll:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "714"
+         endingLineNumber = "714"
+         landmarkName = "-touchesBegan:withEvent:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "725"
+         endingLineNumber = "725"
+         landmarkName = "-scrollViewWillBeginDragging:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "627"
+         endingLineNumber = "627"
+         landmarkName = "-scrollViewDidScroll:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "631"
+         endingLineNumber = "631"
+         landmarkName = "-scrollViewDidScroll:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "523"
+         endingLineNumber = "523"
+         landmarkName = "-enableScrollToPause"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "502"
+         endingLineNumber = "502"
+         landmarkName = "-resetScrollToPause"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983289.186926"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "171"
+         endingLineNumber = "171"
+         landmarkName = "-setupSlidingScrollView"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983296.7083"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "117"
+         endingLineNumber = "117"
+         landmarkName = "-viewDidLoad"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "JSSlidingViewController/JSSlidingViewController.m"
+         timestampString = "383983857.921223"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "617"
+         endingLineNumber = "617"
+         landmarkName = "-scrollViewDidScroll:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
