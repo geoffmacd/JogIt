@@ -30,6 +30,7 @@
 - (void)menuButtonPressed:(id)sender;
 - (void)finishedRun:(RunEvent *)run;
 - (void)pauseAnimation;
+-(void)selectedGhostRun:(RunEvent *)run;
 
 @end
 
@@ -69,7 +70,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *runTitle;
 @property (strong, nonatomic) IBOutlet UIView *mapView;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
-@property (strong, nonatomic) IBOutlet UIImageView *statusIcon;
+@property (strong, nonatomic) IBOutlet UIButton *statusBut;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
 @property (strong, nonatomic) IBOutlet UIButton *finishBut;
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
@@ -87,6 +88,14 @@
 @property (strong, nonatomic) IBOutlet UIButton *invisibleLastKmButton;
 @property (strong, nonatomic) IBOutlet UILabel *lastKmLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lastKmPace;
+@property (strong, nonatomic) IBOutlet UIImageView *goalAchievedImage;
+@property (strong, nonatomic) IBOutlet UILabel *distanceUnitLabel;
+@property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel1;
+@property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel2;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *caloriesLabel;
+@property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 
 
 
@@ -96,8 +105,9 @@
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
 - (IBAction)invisibleButtonTapped:(id)sender;
+- (IBAction)statusButTapped:(id)sender;
 
-- (void)newRun:(NSNumber *) value withMetric:(RunMetric) metric animate:(BOOL)animate;
+- (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 
 
 

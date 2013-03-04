@@ -72,7 +72,7 @@
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
                                                                   owner:self
                                                                 options:nil]objectAtIndex:0];
-        [cell setAssociated:row];
+        [cell setAssociated:row+1];
         [cell setDelegate:self];
         [cell setTimePeriod:weekly];
         

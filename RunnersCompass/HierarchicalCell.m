@@ -48,7 +48,7 @@
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     
-    NSString * header = [NSString stringWithFormat:@"%@ • %@", associatedRun.name, [dateFormatter stringFromDate:associatedRun.date]];
+    NSString * header = [NSString stringWithFormat:@"%.1f • %@", associatedRun.distance, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //set thumbnail

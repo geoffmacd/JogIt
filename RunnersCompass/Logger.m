@@ -21,7 +21,7 @@
 @synthesize mapView;
 @synthesize chart;
 @synthesize panGesture;
-@synthesize statusIcon;
+@synthesize statusBut;
 @synthesize finishBut;
 @synthesize mapButton;
 @synthesize dragButton;
@@ -32,6 +32,10 @@
 @synthesize currentPaceLabel,currentPaceValue;
 @synthesize paused;
 @synthesize lastKmLabel,oldpace1,oldpace2,oldpace3,nextpace,lastKmPace;
+@synthesize goalAchievedImage;
+@synthesize paceLabel,paceUnitLabel1,paceUnitLabel2;
+@synthesize distanceLabel,distanceUnitLabel;
+@synthesize caloriesLabel,timeLabel;
 
 #pragma mark - Lifecycle
 
@@ -76,7 +80,7 @@
     
     
     //load most recent run on startup, but not intended any other time
-    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
+    RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
     loadRun.live = false;
     NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:300];
     //begin run now with no other pause points
@@ -132,16 +136,13 @@
 
 
 
-- (void)newRun:(NSNumber *) value withMetric:(RunMetric) metric animate:(BOOL)animate
+- (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate
 {
     //configure new run with that metric and value if their is one
 
     
     //load most recent run on startup, but not intended any other time
-    RunEvent * loadRun = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
-    loadRun.live = true;
-    loadRun.metricGoal = value;
-    loadRun.metric = metric;
+    RunEvent * loadRun = newRunTemplate;
     NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
     //begin run now with no other pause points
     [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
@@ -237,12 +238,13 @@
     run = _run;
     
     //hide these by default unless newrun overrides them
-    [statusIcon setHidden:!run.live];
     [finishBut setHidden:!run.live];
     
     //set title
     if(!run.live)
     {
+        [statusBut setImage:[UIImage imageNamed:@"ghost.png"] forState:UIControlStateNormal];
+        
         //set title
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
@@ -254,7 +256,47 @@
         [runTitle setText:[NSString stringWithFormat:@"%@ • %@", run.name, [dateFormatter stringFromDate:run.date]]];
     }
     else
+    {
+        //hide red x if it is not a targeted run
+        if(run.metric == NoMetricType)
+        {
+            [goalAchievedImage setHidden:true];
+        }
+        else
+        {
+            //if it is, set the image to be besides the label
+            CGRect metricRect;
+            CGRect imageRect = goalAchievedImage.frame;
+            
+            switch (run.metric) {
+                case MetricTypePace:
+                    metricRect = paceLabel.frame;
+                    break;
+                case MetricTypeTime:
+                    metricRect = timeLabel.frame;
+                    break;
+                case MetricTypeCalories:
+                    metricRect = caloriesLabel.frame;
+                    break;
+                case MetricTypeDistance:
+                    metricRect = distanceLabel.frame;
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            imageRect.origin = metricRect.origin;
+            imageRect.origin.x += metricRect.size.width;
+            imageRect.origin.y += metricRect.size.height/4;
+            [goalAchievedImage setFrame:imageRect];
+            [goalAchievedImage setHidden:false];
+        }
+        
+        [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+        
         [runTitle setText:run.name];
+    }
     
     
 
@@ -296,11 +338,11 @@
                             pauseImage.image = [UIImage imageNamed:@"pause invert.png"];
                         } completion:NULL];
         
-        [UIView transitionWithView:statusIcon
+        [UIView transitionWithView:statusBut
                           duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
-                            statusIcon.image = [UIImage imageNamed:@"pause.png"];
+                            [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
                         } completion:NULL];
         
         finishBut.alpha = 0.0f;
@@ -315,6 +357,11 @@
     }
     else
     {
+        //disable km selection mode
+        kmPaceShowMode = false;
+        selectedBarIndex = -1;
+        [self setLabelsForKMSelection:selectedBarIndex];
+        
         [UIView transitionWithView:pauseImage
                           duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
@@ -323,11 +370,11 @@
                         } completion:NULL];
         
         
-        [UIView transitionWithView:statusIcon
+        [UIView transitionWithView:statusBut
                           duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
-                            statusIcon.image = [UIImage imageNamed:@"record.png"];
+                            [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
                         } completion:NULL];
         
         
@@ -343,6 +390,41 @@
         
     }
 }
+
+
+-(void)shouldUserGhostRun
+{
+    sheet = [[UIActionSheet alloc] initWithTitle:@"Do you want to ghost race yourself?"
+                                        delegate:self
+                               cancelButtonTitle:@"Cancel"
+                          destructiveButtonTitle:@"Ghost Race"
+                               otherButtonTitles:nil];
+    
+    // Show the sheet in view
+    
+    [sheet showInView:self.parentViewController.view];
+}
+
+#pragma mark -
+#pragma mark Action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button %d", buttonIndex);
+    
+    if(buttonIndex == 0)
+    {
+        //start ghost run
+
+        //set as ghost run
+        run.ghost = true;
+        //do standard newRun except with this run object
+        [delegate selectedGhostRun:run];
+        
+    }
+    //coninute otherwise
+}
+
 
 #pragma mark - ScrollView Delegate
 
@@ -546,38 +628,40 @@
 }
  */
 
--(void)reloadPaceGraph
+
+#pragma mark - KM Selection methods
+
+
+
+-(void)setLabelsForKMSelection:(NSInteger) indexSelected
 {
-    /*
-    //redraw all graphs
-    for(int i= 0 ; i < [plots count]; i++)
+    
+    //set the labels to be for the km if this method was called with an index
+    if(indexSelected >= 0 )
     {
-        CPTBarPlot * currentPlot = [plots objectAtIndex:i];
-        [currentPlot reloadData];
+        RunPos * selectionCheckpoint = [[run checkpoints] objectAtIndex:indexSelected];
+        
+        //set the label to say 'KM 4' or 'Km 17'
+        [lastKmLabel setText:[NSString stringWithFormat:@"KM %.f", selectionCheckpoint.pos.x]];
+        
+        //load fake values
+        [lastKmPace setText:@"4:42"];
+        [oldpace1 setText:@"4:12"];
+        [oldpace2 setText:@"4:37"];
+        [oldpace3 setText:@"4:44"];
     }
-     
-     */
+    else{
+        
+        [lastKmLabel setText:@"Current KM"];
+        //load fake values
+        [lastKmPace setText:@"4:42"];
+        [oldpace1 setText:@"4:42"];
+        [oldpace2 setText:@"4:11"];
+        [oldpace3 setText:@"4:59"];
+    }
     
 }
 
--(void)resetKmPaceShowMode
-{
-    kmPaceShowMode = false;
-    
-    selectedBarIndex = -1;
-    
-    
-    [lastKmLabel setHidden:false];
-    [nextpace setHidden:true];
-    
-    
-    //load fake values
-    [lastKmPace setText:nextpace.text];
-    [oldpace1 setText:lastKmPace.text];
-    [oldpace2 setText:oldpace1.text];
-    [oldpace3 setText:oldpace2.text];
-    
-}
 
 #pragma mark -
 #pragma mark Plot Data Source Methods
@@ -635,9 +719,12 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
-    [self resetKmPaceShowMode];
-    
+    //set the select pace
     selectedBarIndex = idx;
+    [self setLabelsForKMSelection:idx];
+    
+    kmPaceShowMode = false;
+    
     [selectedPlot reloadData];
     
     
@@ -840,15 +927,10 @@
     {
         kmPaceShowMode = true;
         
+        //start at last km
         selectedBarIndex = 285;
         numMinutesAtKmSelected = 15;
         
-        
-        [selectedPlot reloadData];
-        
-        [lastKmLabel setHidden:true];
-        //unhide nextpace
-        [nextpace setHidden:false];
     }
     else{
         //already in this mode, cycle to next km
@@ -856,22 +938,33 @@
         if(selectedBarIndex < 0)    //cycle to beginning if necessary
             selectedBarIndex = [[run checkpoints] count] - 15;
         
-        //reload both plot and selected plot to display above details
-        [selectedPlot reloadData];
-
-        
-        //load fake values
-        [nextpace setText:lastKmPace.text];
-        [lastKmPace setText:oldpace1.text];
-        [oldpace1 setText:oldpace2.text];
-        [oldpace2 setText:oldpace3.text];
-        [oldpace3 setText:@"4:22"];
     }
+    //reload labels/selection
+    [selectedPlot reloadData];
+    [self setLabelsForKMSelection:selectedBarIndex];
     
     //scroll to selected index
     CGRect rectToScroll = paceScroll.frame;
     rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedBarIndex, 0.0);
     [paceScroll scrollRectToVisible:rectToScroll animated:true];
+}
+
+- (IBAction)statusButTapped:(id)sender {
+    
+    //action depends on if the run is live
+    if(run.live)
+    {
+        //animate the logger to opposite of paused/record state
+        //asks the jsslider to animate the pause, includes the automatic pausing/record logic
+        //meant to illustrate to user that you can swipe to pause
+        [delegate pauseAnimation];
+        
+    }else{
+        
+        //ask user if they want to start a ghost run
+        [self shouldUserGhostRun];
+        
+    }
 }
 
 - (IBAction)hamburgerTapped:(id)sender {

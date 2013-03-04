@@ -68,15 +68,15 @@
 								<int key="NSID">2</int>
 							</object>
 						</object>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="251191011">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="234055045">
 							<string key="name">Georgia</string>
 							<string key="family">Georgia</string>
 							<int key="traits">0</int>
-							<double key="pointSize">18</double>
+							<double key="pointSize">17</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="270387860">
+						<object class="NSFont" key="IBUIFont" id="169652422">
 							<string key="NSName">Georgia</string>
-							<double key="NSSize">18</double>
+							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -104,8 +104,8 @@
 							<bytes key="NSWhite">MAA</bytes>
 							<reference key="NSCustomColorSpace" ref="71513854"/>
 						</object>
-						<reference key="IBUIFontDescription" ref="251191011"/>
-						<reference key="IBUIFont" ref="270387860"/>
+						<reference key="IBUIFontDescription" ref="234055045"/>
+						<reference key="IBUIFont" ref="169652422"/>
 					</object>
 					<object class="IBUIButton" id="735213304">
 						<reference key="NSNextResponder" ref="786147558"/>
@@ -131,8 +131,8 @@
 							<bytes key="NSWhite">MAA</bytes>
 							<reference key="NSCustomColorSpace" ref="71513854"/>
 						</object>
-						<reference key="IBUIFontDescription" ref="251191011"/>
-						<reference key="IBUIFont" ref="270387860"/>
+						<reference key="IBUIFontDescription" ref="234055045"/>
+						<reference key="IBUIFont" ref="169652422"/>
 					</object>
 					<object class="IBUITableView" id="481462327">
 						<reference key="NSNextResponder" ref="786147558"/>

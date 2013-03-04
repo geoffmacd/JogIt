@@ -62,13 +62,13 @@
     
         
         //load most recent run on startup, but not intended any other time
-        RunEvent * loadRun = [[RunEvent alloc] initWithName:@"10.5 km Run" date:[NSDate date]];
+        RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
         loadRun.live = false;
         NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
         //begin run now with no other pause points
         [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
         
-        for(int i = 0; i < 500; i ++)
+        for(int i = 0; i < 300; i ++)
         {
             RunPos *posToAdd = [[RunPos alloc] init];
             
@@ -203,7 +203,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    //never called, since the cells button is called first 
     
     NSUInteger row = [indexPath row];
     
@@ -263,14 +263,14 @@
 -(void)selectedNewRun:(RunEvent *) run
 {
     //set logger with this run
-    [self.delegate newRun:0 withMetric:0 animate:true];
+    [self.delegate newRun:run animate:true];
     
     runInProgressAsFarAsICanTell = true;
     
+    //modifiy header to indicate progressing run
     start.headerLabel.text = @"Run In Progress";
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
-    //[start.addRunImage setHidden:true];
     [start.addRunButton setImage:[UIImage imageNamed:@"garbagecan.png"] forState:UIControlStateNormal];
     [start.folderImage setHidden:true];
     
@@ -284,19 +284,21 @@
 
 -(void)selectedRun:(id)sender
 {
+    if(!runInProgressAsFarAsICanTell)
+    {
+        HierarchicalCell * cell = (HierarchicalCell * )sender;
+        
+        //set logger with this run
+        [self.delegate loadRun:cell.associatedRun close:true];
+        
+        //refresh start cell
+        runInProgressAsFarAsICanTell = false;
+        start.headerLabel.text = @"New Run";
+        start.locked = false;//to prevent expanding
+        [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
+        [start.folderImage setHidden:false];
     
-    HierarchicalCell * cell = (HierarchicalCell * )sender;
-    
-    //set logger with this run
-    [self.delegate loadRun:cell.associatedRun close:true];
-    
-    //refresh start cell
-    
-    runInProgressAsFarAsICanTell = false;
-    start.headerLabel.text = @"New Run";
-    start.locked = false;//to prevent expanding
-    [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
-    [start.folderImage setHidden:false];
+    }
     
 }
 
@@ -412,17 +414,58 @@
 #pragma mark -
 #pragma mark StartCell Actions
 
--(void)testNewRun
+-(void)paceRunStart:(NSNumber*)selectedIndex
+{
+    CGFloat pace = 0.5 + ([selectedIndex intValue] * 0.5);
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace];
+    
+    [self selectedNewRun:new];
+    
+}
+
+-(void)distanceRunStart:(NSNumber*)selectedIndex
+{
+    CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance];
+    
+    [self selectedNewRun:new];
+    
+}
+
+-(void)timeRunStart:(NSNumber*)selectedIndex
+{
+    CGFloat time = 0.5 + ([selectedIndex intValue] * 0.5);
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time];
+    
+    [self selectedNewRun:new];
+    
+}
+
+-(void)caloriesRunStart:(NSNumber*)selectedIndex
+{
+    CGFloat calories = 0.5 + ([selectedIndex intValue] * 0.5);
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories];
+    
+    [self selectedNewRun:new];
+    
+}
+
+
+-(void)justGoStart
 {
     
-    RunEvent * new = [[RunEvent alloc] initWithName:@"geoff's run" date:[NSDate date]];
-    new.live = true;
+    RunEvent * new = [[RunEvent alloc] initWithNoTarget];
+    
     [self selectedNewRun:new];
     
 }
 
 - (IBAction)paceTapped:(id)sender {
-    PacePicker *pace = [[PacePicker alloc] initWithTitle:@" Pace " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    PacePicker *pace = [[PacePicker alloc] initWithTitle:@" Pace " rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [pace addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -432,7 +475,7 @@
 
 - (IBAction)timeTapped:(id)sender {
     
-    TimePicker *time = [[TimePicker alloc] initWithTitle:@" Time " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    TimePicker *time = [[TimePicker alloc] initWithTitle:@" Time " rows:nil initialSelection:0 target:self successAction:@selector(timeRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [time addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -443,7 +486,7 @@
     
     
     
-    CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(caloriesRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [cal addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -452,13 +495,13 @@
 
 - (IBAction)justGoTapped:(id)sender {
     
-    [self testNewRun];
+    [self justGoStart];
     
 }
 
 - (IBAction)distanceTapped:(id)sender {
     
-    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:@" Distance " rows:nil initialSelection:0 target:self successAction:@selector(testNewRun) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:@" Distance " rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [distance addCustomButtonWithTitle:@"PR" value:nil];
     

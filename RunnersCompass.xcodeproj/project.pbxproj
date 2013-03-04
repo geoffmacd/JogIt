@@ -10,6 +10,8 @@
 		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
 		6703F4E816B75F12006A8F88 /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E716B75F12006A8F88 /* Performance.xib */; };
 		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
+		670493B816E40CA8005E2C87 /* greencheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 670493B616E40CA8005E2C87 /* greencheck.png */; };
+		670493B916E40CA8005E2C87 /* redX.png in Resources */ = {isa = PBXBuildFile; fileRef = 670493B716E40CA8005E2C87 /* redX.png */; };
 		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
 		6721F88516AE3D4E00FE84C5 /* Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88316AE3D4E00FE84C5 /* Log.m */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
@@ -102,6 +104,7 @@
 		67B2FD0B16C60013008694F1 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCFF16C60013008694F1 /* DistancePickerView.m */; };
 		67B2FD0C16C60013008694F1 /* BWLongTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0216C60013008694F1 /* BWLongTextViewController.m */; };
 		67B2FD0D16C60013008694F1 /* BWSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0516C60013008694F1 /* BWSelectViewController.m */; };
+		67B7D13F16E3E34600E7134B /* ghost.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B7D13E16E3E34600E7134B /* ghost.png */; };
 		67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */; };
 		67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E30116D0740900E4DE11 /* ChartCell.m */; };
 		67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E30316D0742E00E4DE11 /* ChartCell.xib */; };
@@ -165,6 +168,8 @@
 		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		6703F4E716B75F12006A8F88 /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
+		670493B616E40CA8005E2C87 /* greencheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greencheck.png; path = Graphics/greencheck.png; sourceTree = SOURCE_ROOT; };
+		670493B716E40CA8005E2C87 /* redX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redX.png; path = Graphics/redX.png; sourceTree = SOURCE_ROOT; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
 		6721F88316AE3D4E00FE84C5 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
@@ -324,6 +329,7 @@
 		67B2FD0216C60013008694F1 /* BWLongTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWLongTextViewController.m; sourceTree = "<group>"; };
 		67B2FD0416C60013008694F1 /* BWSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSelectViewController.h; sourceTree = "<group>"; };
 		67B2FD0516C60013008694F1 /* BWSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSelectViewController.m; sourceTree = "<group>"; };
+		67B7D13E16E3E34600E7134B /* ghost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ghost.png; path = Graphics/ghost.png; sourceTree = SOURCE_ROOT; };
 		67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtil.h; sourceTree = "<group>"; };
 		67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtil.m; sourceTree = "<group>"; };
 		67C8E30016D0740900E4DE11 /* ChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartCell.h; sourceTree = "<group>"; };
@@ -672,6 +678,9 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				670493B616E40CA8005E2C87 /* greencheck.png */,
+				670493B716E40CA8005E2C87 /* redX.png */,
+				67B7D13E16E3E34600E7134B /* ghost.png */,
 				676DE8F816DDC20A00516C2A /* underPageBackground.png */,
 				672AA39516B4C9BA00B7DEE6 /* addbutton.png */,
 				67B2EF2216CDE0E3009F6BD0 /* addrunicon.png */,
@@ -912,6 +921,9 @@
 				67902E6616DAE2AC007D19BC /* CreateGoalHeaderCell.xib in Resources */,
 				67D302E016DAF9FB00BC923F /* redgoal.png in Resources */,
 				676DE8F916DDC20A00516C2A /* underPageBackground.png in Resources */,
+				67B7D13F16E3E34600E7134B /* ghost.png in Resources */,
+				670493B816E40CA8005E2C87 /* greencheck.png in Resources */,
+				670493B916E40CA8005E2C87 /* redX.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

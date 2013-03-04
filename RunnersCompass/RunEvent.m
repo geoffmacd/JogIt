@@ -31,28 +31,12 @@
 @synthesize date;
 @synthesize calories;
 @synthesize distance;
-@synthesize pace;
+@synthesize avgPace;
 @synthesize time;
-@synthesize live,metric;
+@synthesize live,metric,ghost;
 @synthesize checkpoints,distanceCheckpoints,pos,pausePoints;
 @synthesize metricGoal;
-
-
--(id)initWithName:(NSString *)_name date:(NSDate *)_date
-{
-    self = [super init];
-    if (self) {
-        name = _name;
-        date = _date;
-        distance = 4.1f;
-        calories = 301.5f;
-        pace = 264.3f;
-        time = 2063.0f;
-        live = true;
-        return self;
-    }
-    return nil;
-}
+@synthesize eventType;
 
 
 +(NSString * )stringForMetric:(RunMetric) metric
@@ -66,7 +50,7 @@
         case MetricTypePace:
             return @"Pace";
         case MetricTypeTime:
-            return @"Duration";
+            return @"Time";
         case MetricTypeClimbed:
             return @"Climbed";
         case MetricTypeCadence:
@@ -75,8 +59,64 @@
             return @"Stride";
     }
     
-    return @"UnknownMetric";
+    return @"UNKNOWNMETRIC";
 }
+
+-(id)initWithNoTarget
+{
+    self = [super init];
+    if (self) {
+        name = @"";//no name for just go
+        metric = NoMetricType;
+        metricGoal = 0.0f;
+        eventType = EventTypeRun;    //for now this is only possible
+        date = [NSDate date];
+        distance = 4.1f;
+        calories = 301.5f;
+        avgPace = 264.3f;
+        time = 2063.0f;
+        live = true;
+        ghost = false;
+        return self;
+    }
+    return nil;
+}
+
+-(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value
+{
+    self = [super init];
+    if (self) {
+        switch(type)
+        {
+            case MetricTypePace:
+                name = [NSString stringWithFormat:@"%@ Target • %f", [RunEvent stringForMetric:type], value];
+                break;
+            case MetricTypeCalories:
+                name = [NSString stringWithFormat:@"%@ Target • %.0f", [RunEvent stringForMetric:type], value];
+                break;
+            case MetricTypeDistance:
+                name = [NSString stringWithFormat:@"%@ Target • %.1f", [RunEvent stringForMetric:type], value];
+                break;
+            case MetricTypeTime:
+                name = [NSString stringWithFormat:@"%@ Target • %f", [RunEvent stringForMetric:type], value];
+                break;
+                
+        }
+        metric = type;
+        metricGoal = value;
+        eventType = EventTypeRun;    //for now this is only possible
+        date = [NSDate date];
+        distance = 4.1f;
+        calories = 301.5f;
+        avgPace = 264.3f;
+        time = 2063.0f;
+        live = true;
+        ghost = false;
+        return self;
+    }
+    return nil;
+}
+
 
 
 

@@ -41,7 +41,7 @@
             if(!run)
             {
                 //load previous run
-                RunEvent  * run = [[RunEvent alloc] initWithName:@"Old Run" date:[NSDate date]];
+                RunEvent  * run = [[RunEvent alloc] init];
                 [self.backVC setRun:run];
                 
                 [self.viewController setLiveRun:false];
@@ -59,33 +59,49 @@
     
 }
 
+-(void)selectedGhostRun:(RunEvent *)run
+{
+    //launch new run with this run, call same methods as for any new run
+    
+    //call same method as with the startcell
+    [self.frontVC selectedNewRun:run];
+}
+
+
 
 #pragma mark - Menu Delegate Methods
 
-- (void)loadRun:(RunEvent*) run close:(BOOL)close
+- (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close
 {
+    
     //slider unlocked from this point until app is exited
     [self.viewController setLocked:false];
     
     //lock slider bounce to  prevent pause
     [self.viewController setLiveRun:false];
     
-    //load this run into the logger
     
-    [self.backVC setRun:run];
+    //ensure run is not live
+    runToLoad.live = false;
+    
+    //load this run into the logger
+    [self.backVC setRun:runToLoad];
     
     if(close)
         [self.viewController closeSlider:true completion:nil];
     
 }
 
-- (void)newRun:(NSNumber*) value withMetric:(RunMetric) metric animate:(BOOL)animate
+- (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate
 {
     //slider unlocked from this point until app is exited
     [self.viewController setLocked:false];
     
     //set to live so that slider bounce is active
     [self.viewController setLiveRun:true];
+    
+    //ensure run is live
+    newRunTemplate.live = true;
     
     //if status is currently recording, send notification to change and modify image
     if(!self.backVC.paused)
@@ -99,10 +115,11 @@
     
     
     //animate new run
-    [self.backVC newRun:value withMetric:metric animate:animate];
+    [self.backVC newRun:newRunTemplate animate:animate];
     
-    //also close slider 
-    [self.viewController closeSlider:true completion:nil];
+    //also close slider
+    //animate if it is not already in logger view
+    [self.viewController closeSlider:self.viewController.isOpen completion:nil];
     
 }
 
@@ -117,7 +134,7 @@
             {
                 //show discard sheet on completion
                 [self.viewController closeSlider:true completion:^{
-                    [self userDiscardTapped];
+                    [self shouldUserDiscardRun];
                 }];
             }
             else{
@@ -132,10 +149,7 @@
     }
 }
 
-
-#pragma mark - App Delegate
-
--(void)userDiscardTapped
+-(void)shouldUserDiscardRun
 {
     sheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to discard this run?"
                                         delegate:self.frontVC
@@ -149,7 +163,7 @@
 }
 
 
-#pragma mark - App Lifecycle Delegate MEthods
+#pragma mark - App Lifecycle Delegate 
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

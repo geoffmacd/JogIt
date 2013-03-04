@@ -38,7 +38,7 @@
     for(NSInteger i=0;i <13; i++)
     {
         
-        RunEvent * run = [[RunEvent alloc] initWithName:@"10.5 Km" date:[NSDate date]];
+        RunEvent * run = [[RunEvent alloc] initWithNoTarget];
         
         [runs addObject:run];
         

@@ -15,8 +15,8 @@
 
 @protocol MenuViewControllerDelegate <NSObject>
 
-- (void)loadRun:(RunEvent*) run close:(BOOL)close;
-- (void)newRun:(NSNumber*) value withMetric:(RunMetric) metric animate:(BOOL)animate;
+- (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close;
+- (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
 - (void)finishedRun:(RunEvent *)run;
 

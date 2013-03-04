@@ -75,7 +75,7 @@
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
                                                                   owner:self
                                                                 options:nil]objectAtIndex:0];
-        [cell setAssociated:row];//convert row to runmetric assuming
+        [cell setAssociated:row+1];//convert row to runmetric assuming
         [cell setDelegate:self];
         [cell setTimePeriod:weekly];
         
