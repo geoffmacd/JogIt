@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ChartViewController.h"
 #import "RunEvent.h"
+#import "CorePlot-CocoaTouch.h"
 
 @protocol ChartCellDelegate <NSObject>
 
@@ -44,6 +44,7 @@
 @property BOOL expanded;//for whether currently expanded
 @property (nonatomic, setter = setAssociated:) RunMetric associated;
 @property(setter = setTimePeriod:) BOOL weekly;
+@property BOOL loadedGraph;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

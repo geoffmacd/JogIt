@@ -19,13 +19,11 @@
 @synthesize delegate;
 
 @synthesize associated;
-@synthesize expanded;
+@synthesize expanded,loadedGraph;
 @synthesize weekly;
 
 -(void)setup
 {
-    
-    [self setExpand:false withAnimation:false];
     
     UIColor *col = [UIColor blackColor];
     
@@ -34,6 +32,10 @@
     UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
     
     [expandedView setBackgroundColor:col3];
+    
+    loadedGraph = false;//load later
+    
+    [self setExpand:false withAnimation:false];
     
     //set title to match the metric
     [headerLabel setText:[RunEvent stringForMetric:associated]];
@@ -84,6 +86,7 @@
 {
     
     expanded = open;
+    
     NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
     
     if(expanded){
@@ -98,10 +101,12 @@
         }
         
         
+        if(!loadedGraph)
+            [self loadChart];
+        
+        
         
     }else{
-        
-        [self loadChart];
         
         if(animate)
         {
@@ -200,9 +205,11 @@
     barPlot.dataSource = self;
     //barPlot.barOffset  = CPTDecimalFromFloat(-0.25f);
     barPlot.identifier = @"Bar Plot 1";
+    
+    
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
-    
+    loadedGraph = true;
 }
 
 #pragma mark -

@@ -7,8 +7,6 @@
 //
 
 #import "HierarchicalCell.h"
-#import "AnimationUtil.h"
-#import <QuartzCore/QuartzCore.h>
 
 @implementation HierarchicalCell
 

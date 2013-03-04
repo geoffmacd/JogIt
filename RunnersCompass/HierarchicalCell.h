@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
+#import <QuartzCore/QuartzCore.h>
 #import "DataTest.h"
+#import "AnimationUtil.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */

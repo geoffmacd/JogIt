@@ -275,11 +275,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383291610.797102"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
+         startingLineNumber = "35"
+         endingLineNumber = "35"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -288,11 +288,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383291610.797102"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
+         startingLineNumber = "46"
+         endingLineNumber = "46"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -301,25 +301,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383291610.797102"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "65"
-         endingLineNumber = "65"
+         startingLineNumber = "100"
+         endingLineNumber = "100"
          landmarkName = "-tableView:numberOfRowsInSection:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383542048.417966"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "30"
-         endingLineNumber = "30"
-         landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -353,11 +340,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383291610.797102"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "41"
-         endingLineNumber = "41"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -366,11 +353,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383291610.797102"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "46"
-         endingLineNumber = "46"
+         startingLineNumber = "43"
+         endingLineNumber = "43"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1692,11 +1679,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383542024.017248"
+         timestampString = "384060886.435356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
+         startingLineNumber = "47"
+         endingLineNumber = "47"
          landmarkName = "-setTimePeriod:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1705,11 +1692,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceViewController.m"
-         timestampString = "383542078.908669"
+         timestampString = "384064455.382701"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
+         startingLineNumber = "115"
+         endingLineNumber = "115"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1718,11 +1705,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383542380.571993"
+         timestampString = "384060886.435356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "-setTimePeriod:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1731,11 +1718,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383542392.860311"
+         timestampString = "384060886.435356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "51"
-         endingLineNumber = "51"
+         startingLineNumber = "53"
+         endingLineNumber = "53"
          landmarkName = "-setTimePeriod:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1744,11 +1731,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383542393.832071"
+         timestampString = "384060886.435356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
+         startingLineNumber = "57"
+         endingLineNumber = "57"
          landmarkName = "-setTimePeriod:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1796,11 +1783,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/ChartCell.m"
-         timestampString = "383546429.685368"
+         timestampString = "384060886.435356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "39"
-         endingLineNumber = "39"
+         startingLineNumber = "41"
+         endingLineNumber = "41"
          landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2673,6 +2660,149 @@
          startingLineNumber = "664"
          endingLineNumber = "664"
          landmarkName = "-setLabelsForKMSelection:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/ChartCell.m"
+         timestampString = "384060892.800858"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "151"
+         endingLineNumber = "151"
+         landmarkName = "-loadChart"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "32"
+         endingLineNumber = "32"
+         landmarkName = "-viewDidLoad"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "83"
+         endingLineNumber = "83"
+         landmarkName = "-tableView:heightForHeaderInSection:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "65"
+         endingLineNumber = "65"
+         landmarkName = "-tableView:viewForHeaderInSection:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
+         landmarkName = "-tableView:viewForHeaderInSection:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "199"
+         endingLineNumber = "199"
+         landmarkName = "-weeklyTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "212"
+         endingLineNumber = "212"
+         landmarkName = "-monthlyTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceViewController.m"
+         timestampString = "384064455.382701"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "163"
+         endingLineNumber = "163"
+         landmarkName = "-cellDidChangeHeight:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/PerformanceHeaderCell.m"
+         timestampString = "384063417.767466"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
+         landmarkName = "-setup"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
