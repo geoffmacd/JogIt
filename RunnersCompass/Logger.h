@@ -12,7 +12,7 @@
 #import "CorePlot-CocoaTouch.h"
 #import "DataTest.h"
 
-#define mapViewYOffset 180
+#define mapViewYOffset 173
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
 #define mapDragPullYOffset 20
