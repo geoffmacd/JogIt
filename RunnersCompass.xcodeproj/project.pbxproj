@@ -39,8 +39,6 @@
 		6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */; };
 		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
 		6748647216B23890004D2B47 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748647116B23890004D2B47 /* settings.png */; };
-		6761E5C716E44F2A00A4ECD7 /* PerformanceHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6761E5C616E44F2A00A4ECD7 /* PerformanceHeaderCell.xib */; };
-		6761E5CD16E44F8300A4ECD7 /* PerformanceHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6761E5CC16E44F8300A4ECD7 /* PerformanceHeaderCell.m */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
@@ -212,9 +210,6 @@
 		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
 		6748647116B23890004D2B47 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = ../Graphics/settings.png; sourceTree = "<group>"; };
-		6761E5C616E44F2A00A4ECD7 /* PerformanceHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PerformanceHeaderCell.xib; sourceTree = "<group>"; };
-		6761E5CB16E44F8300A4ECD7 /* PerformanceHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceHeaderCell.h; sourceTree = "<group>"; };
-		6761E5CC16E44F8300A4ECD7 /* PerformanceHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceHeaderCell.m; sourceTree = "<group>"; };
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
@@ -482,9 +477,6 @@
 				67C8E30116D0740900E4DE11 /* ChartCell.m */,
 				67C8E30316D0742E00E4DE11 /* ChartCell.xib */,
 				6703F4E716B75F12006A8F88 /* Performance.xib */,
-				6761E5CB16E44F8300A4ECD7 /* PerformanceHeaderCell.h */,
-				6761E5CC16E44F8300A4ECD7 /* PerformanceHeaderCell.m */,
-				6761E5C616E44F2A00A4ECD7 /* PerformanceHeaderCell.xib */,
 				672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */,
 				672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */,
 				67AF65C616D88FF8004A484C /* Predictor.xib */,
@@ -924,7 +916,6 @@
 				67B7D13F16E3E34600E7134B /* ghost.png in Resources */,
 				670493B816E40CA8005E2C87 /* greencheck.png in Resources */,
 				670493B916E40CA8005E2C87 /* redX.png in Resources */,
-				6761E5C716E44F2A00A4ECD7 /* PerformanceHeaderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1002,7 +993,6 @@
 				67902E5F16DAC900007D19BC /* GoalsViewController.m in Sources */,
 				67902E6416DACA60007D19BC /* GoalHeaderCell.m in Sources */,
 				67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */,
-				6761E5CD16E44F8300A4ECD7 /* PerformanceHeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
