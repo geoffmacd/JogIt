@@ -7,7 +7,6 @@
 //
 
 #import "Logger.h"
-#import "JSSlidingViewController.h"
 
 @interface LoggerViewController ()
 
@@ -59,6 +58,11 @@
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setLabelsForUnits)
+                                                 name:@"reloadUnitsNotification"
+                                               object:nil];
     kmPaceShowMode= false;
     inMapView = false;
     paused = true;
@@ -111,6 +115,33 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)setLabelsForUnits
+{
+    DataTest* data = [DataTest sharedData];
+    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    
+    [paceUnitLabel1 setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
+    [paceUnitLabel2 setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
+    
+    [distanceUnitLabel setText:distanceUnitText];
+    
+    if(!run.live)
+    {
+        //set title
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        
+        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [dateFormatter setLocale:usLocale];
+        
+        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+    }
+    
+    [self setLabelsForKMSelection:selectedBarIndex];
+    
 }
 
 
@@ -245,15 +276,7 @@
     {
         [statusBut setImage:[UIImage imageNamed:@"ghost.png"] forState:UIControlStateNormal];
         
-        //set title
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        [dateFormatter setLocale:usLocale];
-        
-        [runTitle setText:[NSString stringWithFormat:@"%@ • %@", run.name, [dateFormatter stringFromDate:run.date]]];
+        //title is set in setLabelsFOrunits
     }
     else
     {
@@ -299,6 +322,8 @@
     }
     
     
+    
+    [self setLabelsForUnits];
 
     
     //set size of view of graph to be equal to that of the split load
@@ -636,13 +661,17 @@
 -(void)setLabelsForKMSelection:(NSInteger) indexSelected
 {
     
+    DataTest* data = [DataTest sharedData];
+    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    
     //set the labels to be for the km if this method was called with an index
     if(indexSelected >= 0 )
     {
         RunPos * selectionCheckpoint = [[run checkpoints] objectAtIndex:indexSelected];
         
+        
         //set the label to say 'KM 4' or 'Km 17'
-        [lastKmLabel setText:[NSString stringWithFormat:@"KM %.f", selectionCheckpoint.pos.x]];
+        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %.f ", distanceUnitText, selectionCheckpoint.pos.x]];
         
         //load fake values
         [lastKmPace setText:@"4:42"];
@@ -652,7 +681,7 @@
     }
     else{
         
-        [lastKmLabel setText:@"Current KM"];
+        [lastKmLabel setText:[NSString stringWithFormat:@"Current %@", distanceUnitText]];
         //load fake values
         [lastKmPace setText:@"4:42"];
         [oldpace1 setText:@"4:42"];

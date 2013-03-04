@@ -25,31 +25,13 @@
 @synthesize expanded;
 @synthesize type;
 @synthesize index;
+@synthesize paceUnit;
 
 
--(void) setAssociated:(RunEvent*) event
-{
-    if(event)
-    {
-    
-        associatedRun = event;
-    
-        [self setup];
-    }
-}
 
 -(void)setup
 {
-    //set header
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
-    
-    NSString * header = [NSString stringWithFormat:@"%.1f • %@", associatedRun.distance, [dateFormatter stringFromDate:associatedRun.date]];
-    [headerLabel setText:header];
+    [self reloadUnitLabels];
     
     //set thumbnail
     [thumbnailImage setImage:associatedRun.map.thumbnail];
@@ -68,7 +50,43 @@
     
     //[expandedView setBackgroundColor:[UIColor darkGrayColor]];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadUnitLabels)
+                                                 name:@"reloadUnitsNotification"
+                                               object:nil];
     
+}
+
+
+-(void) setAssociated:(RunEvent*) event
+{
+    if(event)
+    {
+        
+        associatedRun = event;
+        
+        [self setup];
+    }
+}
+
+-(void)reloadUnitLabels
+{
+    //set header
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    
+    DataTest* data = [DataTest sharedData];
+    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    
+    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
+    [headerLabel setText:header];
+    
+    
+    [paceUnit setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
 }
 
 - (IBAction)expandViewTap:(id)sender

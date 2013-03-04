@@ -139,7 +139,6 @@
 		67FC06B316A11FC700491C97 /* hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B216A11FC700491C97 /* hamburger.png */; };
 		67FC06B516A1205300491C97 /* CellBarsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B416A1205300491C97 /* CellBarsIcon.png */; };
 		67FC06B716A1247D00491C97 /* mapicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FC06B616A1247D00491C97 /* mapicon.png */; };
-		67FC06BA16A1250500491C97 /* PaceChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06B916A1250500491C97 /* PaceChart.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC06C416A1D15900491C97 /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C316A1D15900491C97 /* RunEvent.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
@@ -170,6 +169,7 @@
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		670493B616E40CA8005E2C87 /* greencheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = greencheck.png; path = Graphics/greencheck.png; sourceTree = SOURCE_ROOT; };
 		670493B716E40CA8005E2C87 /* redX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redX.png; path = Graphics/redX.png; sourceTree = SOURCE_ROOT; };
+		670493BC16E42F30005E2C87 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
 		6721F88316AE3D4E00FE84C5 /* Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Log.m; sourceTree = "<group>"; };
@@ -373,8 +373,6 @@
 		67FC06B216A11FC700491C97 /* hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hamburger.png; path = ../Graphics/hamburger.png; sourceTree = "<group>"; };
 		67FC06B416A1205300491C97 /* CellBarsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CellBarsIcon.png; path = ../../../Downloads/CellBarsIcon.png; sourceTree = "<group>"; };
 		67FC06B616A1247D00491C97 /* mapicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapicon.png; path = Graphics/mapicon.png; sourceTree = SOURCE_ROOT; };
-		67FC06B816A1250500491C97 /* PaceChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaceChart.h; sourceTree = "<group>"; };
-		67FC06B916A1250500491C97 /* PaceChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaceChart.m; sourceTree = "<group>"; };
 		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
@@ -484,6 +482,11 @@
 				67AF65C616D88FF8004A484C /* Predictor.xib */,
 				67AF65C716D88FF8004A484C /* PredictorViewController.h */,
 				67AF65C816D88FF8004A484C /* PredictorViewController.m */,
+				67C8E30016D0740900E4DE11 /* ChartCell.h */,
+				67C8E30116D0740900E4DE11 /* ChartCell.m */,
+				67C8E30316D0742E00E4DE11 /* ChartCell.xib */,
+				672AA4F016B602A300B7DEE6 /* ChartViewController.h */,
+				672AA4F116B602A400B7DEE6 /* ChartViewController.m */,
 			);
 			name = Performance;
 			sourceTree = "<group>";
@@ -763,6 +766,12 @@
 				67236D2316409B7700DD13C5 /* Menu.h */,
 				67236D2416409B7700DD13C5 /* Menu.m */,
 				6703F4ED16B75F63006A8F88 /* Menu.xib */,
+				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
+				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
+				67FC070416ACD4F400491C97 /* HierarchicalCell.xib */,
+				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
+				672AA39016B4C87E00B7DEE6 /* StartCell.m */,
+				672AA39116B4C87E00B7DEE6 /* StartCell.xib */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -772,21 +781,8 @@
 			children = (
 				67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */,
 				67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */,
-				67C8E30016D0740900E4DE11 /* ChartCell.h */,
-				67C8E30116D0740900E4DE11 /* ChartCell.m */,
-				67C8E30316D0742E00E4DE11 /* ChartCell.xib */,
-				672AA4F016B602A300B7DEE6 /* ChartViewController.h */,
-				672AA4F116B602A400B7DEE6 /* ChartViewController.m */,
 				672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */,
 				672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */,
-				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
-				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
-				67FC070416ACD4F400491C97 /* HierarchicalCell.xib */,
-				67FC06B816A1250500491C97 /* PaceChart.h */,
-				67FC06B916A1250500491C97 /* PaceChart.m */,
-				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
-				672AA39016B4C87E00B7DEE6 /* StartCell.m */,
-				672AA39116B4C87E00B7DEE6 /* StartCell.xib */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -828,6 +824,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = 67236CF916409B7700DD13C5;
 			productRefGroup = 67236D0516409B7700DD13C5 /* Products */;
@@ -940,7 +937,6 @@
 				67236D2C16409B7700DD13C5 /* Logger.m in Sources */,
 				67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */,
 				67FC068D16A117B800491C97 /* Constants.m in Sources */,
-				67FC06BA16A1250500491C97 /* PaceChart.m in Sources */,
 				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
 				67FC06C416A1D15900491C97 /* RunEvent.m in Sources */,
 				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
@@ -1021,6 +1017,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				67236D1216409B7700DD13C5 /* en */,
+				670493BC16E42F30005E2C87 /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

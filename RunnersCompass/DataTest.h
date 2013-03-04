@@ -7,20 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RunEvent.h"
 #import "Goal.h"
 #import "UserPrefs.h"
-#import "RunEvent.h"
 
 @interface DataTest : NSObject{
+    RunEvent * curRun;
     Goal * curGoal;
     UserPrefs * prefs;
-    RunEvent *curRun;
 }
 
 
 @property (nonatomic, retain) Goal * curGoal;
 @property (nonatomic, retain) UserPrefs * prefs;
-@property (nonatomic, retain) RunEvent *curRun;
+@property (nonatomic, retain) RunEvent * curRun;
 
 + (id)sharedData;
 

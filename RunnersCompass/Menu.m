@@ -465,7 +465,7 @@
 }
 
 - (IBAction)paceTapped:(id)sender {
-    PacePicker *pace = [[PacePicker alloc] initWithTitle:@" Pace " rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [core.prefs getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [pace addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -475,7 +475,7 @@
 
 - (IBAction)timeTapped:(id)sender {
     
-    TimePicker *time = [[TimePicker alloc] initWithTitle:@" Time " rows:nil initialSelection:0 target:self successAction:@selector(timeRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    TimePicker *time = [[TimePicker alloc] initWithTitle:@"Time" rows:nil initialSelection:0 target:self successAction:@selector(timeRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [time addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -501,7 +501,10 @@
 
 - (IBAction)distanceTapped:(id)sender {
     
-    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:@" Distance " rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    
+    ;
+    
+    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [core.prefs getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [distance addCustomButtonWithTitle:@"PR" value:nil];
     

@@ -19,7 +19,10 @@
     new.autopause = [NSNumber numberWithInt:0];
     new.twitter = [NSNumber numberWithInt:0];
     new.facebook = [NSNumber numberWithInt:0];
-    new.metric = [NSNumber numberWithInt:1];
+    //find systems default unit measure
+    NSLocale *locale = [NSLocale currentLocale];
+    BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
+    new.metric = [NSNumber numberWithInt:isMetric];
     new.weight = [NSNumber numberWithInt:150];
     
     //best to leave these blank so user does not have to backspace them
@@ -27,6 +30,18 @@
     new.birthdate = nil;
     
     return new;
+}
+
+-(NSString*)getDistanceUnit
+{
+    
+    //should not need to be translated
+    
+    if([self.metric boolValue])
+        return @"Km";
+    else
+        return @"Mi";
+    
 }
 
 

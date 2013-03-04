@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
+#import "DataTest.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -38,6 +39,7 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIImageView *folderImage;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *paceUnit;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;
@@ -51,6 +53,7 @@ typedef enum
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
+-(void)reloadUnitLabels;
 
 //IB actions
 - (IBAction)expandViewTap:(id)sender;

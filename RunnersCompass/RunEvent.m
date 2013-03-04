@@ -85,6 +85,10 @@
 -(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value
 {
     self = [super init];
+    
+    //DataTest* data = [DataTest sharedData];
+    //NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    
     if (self) {
         switch(type)
         {
@@ -95,7 +99,7 @@
                 name = [NSString stringWithFormat:@"%@ Target • %.0f", [RunEvent stringForMetric:type], value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ Target • %.1f", [RunEvent stringForMetric:type], value];
+                name = [NSString stringWithFormat:@"%@ Target • %.1f %@", [RunEvent stringForMetric:type], value, @"KM"];
                 break;
             case MetricTypeTime:
                 name = [NSString stringWithFormat:@"%@ Target • %f", [RunEvent stringForMetric:type], value];

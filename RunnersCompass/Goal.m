@@ -20,6 +20,7 @@
 
     
     //set up race types
+    //do no care of unit system, since metric people may want 10 mile, etc
     NSArray * raceKeys =  [NSArray arrayWithObjects:@"1 mile",
                             @"3 mile",
                             @"5 mile",

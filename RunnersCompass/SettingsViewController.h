@@ -16,5 +16,6 @@
 
 @property (nonatomic, strong) FKFormModel *formModel;
 @property (nonatomic,strong) UserPrefs *prefs;
+@property (nonatomic) BOOL oldMetric;
 
 @end

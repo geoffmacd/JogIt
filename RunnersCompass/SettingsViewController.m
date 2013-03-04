@@ -16,7 +16,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefs;
+@synthesize formModel,prefs,oldMetric;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,6 +35,7 @@
                                         navigationController:self.navigationController];
     
     self.prefs = [[DataTest sharedData] prefs];
+    oldMetric = [self.prefs.metric boolValue];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
@@ -42,6 +43,13 @@
         [formMapping buttonSave:@"DONE" handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", self.prefs);
+            
+            if(oldMetric != [self.prefs.metric boolValue])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadUnitsNotification"
+                                                                object:nil];
+            }
+            
             [[DataTest sharedData] setPrefs:self.prefs];
             [self dismissViewControllerAnimated:true completion:nil];
         }];

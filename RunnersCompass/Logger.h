@@ -10,6 +10,7 @@
 #import "RunEvent.h"
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
+#import "DataTest.h"
 
 #define mapViewYOffset 193
 #define mapDragCutoff 250

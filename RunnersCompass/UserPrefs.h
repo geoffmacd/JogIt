@@ -19,4 +19,5 @@
 @property (nonatomic, retain) NSNumber *twitter;
 
 + (id)defaultUser;
+-(NSString*)getDistanceUnit;
 @end
