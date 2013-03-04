@@ -198,8 +198,8 @@
 		672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
 		672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceViewController.m; sourceTree = "<group>"; };
 		672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frontViewControllerDropShadow.png; sourceTree = "<group>"; };
-		672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "frontViewControllerDropShadow@2x.png"; sourceTree = "<group>"; };
+		672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontViewControllerDropShadow.png; path = ../JSSlidingViewController/frontViewControllerDropShadow.png; sourceTree = "<group>"; };
+		672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "../JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = "<group>"; };
 		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
 		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
@@ -517,8 +517,6 @@
 		672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */ = {
 			isa = PBXGroup;
 			children = (
-				672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */,
-				672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */,
 				672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */,
 				672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */,
 			);
@@ -676,6 +674,8 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */,
+				672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */,
 				670493B616E40CA8005E2C87 /* greencheck.png */,
 				670493B716E40CA8005E2C87 /* redX.png */,
 				67B7D13E16E3E34600E7134B /* ghost.png */,
