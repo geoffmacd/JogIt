@@ -16,9 +16,11 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 
 @interface SlidingScrollView : UIScrollView
 
+
 @end
 
 @implementation SlidingScrollView
+
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -39,7 +41,12 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 }
 
 - (BOOL)touchesShouldCancelInContentView:(UIView *)view {
+    
+
+    
     return YES; // Makes it so you can swipe to close the slider.
+    
+    
 }
 
 @end
@@ -75,6 +82,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @synthesize changeState;
 @synthesize liveRun;
 @synthesize pauseImage;
+@synthesize cellsForScroll;
 
 #define kDefaultVisiblePortion 0.0f
 
@@ -820,6 +828,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         [self.delegate slidingViewControllerDidOpen:self];
     }
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:JSSlidingViewControllerDidOpenNotification object:self]];
+    
+    
 }
 
 - (void)willClose {

@@ -42,16 +42,18 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceUnit;
+@property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
+@property (strong, nonatomic) IBOutlet UIButton *garbageBut;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
+@property BOOL deletionMode;//for whether currently expanded
 @property (weak, nonatomic) HierarchicalCell *parent;
 @property (nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
-@property (assign, nonatomic) NSIndexPath * index;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
@@ -60,6 +62,7 @@ typedef enum
 //IB actions
 - (IBAction)expandViewTap:(id)sender;
 - (IBAction)headerViewTap:(id)sender;
+- (IBAction)cellSwipedRight:(id)sender;
 
 
 @end

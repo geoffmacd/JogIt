@@ -57,7 +57,7 @@
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-    for(NSInteger i=0;i <12; i++)
+    for(NSInteger i=0;i <1; i++)
     {
     
         
@@ -232,19 +232,30 @@
 
 -(void) cellDidChangeHeight:(id) sender
 {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
+                                                        object:nil];
+    
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
     [MenuTable reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
     
     
-    //still need to animate hidden expandedView
-    
     //if sender was last cell or second last, then scroll to show expanded view
-    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] - 2)])
+    //ensure there is at least something to avoid crash from pressing the startcell
+    if(sender == [cells lastObject])
     {
         NSIndexPath *path = [MenuTable indexPathForCell:sender];
         [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+    }
+    else if([cells count] > 1)
+    {
+        if(sender == [cells objectAtIndex:([cells count] - 2)])
+        {
+            NSIndexPath *path = [MenuTable indexPathForCell:sender];
+            [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+        }
     }
 }
 
@@ -262,6 +273,8 @@
 
 -(void)selectedNewRun:(RunEvent *) run
 {
+    [self cleanupForNav];
+    
     //set logger with this run
     [self.delegate newRun:run animate:true];
     
@@ -284,6 +297,8 @@
 
 -(void)selectedRun:(id)sender
 {
+    [self cleanupForNav];
+    
     if(!runInProgressAsFarAsICanTell)
     {
         HierarchicalCell * cell = (HierarchicalCell * )sender;
@@ -350,7 +365,10 @@
 
 -(void)cleanupForNav
 {
-    //take down logger
+    //stuff to do before navigation like take down garbage cans
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
+                                                        object:nil];
     
     
 }
@@ -502,12 +520,51 @@
 - (IBAction)distanceTapped:(id)sender {
     
     
-    ;
-    
     DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [core.prefs getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [distance addCustomButtonWithTitle:@"PR" value:nil];
     
     [distance showRunFormPicker];
 }
+
+- (IBAction)garbageTapped:(id)sender {
+    
+    //remove cell
+    UIButton * cellButtonTapped = sender;
+    NSUInteger indexOfCell = 10000;
+    
+    for(int i = 0; i < [cells count]; i++)
+    {
+        if([cellButtonTapped isDescendantOfView:[cells objectAtIndex:i]])
+        {
+            indexOfCell = i;
+            break;
+            
+        }
+    }
+    
+    if(indexOfCell != 10000)
+    {
+        HierarchicalCell * cellToDelete = [cells objectAtIndex:indexOfCell];
+        
+        //gauranteed to be the correct row number since the array is reloaded along with the table
+        NSIndexPath * indexToDelete = [NSIndexPath indexPathForRow:indexOfCell inSection:0];
+        
+        NSArray *arrayToDeleteCells = [NSArray arrayWithObject:indexToDelete];
+        
+        RunEvent * runDeleting = [cellToDelete associatedRun];
+        
+        //if run is currently loaded in the logger replace with something else
+        [self.delegate preventUserFromSlidingRunInvalid:runDeleting];
+        
+        //remove both run and cell, run is most necessary
+        [runs removeObject:runDeleting];
+        [cells removeObjectAtIndex:indexOfCell];
+        
+        //commit and reload table here
+        [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
+    
+    }
+}
+
 @end

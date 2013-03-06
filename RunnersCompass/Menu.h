@@ -19,6 +19,7 @@
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
 - (void)finishedRun:(RunEvent *)run;
+-(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete;
 
 @end
 
@@ -48,6 +49,6 @@
 - (IBAction)performanceNavPressed:(id)sender;
 - (IBAction)goalsNavPressed:(id)sender;
 - (IBAction)settingsNavPressed:(id)sender;
-
+- (IBAction)garbageTapped:(id)sender;
 
 @end

@@ -15,6 +15,8 @@
 @synthesize headerLabel;
 @synthesize expandedView;
 @synthesize headerView;
+@synthesize swipeGesture;
+@synthesize garbageBut;
 
 @synthesize delegate;
 
@@ -22,8 +24,8 @@
 @synthesize parent;
 @synthesize expanded;
 @synthesize type;
-@synthesize index;
 @synthesize paceUnit;
+@synthesize deletionMode;
 
 
 
@@ -41,13 +43,21 @@
     
     [self setExpand:false withAnimation:false];
     
+    deletionMode = false;
+    
+    
     UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
-    //UIColor *col = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+
     
     [headerView setBackgroundColor:col];
     
-    //[expandedView setBackgroundColor:[UIColor darkGrayColor]];
+    //tells heirarchical cell to get out of deletion mode, sent by 4 things:: new runs, selected runs, tapping other cells and navigation to other screens
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(resetDeletionMode)
+                                                 name:@"resetCellDeletionModeAfterTouch"
+                                               object:nil];
     
+    //tells cell to reload labels for mi/km units
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadUnitLabels)
                                                  name:@"reloadUnitsNotification"
@@ -87,21 +97,9 @@
     [paceUnit setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
 }
 
-- (IBAction)expandViewTap:(id)sender
-{
-    [delegate selectedRun:self];
-}
-
-- (IBAction)headerViewTap:(id)sender
-{
-    
-    [self setExpand:!expanded withAnimation:true];
-}
-
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
-    
     expanded = open;
     NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
     
@@ -157,14 +155,63 @@
     
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+-(void)resetDeletionMode
 {
-    // Drawing code
+    //only if in deletion mode, get out of it
+    if(deletionMode)
+    {
+        deletionMode = false;
+        
+        //remove button
+        [UIView animateWithDuration:0.25f animations:^{
+            [garbageBut setAlpha:0.0f];
+            
+        }   completion:^(BOOL finished){
+            
+            [garbageBut setHidden:true];
+            
+        }];
+    }
     
 }
-*/
+
+
+- (IBAction)expandViewTap:(id)sender
+{
+    [delegate selectedRun:self];
+}
+
+- (IBAction)headerViewTap:(id)sender
+{
+    
+    [self setExpand:!expanded withAnimation:true];
+}
+
+- (IBAction)cellSwipedRight:(id)sender {
+    
+    //bring up garbage can if not already up
+    if(!deletionMode)
+    {
+        //both hide and alpha
+        [garbageBut setHidden:false];
+        
+        [UIView animateWithDuration:0.25f animations:^{
+            [garbageBut setAlpha:1.0f];
+            
+        }   completion:^(BOOL finished){
+            
+            
+            deletionMode = true;
+            
+        }];
+        
+    }
+    else{
+        //if already up bring down
+        [self resetDeletionMode];
+    }
+    
+}
+
 
 @end

@@ -12,8 +12,10 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
+			<string>IBUIButton</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
+			<string>IBUISwipeGestureRecognizer</string>
 			<string>IBUITableViewCell</string>
 			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
@@ -180,6 +182,7 @@
 										<string key="NSFrame">{{244, 51}, {44, 21}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="723267342"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -250,7 +253,7 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="981189565"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
+								<object class="NSColor" key="IBUIBackgroundColor" id="1022311671">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
@@ -268,7 +271,7 @@
 										<string key="NSFrame">{{25, 13}, {270, 21}}</string>
 										<reference key="NSSuperview" ref="245450979"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="941116554"/>
+										<reference key="NSNextKeyView" ref="230533418"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -300,6 +303,44 @@
 										<object class="NSCustomResource" key="IBUIImage">
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">RightFillTriangleIcon.png</string>
+										</object>
+									</object>
+									<object class="IBUIButton" id="230533418">
+										<reference key="NSNextResponder" ref="245450979"/>
+										<int key="NSvFlags">-2147483356</int>
+										<string key="NSFrame">{{282, 12}, {24, 24}}</string>
+										<reference key="NSSuperview" ref="245450979"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="941116554"/>
+										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<bool key="IBUIOpaque">NO</bool>
+										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+										<int key="IBUIContentHorizontalAlignment">0</int>
+										<int key="IBUIContentVerticalAlignment">0</int>
+										<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
+										<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
+										<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
+										<reference key="IBUIHighlightedTitleColor" ref="1022311671"/>
+										<object class="NSColor" key="IBUINormalTitleColor">
+											<int key="NSColorSpace">1</int>
+											<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+										</object>
+										<object class="NSColor" key="IBUINormalTitleShadowColor">
+											<int key="NSColorSpace">3</int>
+											<bytes key="NSWhite">MC41AA</bytes>
+										</object>
+										<object class="NSCustomResource" key="IBUINormalImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">garbagecan@2x.png</string>
+										</object>
+										<object class="IBUIFontDescription" key="IBUIFontDescription">
+											<int key="type">2</int>
+											<double key="pointSize">15</double>
+										</object>
+										<object class="NSFont" key="IBUIFont">
+											<string key="NSName">Helvetica-Bold</string>
+											<double key="NSSize">15</double>
+											<int key="NSfFlags">16</int>
 										</object>
 									</object>
 								</array>
@@ -341,11 +382,15 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSHuggingPriority">{250, 227}</string>
 				<reference key="IBUIBackgroundColor" ref="478660138"/>
+				<reference key="IBUIGestureRecognizers" ref="0"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="648043000"/>
 				<string key="IBUIReuseIdentifier">HierarchyTableCellPrototype</string>
 				<real value="172" key="IBUIRowHeight"/>
+			</object>
+			<object class="IBUISwipeGestureRecognizer" id="1053375444">
+				<bool key="IBUIDelaysTouchesBegan">YES</bool>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="468913213"/>
 			<object class="IBUITapGestureRecognizer" id="849384263"/>
@@ -401,6 +446,32 @@
 					<int key="connectionID">553</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
+						<string key="label">gestureRecognizers</string>
+						<reference key="source" ref="438365395"/>
+						<reference key="destination" ref="1053375444"/>
+						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
+						<bool key="addsContentToExistingCollection">YES</bool>
+					</object>
+					<int key="connectionID">555</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">swipeGesture</string>
+						<reference key="source" ref="438365395"/>
+						<reference key="destination" ref="1053375444"/>
+					</object>
+					<int key="connectionID">557</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">garbageBut</string>
+						<reference key="source" ref="438365395"/>
+						<reference key="destination" ref="230533418"/>
+					</object>
+					<int key="connectionID">560</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">delegate</string>
 						<reference key="source" ref="849384263"/>
@@ -452,6 +523,23 @@
 					</object>
 					<int key="connectionID">538</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">cellSwipedRight:</string>
+						<reference key="source" ref="1053375444"/>
+						<reference key="destination" ref="438365395"/>
+					</object>
+					<int key="connectionID">558</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">garbageTapped:</string>
+						<reference key="source" ref="230533418"/>
+						<reference key="destination" ref="975951072"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">563</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -499,6 +587,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="18694754"/>
 							<reference ref="174088637"/>
+							<reference ref="230533418"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">HeaderView</string>
@@ -575,6 +664,16 @@
 						<reference key="object" ref="691824556"/>
 						<reference key="parent" ref="941116554"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">554</int>
+						<reference key="object" ref="1053375444"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">559</int>
+						<reference key="object" ref="230533418"/>
+						<reference key="parent" ref="245450979"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -598,12 +697,14 @@
 				<string key="550.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="551.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="552.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="559.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">553</int>
+			<int key="maxID">563</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -611,10 +712,15 @@
 					<string key="className">HierarchicalCell</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="cellSwipedRight:">id</string>
 						<string key="expandViewTap:">id</string>
 						<string key="headerViewTap:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="cellSwipedRight:">
+							<string key="name">cellSwipedRight:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="expandViewTap:">
 							<string key="name">expandViewTap:</string>
 							<string key="candidateClassName">id</string>
@@ -627,8 +733,11 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="expandedView">UIView</string>
 						<string key="folderImage">UIImageView</string>
+						<string key="garbageBut">UIButton</string>
 						<string key="headerLabel">UILabel</string>
 						<string key="headerView">UIView</string>
+						<string key="paceUnit">UILabel</string>
+						<string key="swipeGesture">UISwipeGestureRecognizer</string>
 						<string key="thumbnailImage">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -640,6 +749,10 @@
 							<string key="name">folderImage</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="garbageBut">
+							<string key="name">garbageBut</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="headerLabel">
 							<string key="name">headerLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -647,6 +760,14 @@
 						<object class="IBToOneOutletInfo" key="headerView">
 							<string key="name">headerView</string>
 							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="paceUnit">
+							<string key="name">paceUnit</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="swipeGesture">
+							<string key="name">swipeGesture</string>
+							<string key="candidateClassName">UISwipeGestureRecognizer</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="thumbnailImage">
 							<string key="name">thumbnailImage</string>
@@ -658,6 +779,49 @@
 						<string key="minorKey">./Classes/HierarchicalCell.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">MenuViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="garbageTapped:">id</string>
+						<string key="goalsNavPressed:">id</string>
+						<string key="performanceNavPressed:">id</string>
+						<string key="settingsNavPressed:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="garbageTapped:">
+							<string key="name">garbageTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="goalsNavPressed:">
+							<string key="name">goalsNavPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="performanceNavPressed:">
+							<string key="name">performanceNavPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="settingsNavPressed:">
+							<string key="name">settingsNavPressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">MenuTable</string>
+						<string key="NS.object.0">UITableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">MenuTable</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">MenuTable</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/MenuViewController.h</string>
+					</object>
+				</object>
 			</array>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
@@ -667,6 +831,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="RightFillTriangleIcon.png">{30, 30}</string>
 			<string key="celldivision.png">{320, 3}</string>
+			<string key="garbagecan@2x.png">{32, 42}</string>
 			<string key="map.JPG">{476, 502}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

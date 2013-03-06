@@ -43,8 +43,10 @@
                 //load previous run
                 RunEvent  * run = [[RunEvent alloc] init];
                 [self.backVC setRun:run];
-                
                 [self.viewController setLiveRun:false];
+                
+                //lock since user sliding to previous run is unintuitive
+                [self.viewController setLocked:true];
                 
             }
              
@@ -160,6 +162,21 @@
     // Show the sheet in view
     
     [sheet showInView:self.frontVC.view];
+}
+
+-(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete
+{
+    //lock slider again
+    //happens if logger is loaded with historical run that has been deleted
+    //this run should never be live, so you would not be stuck in menu
+    
+    //object is to be delete after this method
+    if(runToDelete == self.backVC.run)
+    {
+        [self.viewController setLocked:true];
+        
+    }
+    
 }
 
 
