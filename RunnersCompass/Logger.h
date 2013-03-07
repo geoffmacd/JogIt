@@ -108,9 +108,8 @@
 - (IBAction)invisibleButtonTapped:(id)sender;
 - (IBAction)statusButTapped:(id)sender;
 
+
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
-
-
 
 @end
 

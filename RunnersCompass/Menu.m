@@ -57,7 +57,7 @@
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-    for(NSInteger i=0;i <10; i++)
+    for(NSInteger i=0;i <12; i++)
     {
     
         
@@ -573,6 +573,9 @@
         //commit and reload table here
         [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
     
+    }
+    else{
+        NSLog(@"Cant find cell to delete");
     }
 }
 

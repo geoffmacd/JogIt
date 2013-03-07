@@ -907,7 +907,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{89, 229}, {143, 59}}</string>
 						<reference key="NSSuperview" ref="631474008"/>
-						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -928,7 +927,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{88, 194}, {145, 21}}</string>
 						<reference key="NSSuperview" ref="631474008"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="810036111"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -960,7 +958,6 @@
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{320, 568}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="991273031"/>
 				<reference key="IBUIBackgroundColor" ref="467625146"/>
 				<reference key="IBUIGestureRecognizers" ref="0"/>
@@ -1662,7 +1659,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">936</int>
+			<int key="maxID">938</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1683,6 +1680,7 @@
 						<string key="handlePanGesture:">id</string>
 						<string key="invisibleButtonTapped:">id</string>
 						<string key="mapIconTapped:">id</string>
+						<string key="shareTapped:">id</string>
 						<string key="statusButTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -1704,6 +1702,10 @@
 						</object>
 						<object class="IBActionInfo" key="mapIconTapped:">
 							<string key="name">mapIconTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="shareTapped:">
+							<string key="name">shareTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="statusButTapped:">

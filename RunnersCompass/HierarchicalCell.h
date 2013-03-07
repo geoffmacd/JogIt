@@ -42,7 +42,12 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIImageView *folderImage;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailImage;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *calUnit;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *calLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceUnit;
+@property (strong, nonatomic) IBOutlet UILabel *minUnit;
+@property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 @property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 @property (strong, nonatomic) IBOutlet UIButton *garbageBut;
 

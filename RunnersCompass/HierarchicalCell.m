@@ -17,6 +17,7 @@
 @synthesize headerView;
 @synthesize swipeGesture;
 @synthesize garbageBut;
+@synthesize paceLabel,calLabel,calUnit,timeLabel,minUnit,paceUnit;
 
 @synthesize delegate;
 
@@ -24,7 +25,6 @@
 @synthesize parent;
 @synthesize expanded;
 @synthesize type;
-@synthesize paceUnit;
 @synthesize deletionMode;
 
 
@@ -33,7 +33,7 @@
 {
     [self reloadUnitLabels];
     
-    //set thumbnail
+    //set UI style
     [thumbnailImage setImage:associatedRun.map.thumbnail];
     [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [thumbnailImage.layer setBorderWidth: 1.0];
@@ -81,7 +81,6 @@
 
 -(void)reloadUnitLabels
 {
-    //set header
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -92,11 +91,19 @@
     DataTest* data = [DataTest sharedData];
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
+    
+    //Set Title
     NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
-    
+    //Set Pace unit
     [paceUnit setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
+    //no need to change min or cal for now
+    
+    //Set values
+    [paceLabel setText:[NSString stringWithFormat:@"%.1f", associatedRun.avgPace]];
+    [timeLabel setText:[NSString stringWithFormat:@"%.1f", associatedRun.time]];
+    [calLabel setText:[NSString stringWithFormat:@"%.1f", associatedRun.calories]];
 }
 
 
