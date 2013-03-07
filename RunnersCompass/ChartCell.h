@@ -10,23 +10,39 @@
 #import "RunEvent.h"
 #import "CorePlot-CocoaTouch.h"
 
+#define performanceBarWidth 22
+#define performanceLoadObjectsOffset 20
+#define performanceSplitObjects 100
+#define kSelectedPlot @"selected"
+#define kPlot @"plot"
+
 @protocol ChartCellDelegate <NSObject>
 
 -(void)cellDidChangeHeight:(id) sender;
 
 @end
 
-@interface ChartCell : UITableViewCell<CPTPlotDataSource>
+@interface ChartCell : UITableViewCell<CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate>
 {
 @private
     CPTXYGraph *barChart;
+    
+    NSInteger selectedBarIndex;
+    NSInteger lastCacheMinute;
+    CPTBarPlot * selectedPlot;
+    CPTBarPlot * barPlot;
+    CPTXYPlotSpace *plotSpace;
+    
+    NSMutableArray * weeklyValues;
+    NSMutableArray * monthlyValues;
+    NSMutableArray * weeklyXValues;
+    NSMutableArray * monthlyXValues;
 }
 
 
 //UI connections
 
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *expandedView;
-
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
@@ -34,6 +50,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *currentLabel;
 @property (strong, nonatomic) IBOutlet UILabel *currentValueLabel;
 @property (strong, nonatomic) IBOutlet UILabel *previousValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *allTimeValueLabel;
+@property (strong, nonatomic) IBOutlet UILabel *selectedValueLabel;
+@property (strong, nonatomic) IBOutlet UIView *statView;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+
 
 
 //delegate

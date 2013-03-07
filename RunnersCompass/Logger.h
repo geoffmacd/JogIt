@@ -80,7 +80,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *map;
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *paceScroll;
-@property (strong, nonatomic) IBOutlet UILabel *nextpace;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace1;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace2;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace3;

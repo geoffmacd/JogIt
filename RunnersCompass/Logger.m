@@ -30,7 +30,7 @@
 @synthesize paceScroll;
 @synthesize currentPaceLabel,currentPaceValue;
 @synthesize paused;
-@synthesize lastKmLabel,oldpace1,oldpace2,oldpace3,nextpace,lastKmPace;
+@synthesize lastKmLabel,oldpace1,oldpace2,oldpace3,lastKmPace;
 @synthesize goalAchievedImage;
 @synthesize paceLabel,paceUnitLabel1,paceUnitLabel2;
 @synthesize distanceLabel,distanceUnitLabel;
