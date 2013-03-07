@@ -180,10 +180,15 @@
 }
 
 
--(void)updateGesturesNeededtoFail:(NSMutableArray*)gestures
+-(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail
 {
     
-    [self.viewController updateGesturesToFailSlider:gestures];
+    //[self.viewController updateGesturesToFailSlider:gestures];
+    
+    UIPanGestureRecognizer * gestureFromSlider = [self.viewController getSliderPanGesture];
+    
+        
+    [gestureFromSlider requireGestureRecognizerToFail:gestureToFail];
     
     
 }

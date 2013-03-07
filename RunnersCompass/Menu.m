@@ -57,7 +57,7 @@
     
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-    for(NSInteger i=0;i <1; i++)
+    for(NSInteger i=0;i <10; i++)
     {
     
         
@@ -159,22 +159,11 @@
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
                                                  owner:self
                                                options:nil]objectAtIndex:0];
-        [cell setAssociated:[runs objectAtIndex:row]];
         [cell setDelegate:self];
+        [cell setAssociated:[runs objectAtIndex:row]];
+
         
         [cells addObject:cell];
-        
-        
-        //update gestures to fail
-        NSMutableArray * gesturesForFail = [[NSMutableArray alloc]initWithCapacity:10];
-        
-        for(int i = 0 ; i < [cells count]; i++)
-        {
-            HierarchicalCell * cellToUpdateGesture = [cells objectAtIndex:i];
-            [gesturesForFail addObject:[cellToUpdateGesture swipeGesture]];
-        }
-        
-        [self.delegate updateGesturesNeededtoFail:gesturesForFail];
         
         return cell;
     }
@@ -271,6 +260,12 @@
     }
 }
 
+-(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture
+{
+    
+    [self.delegate updateGesturesNeededtoFail:cellGesture];
+}
+
 
 #pragma mark -
 #pragma mark Start Cell Delegate
@@ -307,6 +302,7 @@
 #pragma mark -
 #pragma mark Logger Interface
 
+//also heierachical cell delegate method
 -(void)selectedRun:(id)sender
 {
     [self cleanupForNav];

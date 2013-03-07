@@ -33,7 +33,6 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 @property (nonatomic, readonly) UIViewController *backViewController;
 @property (strong, nonatomic) UIImageView *pauseImage;
 @property (strong, nonatomic) NSMutableArray *cellsForScroll;
-@property (nonatomic, assign) BOOL allowManualSliding;
 @property (assign, nonatomic) BOOL useBouncyAnimations;
 @property (assign, nonatomic) BOOL toggledState;
 @property (assign, nonatomic) BOOL shouldTemporarilyRemoveBackViewControllerWhenClosed;
@@ -53,7 +52,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)setBackViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:(CGFloat)width;
 - (void)pauseWithBounceAnimation:(void(^)(void))completion;
-- (void)updateGesturesToFailSlider:(NSMutableArray*)gesturesToFail;
+-(UIPanGestureRecognizer*)getSliderPanGesture;
 
 
 @end

@@ -40,16 +40,18 @@
     //corners to make map not look so square
     [thumbnailImage.layer setCornerRadius:5.0f];
     [thumbnailImage.layer setMasksToBounds:YES];
+    //set red colour
+    UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    [headerView setBackgroundColor:col];
     
+    //set state
     [self setExpand:false withAnimation:false];
-    
     deletionMode = false;
     
     
-    UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
-
+    //prevent uiscrollview from overriding right swipe gesture
+    [delegate updateGestureFailForCell:self.swipeGesture];
     
-    [headerView setBackgroundColor:col];
     
     //tells heirarchical cell to get out of deletion mode, sent by 4 things:: new runs, selected runs, tapping other cells and navigation to other screens
     [[NSNotificationCenter defaultCenter] addObserver:self
