@@ -164,6 +164,18 @@
         
         [cells addObject:cell];
         
+        
+        //update gestures to fail
+        NSMutableArray * gesturesForFail = [[NSMutableArray alloc]initWithCapacity:10];
+        
+        for(int i = 0 ; i < [cells count]; i++)
+        {
+            HierarchicalCell * cellToUpdateGesture = [cells objectAtIndex:i];
+            [gesturesForFail addObject:[cellToUpdateGesture swipeGesture]];
+        }
+        
+        [self.delegate updateGesturesNeededtoFail:gesturesForFail];
+        
         return cell;
     }
     else{
@@ -330,6 +342,7 @@
         [cell setAssociated:run];
         [cell setDelegate:self];
         [cells insertObject:cell atIndex:0];
+        
         //reload table
         [MenuTable reloadData];
     }

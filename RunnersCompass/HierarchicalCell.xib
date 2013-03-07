@@ -390,7 +390,7 @@
 				<real value="172" key="IBUIRowHeight"/>
 			</object>
 			<object class="IBUISwipeGestureRecognizer" id="1053375444">
-				<bool key="IBUIDelaysTouchesBegan">YES</bool>
+				<bool key="IBUIDelaysTouchesEnded">NO</bool>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="468913213"/>
 			<object class="IBUITapGestureRecognizer" id="849384263"/>

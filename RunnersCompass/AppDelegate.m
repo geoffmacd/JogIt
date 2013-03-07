@@ -180,6 +180,14 @@
 }
 
 
+-(void)updateGesturesNeededtoFail:(NSMutableArray*)gestures
+{
+    
+    [self.viewController updateGesturesToFailSlider:gestures];
+    
+    
+}
+
 #pragma mark - App Lifecycle Delegate 
 
 

@@ -20,6 +20,7 @@
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
 - (void)finishedRun:(RunEvent *)run;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete;
+-(void)updateGesturesNeededtoFail:(NSMutableArray*)gestures;
 
 @end
 

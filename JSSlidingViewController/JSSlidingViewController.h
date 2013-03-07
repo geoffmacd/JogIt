@@ -53,6 +53,8 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)setBackViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:(CGFloat)width;
 - (void)pauseWithBounceAnimation:(void(^)(void))completion;
+- (void)updateGesturesToFailSlider:(NSMutableArray*)gesturesToFail;
+
 
 @end
 
@@ -68,7 +70,6 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)slidingViewControllerDidClose:(JSSlidingViewController *)viewController;
 - (void)isBouncing:(CGFloat)differential changeState:(BOOL)changeState;
 -(void)resetViewFromSlider;
--(BOOL)shouldCancelContentTouches;
 
 
 // If these are not implemented by the delegate, they return UIInterfaceOrientationPortrait for iPhone and all 4 orientations for iPad.

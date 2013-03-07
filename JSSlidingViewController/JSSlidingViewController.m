@@ -22,6 +22,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 @implementation SlidingScrollView
 
 
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -42,8 +43,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 
 - (BOOL)touchesShouldCancelInContentView:(UIView *)view {
     
-
-    
+   
     return YES; // Makes it so you can swipe to close the slider.
     
     
@@ -111,11 +111,16 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self setupSlidingScrollView];
     CGRect frame = self.view.bounds;
     
+    
+    //logger gets inserted into bottom of stack
     self.backViewController.view.frame = CGRectMake(0, frame.origin.y, frame.size.width, frame.size.height);
     [self addChildViewController:self.backViewController];
     [self.view insertSubview:self.backViewController.view atIndex:0];
     [self.backViewController didMoveToParentViewController:self];
     
+    
+    
+    //menu gets added on top 
     self.frontViewController.view.frame = frame;
     [self addChildViewController:self.frontViewController];
     [_slidingScrollView addSubview:self.frontViewController.view];
@@ -158,10 +163,10 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     
     [self.view insertSubview:_slidingScrollView atIndex:0];
     _isOpen = YES;
+    _allowManualSliding = YES;
     [self setLocked:YES];//begin locked until a new run or run is selected
     _animating = NO;
     _frontViewControllerHasOpenCloseNavigationBarButton = YES;
-    _allowManualSliding = YES;
     liveRun = false;
     
     self.frontViewControllerDropShadow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"frontViewControllerDropShadow.png"]];
@@ -177,6 +182,18 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
     self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, (frame.size.height - pauseImageSize)/2, pauseImageSize, pauseImageSize);
     [_slidingScrollView addSubview:self.pauseImage];
+}
+
+- (void)updateGesturesToFailSlider:(NSMutableArray*)gesturesToFail
+{
+    
+    for(int i = 0; i < [gesturesToFail count]; i ++)
+    {
+        UIGestureRecognizer * gestureToFail = [gesturesToFail objectAtIndex:i];
+        
+        [[_slidingScrollView panGestureRecognizer] requireGestureRecognizerToFail:gestureToFail];
+    }
+    
 }
 
 #pragma mark - AutoRotation
@@ -618,6 +635,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     // is called as the slidingScrollView updates it's layout for a new interfaceOrientation. ~ JTS.
     
     CGPoint co = scrollView.contentOffset;
+    NSLog(@"Scrolled with content Offset: %.0f   , %.0f", scrollView.contentOffset.x , scrollView.contentSize.width);
+    NSLog(@"Scrolled with content Offset: %d ,  %d , %d", scrollView.bounces, scrollView.delaysContentTouches, scrollView.canCancelContentTouches);
     
     
     if (self.isOpen == NO && self.isAnimatingInterfaceOrientation == NO) {
@@ -676,7 +695,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
                 CGRect rect = _slidingScrollView.frame;
                 rect.origin.x = 0;
                 _slidingScrollView.frame = rect;
-                _slidingScrollView.contentOffset = CGPointMake(0, 0);
+                _slidingScrollView.contentOffset = CGPointMake(0.0f, 0.0f);
                 _isOpen = YES;
             } else if(_isOpen){
                 [self willClose];
@@ -693,6 +712,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
     if (_animating == NO) {
         CGPoint origin = self.frontViewController.view.frame.origin;
         origin = [_slidingScrollView convertPoint:origin toView:self.view];
@@ -729,6 +749,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
+    NSLog(@"Began with content Offset: %.0f   , %.0f", scrollView.contentOffset.x , scrollView.contentSize.width);
     
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:JSSlidingViewControllerWillBeginDraggingNotification object:self]];
     
@@ -828,7 +850,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         [self.delegate slidingViewControllerDidOpen:self];
     }
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:JSSlidingViewControllerDidOpenNotification object:self]];
-    
     
 }
 
