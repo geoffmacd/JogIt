@@ -33,10 +33,6 @@
     
     [headerView setBackgroundColor:col];
     
-    UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
-    
-    [expandedView setBackgroundColor:col3];
-    
     loadedGraph = false;//load later
     
     [self setExpand:false withAnimation:false];
@@ -48,7 +44,11 @@
     [scrollView setDelegate:self];
     
     
-    
+    //init array
+    weeklyValues = [[NSMutableArray alloc] initWithCapacity:100];
+    weeklyXValues = [[NSMutableArray alloc] initWithCapacity:100];
+    monthlyValues = [[NSMutableArray alloc] initWithCapacity:100];
+    monthlyXValues = [[NSMutableArray alloc] initWithCapacity:100];
     
     //fake data
     for(int i = 0; i < 100; i ++)
@@ -169,7 +169,7 @@
     
     if(!animate)
     {
-        [expandedView setHidden:!open];
+       // [expandedView setHidden:!open];
     }
     
     
@@ -216,14 +216,13 @@
     
     //plot area
     barChart.plotAreaFrame.paddingLeft   = 0.0f;
-    barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
+    barChart.plotAreaFrame.paddingTop    = 15.0;//for selected labels
     barChart.plotAreaFrame.paddingRight  = 0.0f;
     barChart.plotAreaFrame.paddingBottom = 10.0f;
     
     //look modification
     barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
     barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
-    
     
     
     // Add plot space for horizontal bar charts
@@ -235,13 +234,64 @@
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
+    x.majorIntervalLength = CPTDecimalFromString(@"12");
+    x.minorTicksPerInterval = 1;
+    x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+    x.title = @"Months";
+    x.timeOffset = 0.0f;
+ 	NSArray *exclusionRanges = [NSArray arrayWithObjects:[CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0) length:CPTDecimalFromInt(0)], nil];
+	x.labelExclusionRanges = exclusionRanges;
+    CPTMutableTextStyle *yLabelTextStyle = [CPTMutableTextStyle textStyle];
+    yLabelTextStyle.color = [CPTColor whiteColor];
+    yLabelTextStyle.fontSize = 14;
+    yLabelTextStyle.fontName = @"Ingleby";
+    x.labelTextStyle = yLabelTextStyle;
+    
+    NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
+    int idx = 0;
+    
+    for (NSNumber * valueToLabel  in weeklyValues)
+    {
+        if(idx % 12 == 0)
+        {
+            NSString * tempLabel;
+            
+            switch(idx/12)
+            {
+                case 1:
+                    tempLabel = @"Mar";
+                    break;
+                case 2:
+                    tempLabel = @"Jun";
+                    break;
+                case 3:
+                    tempLabel = @"Sept";
+                    break;
+                case 4:
+                    tempLabel = @"Dec";
+                    idx -= 52;
+                    break;
+                    
+                    
+            }
+            
+            
+            CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:x.labelTextStyle];
+            label.tickLocation = CPTDecimalFromInt(idx);
+            label.offset = 5.0f;
+            [labels addObject:label];
+        }
+        idx ++;
+    }
+    x.axisLabels = [NSSet setWithArray:labels];
+    
     
     
     //axis line style
     CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
     majorLineStyle.lineCap   = kCGLineCapRound;
-    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.3)];
-    majorLineStyle.lineWidth = CPTFloat(0.0);
+    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.15)];
+    majorLineStyle.lineWidth = CPTFloat(1.0);
     x.axisLineStyle                  = majorLineStyle;
     
     //y-axis
@@ -259,7 +309,7 @@
     barPlot.barWidthsAreInViewCoordinates = NO;
     barPlot.barCornerRadius               = CPTFloat(5.0);
     barPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor lightGrayColor] endingColor:[CPTColor lightGrayColor]];
+    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor darkGrayColor] endingColor:[CPTColor darkGrayColor]];
     fillGradient.angle = 0.0f;
     barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
     barPlot.delegate = self;
@@ -309,7 +359,7 @@
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSDecimalNumber *num = nil;
-    RunPos * paceForTime;
+    NSNumber * numberValue;
     NSInteger xCoord;
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
@@ -318,13 +368,11 @@
                 //x location of index
                 
                 if(weekly)
-                    paceForTime = [weeklyXValues objectAtIndex:index];
+                    numberValue = [weeklyXValues objectAtIndex:index];
                 else
-                    paceForTime = [monthlyXValues objectAtIndex:index];
+                    numberValue = [monthlyXValues objectAtIndex:index];
                 
-                xCoord = paceForTime.time;
-                
-                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:xCoord];
+                num = numberValue;
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -332,11 +380,11 @@
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
                     {
                         if(weekly)
-                            paceForTime = [weeklyValues objectAtIndex:index];
+                            numberValue = [weeklyValues objectAtIndex:index];
                         else
-                            paceForTime = [monthlyValues objectAtIndex:index];
+                            numberValue = [monthlyValues objectAtIndex:index];
                         
-                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                        num = numberValue;
                     }
                 break;
         }
