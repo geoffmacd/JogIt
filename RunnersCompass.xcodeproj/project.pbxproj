@@ -35,6 +35,7 @@
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
 		6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6735780C16D71CE1004A92D1 /* TimePicker.m */; };
 		6738D66A16ACE7DE0044BA00 /* map.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 6738D66916ACE7DE0044BA00 /* map.JPG */; };
+		6744B48016EE294500072372 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 6744B47F16EE294500072372 /* share.png */; };
 		6745C7EE16ACDBB9005F4F1B /* hud.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7ED16ACDBB9005F4F1B /* hud.png */; };
 		6745C7F916ACE54D005F4F1B /* RightFillTriangleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */; };
 		6748646F16B237C2004D2B47 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 6748646E16B237C2004D2B47 /* switch.png */; };
@@ -206,6 +207,7 @@
 		6735780B16D71CE1004A92D1 /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
 		6735780C16D71CE1004A92D1 /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
 		6738D66916ACE7DE0044BA00 /* map.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = map.JPG; path = ../Graphics/map.JPG; sourceTree = "<group>"; };
+		6744B47F16EE294500072372 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = share.png; path = Graphics/share.png; sourceTree = SOURCE_ROOT; };
 		6745C7ED16ACDBB9005F4F1B /* hud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hud.png; path = Graphics/hud.png; sourceTree = SOURCE_ROOT; };
 		6745C7F816ACE54D005F4F1B /* RightFillTriangleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = RightFillTriangleIcon.png; path = ../Graphics/RightFillTriangleIcon.png; sourceTree = "<group>"; };
 		6748646E16B237C2004D2B47 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = switch.png; path = ../Graphics/switch.png; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 		67FC067F16A10EBD00491C97 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6744B47F16EE294500072372 /* share.png */,
 				672AA50716B73DAE00B7DEE6 /* frontViewControllerDropShadow.png */,
 				672AA50816B73DAE00B7DEE6 /* frontViewControllerDropShadow@2x.png */,
 				670493B616E40CA8005E2C87 /* greencheck.png */,
@@ -916,6 +919,7 @@
 				67B7D13F16E3E34600E7134B /* ghost.png in Resources */,
 				670493B816E40CA8005E2C87 /* greencheck.png in Resources */,
 				670493B916E40CA8005E2C87 /* redX.png in Resources */,
+				6744B48016EE294500072372 /* share.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

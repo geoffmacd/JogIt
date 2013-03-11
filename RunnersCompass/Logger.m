@@ -35,6 +35,7 @@
 @synthesize paceLabel,paceUnitLabel1,paceUnitLabel2;
 @synthesize distanceLabel,distanceUnitLabel;
 @synthesize caloriesLabel,timeLabel;
+@synthesize ghostBut;
 
 #pragma mark - Lifecycle
 
@@ -274,15 +275,21 @@
     //set title
     if(!run.live)
     {
-        [statusBut setImage:[UIImage imageNamed:@"ghost.png"] forState:UIControlStateNormal];
+        //display ghost and share
+        [statusBut setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
+        [ghostBut setHidden:false];
         
-        //title is set in setLabelsFOrunits
+        //hide goal image
+        [goalAchievedImage setHidden:true];
+        
+        //title is set in setLabelsForunits
     }
     else
     {
         //hide red x if it is not a targeted run
         if(run.metric == NoMetricType)
         {
+            //hide goal image
             [goalAchievedImage setHidden:true];
         }
         else
@@ -314,11 +321,15 @@
             imageRect.origin.y += metricRect.size.height/4;
             [goalAchievedImage setFrame:imageRect];
             [goalAchievedImage setHidden:false];
+            
         }
         
         [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         
         [runTitle setText:run.name];
+        
+        //hide ghost
+        [ghostBut setHidden:true];
     }
     
     
@@ -990,10 +1001,45 @@
         
     }else{
         
-        //ask user if they want to start a ghost run
-        [self shouldUserGhostRun];
+        //share the run
+        NSArray *activityItems;
+        
+        
+        //log text message
+        NSString * messageToSend = @"I completed a run with RunCompass!";
+        
+        //capture screenshot without modification
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+            //Retina display
+            UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+        } else {
+            UIGraphicsBeginImageContext(self.view.bounds.size);
+        }
+        [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        if (finalImage) 
+            activityItems = @[messageToSend,finalImage];
+        
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+        [self presentViewController:activityController animated:YES completion:nil];
+        
+        
         
     }
+}
+
+- (IBAction)ghostButTapped:(id)sender {
+    
+        //only if it is historical
+        if(!run.live)
+        {
+            
+            //ask user if they want to start a ghost run
+            [self shouldUserGhostRun];
+            
+        }
 }
 
 - (IBAction)hamburgerTapped:(id)sender {

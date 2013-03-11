@@ -96,6 +96,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *caloriesLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
+@property (strong, nonatomic) IBOutlet UIButton *ghostBut;
 
 
 
@@ -106,6 +107,7 @@
 - (IBAction)finishTapped:(id)sender;
 - (IBAction)invisibleButtonTapped:(id)sender;
 - (IBAction)statusButTapped:(id)sender;
+- (IBAction)ghostButTapped:(id)sender;
 
 
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
