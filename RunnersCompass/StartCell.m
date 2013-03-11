@@ -17,7 +17,7 @@
 @synthesize headerView;
 @synthesize delegate;
 @synthesize addRunButton;
-
+@synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
 @synthesize expanded,locked;
 
 -(void)setup
@@ -27,14 +27,14 @@
     
     [self setExpand:false withAnimation:false];
     
-    UIColor *col = [UIColor blackColor];
+    [headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     
-    //[headerView setBackgroundColor:col];
-    
-    //UIColor *col3 = [UIColor colorWithRed:145.0f/255 green:153.0f/255 blue:161.0f/255 alpha:1.0f];
-    UIColor *col3 = [UIColor darkGrayColor];
-    
-    //[expandedView setBackgroundColor:col3];
+    //localized buttons in IB
+    [timeBut setTitle:NSLocalizedString(@"TimeRunTargetButton", @"TimeRunTargetButton") forState:UIControlStateNormal];
+    [justGoBut setTitle:NSLocalizedString(@"JustGoTargetButton", @"JustGoTargetButton") forState:UIControlStateNormal];
+    [caloriesBut setTitle:NSLocalizedString(@"CaloriesRunTargetButton", @"CaloriesRunTargetButton") forState:UIControlStateNormal];
+    [paceBut setTitle:NSLocalizedString(@"PaceRunTargetButton", @"PaceRunTargetButton") forState:UIControlStateNormal];
+    [distanceBut setTitle:NSLocalizedString(@"DistanceRunTargetButton", @"DistanceRunTargetButton") forState:UIControlStateNormal];
     
 }
 

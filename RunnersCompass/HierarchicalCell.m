@@ -96,9 +96,10 @@
     NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
-    //Set Pace unit
-    [paceUnit setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
-    //no need to change min or cal for now
+    //Set units for localization/units
+    [paceUnit setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    [calUnit setText: NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
+    [minUnit setText: NSLocalizedString(@"TimeShort", @"Shortform units for time")];
     
     //Set values
     [paceLabel setText:[NSString stringWithFormat:@"%.1f", associatedRun.avgPace]];

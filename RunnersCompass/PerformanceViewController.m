@@ -18,6 +18,9 @@
 @synthesize predictBut;
 @synthesize doneBut;
 
+#pragma mark -
+#pragma mark Lifecycle
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -45,6 +48,12 @@
         
         [charts addObject:test];
     }
+    
+    //localized buttons in IB
+    [predictBut setTitle:NSLocalizedString(@"PredictButtonTitle", @"button for prediction view") forState:UIControlStateNormal];
+    [weeklyBut setTitle:NSLocalizedString(@"WeeklyButton", @"button for weekly") forState:UIControlStateNormal];
+    [monthlyBut setTitle:NSLocalizedString(@"MonthlyButton", @"button for monthly") forState:UIControlStateNormal];
+    [doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
     
 }
 
@@ -119,8 +128,7 @@
 }
 
 
-#pragma mark -
-#pragma mark ChartCellDelegate
+#pragma mark -  ChartCellDelegate
 
 -(void) cellDidChangeHeight:(id) sender
 {
@@ -139,7 +147,6 @@
     }
 }
 
-#pragma mark - 
 #pragma mark - other actions
 
 - (IBAction)doneTapped:(id)sender {

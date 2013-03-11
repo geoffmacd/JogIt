@@ -54,6 +54,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *selectedValueLabel;
 @property (strong, nonatomic) IBOutlet UIView *statView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UILabel *allTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *selectedLabel;
 
 
 

@@ -40,7 +40,7 @@
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:@"DONE" handler:^{
+        [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
             NSLog(@"save pressed");
             NSLog(@"%@", self.prefs);
             
@@ -55,30 +55,30 @@
         }];
         
         
-        [formMapping sectionWithTitle:@"Personal"  identifier:@"info"];
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsPersonalHeader", @"personal header in settings")   identifier:@"info"];
         
-        [formMapping mapAttribute:@"fullname" title:@"Full name" type:FKFormAttributeMappingTypeText];
+        [formMapping mapAttribute:@"fullname" title:NSLocalizedString(@"SettingsFullName", @"full name settings")  type:FKFormAttributeMappingTypeText];
         [formMapping mappingForAttribute:@"birthdate"
-                                   title:@"Birthdate"
+                                   title:NSLocalizedString(@"SettingsBirth", @"birth date in settings") 
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
-        [formMapping mapAttribute:@"weight" title:@"Weight (lbs)" type:FKFormAttributeMappingTypeInteger];
+        [formMapping mapAttribute:@"weight" title:NSLocalizedString(@"SettingsWeight", @"weight in settings")  type:FKFormAttributeMappingTypeInteger];
         
         
-        [formMapping sectionWithTitle:@"Measurement" identifier:@"bob"];
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsMeasurementHeader", @"measurement header in settings")  identifier:@"bob"];
         
-        [formMapping mapAttribute:@"autopause" title:@"Auto-Pause" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"metric" title:@"Metric Units" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"countdown" title:@"Countdown (sec)" type:FKFormAttributeMappingTypeInteger];
+        [formMapping mapAttribute:@"autopause" title:NSLocalizedString(@"SettingsAutoPause", @"auto pause switch in settings") type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"metric" title:NSLocalizedString(@"SettingsUnits", @"units switch in settings") type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"countdown" title:NSLocalizedString(@"SettingsCountdown", @"countdown  in settings")type:FKFormAttributeMappingTypeInteger];
 
         
-        [formMapping sectionWithTitle:@"Sharing" identifier:@"sdf"];
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsSharingHeader", @"sharing header in settings")  identifier:@"sdf"];
         
-        [formMapping mapAttribute:@"facebook" title:@"Post to Facebook" type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"twitter" title:@"Post to Twitter" type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"facebook" title:NSLocalizedString(@"SettingsFacebook", @"fb posting in settings") type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"twitter" title:NSLocalizedString(@"SettingsTwitter", @"twitter posting  in settings")  type:FKFormAttributeMappingTypeBoolean];
         
         
         [self.formModel registerMapping:formMapping];

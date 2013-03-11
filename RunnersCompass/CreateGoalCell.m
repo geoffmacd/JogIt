@@ -27,23 +27,29 @@
         }
     }
     
+    //get object for getting button titles only
+    Goal * emptyGoal ;
     //set image and text
     switch(goalType)
     {
         case GoalTypeCalories:
-            [button setTitle:@"Lose Weight" forState:UIControlStateNormal];
+            emptyGoal = [[Goal alloc] initWithType:goalType];
+            [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"scale.jpg"]];
             break;
         case GoalTypeOneDistance:
-            [button setTitle:@"Complete Race" forState:UIControlStateNormal];
+            emptyGoal = [[Goal alloc] initWithType:goalType];
+            [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"finishflag.png"]];
             break;
         case GoalTypeRace:
-            [button setTitle:@"Fastest Race Time" forState:UIControlStateNormal];
+            emptyGoal = [[Goal alloc] initWithType:goalType];
+            [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"goldmedal.jpeg"]];
             break;
         case GoalTypeTotalDistance:
-            [button setTitle:@"Total Distance" forState:UIControlStateNormal];
+            emptyGoal = [[Goal alloc] initWithType:goalType];
+            [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"stopwatch.png"]];
             break;
     }

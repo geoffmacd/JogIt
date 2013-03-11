@@ -97,6 +97,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *caloriesLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 @property (strong, nonatomic) IBOutlet UIButton *ghostBut;
+@property (strong, nonatomic) IBOutlet UILabel *caloriesTitle;
+@property (strong, nonatomic) IBOutlet UILabel *avgPaceTitle;
+@property (strong, nonatomic) IBOutlet UILabel *distanceTitle;
+@property (strong, nonatomic) IBOutlet UILabel *timeTitle;
+@property (strong, nonatomic) IBOutlet UILabel *swipeToPauseLabel;
 
 
 

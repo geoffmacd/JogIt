@@ -70,7 +70,7 @@
         [progress setProgress:data.curGoal.progress];
         
     }else{
-        [goalButton setTitle:@"Create Goal" forState:UIControlStateNormal];
+        [goalButton setTitle:NSLocalizedString(@"GoalButtonWithNone", @"No goal for button") forState:UIControlStateNormal];
         
         //dates
         [beganValue setText:@""];
@@ -88,6 +88,12 @@
         //progress bar
         [progress setProgress:0.0f];
     }
+    
+    //localizations    //localized buttons in IB
+    [doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+    [beganLabel setText:NSLocalizedString(@"GoalBeganLabel", @"began date label for goal")];
+    [targetLabel setText:NSLocalizedString(@"GoalTargetLabel", @"target date label for goal")];
+    [countLabel setText:NSLocalizedString(@"GoalCountLabel", @"count label for goal activites")];
 }
 
 @end

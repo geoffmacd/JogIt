@@ -247,7 +247,7 @@
 									<object class="IBUILabel" id="411892738">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{129, 22}, {103, 21}}</string>
+										<string key="NSFrame">{{141, 22}, {103, 21}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="1002009235"/>
@@ -272,7 +272,7 @@
 									<object class="IBUILabel" id="56337422">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{129, 0}, {103, 23}}</string>
+										<string key="NSFrame">{{141, 0}, {103, 23}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="411892738"/>
@@ -520,6 +520,22 @@
 					<int key="connectionID">181</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">allTimeLabel</string>
+						<reference key="source" ref="1040117206"/>
+						<reference key="destination" ref="698357004"/>
+					</object>
+					<int key="connectionID">182</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">selectedLabel</string>
+						<reference key="source" ref="1040117206"/>
+						<reference key="destination" ref="164558971"/>
+					</object>
+					<int key="connectionID">183</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="525973153"/>
@@ -588,9 +604,9 @@
 							<reference ref="1040237880"/>
 							<reference ref="1046342168"/>
 							<reference ref="411892738"/>
-							<reference ref="56337422"/>
 							<reference ref="1002009235"/>
 							<reference ref="319879100"/>
+							<reference ref="56337422"/>
 						</array>
 						<reference key="parent" ref="1040117206"/>
 						<string key="objectName">HeaderView</string>
@@ -705,7 +721,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">181</int>
+			<int key="maxID">183</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -735,6 +751,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="allTimeLabel">UILabel</string>
 						<string key="allTimeValueLabel">UILabel</string>
 						<string key="currentLabel">UILabel</string>
 						<string key="currentValueLabel">UILabel</string>
@@ -745,10 +762,15 @@
 						<string key="previousLabel">UILabel</string>
 						<string key="previousValueLabel">UILabel</string>
 						<string key="scrollView">UIScrollView</string>
+						<string key="selectedLabel">UILabel</string>
 						<string key="selectedValueLabel">UILabel</string>
 						<string key="statView">UIView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="allTimeLabel">
+							<string key="name">allTimeLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="allTimeValueLabel">
 							<string key="name">allTimeValueLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -788,6 +810,10 @@
 						<object class="IBToOneOutletInfo" key="scrollView">
 							<string key="name">scrollView</string>
 							<string key="candidateClassName">UIScrollView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="selectedLabel">
+							<string key="name">selectedLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="selectedValueLabel">
 							<string key="name">selectedValueLabel</string>

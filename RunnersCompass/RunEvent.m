@@ -44,19 +44,19 @@
     switch(metric)
     {
         case MetricTypeCalories:
-            return @"Calories";
+            return NSLocalizedString(@"CaloriesMetric", @"Calorie name for title or goal");
         case MetricTypeDistance:
-            return @"Distance";
+            return NSLocalizedString(@"DistanceMetric", @"Distance name for title or goal");
         case MetricTypePace:
-            return @"Pace";
+            return NSLocalizedString(@"PaceMetric", @"Pace name for title or goal");
         case MetricTypeTime:
-            return @"Time";
+            return NSLocalizedString(@"TimeMetric", @"Time name for title or goal");
         case MetricTypeClimbed:
-            return @"Climbed";
+            return NSLocalizedString(@"AscentionMetric", @"Climbed name for title or goal");
         case MetricTypeCadence:
-            return @"Cadence";
+            return NSLocalizedString(@"CadenceMetric", @"Cadence name for title or goal");
         case MetricTypeStride:
-            return @"Stride";
+            return NSLocalizedString(@"StrideMetric", @"Stride name for title or goal");
     }
     
     return @"UNKNOWNMETRIC";
@@ -66,15 +66,15 @@
 {
     self = [super init];
     if (self) {
-        name = @"";//no name for just go
+        name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
         metric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
         distance = 4.1f;
         calories = 301.5f;
-        avgPace = 264.3f;
-        time = 2063.0f;
+        avgPace = 264;
+        time = 2063;
         live = true;
         ghost = false;
         return self;
@@ -93,16 +93,16 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ Target • %f", [RunEvent stringForMetric:type], value];
+                name = [NSString stringWithFormat:@"%@ %@ • %f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeCalories:
-                name = [NSString stringWithFormat:@"%@ Target • %.0f", [RunEvent stringForMetric:type], value];
+                name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ Target • %.1f %@", [RunEvent stringForMetric:type], value, @"KM"];
+                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value, @"KM"];
                 break;
             case MetricTypeTime:
-                name = [NSString stringWithFormat:@"%@ Target • %f", [RunEvent stringForMetric:type], value];
+                name = [NSString stringWithFormat:@"%@ %@ • %f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
                 
         }
@@ -112,8 +112,8 @@
         date = [NSDate date];
         distance = 4.1f;
         calories = 301.5f;
-        avgPace = 264.3f;
-        time = 2063.0f;
+        avgPace = 264;
+        time = 2063;
         live = true;
         ghost = false;
         return self;

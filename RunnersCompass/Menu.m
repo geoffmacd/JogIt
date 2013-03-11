@@ -288,7 +288,7 @@
     runInProgressAsFarAsICanTell = true;
     
     //modifiy header to indicate progressing run
-    start.headerLabel.text = @"Run In Progress";
+    start.headerLabel.text = NSLocalizedString(@"RunInProgressTitle", @"start cell title for runs in progress");
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
     [start.addRunButton setImage:[UIImage imageNamed:@"garbagecan.png"] forState:UIControlStateNormal];
@@ -316,7 +316,7 @@
         
         //refresh start cell
         runInProgressAsFarAsICanTell = false;
-        start.headerLabel.text = @"New Run";
+        [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
         start.locked = false;//to prevent expanding
         [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
         [start.folderImage setHidden:false];
@@ -347,7 +347,7 @@
     //refresh start cell
     
     runInProgressAsFarAsICanTell = false;
-    start.headerLabel.text = @"New Run";
+    [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     start.locked = false;//to prevent expanding
     [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
     [start.folderImage setHidden:false];

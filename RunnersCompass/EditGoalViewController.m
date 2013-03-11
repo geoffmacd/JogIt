@@ -44,7 +44,7 @@
         
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:@"Create Goal" handler:^{
+        [formMapping buttonSave:NSLocalizedString(@"CreateGoalButton", @"Create goal in edit screen") handler:^{
             
             //confirm goal is valid before saving, this will handle error validation as well
             if([tempGoal validateGoalEntry])
@@ -71,7 +71,7 @@
                 return tempGoal.value;
                 
             } errorMessageBlock:^NSString *(id value, id object) {
-                return @"Must enter a weight loss.";
+                return NSLocalizedString(@"GoalValidationDistanceError", @"validation for no distance entered"); 
             }];
         }
         else if(tempGoal.type == GoalTypeCalories)
@@ -97,7 +97,7 @@
                 return tempGoal.weight;
                 
             } errorMessageBlock:^NSString *(id value, id object) {
-                return @"Must enter a weight loss.";
+                return NSLocalizedString(@"GoalValidationWeightError", @"validation for no weight loss entered");
             }];
         }
         else if(tempGoal.type == GoalTypeOneDistance || tempGoal.type == GoalTypeRace)//need the race selector for races
@@ -124,7 +124,7 @@
                 return tempGoal.race;
                 
             } errorMessageBlock:^NSString *(id value, id object) {
-                return @"Must enter a time.";
+                return NSLocalizedString(@"GoalValidationTimeError", @"validation for no time entered"); //@"Must enter a time.";
             }];
         }
         
@@ -140,27 +140,27 @@
                 return tempGoal.time;
                 
             } errorMessageBlock:^NSString *(id value, id object) {
-                return @"Must enter a time.";
+                return  NSLocalizedString(@"GoalValidationTimeError", @"validation for no time entered");//@"Must enter a time.";
             }];
         }
         
         [formMapping mappingForAttribute:@"startDate"
-                                   title:@"Start Date"
+                                   title: NSLocalizedString(@"GoalStartLabel", @"label for goal edit form")//@"Start Date"
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
         //validationn
-        [formMapping validationForAttribute:@"endDate" validBlock:^BOOL(NSString *value, id object) {
+        [formMapping validationForAttribute:@"startDate" validBlock:^BOOL(NSString *value, id object) {
             return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
             
         } errorMessageBlock:^NSString *(id value, id object) {
-            return @"Target date must be after start!";
+            return NSLocalizedString(@"GoalValidationDateError", @"validation for dates being incorrect order");//@"Target date must be after start!";
         }];
         
         [formMapping mappingForAttribute:@"endDate"
-                                   title:@"End Date"
+                                   title: NSLocalizedString(@"GoalEndLabel", @"label for goal edit form")
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
@@ -171,13 +171,14 @@
             return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
             
         } errorMessageBlock:^NSString *(id value, id object) {
-            return @"Target date must be after start!";
+            return NSLocalizedString(@"GoalValidationDateError", @"validation for dates being incorrect order");//@"Target date must be after start!";
         }];
         
         
         [formMapping sectionWithTitle:@"" identifier:@"cancelButSection"];
         
-        [formMapping button:@"Cancel" identifier:@"cancelButton" handler:^(id object){
+        [formMapping button:NSLocalizedString(@"CancelWord", @"cancel word")
+                 identifier:@"cancelButton" handler:^(id object){
             [self dismissViewControllerAnimated:true completion:nil];
             //dont save
             

@@ -36,6 +36,8 @@
 @synthesize distanceLabel,distanceUnitLabel;
 @synthesize caloriesLabel,timeLabel;
 @synthesize ghostBut;
+@synthesize timeTitle,distanceTitle,caloriesTitle,avgPaceTitle;
+@synthesize swipeToPauseLabel;
 
 #pragma mark - Lifecycle
 
@@ -67,6 +69,16 @@
     kmPaceShowMode= false;
     inMapView = false;
     paused = true;
+    
+    //localization
+    [timeTitle setText:NSLocalizedString(@"TimeTitle", "Logger title for time")];
+    [avgPaceTitle setText:NSLocalizedString(@"PaceTitle", "Logger title for pace")];
+    [caloriesTitle setText:NSLocalizedString(@"CaloriesTitle", "Logger title for calories")];
+    [distanceTitle setText:NSLocalizedString(@"DistanceTitle", "Logger title for distance")];
+    [finishBut setTitle:NSLocalizedString(@"FinishButton", "Logger finish button title") forState:UIControlStateNormal];
+    [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
+    [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
+    [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
 
 }
 
@@ -123,8 +135,8 @@
     DataTest* data = [DataTest sharedData];
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
-    [paceUnitLabel1 setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
-    [paceUnitLabel2 setText:[NSString stringWithFormat:@"min/%@", distanceUnitText]];
+    [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
     
     [distanceUnitLabel setText:distanceUnitText];
     
@@ -430,11 +442,12 @@
 
 -(void)shouldUserGhostRun
 {
-    sheet = [[UIActionSheet alloc] initWithTitle:@"Do you want to ghost race yourself?"
+    sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"GhostRun", @"Question for starting ghost run")//@"Do you want to ghost race yourself?"
                                         delegate:self
-                               cancelButtonTitle:@"Cancel"
-                          destructiveButtonTitle:@"Ghost Race"
+                               cancelButtonTitle:NSLocalizedString(@"CancelWord", @"cancel word")
+                          destructiveButtonTitle:NSLocalizedString(@"GhostRunStart", @"word for starting ghost run")
                                otherButtonTitles:nil];
+    
     
     // Show the sheet in view
     
@@ -692,7 +705,7 @@
     }
     else{
         
-        [lastKmLabel setText:[NSString stringWithFormat:@"Current %@", distanceUnitText]];
+        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"CurrentWord", @"Current word"), distanceUnitText]];
         //load fake values
         [lastKmPace setText:@"4:42"];
         [oldpace1 setText:@"4:42"];

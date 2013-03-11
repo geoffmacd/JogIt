@@ -153,10 +153,10 @@
 
 -(void)shouldUserDiscardRun
 {
-    sheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to discard this run?"
+    sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DiscardCurrentRun", @"Question for discarding run")//@"Are you sure you want to discard this run?"
                                         delegate:self.frontVC
-                               cancelButtonTitle:@"Cancel"
-                          destructiveButtonTitle:@"Discard"
+                               cancelButtonTitle:NSLocalizedString(@"CancelWord", @"cancel word")
+                          destructiveButtonTitle:NSLocalizedString(@"DiscardWord", @"discard word")
                                otherButtonTitles:nil];
     
     // Show the sheet in view

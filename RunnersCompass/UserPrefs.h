@@ -20,4 +20,6 @@
 
 + (id)defaultUser;
 -(NSString*)getDistanceUnit;
+-(NSString*)getTimeStringWithSeconds:(NSTimeInterval) f;
+-(NSString*)getTimeString:(NSTimeInterval) f;
 @end

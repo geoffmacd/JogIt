@@ -63,6 +63,8 @@
 {
     
     NSString * goalName;//generate every time
+    
+    //disable dates for now because of long text in button
     /*
     NSString *endString = @" by ";
     
@@ -106,22 +108,22 @@
     switch(type)
     {
         case GoalTypeCalories:
-            goalName = [NSString stringWithFormat:@"Goal: Lose %d lbs%@", [self.value integerValue], endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %d lbs%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LoseWord",@"Word for Lose in title"),[self.value integerValue], endString];
             break;
         case GoalTypeOneDistance:
-            goalName = [NSString stringWithFormat:@"Goal: Finish %@ race%@", self.race, endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %@ race%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, endString];
             break;
         case GoalTypeRace:
             if(components.hour > 0)
-                goalName = [NSString stringWithFormat:@"Goal: Finish %@ in less than %d hr %d min", self.race, components.hour, components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, components.hour, components.minute];
             else
-                goalName = [NSString stringWithFormat:@"Goal: Finish %@ in less than %d min", self.race, components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, components.minute];
             break;
         case GoalTypeTotalDistance:
-            goalName = [NSString stringWithFormat:@"Goal: Log %d km %@", [self.value integerValue], endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %d km %@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LogWord",@"Word for log in title"), [self.value integerValue], endString];
             break;
         default:
-            return @"bad goal name";
+            return NSLocalizedString(@"GoalNameBadGoalType",@"bad goal type");//return @"bad goal name";
     }
     
     return goalName;
@@ -132,16 +134,16 @@
 {
     //return [raceDictionary allKeys]; returns unsorted, doesnt work
     
-    return [NSArray arrayWithObjects:@"1 mile",
-            @"3 mile",
-            @"5 mile",
-            @"10 mile",
-            @"1 km",
-            @"3 km",
-            @"5 km",
-            @"10 km",
-            @"Half Marathon",
-            @"Full Marathon", nil];
+    return [NSArray arrayWithObjects:NSLocalizedString(@"1mile",nil),
+            NSLocalizedString(@"3mile",nil),
+            NSLocalizedString(@"5mile",nil),
+            NSLocalizedString(@"10mile",nil),
+            NSLocalizedString(@"1km",nil),
+            NSLocalizedString(@"3km",nil),
+            NSLocalizedString(@"5km",nil),
+            NSLocalizedString(@"10km",nil),
+            NSLocalizedString(@"halfmarathon",nil),
+            NSLocalizedString(@"fullmarathon",nil), nil];
 }
 
 -(NSArray*)getWeightNames
@@ -192,19 +194,19 @@
     switch(type)
     {
         case GoalTypeCalories:
-            description = @"Weight Loss";
+            description = NSLocalizedString(@"GoalDescriptCalories",@"goal descriptions");//@"Weight Loss";
             break;
         case GoalTypeOneDistance:
-            description = @"Furthest Distance";
+            description = NSLocalizedString(@"GoalDescriptOneDistance",@"goal descriptions"); //@"Furthest Distance";
             break;
         case GoalTypeRace:
-            description = @"Fastest Race Time";
+            description = NSLocalizedString(@"GoalDescriptRace",@"goal descriptions");//@"Fastest Race Time";
             break;
         case GoalTypeTotalDistance:
-            description = @"Total Distance";
+            description = NSLocalizedString(@"GoalDescriptTotalDistance",@"goal descriptions");//@"Total Distance";
             break;
         default:
-            return @"bad description";
+            return NSLocalizedString(@"GoalDescriptionBadMetric",@"bad metric for goal description");//@"bad subtitle";//return @"bad description";
     }
     
     return description;
@@ -220,19 +222,19 @@
     switch(type)
     {
         case GoalTypeCalories:
-            description = @"Enter Target Weight Loss";
+            description = NSLocalizedString(@"GoalHeaderDescriptCalories",@"goal header descriptions for edit");//@"Enter Target Weight Loss";
             break;
         case GoalTypeOneDistance:
-            description = @"Enter Distance Target";
+            description = NSLocalizedString(@"GoalHeaderDescriptOneDistance",@"goal header descriptions for edit");//@"Enter Distance Target";
             break;
         case GoalTypeRace:
-            description = @"Enter Fastest Time for Distance";
+            description = NSLocalizedString(@"GoalHeaderDescriptRace",@"goal header descriptions for edit");//@"Enter Fastest Time for Distance";
             break;
         case GoalTypeTotalDistance:
-            description = @"Enter Total Distance To Log";
+            description = NSLocalizedString(@"GoalHeaderDescriptTotalDistance",@"goal header descriptions for edit");//@"Enter Total Distance To Log";
             break;
         default:
-            return @"bad description";
+            return NSLocalizedString(@"GoalHeaderBadMetric",@"bad metric for goal header in edit");//@"bad subtitle";//return @"bad description";
     }
     
     return description;
@@ -246,13 +248,13 @@
     switch(type)
     {       
         case GoalTypeRace:
-            return @"Time to Beat";
+            return NSLocalizedString(@"GoalEditSecondChoiceRace",@"goal edit second dscrition for race");//@"Time to Beat";
         case GoalTypeCalories:
         case GoalTypeOneDistance:
         case GoalTypeTotalDistance:
             return nil;
         default:
-            return @"bad description";
+            return NSLocalizedString(@"GoalEditSecondChoiceBadMetric",@"bad metric for goal edit second edit");//@"bad subtitle";//return @"bad description";
     }
     
     return description;
@@ -274,20 +276,20 @@
     switch(type)
     {
         case GoalTypeCalories:
-            subtitle = @"3500cal/1lb fat";
+            subtitle = NSLocalizedString(@"SubtitleGoalTypeCalories",@"3500cal/1lb fat for calories goal subtitle");//@"3500cal/1lb fat";
             break;
         case GoalTypeOneDistance:
-            subtitle = @"";
+            subtitle = NSLocalizedString(@"SubtitleGoalTypeOneDistance",@"nothing here for one distance goal");
             break;
         case GoalTypeRace:
-            subtitle = @"";
+            subtitle = NSLocalizedString(@"SubtitleGoalTypeRace",@"nothing here for one race goal");
             break;
         case GoalTypeTotalDistance:
-            subtitle = @"";
+            subtitle = NSLocalizedString(@"SubtitleGoalTypeTotalDistance",@"nothing here for one total distance goal");
             break;
             
         default:
-            return @"bad subtitle";
+            return NSLocalizedString(@"SubtitleBadMetric",@"bad metric for goal subtitle");//@"bad subtitle";
     }
     
     return subtitle;

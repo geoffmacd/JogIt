@@ -19,12 +19,11 @@
 @synthesize currentLabel,currentValueLabel,previousLabel,previousValueLabel;
 @synthesize delegate;
 @synthesize selectedValueLabel,allTimeValueLabel;
-
 @synthesize associated;
 @synthesize expanded,loadedGraph;
 @synthesize weekly;
-
 @synthesize scrollView;
+@synthesize selectedLabel,allTimeLabel;
 
 -(void)setup
 {
@@ -42,6 +41,12 @@
     
     
     [scrollView setDelegate:self];
+    
+    
+    
+    //localized buttons in IB
+    [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
+    [allTimeLabel setText:NSLocalizedString(@"PerformanceAllTimeLabel", @"label for all time performance")];
     
     
     //init array
@@ -69,16 +74,17 @@
 {
     weekly = toWeekly;
     
-    //set weekly labels
+    
+    //set weekly labels, with localization
     if(toWeekly)
     {
-        [previousLabel setText:@"Previous Week"];
-        [currentLabel setText:@"Current Week"];
+        [previousLabel setText:NSLocalizedString(@"PerformancePreviousWeek", @"previous week in performance")];
+        [currentLabel setText:NSLocalizedString(@"PerformanceCurrentWeek", @"current week in performance")];
     }
     else
     {
-        [previousLabel setText:@"Previous Month"];
-        [currentLabel setText:@"Current Month"];
+        [previousLabel setText:NSLocalizedString(@"PerformancePreviousMonth", @"previous month in performance")];
+        [currentLabel setText:NSLocalizedString(@"PerformanceCurrentMonth", @"current month in performance")];
     }
     
     //reload data

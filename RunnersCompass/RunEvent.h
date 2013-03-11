@@ -12,13 +12,13 @@
 @interface RunPos : NSObject{
     CGPoint pos;
     CGFloat elevation;
-    CGFloat pace;
+    NSTimeInterval pace;
     NSTimeInterval time;
 }
 
 @property (nonatomic) CGPoint pos;
 @property (nonatomic) CGFloat elevation;
-@property (nonatomic) CGFloat pace;
+@property (nonatomic) NSTimeInterval pace;
 @property (nonatomic) NSTimeInterval time;//seconds after the pausePoint
 
 
@@ -59,8 +59,8 @@ typedef enum
 
 //total/averages for display/data collection
 @property (nonatomic) CGFloat distance;
-@property (nonatomic) CGFloat time;
-@property (nonatomic) CGFloat avgPace;
+@property (nonatomic) NSTimeInterval time;
+@property (nonatomic) NSTimeInterval avgPace;
 @property (nonatomic) CGFloat calories;
 @property (nonatomic) CGFloat climbed;
 @property (nonatomic) CGFloat stride;

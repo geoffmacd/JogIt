@@ -44,10 +44,10 @@
 
 -(void)shouldUserDiscardGoal
 {
-    UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:@"Do you want to discard the current goal?"
+    UIActionSheet * sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"DiscardCurrentGoal", @"Question for discarding goal")//@"Do you want to discard the current goal?"
                                         delegate:self
-                               cancelButtonTitle:@"Cancel"
-                          destructiveButtonTitle:@"Discard"
+                               cancelButtonTitle:NSLocalizedString(@"CancelWord", @"cancel word")
+                          destructiveButtonTitle:NSLocalizedString(@"DiscardWord", @"discard word")
                                otherButtonTitles:nil];
     
     // Show the sheet in view
@@ -169,6 +169,9 @@
         
         //set rounded corners on button
         [header.doneBut.layer setCornerRadius:8.0f];
+        [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+        
+        [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
     }
     
     return header;
@@ -184,7 +187,9 @@
                                                                   owner:self
                                                                       options:nil]objectAtIndex:0];
         //set rounded corners on button
-        [header.doneBut.layer setCornerRadius:8.0f];
+        [header.doneBut.layer setCornerRadius:8.0f];        [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+        
+        [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
         
     }
     

@@ -29,6 +29,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UIButton *addRunButton;
+@property (strong, nonatomic) IBOutlet UIButton *justGoBut;
+@property (strong, nonatomic) IBOutlet UIButton *distanceBut;
+@property (strong, nonatomic) IBOutlet UIButton *paceBut;
+@property (strong, nonatomic) IBOutlet UIButton *timeBut;
+@property (strong, nonatomic) IBOutlet UIButton *caloriesBut;
 
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;
