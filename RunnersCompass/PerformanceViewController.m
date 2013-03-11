@@ -8,6 +8,7 @@
 
 #import "PerformanceViewController.h"
 #import "PredictorViewController.h"
+#import "DataTest.h"
 
 @implementation PerformanceViewController
 
@@ -35,19 +36,9 @@
     
     
     //add ChartViewControllers to views
-    cells = [[NSMutableArray alloc] initWithCapacity:5];
+    cells = [[NSMutableArray alloc] initWithCapacity:10];
     
-    charts = [[NSMutableArray alloc] initWithCapacity:5];
-    for(NSUInteger i = 0;i<7;i++)
-    {
-    
-        ChartCell * test   =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
-                                                           owner:self
-                                                         options:nil]objectAtIndex:0];
-        
-        
-        [charts addObject:test];
-    }
+    analysis = [[DataTest sharedData] analysis];
     
     //localized buttons in IB
     [predictBut setTitle:NSLocalizedString(@"PredictButtonTitle", @"button for prediction view") forState:UIControlStateNormal];
@@ -71,7 +62,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of charts
-    return [charts count];
+    return MetricTypeStride;
 }
 
 // Customize the appearance of table view cells.
@@ -87,8 +78,14 @@
         
         [cells addObject:cell];
         [cell setDelegate:self];
+        //set data for cells with array at index of the metric
+        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row+1];
+        [cell setWeeklyValues:valuesToSet];
+        [cell setMonthlyValues:valuesToSet];
         [cell setTimePeriod:weekly];
+        //must be last
         [cell setAssociated:row+1];//convert row to runmetric assuming
+     
         return cell;
     }
     else{
@@ -159,12 +156,6 @@
     
     
     [self presentViewController:vc animated:true completion:^{
-        /*      doesnt work
-        if(weekly)
-            [vc weeklyTapped:nil];
-        else
-            [vc monthlyTapped:nil];
-         */
         
     }];
 }
@@ -182,7 +173,10 @@
         
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
+        {
+            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
+        }
     }
 }
 
@@ -200,7 +194,10 @@
         
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
+        {
+            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
+        }
     }
 }
 

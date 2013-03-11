@@ -10,7 +10,7 @@
 
 @implementation DataTest
 
-@synthesize curGoal,curRun,prefs;
+@synthesize curGoal,curRun,prefs,analysis;
 
 
 
@@ -30,7 +30,7 @@
     curGoal = nil;//[[Goal alloc] initWithType:GoalTypeCalories value:[NSNumber numberWithInt:10000] start:[NSDate date] end:[NSDate date] ];
     prefs = [UserPrefs defaultUser];
     curRun = nil;//[[RunEvent alloc] initWithName:@"Test Run from core" date:[NSDate date]];
-    
+    analysis = nil;
     
     return self;
 }

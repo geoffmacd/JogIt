@@ -10,12 +10,12 @@
 #import <UIKit/UIKit.h>
 #import "ChartCell.h"
 #import "RunEvent.h"//for metric
+#import "Analysis.h"
 
 @interface PerformanceViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
-    NSMutableArray * charts;
     NSMutableArray * cells;
-    
+    Analysis * analysis;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *table;

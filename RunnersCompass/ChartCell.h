@@ -24,6 +24,7 @@
 
 @interface ChartCell : UITableViewCell<CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate>
 {
+
 @private
     CPTXYGraph *barChart;
     
@@ -32,11 +33,8 @@
     CPTBarPlot * selectedPlot;
     CPTBarPlot * barPlot;
     CPTXYPlotSpace *plotSpace;
-    
-    NSMutableArray * weeklyValues;
-    NSMutableArray * monthlyValues;
-    NSMutableArray * weeklyXValues;
-    NSMutableArray * monthlyXValues;
+    CGFloat minY;
+    CGFloat maxY;
 }
 
 
@@ -68,6 +66,8 @@
 @property (nonatomic, setter = setAssociated:) RunMetric associated;
 @property(setter = setTimePeriod:) BOOL weekly;
 @property BOOL loadedGraph;
+@property (strong) NSMutableArray * weeklyValues;
+@property (strong) NSMutableArray * monthlyValues;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

@@ -16,6 +16,7 @@
 #import "GoalsViewController.h"
 #import "CreateGoalViewController.h"
 #import "RunFormPicker.h"
+#import "Analysis.h"
 
 
 
@@ -83,7 +84,9 @@
         
         [loadRun setPos:loadPos];
         [loadRun setCheckpoints:loadPos];
-        
+        //for every 10 days before today 
+        [loadRun setDate:[loadRun.date dateByAddingTimeInterval:-(86400 * i * 10)]];
+                          
         [loadRun setLive:false];
         
         [loadRun setMap:map];
@@ -92,6 +95,9 @@
         
     }
     
+    //fake analysis data
+    Analysis * analysisToSet = [[Analysis alloc] setupFakeWithRuns:runs];
+    [core setAnalysis:analysisToSet];
     
     runInProgressAsFarAsICanTell = false;
     

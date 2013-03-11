@@ -24,6 +24,7 @@
 @synthesize weekly;
 @synthesize scrollView;
 @synthesize selectedLabel,allTimeLabel;
+@synthesize weeklyValues,monthlyValues;
 
 
 #pragma mark - Lifecycle
@@ -46,26 +47,7 @@
     //localized buttons in IB
     [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
     [allTimeLabel setText:NSLocalizedString(@"PerformanceAllTimeLabel", @"label for all time performance")];
-    
-    
-    //init array
-    weeklyValues = [[NSMutableArray alloc] initWithCapacity:100];
-    weeklyXValues = [[NSMutableArray alloc] initWithCapacity:100];
-    monthlyValues = [[NSMutableArray alloc] initWithCapacity:100];
-    monthlyXValues = [[NSMutableArray alloc] initWithCapacity:100];
-    
-    //fake data
-    for(int i = 0; i < 100; i ++)
-    {
-        NSNumber * value = [NSNumber numberWithFloat:arc4random() % 100];
-        NSNumber * xValue = [NSNumber numberWithInt:i];
-        
-        
-        [weeklyXValues addObject:xValue];
-        [monthlyXValues addObject:xValue];
-        [weeklyValues addObject:value];
-        [monthlyValues addObject:value];
-    }
+
     
 }
 
@@ -73,20 +55,80 @@
 {
     weekly = toWeekly;
     
+    NSInteger highest= 0;
+    NSInteger lowest= 1000000;
     
     //set weekly labels, with localization
     if(toWeekly)
     {
         [previousLabel setText:NSLocalizedString(@"PerformancePreviousWeek", @"previous week in performance")];
         [currentLabel setText:NSLocalizedString(@"PerformanceCurrentWeek", @"current week in performance")];
+        
+        //set all time high and selected
+        for(NSNumber * num in weeklyValues)
+        {
+            if([num integerValue] > highest)
+                highest = [num integerValue];
+            
+            if([num integerValue] < lowest)
+                lowest = [num integerValue];
+        }
     }
     else
     {
         [previousLabel setText:NSLocalizedString(@"PerformancePreviousMonth", @"previous month in performance")];
         [currentLabel setText:NSLocalizedString(@"PerformanceCurrentMonth", @"current month in performance")];
+        
+        //set all time high and selected
+        for(NSNumber * num in monthlyValues)
+        {
+            if([num integerValue] > highest)
+                highest = [num integerValue];
+            if([num integerValue] < lowest)
+                lowest = [num integerValue];
+        }
+
     }
     
-    //reload data
+    
+    //deter chart y range
+    minY = 0;
+    maxY = highest + 1.0f;
+    
+    [allTimeValueLabel setText:[NSString stringWithFormat:@"%d", highest]];
+    
+    //reload data if already loaded
+    if(loadedGraph)
+    {
+        loadedGraph = false;
+        
+        
+        //set size of view of graph to be equal to that of the split load
+        CGRect graphRect = expandedView.frame;
+        graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
+        //set origin so that view is drawn for split filling up the last possible view
+        if(weekly)
+            graphRect.origin = CGPointMake(([weeklyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
+        else
+            graphRect.origin = CGPointMake(([monthlyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
+        [expandedView setFrame:graphRect];
+        
+        
+        //draw bar graph with new data from run
+        if(weekly)
+            lastCacheMinute = [weeklyValues count] - performanceSplitObjects;
+        else
+            lastCacheMinute = [monthlyValues count] - performanceSplitObjects;
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
+        [self setupGraphForView:expandedView withRange:firstRangeToShow];
+        
+        
+        //set scroll to be at the end of run
+        [scrollView setContentSize:CGSizeMake([weeklyValues count] * performanceBarWidth, scrollView.frame.size.height)];
+        [scrollView setContentOffset:CGPointMake(([weeklyValues count]  * performanceBarWidth) - scrollView.frame.size.width, 0)];
+        
+    }
+    
 }
 
 - (IBAction)expandTapped:(id)sender {
@@ -216,7 +258,7 @@
     
     //plot area
     barChart.plotAreaFrame.paddingLeft   = 0.0f;
-    barChart.plotAreaFrame.paddingTop    = 16.0;//for selected labels
+    barChart.plotAreaFrame.paddingTop    = 25.0;//for selected labels
     barChart.plotAreaFrame.paddingRight  = 0.0f;
     barChart.plotAreaFrame.paddingBottom = 20.0f;
     barChart.plotAreaFrame.masksToBorder = NO;
@@ -228,7 +270,7 @@
     
     // Add plot space for horizontal bar charts
     plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(minY) length:CPTDecimalFromFloat(maxY)];
     plotSpace.xRange = range;
     
     //x-axis
@@ -237,53 +279,96 @@
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
     x.majorIntervalLength = CPTDecimalFromString(@"1");
     x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
-    x.title = @"Months";
+    
+    //labels for x-axis
     CPTMutableTextStyle * dateLabelTextStyle = [CPTMutableTextStyle textStyle];
     dateLabelTextStyle.color = [CPTColor lightGrayColor];
     dateLabelTextStyle.fontSize = 12;
     x.labelTextStyle = dateLabelTextStyle;
-    
-    NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
-    int idx = 0;
-    
-    for (NSNumber * valueToLabel  in weeklyValues)
+    NSDate * today = [NSDate date];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components = [calendar components:NSWeekOfYearCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
+    if(weekly)
     {
-        if(idx % 12 == 0)
+        NSInteger startWeek = components.weekOfYear;
+        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
+        int idx = startWeek;
+        int dateIndex = 0;
+        for (NSNumber * valueToLabel  in weeklyValues)
         {
-            NSString * tempLabel;
+            if(idx ==0)
+                idx = 52;
             
-            switch(idx/12)
+            if(idx % 13 == 0)
             {
-                case 1:
-                    tempLabel = @"Mar";
-                    break;
-                case 2:
-                    tempLabel = @"Jun";
-                    break;
-                case 3:
-                    tempLabel = @"Sept";
-                    break;
-                case 4:
-                    tempLabel = @"Dec";
-                    break;
-                    
-            }
-            
-            if(tempLabel)
-            {
-                CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
-                label.tickLocation = CPTDecimalFromInt(idx);
-                label.offset = 5.0f;
-                [labels addObject:label];
+                NSString * tempLabel;
                 
-                if(idx == 48)
-                    idx = 0;
+                switch(idx/13)
+                {
+                    case 1:
+                        tempLabel = NSLocalizedString(@"AprilMonth", "month string");// @"April";
+                        break;
+                    case 2:
+                        tempLabel = NSLocalizedString(@"JulyMonth", "month string");// @"July";
+                        break;
+                    case 3:
+                        tempLabel = NSLocalizedString(@"OctoberMonth", "month string");// @"October";
+                        break;
+                    case 4:
+                        tempLabel = NSLocalizedString(@"JanuaryMonth", "month string");// @"January";
+                        break;
+                        
+                }
+                
+                if(tempLabel)
+                {
+                    CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
+                    label.tickLocation = CPTDecimalFromInt([weeklyValues count] - dateIndex);
+                    label.offset = 5.0f;
+                    [labels addObject:label];
+                }
             }
+            idx--;
+            dateIndex++;
         }
-        idx ++;
+        x.axisLabels = [NSSet setWithArray:labels];
     }
-    x.axisLabels = [NSSet setWithArray:labels];
-    
+    else
+    {
+        //set years instead for months
+        
+        NSInteger startMonth = components.month;
+        NSInteger startYear = components.year;
+        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[monthlyValues count]/12];
+        int idx = startMonth;
+        int dateIndex = 0;
+        for (NSNumber * valueToLabel  in monthlyValues)
+        {
+            if(idx ==0)
+                idx = 12;
+            
+            if(idx / 12 == 1)
+            {
+                NSString * tempLabel;
+                
+                tempLabel = [NSString stringWithFormat:@"%d", startYear];
+                
+                if(tempLabel)
+                {
+                    CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
+                    label.tickLocation = CPTDecimalFromInt([monthlyValues count] - dateIndex);
+                    label.offset = 5.0f;
+                    [labels addObject:label];
+                }
+                
+                startYear -= 1;
+            }
+            idx--;
+            dateIndex++;
+        }
+        x.axisLabels = [NSSet setWithArray:labels];
+    }
+
     
     //y-axis
     CPTXYAxis *y = axisSet.yAxis;
@@ -300,7 +385,7 @@
     // add bar plot to view, all bar customization done here
     CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
     barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
-    barPlot.baseValue  = CPTDecimalFromString(@"2");
+    barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.identifier = kPlot;
     barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
@@ -326,7 +411,7 @@
     selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
     selectedPlot.barCornerRadius               = CPTFloat(5.0);
     selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    selectedPlot.baseValue  = CPTDecimalFromString(@"2");
+    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
     
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
@@ -362,14 +447,10 @@
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
             case CPTBarPlotFieldBarLocation:
-                //x location of index
                 
-                if(weekly)
-                    numberValue = [weeklyXValues objectAtIndex:index];
-                else
-                    numberValue = [monthlyXValues objectAtIndex:index];
+                //x location of index is opposite side of chart such that weeklyValue[0] is latest run
                 
-                num = numberValue;
+                num = [NSNumber numberWithInt:[weeklyValues count] - index];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -409,7 +490,7 @@
     else
         valueToDisplay = [monthlyValues objectAtIndex:idx];
     
-    [selectedValueLabel setText:[NSString stringWithFormat:@"Minute %.2f",[valueToDisplay floatValue]]];
+    [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
     
 }
 

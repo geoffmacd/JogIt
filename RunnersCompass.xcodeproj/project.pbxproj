@@ -46,6 +46,7 @@
 		676DE8F916DDC20A00516C2A /* underPageBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 676DE8F816DDC20A00516C2A /* underPageBackground.png */; };
 		6779C0F716EE3C81002BCAEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6779C0F916EE3C81002BCAEC /* Localizable.strings */; };
 		6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779C10016EE3F1D002BCAEC /* RunEvent.m */; };
+		6779C10416EE83D9002BCAEC /* Analysis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779C10316EE83D8002BCAEC /* Analysis.m */; };
 		67902E5E16DAC900007D19BC /* Goals.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E5B16DAC8FF007D19BC /* Goals.xib */; };
 		67902E5F16DAC900007D19BC /* GoalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E5D16DAC900007D19BC /* GoalsViewController.m */; };
 		67902E6116DAC971007D19BC /* GoalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E6016DAC971007D19BC /* GoalHeaderCell.xib */; };
@@ -222,6 +223,8 @@
 		676DE8F816DDC20A00516C2A /* underPageBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = underPageBackground.png; path = Graphics/underPageBackground.png; sourceTree = SOURCE_ROOT; };
 		6779C0F816EE3C81002BCAEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6779C10016EE3F1D002BCAEC /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
+		6779C10216EE83D8002BCAEC /* Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analysis.h; sourceTree = "<group>"; };
+		6779C10316EE83D8002BCAEC /* Analysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Analysis.m; sourceTree = "<group>"; };
 		67902E5B16DAC8FF007D19BC /* Goals.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Goals.xib; sourceTree = "<group>"; };
 		67902E5C16DAC8FF007D19BC /* GoalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalsViewController.h; sourceTree = "<group>"; };
 		67902E5D16DAC900007D19BC /* GoalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalsViewController.m; sourceTree = "<group>"; };
@@ -754,6 +757,8 @@
 				6721F88016AE39AB00FE84C5 /* RunMap.m */,
 				67CAFC7916C3254D00C99BD6 /* UserPrefs.h */,
 				67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */,
+				6779C10216EE83D8002BCAEC /* Analysis.h */,
+				6779C10316EE83D8002BCAEC /* Analysis.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1008,6 +1013,7 @@
 				67902E6416DACA60007D19BC /* GoalHeaderCell.m in Sources */,
 				67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */,
 				6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */,
+				6779C10416EE83D9002BCAEC /* Analysis.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
