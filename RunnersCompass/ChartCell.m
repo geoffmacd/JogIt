@@ -216,9 +216,10 @@
     
     //plot area
     barChart.plotAreaFrame.paddingLeft   = 0.0f;
-    barChart.plotAreaFrame.paddingTop    = 15.0;//for selected labels
+    barChart.plotAreaFrame.paddingTop    = 16.0;//for selected labels
     barChart.plotAreaFrame.paddingRight  = 0.0f;
-    barChart.plotAreaFrame.paddingBottom = 10.0f;
+    barChart.plotAreaFrame.paddingBottom = 20.0f;
+    barChart.plotAreaFrame.masksToBorder = NO;
     
     //look modification
     barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
@@ -234,18 +235,13 @@
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
-    x.majorIntervalLength = CPTDecimalFromString(@"12");
-    x.minorTicksPerInterval = 1;
+    x.majorIntervalLength = CPTDecimalFromString(@"1");
     x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     x.title = @"Months";
-    x.timeOffset = 0.0f;
- 	NSArray *exclusionRanges = [NSArray arrayWithObjects:[CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(0) length:CPTDecimalFromInt(0)], nil];
-	x.labelExclusionRanges = exclusionRanges;
-    CPTMutableTextStyle *yLabelTextStyle = [CPTMutableTextStyle textStyle];
-    yLabelTextStyle.color = [CPTColor whiteColor];
-    yLabelTextStyle.fontSize = 14;
-    yLabelTextStyle.fontName = @"Ingleby";
-    x.labelTextStyle = yLabelTextStyle;
+    CPTMutableTextStyle * dateLabelTextStyle = [CPTMutableTextStyle textStyle];
+    dateLabelTextStyle.color = [CPTColor lightGrayColor];
+    dateLabelTextStyle.fontSize = 12;
+    x.labelTextStyle = dateLabelTextStyle;
     
     NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
     int idx = 0;
@@ -269,23 +265,29 @@
                     break;
                 case 4:
                     tempLabel = @"Dec";
-                    idx -= 52;
                     break;
-                    
                     
             }
             
-            
-            CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:x.labelTextStyle];
-            label.tickLocation = CPTDecimalFromInt(idx);
-            label.offset = 5.0f;
-            [labels addObject:label];
+            if(tempLabel)
+            {
+                CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
+                label.tickLocation = CPTDecimalFromInt(idx);
+                label.offset = 5.0f;
+                [labels addObject:label];
+                
+                if(idx == 48)
+                    idx = 0;
+            }
         }
         idx ++;
     }
     x.axisLabels = [NSSet setWithArray:labels];
     
     
+    //y-axis
+    CPTXYAxis *y = axisSet.yAxis;
+    y.labelingPolicy = CPTAxisLabelingPolicyNone;
     
     //axis line style
     CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
@@ -293,10 +295,6 @@
     majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.15)];
     majorLineStyle.lineWidth = CPTFloat(1.0);
     x.axisLineStyle                  = majorLineStyle;
-    
-    //y-axis
-    CPTXYAxis *y = axisSet.yAxis;
-    y.labelingPolicy = CPTAxisLabelingPolicyNone;
     
     
     // add bar plot to view, all bar customization done here
@@ -316,7 +314,6 @@
     
     
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
-    
     
     
     
