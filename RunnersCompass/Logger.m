@@ -1019,7 +1019,7 @@
         
         
         //log text message
-        NSString * messageToSend = @"I completed a run with RunCompass!";
+        NSString * messageToSend = NSLocalizedString(@"LoggerShareMsg", "message to be sent with sharing");
         
         //capture screenshot without modification
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
