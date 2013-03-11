@@ -25,12 +25,12 @@
 @synthesize scrollView;
 @synthesize selectedLabel,allTimeLabel;
 
+
+#pragma mark - Lifecycle
+
 -(void)setup
 {
     
-    UIColor *col = [UIColor blackColor];
-    
-    [headerView setBackgroundColor:col];
     
     loadedGraph = false;//load later
     
@@ -41,7 +41,6 @@
     
     
     [scrollView setDelegate:self];
-    
     
     
     //localized buttons in IB
@@ -99,9 +98,9 @@
 }
 
 
--(void) setAssociated:(RunMetric) chart
+-(void) setAssociated:(RunMetric) metricToAssociate
 {
-    associated = chart;
+    associated = metricToAssociate;
     
     
     [self setup];
@@ -171,11 +170,6 @@
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
-    }
-    
-    if(!animate)
-    {
-       // [expandedView setHidden:!open];
     }
     
     

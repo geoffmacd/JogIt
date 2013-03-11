@@ -84,12 +84,11 @@
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
                                                                   owner:self
                                                                 options:nil]objectAtIndex:0];
-        [cell setAssociated:row+1];//convert row to runmetric assuming
-        [cell setDelegate:self];
-        [cell setTimePeriod:weekly];
         
         [cells addObject:cell];
-        
+        [cell setDelegate:self];
+        [cell setTimePeriod:weekly];
+        [cell setAssociated:row+1];//convert row to runmetric assuming
         return cell;
     }
     else{
@@ -120,6 +119,8 @@
         height = 48.0f;
     }
     
+    NSAssert(height > 40.0, @"invalid cell height");
+    
     
     return height;
     
@@ -140,7 +141,7 @@
     //still need to animate hidden expandedView
     
     //if sender was last cell or second last, then scroll to show expanded view
-    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] - 2)])
+    if(sender == [cells lastObject])
     {
         NSIndexPath *path = [table indexPathForCell:sender];
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
