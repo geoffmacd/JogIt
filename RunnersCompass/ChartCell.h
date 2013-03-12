@@ -64,7 +64,7 @@
 //instance variables
 @property BOOL expanded;//for whether currently expanded
 @property (nonatomic, setter = setAssociated:) RunMetric associated;
-@property(setter = setTimePeriod:) BOOL weekly;
+@property(nonatomic, setter = setTimePeriod:) BOOL weekly;
 @property BOOL loadedGraph;
 @property (strong) NSMutableArray * weeklyValues;
 @property (strong) NSMutableArray * monthlyValues;

@@ -147,8 +147,8 @@
         [expandedView setHidden:!open];
     }
     
-    
-    [delegate cellDidChangeHeight:self];
+    if(delegate)
+        [delegate cellDidChangeHeight:self];
     
 }
 

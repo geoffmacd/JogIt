@@ -24,6 +24,7 @@
 
 @synthesize MenuTable;
 @synthesize runInProgressAsFarAsICanTell;
+@synthesize settingsBut,performanceBut,goalsBut;
 
 
 
@@ -48,6 +49,8 @@
         
         start = cell;
     }
+    
+    [settingsBut setImage:[UIImage imageNamed:@"settings"]];
     
     
     runs = [[NSMutableArray alloc] initWithCapacity:3];
@@ -164,11 +167,12 @@
     if(row >= [cells count]){
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
                                                  owner:self
-                                               options:nil]objectAtIndex:0];
-        [cell setDelegate:self];
-        [cell setAssociated:[runs objectAtIndex:row]];
-
+                                                                options:nil]objectAtIndex:0];
         
+        
+        [cell setAssociated:[runs objectAtIndex:row]];
+        [cell setDelegate:self];
+
         [cells addObject:cell];
         
         return cell;
@@ -189,7 +193,7 @@
 {
     CGFloat height;
     NSUInteger row = [indexPath row];
-    if(row< [cells count]){
+    if(row < [cells count]){
         HierarchicalCell * cell = [cells objectAtIndex:row];
     
         height = [cell getHeightRequired];
@@ -211,7 +215,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //never called, since the cells button is called first 
-    
+    /*
     NSUInteger row = [indexPath row];
     
     if(row > ([cells count]) || row == 0)
@@ -230,6 +234,7 @@
             [MenuTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
         }
     }
+     */
     
 }
 
@@ -297,7 +302,8 @@
     start.headerLabel.text = NSLocalizedString(@"RunInProgressTitle", @"start cell title for runs in progress");
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
-    [start.addRunButton setImage:[UIImage imageNamed:@"garbagecan.png"] forState:UIControlStateNormal];
+    [start.garbageBut setHidden:false];
+    [start.addRunButton setHidden:true];
     [start.folderImage setHidden:true];
     
 }
@@ -324,7 +330,8 @@
         runInProgressAsFarAsICanTell = false;
         [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
         start.locked = false;//to prevent expanding
-        [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
+        [start.garbageBut setHidden:true];
+        [start.addRunButton setHidden:false];
         [start.folderImage setHidden:false];
     
     }
@@ -355,7 +362,8 @@
     runInProgressAsFarAsICanTell = false;
     [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     start.locked = false;//to prevent expanding
-    [start.addRunButton setImage:[UIImage imageNamed:@"whiteaddrun.png"] forState:UIControlStateNormal];
+    [start.garbageBut setHidden:true];
+    [start.addRunButton setHidden:false];
     [start.folderImage setHidden:false];
 }
 
@@ -405,12 +413,6 @@
     
     if(!core.curGoal)
     {
-        //go straight to create screen since their is no goal to show
-        
-        //CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
-        
-        //[self presentViewController:vc2 animated:true completion:nil];
-        
         
         GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
         CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];

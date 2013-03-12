@@ -25,7 +25,7 @@
 @end
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate, LoggerViewControllerDelegate,UIActionSheetDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate,UIActionSheetDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * cells;
@@ -35,8 +35,6 @@
     
 }
 
--(void)testNewRun;
-
 @property (assign, nonatomic) BOOL runInProgressAsFarAsICanTell;
 
 //delegate
@@ -44,6 +42,9 @@
 
 //UI
 @property (strong, nonatomic) IBOutlet UITableView *MenuTable;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBut;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *goalsBut;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *performanceBut;
 
 
 //actions
@@ -51,5 +52,7 @@
 - (IBAction)goalsNavPressed:(id)sender;
 - (IBAction)settingsNavPressed:(id)sender;
 - (IBAction)garbageTapped:(id)sender;
+
+- (void)finishedRun:(RunEvent *)run;
 
 @end

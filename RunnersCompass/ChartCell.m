@@ -78,7 +78,7 @@
         NSNumber* current = [weeklyValues objectAtIndex:0];
         NSNumber* previous = [weeklyValues objectAtIndex:1];
         [currentValueLabel setText:[current stringValue]];
-        [previousValueLabel setText:[current stringValue]];
+        [previousValueLabel setText:[previous stringValue]];
     }
     else
     {
@@ -98,7 +98,7 @@
         NSNumber* current = [monthlyValues objectAtIndex:0];
         NSNumber* previous = [monthlyValues objectAtIndex:1];
         [currentValueLabel setText:[current stringValue]];
-        [previousValueLabel setText:[current stringValue]];
+        [previousValueLabel setText:[previous stringValue]];
     }
     
     
@@ -454,9 +454,7 @@
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
-    NSDecimalNumber *num = nil;
     NSNumber * numberValue;
-    NSInteger xCoord;
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
@@ -464,7 +462,7 @@
                 
                 //x location of index is opposite side of chart such that weeklyValue[0] is latest run
                 
-                num = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
+                numberValue = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -476,13 +474,12 @@
                         else
                             numberValue = [monthlyValues objectAtIndex:index];
                         
-                        num = numberValue;
                     }
                 break;
         }
     }
     
-    return num;
+    return numberValue;
 }
 
 #pragma mark - Bar Plot deleget methods

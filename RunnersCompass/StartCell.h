@@ -34,6 +34,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *paceBut;
 @property (strong, nonatomic) IBOutlet UIButton *timeBut;
 @property (strong, nonatomic) IBOutlet UIButton *caloriesBut;
+@property (strong, nonatomic) IBOutlet UIButton *garbageBut;
 
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;
@@ -54,7 +55,6 @@
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
-- (void)handleStartTap:(UITapGestureRecognizer *)gestureRecognizer;
 -(void)setup;
 
 @end

@@ -57,6 +57,8 @@
             return NSLocalizedString(@"CadenceMetric", @"Cadence name for title or goal");
         case MetricTypeStride:
             return NSLocalizedString(@"StrideMetric", @"Stride name for title or goal");
+        case NoMetricType:
+            return @"UNKNOWNMETRIC";
     }
     
     return @"UNKNOWNMETRIC";
@@ -86,9 +88,6 @@
 {
     self = [super init];
     
-    //DataTest* data = [DataTest sharedData];
-    //NSString *distanceUnitText = [data.prefs getDistanceUnit];
-    
     if (self) {
         switch(type)
         {
@@ -103,6 +102,13 @@
                 break;
             case MetricTypeTime:
                 name = [NSString stringWithFormat:@"%@ %@ • %f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
+                break;
+                
+            case MetricTypeCadence:
+            case MetricTypeStride:
+            case MetricTypeClimbed:
+            case NoMetricType:
+                name = nil;
                 break;
                 
         }

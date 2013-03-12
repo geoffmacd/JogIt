@@ -18,7 +18,7 @@
 @synthesize delegate;
 @synthesize addRunButton;
 @synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
-@synthesize expanded,locked;
+@synthesize expanded,locked,garbageBut;
 
 -(void)setup
 {

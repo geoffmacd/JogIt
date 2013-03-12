@@ -300,12 +300,14 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         duration2 = secondStageAnimationClose;
     }
     [self.pauseImage setHidden:true];
-    [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+
+    //slow for some reason
+    [UIView animateWithDuration: duration1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         CGRect rect = _slidingScrollView.frame;
         rect.origin.x = -self.view.bounds.size.width;
         _slidingScrollView.frame = rect;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration: duration2 delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+        [UIView animateWithDuration: duration2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             CGRect rect = _slidingScrollView.frame;
             rect.origin.x = -self.view.bounds.size.width - bouncyOvershootX;
             _slidingScrollView.frame = rect;

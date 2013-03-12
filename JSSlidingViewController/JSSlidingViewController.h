@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define dropShadowXOffset 20.0f
-#define firstStageAnimationClose 0.2f
+#define firstStageAnimationClose 0.3f
 #define secondStageAnimationClose 0.1f
 #define bouncyOvershootX 10.0f
 #define pauseOvershootX 100.0f
@@ -50,7 +50,7 @@ extern NSString * const JSSlidingViewControllerWillBeginDraggingNotification;
 - (void)openSlider:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setFrontViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
 - (void)setBackViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(void (^)(void))completion;
-- (void)setWidthOfVisiblePortionOfFrontViewControllerWhenSliderIsOpen:(CGFloat)width;
+
 - (void)pauseWithBounceAnimation:(void(^)(void))completion;
 -(UIPanGestureRecognizer*)getSliderPanGesture;
 

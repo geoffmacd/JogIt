@@ -51,6 +51,7 @@
     
     [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [mapButton.layer setBorderWidth: 1.0];
+    [mapButton.layer setCornerRadius: 5.0];
     
     [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [map.layer setBorderWidth: 1.0];
