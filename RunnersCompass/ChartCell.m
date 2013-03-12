@@ -73,6 +73,12 @@
             if([num integerValue] < lowest)
                 lowest = [num integerValue];
         }
+        
+        //set value for previous,current
+        NSNumber* current = [weeklyValues objectAtIndex:0];
+        NSNumber* previous = [weeklyValues objectAtIndex:1];
+        [currentValueLabel setText:[current stringValue]];
+        [previousValueLabel setText:[current stringValue]];
     }
     else
     {
@@ -87,7 +93,12 @@
             if([num integerValue] < lowest)
                 lowest = [num integerValue];
         }
-
+        
+        //set value for previous,current
+        NSNumber* current = [monthlyValues objectAtIndex:0];
+        NSNumber* previous = [monthlyValues objectAtIndex:1];
+        [currentValueLabel setText:[current stringValue]];
+        [previousValueLabel setText:[current stringValue]];
     }
     
     
@@ -113,6 +124,7 @@
             graphRect.origin = CGPointMake(([monthlyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
         [expandedView setFrame:graphRect];
         
+        [self barPlot:nil barWasSelectedAtRecordIndex:0];
         
         //draw bar graph with new data from run
         if(weekly)
@@ -184,6 +196,8 @@
                 graphRect.origin = CGPointMake(([monthlyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
             [expandedView setFrame:graphRect];
             
+            
+            [self barPlot:nil barWasSelectedAtRecordIndex:0];
             
             //draw bar graph with new data from run
             if(weekly)
@@ -450,7 +464,7 @@
                 
                 //x location of index is opposite side of chart such that weeklyValue[0] is latest run
                 
-                num = [NSNumber numberWithInt:[weeklyValues count] - index];
+                num = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -480,6 +494,7 @@
     
     
     [selectedPlot reloadData];
+    [barPlot reloadData];//need to correct cleared fill
     
     
     //change selected values

@@ -77,6 +77,7 @@
                                                                 options:nil]objectAtIndex:0];
         
         [cells addObject:cell];
+        
         [cell setDelegate:self];
         //set data for cells with array at index of the metric
         NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row+1];
@@ -85,15 +86,14 @@
         [cell setTimePeriod:weekly];
         //must be last
         [cell setAssociated:row+1];//convert row to runmetric assuming
-     
+        
+        
         return cell;
     }
     else{
         
         
         ChartCell * curCell = [cells objectAtIndex:row];
-        
-        //may need to reload data if weekly was changed as per reloadtable
         [curCell setTimePeriod:weekly];
         
         return curCell;
@@ -118,11 +118,7 @@
     
     NSAssert(height > 40.0, @"invalid cell height");
     
-    
     return height;
-    
-    
-    
 }
 
 

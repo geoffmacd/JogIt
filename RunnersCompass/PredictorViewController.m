@@ -29,19 +29,9 @@
     
     
     //add ChartViewControllers to views
-    cells = [[NSMutableArray alloc] initWithCapacity:5];
+    cells = [[NSMutableArray alloc] initWithCapacity:10];
     
-    charts = [[NSMutableArray alloc] initWithCapacity:5];
-    for(NSUInteger i = 0;i<7;i++)
-    {
-    
-        ChartCell * test   =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
-                                                           owner:self
-                                                         options:nil]objectAtIndex:0];
-        
-        
-        [charts addObject:test];
-    }
+    analysis = [[DataTest sharedData] analysis];
     
     //localized buttons in IB
     [weeklyBut setTitle:NSLocalizedString(@"WeeklyButton", @"button for weekly") forState:UIControlStateNormal];
@@ -62,8 +52,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return number of charts
-    return [charts count];
+    //return number of race types, same for month and week because it is array of array
+    return [analysis.weeklyRace count];
 }
 
 // Customize the appearance of table view cells.
@@ -76,11 +66,17 @@
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"
                                                                   owner:self
                                                                 options:nil]objectAtIndex:0];
-        [cell setAssociated:row+1];
-        [cell setDelegate:self];
-        [cell setTimePeriod:weekly];
-        
         [cells addObject:cell];
+        
+        [cell setDelegate:self];
+        //set data for cells with array at index of the metric
+        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row+1];
+        [cell setWeeklyValues:valuesToSet];
+        [cell setMonthlyValues:valuesToSet];
+        [cell setTimePeriod:weekly];
+        //must be last
+        [cell setAssociated:row+1];//convert row to runmetric assuming
+        
         
         return cell;
     }
@@ -110,11 +106,9 @@
         height = 48.0f;
     }
     
+    NSAssert(height > 40.0, @"invalid cell height");
     
     return height;
-    
-    
-    
 }
 
 
@@ -131,7 +125,7 @@
     //still need to animate hidden expandedView
     
     //if sender was last cell or second last, then scroll to show expanded view
-    if(sender == [cells lastObject] || [cells objectAtIndex:([cells count] - 2)])
+    if(sender == [cells lastObject])
     {
         NSIndexPath *path = [table indexPathForCell:sender];
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];

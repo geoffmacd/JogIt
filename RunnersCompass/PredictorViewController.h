@@ -9,11 +9,13 @@
 #import "CorePlot-CocoaTouch.h"
 #import <UIKit/UIKit.h>
 #import "ChartCell.h"
+#import "Analysis.h"
+#import "DataTest.h"
 
 @interface PredictorViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
-    NSMutableArray * charts;
     NSMutableArray * cells;
+    Analysis * analysis;
     
 }
 
