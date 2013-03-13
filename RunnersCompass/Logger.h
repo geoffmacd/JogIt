@@ -57,6 +57,7 @@
     BOOL kmPaceShowMode;
     NSUInteger numMinutesAtKmSelected;
     CLLocationManager *locationManager;
+    NSMutableArray *tLocs;
 }
 
 

@@ -91,6 +91,8 @@
     locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
     [locationManager startUpdatingLocation];
     [map setShowsUserLocation:YES];
+    
+    tLocs = [[NSMutableArray alloc] initWithCapacity:1000];
 
 
 }
@@ -491,7 +493,9 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations objectAtIndex:0];
     NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
+
     
+    [tLocs addObjectsFromArray:locations];
     
     //zoom to 500m square
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 500 , 500);
