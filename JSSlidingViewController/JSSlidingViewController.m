@@ -358,44 +358,12 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         [self willOpen];
         _animating = YES;
         _isOpen = YES; // Needs to be here to prevent bugs
-        if (self.useBouncyAnimations) {
-            [self openWithBouncyAnimation:animated completion:completion];
-        } else {
-            [self openWithSmoothAnimation:animated completion:completion];
-        }
+        [self openWithSmoothAnimation:animated completion:completion];
     } else {
         if (completion) {
             completion();
         }
     }
-}
-
-- (void)openWithBouncyAnimation:(BOOL)animated completion:(void(^)(void))completion {
-    CGFloat duration1 = 0.0f;
-    CGFloat duration2 = 0.0f;
-    if (animated) {
-        duration1 = firstStageAnimationClose;
-        duration2 = secondStageAnimationClose;
-    }
-    [UIView animateWithDuration:duration1  delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration  animations:^{
-        CGRect aRect = _slidingScrollView.frame;
-        aRect.origin.x = _sliderOpeningWidth + bouncyOvershootX;
-        _slidingScrollView.frame = aRect;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:duration2  delay:0 options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
-            CGRect rect = _slidingScrollView.frame;
-            rect.origin.x = _sliderOpeningWidth;
-            _slidingScrollView.frame = rect;
-        } completion:^(BOOL finished) {
-            self.view.userInteractionEnabled = YES;
-            _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
-            _animating = NO;
-            [self didOpen];
-            if (completion) {
-                completion();
-            }
-        }];
-    }];
 }
 
 - (void)openWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
@@ -811,6 +779,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     if ([self.delegate respondsToSelector:@selector(slidingViewControllerWillOpen:)]) {
         [self.delegate slidingViewControllerWillOpen:self];
     }
+    [self resetScrollToPause];
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:JSSlidingViewControllerWillOpenNotification object:self]];
 }
 
