@@ -35,22 +35,22 @@
         case GoalTypeCalories:
             emptyGoal = [[Goal alloc] initWithType:goalType];
             [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
-            [goalImage setImage:[UIImage imageNamed:@"scale.jpg"]];
+            [goalImage setImage:[UIImage imageNamed:@"fatperson.png"]];
             break;
         case GoalTypeOneDistance:
             emptyGoal = [[Goal alloc] initWithType:goalType];
             [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
-            [goalImage setImage:[UIImage imageNamed:@"finishflag.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"flag.png"]];
             break;
         case GoalTypeRace:
             emptyGoal = [[Goal alloc] initWithType:goalType];
             [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
-            [goalImage setImage:[UIImage imageNamed:@"goldmedal.jpeg"]];
+            [goalImage setImage:[UIImage imageNamed:@"whiteclock.png"]];
             break;
         case GoalTypeTotalDistance:
             emptyGoal = [[Goal alloc] initWithType:goalType];
             [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
-            [goalImage setImage:[UIImage imageNamed:@"stopwatch.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"odometer.png"]];
             break;
     }
     

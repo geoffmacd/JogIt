@@ -138,12 +138,13 @@
 					<object class="IBUIButton" id="204915733">
 						<reference key="NSNextResponder" ref="572499848"/>
 						<int key="NSvFlags">1316</int>
-						<string key="NSFrame">{{8, 8}, {25, 25}}</string>
+						<string key="NSFrame">{{8, 11}, {20, 20}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="920167502"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
+						<int key="IBUIContentMode">1</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -248,7 +249,7 @@
 						<string key="NSFrame">{{200, 54}, {100, 15}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="484553668"/>
+						<reference key="NSNextKeyView" ref="289254834"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -484,7 +485,7 @@
 						<string key="NSFrame">{{233, 463}, {80, 30}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="407339574"/>
+						<reference key="NSNextKeyView" ref="1054154486"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -506,7 +507,7 @@
 						<string key="NSFrame">{{233, 488}, {97, 21}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="259539174"/>
+						<reference key="NSNextKeyView" ref="407339574"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -528,7 +529,7 @@
 						<string key="NSFrame">{{234, 424}, {78, 38}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="1054154486"/>
+						<reference key="NSNextKeyView" ref="259539174"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -549,7 +550,7 @@
 						<reference key="NSNextResponder" ref="572499848"/>
 						<int key="NSvFlags">1320</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{35, 10}, {219, 21}}</string>
+						<string key="NSFrame">{{35, 10}, {250, 21}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="395160277"/>
@@ -641,7 +642,7 @@
 						<string key="NSFrame">{{51, 3}, {219, 34}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="289254834"/>
+						<reference key="NSNextKeyView" ref="924007125"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
@@ -866,10 +867,10 @@
 					<object class="IBUIButton" id="289254834">
 						<reference key="NSNextResponder" ref="572499848"/>
 						<int key="NSvFlags">1316</int>
-						<string key="NSFrame">{{254, 6}, {30, 30}}</string>
+						<string key="NSFrame">{{287, 41}, {30, 30}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="924007125"/>
+						<reference key="NSNextKeyView" ref="484553668"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUIContentMode">1</int>
@@ -1988,13 +1989,13 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="background.png">{640, 960}</string>
-			<string key="ghost.png">{50, 50}</string>
+			<string key="background.png">{320, 480}</string>
+			<string key="ghost.png">{25, 25}</string>
 			<string key="greencheck.png">{25, 25}</string>
-			<string key="hamburger.png">{50, 50}</string>
+			<string key="hamburger.png">{20, 20}</string>
 			<string key="map.JPG">{16, 16}</string>
-			<string key="pause.png">{50, 50}</string>
-			<string key="pull.png">{60, 30}</string>
+			<string key="pause.png">{25, 25}</string>
+			<string key="pull.png">{30, 15}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

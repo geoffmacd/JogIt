@@ -30,11 +30,18 @@
     [goalButton.layer setCornerRadius:8.0f];
     
     //set progress bar
-    UIImage *trackImg = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-    UIImage *progressImg = [[UIImage imageNamed:@"progress.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+    //UIImage *trackImg = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+    //UIImage *progressImg = [[UIImage imageNamed:@"progress.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
+    UIImage *background = [[UIImage imageNamed:@"progress-bar-bg.png"]
+                           resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 4)];
+    UIImage *fill = [[UIImage imageNamed:@"progress-bar-fill.png"]
+                     resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 4)];
     
-    [progress setTrackImage:trackImg];
-    [progress setProgressImage:progressImg];
+    [progress setTrackImage:background];
+    [progress setProgressImage:fill];
+    [progress.layer setCornerRadius:6.0f];
+    [progress.layer setMasksToBounds:true];
+    
 }
 
 -(void)setGoalLabels
@@ -67,7 +74,7 @@
         [metricDescriptionSubtitle setText:[data.curGoal stringForSubtitle]];
         
         //progress bar
-        [progress setProgress:data.curGoal.progress];
+        [progress setProgress:0.5];//data.curGoal.progress];
         
     }else{
         [goalButton setTitle:NSLocalizedString(@"GoalButtonWithNone", @"No goal for button") forState:UIControlStateNormal];
@@ -86,7 +93,7 @@
         [metricDescriptionSubtitle setText:@""];
         
         //progress bar
-        [progress setProgress:0.0f];
+        [progress setProgress:0.5];//0];
     }
     
     //localizations    //localized buttons in IB

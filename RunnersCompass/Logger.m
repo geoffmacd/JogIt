@@ -52,6 +52,7 @@
     [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [mapButton.layer setBorderWidth: 1.0];
     [mapButton.layer setCornerRadius: 5.0];
+    [mapButton.layer setMasksToBounds:YES];
     
     [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [map.layer setBorderWidth: 1.0];
@@ -625,7 +626,7 @@
     barPlot.barWidthsAreInViewCoordinates = NO;
     barPlot.barCornerRadius               = CPTFloat(5.0);
     barPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor darkGrayColor] endingColor:[CPTColor darkGrayColor]];
+    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor lightGrayColor] endingColor:[CPTColor lightGrayColor]];
     fillGradient.angle = 0.0f;
     barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
     barPlot.delegate = self;
