@@ -791,7 +791,7 @@
     
 }
 
-
+/*
 -(CPTFill *)barFillForBarPlot:(CPTBarPlot *)plot recordIndex:(NSUInteger)index
 {
     if ([plot.identifier isEqual: kPlot] && index == selectedBarIndex)
@@ -801,7 +801,7 @@
     }
     return nil;
 }
-
+*/
 
 #pragma mark - Map opening
 

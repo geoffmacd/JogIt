@@ -491,7 +491,7 @@
     
     
     [selectedPlot reloadData];
-    [barPlot reloadData];//need to correct cleared fill
+    //[barPlot reloadData];//need to correct cleared fill
     
     
     //change selected values
@@ -506,7 +506,7 @@
     
 }
 
-
+/*
 -(CPTFill *)barFillForBarPlot:(CPTBarPlot *)plot recordIndex:(NSUInteger)index
 {
     if ([plot.identifier isEqual: kPlot] && index == selectedBarIndex)
@@ -516,7 +516,7 @@
     }
     return nil;
 }
-
+*/
 
 
 #pragma mark - ScrollView Delegate
