@@ -138,8 +138,8 @@
             StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
                                                                owner:self
                                                              options:nil]objectAtIndex:0];
-            [cell setup];
             [cell setDelegate:self];
+            [cell setup];
             
             start = cell;
         }
@@ -170,8 +170,8 @@
                                                                 options:nil]objectAtIndex:0];
         
         
-        [cell setAssociated:[runs objectAtIndex:row]];
         [cell setDelegate:self];
+        [cell setAssociated:[runs objectAtIndex:row]];
 
         [cells addObject:cell];
         
