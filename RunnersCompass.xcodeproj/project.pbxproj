@@ -88,6 +88,8 @@
 		67B2582C16F00B2E00CF337E /* odometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582416F00B2E00CF337E /* odometer@2x.png */; };
 		67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582516F00B2E00CF337E /* whiteclock.png */; };
 		67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582616F00B2E00CF337E /* whiteclock@2x.png */; };
+		67B2583016F0123100CF337E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B2582F16F0123100CF337E /* MapKit.framework */; };
+		67B2583216F017FF00CF337E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B2583116F017FF00CF337E /* CoreLocation.framework */; };
 		67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */; };
 		67B2FCDA16C5FDFA008694F1 /* FKButtonField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA616C5FDFA008694F1 /* FKButtonField.m */; };
 		67B2FCDB16C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCA816C5FDFA008694F1 /* FKDisclosureIndicatorAccessoryField.m */; };
@@ -263,6 +265,8 @@
 		67B2582416F00B2E00CF337E /* odometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "odometer@2x.png"; sourceTree = "<group>"; };
 		67B2582516F00B2E00CF337E /* whiteclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteclock.png; sourceTree = "<group>"; };
 		67B2582616F00B2E00CF337E /* whiteclock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteclock@2x.png"; sourceTree = "<group>"; };
+		67B2582F16F0123100CF337E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		67B2583116F017FF00CF337E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		67B2FCA316C5FDFA008694F1 /* FKBadgeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKBadgeField.h; sourceTree = "<group>"; };
 		67B2FCA416C5FDFA008694F1 /* FKBadgeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FKBadgeField.m; sourceTree = "<group>"; };
 		67B2FCA516C5FDFA008694F1 /* FKButtonField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FKButtonField.h; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67B2583216F017FF00CF337E /* CoreLocation.framework in Frameworks */,
+				67B2583016F0123100CF337E /* MapKit.framework in Frameworks */,
 				67C8E34E16D1D4E300E4DE11 /* libCorePlot-CocoaTouch.a in Frameworks */,
 				672AA43816B5AE6700B7DEE6 /* QuartzCore.framework in Frameworks */,
 				67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */,
@@ -381,6 +387,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				67B2583116F017FF00CF337E /* CoreLocation.framework */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
@@ -402,6 +409,7 @@
 		67236D0716409B7700DD13C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				67B2582F16F0123100CF337E /* MapKit.framework */,
 				672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */,
 				67236D0816409B7700DD13C5 /* UIKit.framework */,
 				67236D0A16409B7700DD13C5 /* Foundation.framework */,

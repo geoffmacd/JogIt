@@ -81,6 +81,17 @@
     [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
     [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
     [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
+    
+    
+    //init location manager
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
+    [locationManager startUpdatingLocation];
+    [map setShowsUserLocation:YES];
+
 
 }
 
@@ -474,6 +485,31 @@
         
     }
     //coninute otherwise
+}
+
+#pragma mark - Location Manager Delegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    CLLocation *location = [locations objectAtIndex:0];
+    NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
+    
+    
+    //zoom to 500m square
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 500 , 500);
+    
+    //always center on user
+    [map setRegion:viewRegion animated:YES];
+    
+    //set current pace to be the speed of most recent location
+    NSString * paceToSet;
+    CLLocationSpeed speedMPerSec = location.speed;
+    NSTimeInterval speedsPerKm = (speedMPerSec * 60) / 3.6;
+    
+    NSInteger min = speedsPerKm / 60;
+    NSInteger sec = speedsPerKm - (min * 60);
+    paceToSet = [NSString stringWithFormat:@"%d:%d", min,sec];
+    
+    [currentPaceValue setText:paceToSet];
+    
 }
 
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import "RunEvent.h"
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
@@ -37,7 +38,7 @@
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
 {
     UIActionSheet *sheet;
     NSInteger selectedBarIndex;
@@ -55,6 +56,7 @@
     CGFloat countdown;
     BOOL kmPaceShowMode;
     NSUInteger numMinutesAtKmSelected;
+    CLLocationManager *locationManager;
 }
 
 
@@ -68,6 +70,7 @@
 
 
 //UI
+@property (strong, nonatomic)  IBOutlet MKMapView *map;
 @property (strong, nonatomic) IBOutlet UILabel *runTitle;
 @property (strong, nonatomic) IBOutlet UIView *mapView;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
@@ -77,7 +80,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *mapButton;
 @property (strong, nonatomic) IBOutlet UIView *shadeView;
 @property (strong, nonatomic) IBOutlet UIButton *dragButton;
-@property (strong, nonatomic) IBOutlet UIImageView *map;
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *paceScroll;
 @property (strong, nonatomic) IBOutlet UILabel *oldpace1;
