@@ -40,6 +40,9 @@
 		67902E6416DACA60007D19BC /* GoalHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E6316DACA60007D19BC /* GoalHeaderCell.m */; };
 		67902E6616DAE2AC007D19BC /* CreateGoalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E6516DAE2AC007D19BC /* CreateGoalHeaderCell.xib */; };
 		67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E6816DAE2CA007D19BC /* CreateGoalHeaderCell.m */; };
+		67A8D59216F143380070E38B /* CrumbPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D58F16F143380070E38B /* CrumbPath.m */; };
+		67A8D59316F143380070E38B /* CrumbPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59116F143380070E38B /* CrumbPathView.m */; };
+		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
 		67AF65C916D88FF8004A484C /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65C616D88FF8004A484C /* Predictor.xib */; };
 		67AF65CA16D88FF8004A484C /* PredictorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65C816D88FF8004A484C /* PredictorViewController.m */; };
@@ -211,6 +214,12 @@
 		67902E6516DAE2AC007D19BC /* CreateGoalHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateGoalHeaderCell.xib; sourceTree = "<group>"; };
 		67902E6716DAE2CA007D19BC /* CreateGoalHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGoalHeaderCell.h; sourceTree = "<group>"; };
 		67902E6816DAE2CA007D19BC /* CreateGoalHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalHeaderCell.m; sourceTree = "<group>"; };
+		67A8D58E16F143380070E38B /* CrumbPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrumbPath.h; path = Overlay/CrumbPath.h; sourceTree = SOURCE_ROOT; };
+		67A8D58F16F143380070E38B /* CrumbPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CrumbPath.m; path = Overlay/CrumbPath.m; sourceTree = SOURCE_ROOT; };
+		67A8D59016F143380070E38B /* CrumbPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrumbPathView.h; path = Overlay/CrumbPathView.h; sourceTree = SOURCE_ROOT; };
+		67A8D59116F143380070E38B /* CrumbPathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CrumbPathView.m; path = Overlay/CrumbPathView.m; sourceTree = SOURCE_ROOT; };
+		67A8D59416F150EE0070E38B /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		67A8D59516F150EE0070E38B /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
 		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
 		67AF65C616D88FF8004A484C /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
@@ -387,7 +396,6 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67B2583116F017FF00CF337E /* CoreLocation.framework */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
@@ -409,6 +417,7 @@
 		67236D0716409B7700DD13C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				67B2583116F017FF00CF337E /* CoreLocation.framework */,
 				67B2582F16F0123100CF337E /* MapKit.framework */,
 				672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */,
 				67236D0816409B7700DD13C5 /* UIKit.framework */,
@@ -541,6 +550,18 @@
 				6779C0F916EE3C81002BCAEC /* Localizable.strings */,
 			);
 			name = Localization;
+			sourceTree = "<group>";
+		};
+		67A8D58D16F143230070E38B /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				67A8D58E16F143380070E38B /* CrumbPath.h */,
+				67A8D58F16F143380070E38B /* CrumbPath.m */,
+				67A8D59016F143380070E38B /* CrumbPathView.h */,
+				67A8D59116F143380070E38B /* CrumbPathView.m */,
+			);
+			name = Overlay;
+			path = ../Pickers;
 			sourceTree = "<group>";
 		};
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
@@ -767,8 +788,11 @@
 		67FC068616A111A100491C97 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				67A8D58D16F143230070E38B /* Overlay */,
 				67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */,
 				67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */,
+				67A8D59416F150EE0070E38B /* Util.h */,
+				67A8D59516F150EE0070E38B /* Util.m */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -976,6 +1000,9 @@
 				67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */,
 				6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */,
 				6779C10416EE83D9002BCAEC /* Analysis.m in Sources */,
+				67A8D59216F143380070E38B /* CrumbPath.m in Sources */,
+				67A8D59316F143380070E38B /* CrumbPathView.m in Sources */,
+				67A8D59616F150EE0070E38B /* Util.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

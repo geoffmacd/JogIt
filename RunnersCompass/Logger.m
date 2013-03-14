@@ -87,13 +87,21 @@
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
-    [locationManager startUpdatingLocation];
-    [map setShowsUserLocation:YES];
+    //[locationManager startUpdatingLocation];
     
-    tLocs = [[NSMutableArray alloc] initWithCapacity:1000];
-
+    //init paths
+    crumbPaths = [[NSMutableArray alloc] initWithCapacity:100];
+    crumbPathViews = [[NSMutableArray alloc] initWithCapacity:100];
+    readyForPathInit = true;
+    
+    
+    [map setShowsUserLocation:YES];
+    [map setDelegate:self];
+    
+    tLocs = [[NSMutableArray alloc] initWithCapacity:10000];
+    
 
 }
 
@@ -172,6 +180,25 @@
     
 }
 
+#pragma mark -
+#pragma mark Action sheet delegate methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button %d", buttonIndex);
+    
+    if(buttonIndex == 0)
+    {
+        //start ghost run
+        
+        //set as ghost run
+        run.ghost = true;
+        //do standard newRun except with this run object
+        [delegate selectedGhostRun:run];
+        
+    }
+    //coninute otherwise
+}
 
 #pragma mark - Managing runs
 
@@ -244,6 +271,7 @@
                              [shadeView setHidden:true];
                              [shadeView setAlpha:1.0f];
                              [countdownLabel setText:@"3"];
+                             [self startRun];
                          }
                          else
                          {
@@ -261,6 +289,7 @@
                                                       [shadeView setHidden:true];
                                                       [shadeView setAlpha:1.0f];
                                                       [countdownLabel setText:@"3"];
+                                                      [self startRun];
                                                   }
                                                   else
                                                   {
@@ -281,7 +310,10 @@
                                                                            
                                                                            //animate the view controller
                                                                            //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
-                                                                           [delegate pauseAnimation];
+                                                                           [delegate pauseAnimation:^{
+                                                                               [self startRun];
+                                                                           }];
+                                                                           
                                                                            
                                                                        }];
                                                       
@@ -296,8 +328,13 @@
 {
     run = _run;
     
+    //reset live variables,caches,etc
+    [tLocs removeAllObjects];
+    [crumbPathViews removeAllObjects];
+    [crumbPaths removeAllObjects];
+    
     //hide these by default unless newrun overrides them
-    [finishBut setHidden:!run.live];
+    [finishBut setHidden:true];
     
     //set title
     if(!run.live)
@@ -417,6 +454,10 @@
                             finishBut.alpha = 1.0f;
                         } completion:nil];
         
+        
+        
+        //stop location updates
+        [self stopRun];
     }
     else
     {
@@ -451,7 +492,12 @@
                             [finishBut setHidden:true];
                         }];
         
+        //start run
+        [self startRun];
+        
     }
+    
+    
 }
 
 
@@ -469,53 +515,230 @@
     [sheet showInView:self.parentViewController.view];
 }
 
-#pragma mark -
-#pragma mark Action sheet delegate methods
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+
+#pragma mark - Managing Live run
+
+-(void)startRun
 {
-    NSLog(@"Button %d", buttonIndex);
+    //start updates
+    NSLog(@"started tracking.....");
+    [locationManager startUpdatingLocation];
     
-    if(buttonIndex == 0)
-    {
-        //start ghost run
+    
+    //set timer up
+    if(![timer isValid])
+        timer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                             target:self
+                                           selector:@selector(tick)
+                                           userInfo:nil
+                                            repeats:YES];
+    
+    readyForPathInit = true; //to restart path at the current users location
+}
 
-        //set as ghost run
-        run.ghost = true;
-        //do standard newRun except with this run object
-        [delegate selectedGhostRun:run];
+
+-(void) stopRun
+{
+    //stop timer updating
+    [timer invalidate];
+    
+    
+    //stop updates
+    NSLog(@"stopped tracking.....");
+    [locationManager stopUpdatingLocation];
+    
+    //only zoom if there exists a last point
+    if([tLocs lastObject])
+    {
+        [self autoZoomMap:[tLocs lastObject]];
         
     }
-    //coninute otherwise
+    
+    //update map icon one last time
+    [self reloadMapIcon];
+    
+}
+
+
+-(void)tick
+{
+    //process 1 second gone by in timer
+    
+    
+    //update time with 1 second
+    run.time += 1;
+    
+    //update time displayed
+    NSInteger hours,minutes,seconds;
+    
+    hours = run.time / 3600;
+    minutes = run.time / 60 - (hours*60);
+    seconds = run.time - (minutes * 60) - (hours * 3600);
+    
+    NSString * stringToSetTime;
+    if(hours == 0)
+        stringToSetTime = [NSString stringWithFormat:@"00:%d:%d", minutes,seconds];
+    else
+        stringToSetTime = [NSString stringWithFormat:@"0%d:%d:%d", hours,minutes,seconds];
+    
+    [timeLabel setText:stringToSetTime];
 }
 
 #pragma mark - Location Manager Delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    CLLocation *location = [locations objectAtIndex:0];
-    NSLog(@"lat%f - lon%f", location.coordinate.latitude, location.coordinate.longitude);
-
+    
+    //last should the last object in tLocs
+    CLLocation *newLocation = [locations lastObject];
+    CLLocation *oldLocation = [tLocs lastObject];
     
     [tLocs addObjectsFromArray:locations];
     
-    //zoom to 500m square
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, 500 , 500);
+    NSLog(@"lat%f - lon%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     
-    //always center on user
-    [map setRegion:viewRegion animated:YES];
+    //don't know when more than one will come
+    if([locations count] > 1)
+        NSLog(@"more than one location");
+
     
-    //set current pace to be the speed of most recent location
-    NSString * paceToSet;
-    CLLocationSpeed speedMPerSec = location.speed;
-    NSTimeInterval speedsPerKm = (speedMPerSec * 60) / 3.6;
+    //add anotation to map
+    if (newLocation.timestamp > oldLocation.timestamp)
+    {
+		
+		// make sure the old and new coordinates are different
+        if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&
+            (oldLocation.coordinate.longitude != newLocation.coordinate.longitude))
+        {
+            if (readyForPathInit)
+            {
+                // This is the first time we're getting a location update, so create
+                // the CrumbPath and add it to the map.
+                //
+                CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
+                [self.map addOverlay:newPath];
+                [crumbPaths addObject:newPath];
+                
+                // On the first location update only, zoom map to user location
+                MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
+                [self.map setRegion:region animated:YES];
+                timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
+                
+                //set initial map icon
+                UIImage * newMapIcon = [Util imageWithView:map];
+                
+                [mapButton setImage:newMapIcon forState:UIControlStateNormal];
+                timeSinceMapIconRefresh = timeSinceMapCenter;
+                
+                readyForPathInit = false;
+                
+            }
+            else
+            {
+                // This is a subsequent location update.
+                // If the crumbs MKOverlay model object determines that the current location has moved
+                // far enough from the previous location, use the returned updateRect to redraw just
+                // the changed area.
+
+                //
+                MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
+                
+                if (!MKMapRectIsNull(updateRect))
+                {
+                    // There is a non null update rect.
+                    // Compute the currently visible map zoom scale
+                    MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
+                    // Find out the line width at this zoom scale and outset the updateRect by that amount
+                    CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+                    updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
+                    // Ask the overlay view to update just the changed area.
+                    [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+                }
+                
+                //reload map icon every 30 seconds, must happen before animation to prevent image being captured during meaningless position
+                if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - 30))
+                {
+                    [self reloadMapIcon];
+                    
+                }
+                
+                //zoom every 5 seconds, or 30 seconds inMapView
+                //also do not auto zoom if user has recently scrolled
+                if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - (inMapView ? 5 : 30))) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - 15)))
+                {
+                    [self autoZoomMap:newLocation];
+
+                }
+                
+                
+                
+            }
+        }
+    }
+}
+
+
+#pragma mark - Map Custom Functions
+
+-(void) reloadMapIcon
+{
     
-    NSInteger min = speedsPerKm / 60;
-    NSInteger sec = speedsPerKm - (min * 60);
-    paceToSet = [NSString stringWithFormat:@"%d:%d", min,sec];
+    timeSinceMapIconRefresh = [NSDate timeIntervalSinceReferenceDate];
     
-    [currentPaceValue setText:paceToSet];
+    UIImage * newMapIcon = [Util imageWithView:map];
+    
+    //blur
+    newMapIcon = [newMapIcon imageWithGaussianBlur9];
+    
+    [mapButton setImage:newMapIcon forState:UIControlStateNormal];
+}
+
+
+-(void) autoZoomMap:(CLLocation*)newLocation
+{
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
+    //animated to prevent jumpy
+    [self.map setRegion:region animated:(inMapView ? YES : NO)];
+    
+    timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
     
 }
 
+#pragma mark - MapKit Delegate
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
+{
+    if ([crumbPaths lastObject])
+    {
+        CrumbPathView* crumbView = [[CrumbPathView alloc] initWithOverlay:overlay];
+        [crumbPathViews addObject:crumbView];
+    }
+    return [crumbPathViews lastObject];
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+{
+    //check for network errors, throw up popup?
+}
+
+- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
+{
+    
+    
+}
+
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    if([NSDate timeIntervalSinceReferenceDate] < timeSinceMapCenter + 0.5)
+    {
+        //scrolling was caused programmatically do nothing
+    }
+    else{
+        //user scrolled
+        //set time to lastMapTouch
+        
+        lastMapTouch = [NSDate timeIntervalSinceReferenceDate];
+    }
+}
 
 #pragma mark - ScrollView Delegate
 
@@ -866,6 +1089,9 @@
         
         
     } completion:^(BOOL finished) {
+        //reload icon to refresh
+        if(run.live && !paused)
+            [self reloadMapIcon];
         if (completion) {
             completion();
         }
@@ -894,6 +1120,9 @@
         
         
     } completion:^(BOOL finished) {
+        //autozoom
+        if(run.live && !paused)
+            [self autoZoomMap:[tLocs lastObject]];
         if (completion) {
             completion();
         }
@@ -1008,10 +1237,17 @@
 
 
 - (IBAction)finishTapped:(id)sender {
+    
+    //set the run to have the correct picture in table cell
+    run.map.thumbnail = [mapButton imageForState:UIControlStateNormal];
+    
+    //go back to menu and add to table at top
     [delegate finishedRun:run];
+    
     
     //convert current run to a historical run now that it is saved!
     [self setRun:run];
+    
     
 }
 
@@ -1052,7 +1288,7 @@
         //animate the logger to opposite of paused/record state
         //asks the jsslider to animate the pause, includes the automatic pausing/record logic
         //meant to illustrate to user that you can swipe to pause
-        [delegate pauseAnimation];
+        [delegate pauseAnimation:nil];
         
     }else{
         

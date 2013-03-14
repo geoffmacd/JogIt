@@ -37,6 +37,7 @@
 @synthesize checkpoints,distanceCheckpoints,pos,pausePoints;
 @synthesize metricGoal;
 @synthesize eventType;
+@synthesize map;
 
 
 +(NSString * )stringForMetric:(RunMetric) metric
@@ -79,6 +80,8 @@
         time = 2063;
         live = true;
         ghost = false;
+    
+        map = [[RunMap alloc] init];
         return self;
     }
     return nil;

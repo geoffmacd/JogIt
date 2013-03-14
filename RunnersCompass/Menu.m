@@ -374,6 +374,7 @@
 {
     NSLog(@"Button %d", buttonIndex);
     
+    //for discarding active run
     if(buttonIndex == 0)
     {
         [self.delegate finishedRun:nil];

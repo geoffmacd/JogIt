@@ -29,21 +29,20 @@
 //both menu and logger delegate method
 - (void)finishedRun:(RunEvent *)run
 {
+    //finish and clean run in logger if it exists
+    [self.backVC stopRun];
+    
     //send run to menu to add it to list
     [self.frontVC finishedRun:run];
     
     //if it is in logger view
     if(!self.viewController.isOpen)
     {
-        [self.viewController.view setUserInteractionEnabled:false];
         [self.viewController openSlider:true completion:^{
             
+            //handle case where run is being deleted and logger view is not valid
             if(!run)
             {
-                //load previous run
-                RunEvent  * run = [[RunEvent alloc] init];
-                [self.backVC setRun:run];
-                [self.viewController setLiveRun:false];
                 
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
@@ -55,9 +54,9 @@
     
 }
 
-- (void)pauseAnimation{
+- (void)pauseAnimation:(void(^)(void))completion {
     
-    [self.viewController pauseWithBounceAnimation:nil];
+    [self.viewController pauseWithBounceAnimation:completion];
     
 }
 
@@ -237,11 +236,19 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    
+    //we would stopUpdating if we wanted to stop map updateshere
+    
+    
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    //we would startUp[dating if we wanted to start map updateshere
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

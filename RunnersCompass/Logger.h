@@ -12,7 +12,12 @@
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
 #import "DataTest.h"
+#import "CrumbPath.h"
+#import "CrumbPathView.h"
+#import "Util.h"
 
+
+#define mapZoomDefault 1000 //m
 #define mapViewYOffset 173
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
@@ -31,7 +36,7 @@
 
 - (void)menuButtonPressed:(id)sender;
 - (void)finishedRun:(RunEvent *)run;
-- (void)pauseAnimation;
+- (void)pauseAnimation:(void(^)(void))completion;
 -(void)selectedGhostRun:(RunEvent *)run;
 
 @end
@@ -58,6 +63,12 @@
     NSUInteger numMinutesAtKmSelected;
     CLLocationManager *locationManager;
     NSMutableArray *tLocs;
+    NSMutableArray *crumbPaths;
+    NSMutableArray *crumbPathViews;
+    NSTimeInterval timeSinceMapCenter;
+    NSTimeInterval timeSinceMapIconRefresh;
+    NSTimeInterval lastMapTouch;
+    BOOL readyForPathInit;
 }
 
 
@@ -67,7 +78,6 @@
 //objects
 @property (nonatomic, strong, setter = setRun:) RunEvent * run;
 @property (nonatomic) BOOL paused;
-
 
 
 //UI
@@ -117,7 +127,7 @@
 - (IBAction)statusButTapped:(id)sender;
 - (IBAction)ghostButTapped:(id)sender;
 
-
+-(void) stopRun;
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 
 @end
