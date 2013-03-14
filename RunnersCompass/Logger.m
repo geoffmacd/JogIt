@@ -535,6 +535,7 @@
                                             repeats:YES];
     
     readyForPathInit = true; //to restart path at the current users location
+    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
 }
 
 
@@ -585,6 +586,67 @@
     [timeLabel setText:stringToSetTime];
 }
 
+
+-(void)calculate
+{
+    //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
+    
+    CLLocation *latest = [tLocs lastObject];
+    
+    NSInteger countOfLoc = [tLocs count] ;
+
+    if(countOfLoc > 5)
+    {
+        NSArray * prevLocArray = [NSArray arrayWithObjects:[tLocs objectAtIndex:(countOfLoc -2)], [tLocs objectAtIndex:(countOfLoc -3)],[tLocs objectAtIndex:(countOfLoc -4)],[tLocs objectAtIndex:(countOfLoc -5)], nil];
+        
+        //determine weighting, 0.5,0.25,0.125
+        CLLocationDistance weightedDistance = 0.0;
+        for(int i = 0; i < 3; i++)
+        {
+            //for each determine weighting
+            CLLocationDistance distance =[latest distanceFromLocation:[prevLocArray objectAtIndex:i]];
+            CLLocationDistance distanceToSecondLatest =[[prevLocArray objectAtIndex:0] distanceFromLocation:[prevLocArray objectAtIndex:i]];
+            
+            CLLocationDistance normalizedDistance = distance - distanceToSecondLatest;
+            
+            
+            //weight with index, subtract distance from nearest
+            weightedDistance += normalizedDistance  *(1/pow(2.0,i));
+        }
+        
+        
+        run.distance += weightedDistance/1000;
+        run.avgPace =  run.time / run.distance;
+        
+        //set current pace
+        CLLocationDistance paceDistance = [[tLocs objectAtIndex:(countOfLoc -5)] distanceFromLocation:latest];//m
+        CLLocationSpeed currentPace = 5.0 / paceDistance;//s/m
+        CLLocationSpeed adjustedPace = (currentPace * 1000); //min / km
+        
+        
+        NSInteger minutes,seconds;
+        
+        minutes = adjustedPace / 60 ;
+        seconds = adjustedPace - (minutes * 60);
+        
+        NSString * stringToSetTime;
+        stringToSetTime = [NSString stringWithFormat:@"%2d:%2d", minutes,seconds];
+        
+        [currentPaceValue setText:stringToSetTime];
+        [distanceLabel setText:[NSString stringWithFormat:@"%.2f", run.distance]];
+        
+        //avg pace
+        
+        minutes = run.avgPace / 60 ;
+        seconds = run.avgPace - (minutes * 60);
+        stringToSetTime = [NSString stringWithFormat:@"%2d:%2d", minutes,seconds];
+        [paceLabel setText:stringToSetTime];
+        
+    }
+    
+    
+}
+
 #pragma mark - Location Manager Delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
@@ -593,6 +655,7 @@
     CLLocation *oldLocation = [tLocs lastObject];
     
     [tLocs addObjectsFromArray:locations];
+
     
     NSLog(@"lat%f - lon%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     
@@ -669,7 +732,13 @@
 
                 }
                 
-                
+                //update metrics every 5 seconds
+                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 5))
+                {
+                    [self calculate];
+                    
+                    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
+                }
                 
             }
         }

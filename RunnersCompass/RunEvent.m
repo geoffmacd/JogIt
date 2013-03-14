@@ -74,10 +74,10 @@
         metricGoal = 0.0f;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
-        distance = 4.1f;
-        calories = 301.5f;
-        avgPace = 264;
-        time = 2063;
+        distance = 0;
+        calories = 0;
+        avgPace = 0;
+        time = 0;
         live = true;
         ghost = false;
     

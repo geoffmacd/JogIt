@@ -58,13 +58,16 @@ typedef enum
 @property (nonatomic) BOOL ghost;
 
 //total/averages for display/data collection
+
+//updated every 5 sec
 @property (nonatomic) CGFloat distance;
-@property (nonatomic) NSTimeInterval time;
 @property (nonatomic) NSTimeInterval avgPace;
 @property (nonatomic) CGFloat calories;
 @property (nonatomic) CGFloat climbed;
 @property (nonatomic) CGFloat stride;
 @property (nonatomic) CGFloat cadence;
+//updated every second
+@property (nonatomic) NSTimeInterval time;
 
 
 
