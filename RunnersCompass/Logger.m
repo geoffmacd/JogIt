@@ -452,12 +452,14 @@
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 1.0f;
-                        } completion:nil];
+                        } completion:^(BOOL finish){
+                            
+                            //stop location updates
+                            [self stopRun];
+                        }];
         
         
         
-        //stop location updates
-        [self stopRun];
     }
     else
     {
@@ -490,10 +492,10 @@
                             finishBut.alpha = 0.0f;
                         } completion:^(BOOL finish){
                             [finishBut setHidden:true];
+                            //start run
+                            [self startRun];
                         }];
         
-        //start run
-        [self startRun];
         
     }
     
