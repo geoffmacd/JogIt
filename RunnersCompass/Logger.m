@@ -528,11 +528,19 @@
     
     //set timer up
     if(![timer isValid])
+    {/* 
+        //does not register when main thread under load from scroll view
         timer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                              target:self
                                            selector:@selector(tick)
                                            userInfo:nil
                                             repeats:YES];
+      */
+        
+        //schedule on run loop to increase priority
+        timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
     
     readyForPathInit = true; //to restart path at the current users location
     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
