@@ -9,9 +9,9 @@
 #import "RunEvent.h"
 
 
-@implementation RunPos
+@implementation CLLocationMeta
 
-@synthesize pos,elevation,pace,time;
+@synthesize time,pace;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super init];
@@ -65,6 +65,66 @@
     return @"UNKNOWNMETRIC";
 }
 
++(NSString*)getPaceString:(NSTimeInterval)paceToFormat
+{
+    NSInteger minutes,seconds;
+    
+    minutes = paceToFormat/ 60;
+    seconds = paceToFormat - (minutes * 60);
+    
+    NSString * minuteTime;
+    NSString * secondTime;
+    NSString *stringToSetTime;
+    
+    if(minutes < 10)
+        minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+    else
+        minuteTime = [NSString stringWithFormat:@"%d",minutes];
+    
+    if(seconds < 10)
+        secondTime = [NSString stringWithFormat:@"0%d",seconds];
+    else
+        secondTime = [NSString stringWithFormat:@"%d",seconds];
+    
+    stringToSetTime = [NSString stringWithFormat:@"%@:%@",minuteTime,secondTime];
+    
+    return stringToSetTime;
+    
+}
+
++(NSString*)getTimeString:(NSTimeInterval)timeToFormat
+{
+    NSInteger hours,minutes,seconds;
+    
+    hours = timeToFormat / 3600;
+    minutes = timeToFormat/ 60 - (hours*60);
+    seconds = timeToFormat - (minutes * 60) - (hours * 3600);
+    
+    NSString * hourTime;
+    NSString * minuteTime;
+    NSString * secondTime;
+    NSString *stringToSetTime;
+    if(hours < 10)
+        hourTime = [NSString stringWithFormat:@"0%d", hours];
+    else
+        hourTime = [NSString stringWithFormat:@"%d",hours];
+    
+    if(minutes < 10)
+        minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+    else
+        minuteTime = [NSString stringWithFormat:@"%d",minutes];
+    
+    if(seconds < 10)
+        secondTime = [NSString stringWithFormat:@"0%d",seconds];
+    else
+        secondTime = [NSString stringWithFormat:@"%d",seconds];
+    
+    stringToSetTime = [NSString stringWithFormat:@"%@:%@:%@", hourTime,minuteTime,secondTime];
+    
+    return stringToSetTime;
+}
+
+
 -(id)initWithNoTarget
 {
     self = [super init];
@@ -80,7 +140,7 @@
         time = 0;
         live = true;
         ghost = false;
-    
+        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
     
         map = [[RunMap alloc] init];
         return self;
@@ -126,6 +186,7 @@
         time = 2063;
         live = true;
         ghost = false;
+        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
         return self;
     }
     return nil;

@@ -93,7 +93,7 @@
     
     
     //Set Title
-    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
+    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance/1000,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //Set units for localization/units

@@ -17,7 +17,7 @@
 #import "Util.h"
 
 
-#define mapZoomDefault 1000 //m
+#define mapZoomDefault 500 //m
 #define mapViewYOffset 173
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
@@ -71,6 +71,8 @@
     NSTimeInterval lastCalculate;
     BOOL readyForPathInit;
     NSInteger badSignalCount;
+    NSInteger consecutiveHeadingCount;
+    NSInteger timeSinceChartReload;
 }
 
 

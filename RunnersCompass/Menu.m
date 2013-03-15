@@ -72,20 +72,8 @@
         //begin run now with no other pause points
         [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
         
-        for(int i = 0; i < 300; i ++)
-        {
-            RunPos *posToAdd = [[RunPos alloc] init];
-            
-            posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
-            posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
-            posToAdd.elevation =  arc4random() % 100;
-            posToAdd.time=  i;
-            
-            
-            [loadPos addObject:posToAdd];
-        }
         
-        [loadRun setPos:loadPos];
+        //[loadRun setPos:loadPos];
         [loadRun setCheckpoints:loadPos];
         //for every 10 days before today 
         [loadRun setDate:[loadRun.date dateByAddingTimeInterval:-(86400 * i * 10)]];

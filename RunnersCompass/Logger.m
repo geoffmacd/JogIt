@@ -101,10 +101,6 @@
     
     [map setShowsUserLocation:YES];
     [map setDelegate:self];
-    
-    tLocs = [[NSMutableArray alloc] initWithCapacity:10000];
-    
-
 }
 
 -(void) viewDidLayoutSubviews
@@ -128,20 +124,7 @@
     //begin run now with no other pause points
     [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
     
-    for(int i = 0; i < 300; i ++)
-    {
-        RunPos *posToAdd = [[RunPos alloc] init];
-        
-        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
-        posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
-        posToAdd.elevation =  arc4random() % 100;
-        posToAdd.time=  i;
-        
-        
-        [loadPos addObject:posToAdd];
-    }
     
-    [loadRun setPos:loadPos];
     [loadRun setCheckpoints:loadPos];
     
     [self setRun:loadRun];
@@ -235,20 +218,6 @@
     //begin run now with no other pause points
     [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
     
-    for(int i = 0; i < 300; i ++)
-    {
-        RunPos *posToAdd = [[RunPos alloc] init];
-        
-        posToAdd.pos =  CGPointMake(arc4random() % 100, arc4random() % 100);
-        posToAdd.pace =  arc4random() % 100;//100 * ((CGFloat)i/100.0);
-        posToAdd.elevation =  arc4random() % 100;
-        posToAdd.time=  i;
-        
-        
-        [loadPos addObject:posToAdd];
-    }
-    
-    [loadRun setPos:loadPos];
     [loadRun setCheckpoints:loadPos];
     
     [self setRun:loadRun];
@@ -330,11 +299,6 @@
 {
     run = _run;
     
-    //reset live variables,caches,etc
-    [tLocs removeAllObjects];
-    [crumbPathViews removeAllObjects];
-    [crumbPaths removeAllObjects];
-    
     //hide these by default unless newrun overrides them
     [finishBut setHidden:true];
     
@@ -347,8 +311,6 @@
         
         //hide goal image
         [goalAchievedImage setHidden:true];
-        
-        //title is set in setLabelsForunits
     }
     else
     {
@@ -396,12 +358,16 @@
         
         //hide ghost
         [ghostBut setHidden:true];
+        
+        //set map to follow user before starting track
+        [map setUserTrackingMode:MKUserTrackingModeFollow];
     }
     
     
-    
+    [self drawMapOverlayForRun];
     [self setLabelsForUnits];
-
+    
+    [self updateHUD];
     
     //set size of view of graph to be equal to that of the split load
     CGRect paceGraphRect = chart.frame;
@@ -450,7 +416,7 @@
         finishBut.alpha = 0.0f;
         [finishBut setHidden:false];
         [UIView transitionWithView:finishBut
-                          duration:0.2f
+                          duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 1.0f;
@@ -488,7 +454,7 @@
         
         finishBut.alpha = 1.0f;
         [UIView transitionWithView:finishBut
-                          duration:0.2f
+                          duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 0.0f;
@@ -525,6 +491,9 @@
 
 -(void)startRun
 {
+    //stop map following user
+    [map setUserTrackingMode:MKUserTrackingModeNone];
+    
     //start updates
     NSLog(@"started tracking.....");
     [locationManager startUpdatingLocation];
@@ -532,14 +501,7 @@
     
     //set timer up
     if(![timer isValid])
-    {/* 
-        //does not register when main thread under load from scroll view
-        timer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                             target:self
-                                           selector:@selector(tick)
-                                           userInfo:nil
-                                            repeats:YES];
-      */
+    {
         
         //schedule on run loop to increase priority
         timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
@@ -548,6 +510,7 @@
     
     readyForPathInit = true; //to restart path at the current users location
     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
+    
 }
 
 
@@ -562,9 +525,9 @@
     [locationManager stopUpdatingLocation];
     
     //only zoom if there exists a last point
-    if([tLocs lastObject])
+    if([run.pos lastObject])
     {
-        [self autoZoomMap:[tLocs lastObject]];
+        [self autoZoomMap:[run.pos lastObject]];
         
     }
     
@@ -583,18 +546,7 @@
     run.time += 1;
     
     //update time displayed
-    NSInteger hours,minutes,seconds;
-    
-    hours = run.time / 3600;
-    minutes = run.time / 60 - (hours*60);
-    seconds = run.time - (minutes * 60) - (hours * 3600);
-    
-    NSString * stringToSetTime;
-    if(hours == 0)
-        stringToSetTime = [NSString stringWithFormat:@"00:%d:%d", minutes,seconds];
-    else
-        stringToSetTime = [NSString stringWithFormat:@"0%d:%d:%d", hours,minutes,seconds];
-    
+    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
     [timeLabel setText:stringToSetTime];
 }
 
@@ -603,21 +555,21 @@
 {
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
     
-    NSInteger countOfLoc = [tLocs count] ;
+    NSInteger countOfLoc = [run.pos count] ;
 
     
-    if(latest.horizontalAccuracy <= logRequiredAccuracy && latest.verticalAccuracy <= logRequiredAccuracy && countOfLoc >= 5)
+    if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc >= 1)
     {
 
         
-        CLLocation *prior = [tLocs lastObject];
-        CLLocation *prior2 = [tLocs objectAtIndex:countOfLoc-2];
-        CLLocation *prior3 = [tLocs objectAtIndex:countOfLoc-3];
-        CLLocation *prior4 = [tLocs objectAtIndex:countOfLoc-4];
+        CLLocation *prior = [run.pos lastObject];
+        NSTimeInterval paceTimeInterval = latest.timestamp.timeIntervalSinceReferenceDate - prior.timestamp.timeIntervalSinceReferenceDate;
 
-        CLLocationDistance distanceToAdd = [self calcDistance:latest withPrior1:prior prior2:prior2 prior3:prior3 prior4:prior4];
+        CLLocationDistance distanceToAdd = [self calcDistance:latest];
         run.distance += distanceToAdd;
         
+        //add calories @ 0.08 cal per minute per lb
+        run.calories += (paceTimeInterval / 60) * 0.08  * [[[[DataTest sharedData] prefs] weight] integerValue];
         
         run.avgPace =  run.time / run.distance;
         
@@ -625,30 +577,27 @@
         
         //set current pace
         CLLocationDistance paceDistance = distanceToAdd;
-        NSTimeInterval paceTimeInterval = latest.timestamp.timeIntervalSinceReferenceDate - prior.timestamp.timeIntervalSinceReferenceDate;
         CLLocationSpeed currentPace = paceTimeInterval / paceDistance;//s/m
-        CLLocationSpeed adjustedPace = (currentPace * 1000); //min / km
-        
-        
-        NSInteger minutes,seconds;
-        
-        minutes = adjustedPace / 60 ;
-        seconds = adjustedPace - (minutes * 60);
-        
-        NSString * stringToSetTime;
-        stringToSetTime = [NSString stringWithFormat:@"%2d:%2d", minutes,seconds];
-        
+        NSTimeInterval adjustedPace = (currentPace * 1000); //s / km
+        NSString * stringToSetTime = [RunEvent getPaceString:adjustedPace];
         [currentPaceValue setText:stringToSetTime];
-        [distanceLabel setText:[NSString stringWithFormat:@"%.2f", run.distance]];
         
-        //avg pace
         
-        minutes = run.avgPace / 60 ;
-        seconds = run.avgPace - (minutes * 60);
-        stringToSetTime = [NSString stringWithFormat:@"%2d:%2d", minutes,seconds];
-        [paceLabel setText:stringToSetTime];
+        //update hud too
+        [self updateHUD];
         
-        [tLocs addObject:latest];
+        
+        [self addPosToRun:latest withPace:adjustedPace];
+        
+        //update hud if multiple of 60, therefore one minute
+        if(!((int)run.time % 60))
+        {
+            //add one checkpoint representing past 60 seconds
+            
+            
+            
+            //[self updateChart];
+        }
         
         //decrement bad signal count
         if(badSignalCount > 0 )
@@ -657,142 +606,116 @@
     }
     else{
         
-        if(countOfLoc < 5)
-            [tLocs addObject:latest];
+        if(countOfLoc < 1)
+            [self addPosToRun:latest withPace:0];
         
         //incremenet bad signal count and wait for better signal
+        NSLog(@"bad signal - cant process");
         badSignalCount++;
     }
     
     
 }
 
--(CLLocationDistance)calcDistance:(CLLocation *)latest withPrior1: (CLLocation*)pr1 prior2:(CLLocation*)pr2 prior3:(CLLocation*)pr3 prior4:(CLLocation*)pr4
+-(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd
+{
+    CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
+    
+    metaToAdd.pace = paceToAdd;
+    metaToAdd.time = run.time;
+    
+    //add both 
+    [run.pos addObject:locToAdd];
+    [run.posMeta addObject:metaToAdd];
+    
+}
+
+-(void)updateHUD
+{
+    //set text for labels
+    
+    //set distance in km
+    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
+    
+    //avg pace
+    NSString * stringToSetTime = [RunEvent getPaceString:(run.avgPace * 1000)];
+    [paceLabel setText:stringToSetTime];
+    
+    //update time displayed
+    stringToSetTime = [RunEvent getTimeString:run.time];
+    [timeLabel setText:stringToSetTime];
+    
+    [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
+}
+
+-(CLLocationDistance)calcDistance:(CLLocation *)latest 
 {
     
-    CGFloat sdRatio1 = [self calcRatio:latest with:pr1];
+    CLLocation * prior = [run.pos lastObject];
+    NSInteger locCount = [run.pos count];
+    CLLocationDistance distanceToAdd = 0.0;
     
-    
-    if(sdRatio1 < 0.3)
+    if(consecutiveHeadingCount)
     {
-        NSLog(@"non-consecutive");
-        return [latest distanceFromLocation:pr1];
-    }
-    else
-    {
-        switch([self maxAcceptablePriorWithHeading:latest with:pr2 with:pr3 with:pr4])
+     
+        CLLocationDirection cumulativeCourseDifferential = 0;
+        
+        for(int i = 1; i <= consecutiveHeadingCount; i++)
         {
-            case 2:
-                NSLog(@"second consecutive");
-                return [latest distanceFromLocation:pr2] - [pr1 distanceFromLocation:pr2];
+            //invalidate consequtive run only if cumulative error is too large or course differential is too big
+            CLLocation * considerPt = [run.pos objectAtIndex:(locCount - i)];
+            
+            if(!NSLocationInRange(fabs(considerPt.course - latest.course), NSMakeRange(-20, 40)))
+            {
+                //invalid
+                consecutiveHeadingCount = 0;
                 break;
-            case 3:
-                NSLog(@"third consecutive");
-                return [latest distanceFromLocation:pr3] - [pr1 distanceFromLocation:pr3];
+            }
+            
+            cumulativeCourseDifferential += fabs(considerPt.course - latest.course);
+            
+            if(cumulativeCourseDifferential > 50)
+            {
+                consecutiveHeadingCount = 0;
                 break;
-            case 4:
-                NSLog(@"fourth consecutive");
-                return [latest distanceFromLocation:pr4] - [pr1 distanceFromLocation:pr4];
-                break;
-            case 0:
-                //unacceptable
-                NSLog(@"invalidated! consecutive");
-                return [latest distanceFromLocation:pr1];
-                break;
-                
+            }
+            
         }
         
+        
+        //calc distance if still availabe
+        distanceToAdd = [latest distanceFromLocation:[run.pos objectAtIndex:(locCount - consecutiveHeadingCount - 1)]] - [prior distanceFromLocation:[run.pos objectAtIndex:(locCount - consecutiveHeadingCount - 1)]];
+        
+        //incremenet if it did not fail on prior
+        if(consecutiveHeadingCount != 0)
+            consecutiveHeadingCount++;
+        
+    }
+    else{
+        
+        //check to see if consequtive should start
+        if(NSLocationInRange(fabs(prior.course - latest.course), NSMakeRange(-20, 40)))
+        {
+            consecutiveHeadingCount++;
+        }
+        
+        distanceToAdd = [latest distanceFromLocation:prior];
     }
     
-    return [latest distanceFromLocation:pr1];
+    NSLog(@"Consequtive %d", consecutiveHeadingCount);
+    
+    return distanceToAdd;
 }
 
-
--(CGFloat)calcRatio:(CLLocation*)pt1 with: (CLLocation *)pt2
-{
-    CGFloat accuracy1 = MAX(pt1.horizontalAccuracy, pt1.verticalAccuracy);
-    CGFloat accuracy2 = MAX(pt2.horizontalAccuracy, pt2.verticalAccuracy);
-    
-    CLLocationDistance distance = [pt1 distanceFromLocation:pt2];
-    
-    
-    //take the min accuracy
-    CGFloat ratio = MIN(accuracy1,accuracy2) / distance;
-    
-    return ratio;
-    
-}
-
-
--(NSInteger)maxAcceptablePriorWithHeading:(CLLocation*)latest with:(CLLocation *)pt2 with: (CLLocation *)pt3 with:(CLLocation *)pt4
-{
-    //sample three times to prevent squiggly running
-    
-    NSInteger consistencyCount= 0;
-    
-    if(NSLocationInRange(fabs(pt4.course - latest.course), NSMakeRange(-15, 30)) && [self calcRatio:pt4 with:latest] < 0.2)
-    {
-        //in approx same direction
-        consistencyCount++;
-    }
-    else
-    {
-        consistencyCount =0;
-    }
-    
-    if(NSLocationInRange(fabs(pt3.course - latest.course), NSMakeRange(-20, 40)) && [self calcRatio:pt3 with:latest] < 0.3)
-    {
-        //in approx same direction
-        consistencyCount++;
-    }
-    else
-    {
-        consistencyCount =0;
-    }
-    
-    if(NSLocationInRange(fabs(pt2.course - latest.course), NSMakeRange(-30, 60))&& [self calcRatio:pt2 with:latest] < 0.4)
-    {
-        //in approx same direction
-        consistencyCount++;
-    }
-    else
-    {
-        consistencyCount = 0;
-    }
-    
-    switch (consistencyCount) {
-        case 0:
-            return 0;
-            break;
-        case 1:
-            return 2;
-            break;
-        case 2:
-            return 3;
-            break;
-        case 3:
-            return 4;
-            break;
-            
-        default:
-            return 0;
-            break;
-    }
-    
-    return 0;
-    
-}
 
 #pragma mark - Location Manager Delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     
-    //last should the last object in tLocs
+    //last should the last object in run.pos
     CLLocation *newLocation = [locations lastObject];
-    CLLocation *oldLocation = [tLocs lastObject];
+    CLLocation *oldLocation = [run.pos lastObject];
     
-    //[tLocs addObjectsFromArray:locations];
-    
-    NSLog(@"%d  - lat%f - lon%f  - accur %f , %f", [tLocs count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
+    NSLog(@"%d  - lat%f - lon%f  - accur %f , %f  -speed %f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy , newLocation.speed);
 
     
     //add anotation to map
@@ -824,7 +747,7 @@
                 timeSinceMapIconRefresh = timeSinceMapCenter;
                 
                 //add an inital position
-                [tLocs addObject:newLocation];
+                [self addPosToRun:newLocation withPace:0];
                 
                 readyForPathInit = false;
                 
@@ -874,6 +797,16 @@
                     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
                 }
                 
+                
+                //update metrics every 3 seconds
+                if(timeSinceChartReload < ([NSDate timeIntervalSinceReferenceDate] - 60))
+                {
+                    
+                    [self updateChart];
+                    
+                    timeSinceChartReload = [NSDate timeIntervalSinceReferenceDate];
+                }
+                
             }
         }
     }
@@ -890,7 +823,7 @@
     UIImage * newMapIcon = [Util imageWithView:map];
     
     //blur
-    newMapIcon = [newMapIcon imageWithGaussianBlur9];
+    //newMapIcon = [newMapIcon imageWithGaussianBlur9];
     
     [mapButton setImage:newMapIcon forState:UIControlStateNormal];
 }
@@ -903,6 +836,67 @@
     [self.map setRegion:region animated:(inMapView ? YES : NO)];
     
     timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
+    
+}
+
+-(void)drawMapOverlayForRun
+{
+    
+    //reset live variables,caches,etc
+    [map removeOverlays:crumbPaths];
+    [crumbPathViews removeAllObjects];
+    [crumbPaths removeAllObjects];
+    
+    readyForPathInit = true;
+    
+    //redraw crumb paths for positions
+    
+    for(CLLocation * loc in run.pos)
+    {
+        if (readyForPathInit)
+        {
+            // This is the first time we're getting a location update, so create
+            // the CrumbPath and add it to the map.
+            //
+            CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:loc.coordinate];
+            [map addOverlay:newPath];
+            [crumbPaths addObject:newPath];
+            
+            timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
+            
+            readyForPathInit = false;
+            
+        }
+        else
+        {
+            //path already created
+            MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:loc.coordinate];
+            
+            if (!MKMapRectIsNull(updateRect))
+            {
+                // There is a non null update rect.
+                // Compute the currently visible map zoom scale
+                MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
+                // Find out the line width at this zoom scale and outset the updateRect by that amount
+                CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+                updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
+                // Ask the overlay view to update just the changed area.
+                [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+            }
+        }
+    }
+    
+    
+    //zoom map to user location, no animation
+    CLLocation * lastPos = [run.pos lastObject];
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(lastPos.coordinate, mapZoomDefault, mapZoomDefault);
+    [map setRegion:region animated:NO];
+    
+    
+    //set initial map icon
+    UIImage * newMapIcon = [Util imageWithView:map];
+    [mapButton setImage:newMapIcon forState:UIControlStateNormal];
+    
     
 }
 
@@ -1022,7 +1016,10 @@
 #pragma mark - BarChart
 
 
-
+-(void)updateChart
+{
+    
+}
 
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
@@ -1054,7 +1051,6 @@
     //look modification
     barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
     barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
-    
     
     
     // Add plot space for horizontal bar charts
@@ -1120,30 +1116,7 @@
     
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
     
-    /*
-     //adding animation here
-     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"transform.scale.y"];
-     [anim setDuration:2.5f];
-     anim.toValue = [NSNumber numberWithFloat:1];
-     anim.fromValue = [NSNumber numberWithFloat:0.0f];
-     anim.removedOnCompletion = NO;
-     anim.delegate = self;
-     anim.fillMode = kCAFillModeForwards;
-     
-     
-     barPlot.anchorPoint = CGPointMake(0.0, 0.0);
-     [barPlot addAnimation:anim forKey:@"grow"];
-     */
-    
 }
-
-/*
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    NSLog(@"animation stopped");
-    
-}
- */
 
 
 #pragma mark - KM Selection methods
@@ -1159,11 +1132,11 @@
     //set the labels to be for the km if this method was called with an index
     if(indexSelected >= 0 )
     {
-        RunPos * selectionCheckpoint = [[run checkpoints] objectAtIndex:indexSelected];
+        //RunPos * selectionCheckpoint = [[run checkpoints] objectAtIndex:indexSelected];
         
         
         //set the label to say 'KM 4' or 'Km 17'
-        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %.f ", distanceUnitText, selectionCheckpoint.pos.x]];
+        //[lastKmLabel setText:[NSString stringWithFormat:@"%@ %.f ", distanceUnitText, selectionCheckpoint.pos.x]];
         
         //load fake values
         [lastKmPace setText:@"4:42"];
@@ -1196,7 +1169,7 @@
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSDecimalNumber *num = nil;
-    RunPos * paceForTime;
+    CLLocationMeta * metaForPos;
     NSInteger xCoord;
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
@@ -1204,9 +1177,9 @@
             case CPTBarPlotFieldBarLocation:
                 //x location of index
                 
-                paceForTime = [[run checkpoints] objectAtIndex:index];
+                metaForPos = [[run checkpoints] objectAtIndex:index];
                 
-                xCoord = paceForTime.time;
+                xCoord = metaForPos.time;
                 
                 num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:xCoord];
                 break;
@@ -1217,15 +1190,15 @@
                 {
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
                     {
-                        paceForTime = [[run checkpoints] objectAtIndex:index];
-                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                        metaForPos = [[run checkpoints] objectAtIndex:index];
+                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:metaForPos.pace];
                     }
                 }
                 else{
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedBarIndex && index <= (selectedBarIndex + numMinutesAtKmSelected))))
                     {
-                        paceForTime = [[run checkpoints] objectAtIndex:index];
-                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:paceForTime.pace];
+                        metaForPos = [[run checkpoints] objectAtIndex:index];
+                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:metaForPos.pace];
                     }
                 }
                 break;
@@ -1250,24 +1223,12 @@
     
     
     //change "current pace" and value to respective value at checkpoint
-    RunPos * posAtIndex = [[run checkpoints] objectAtIndex:idx];
+    CLLocationMeta * metaForPos = [[run checkpoints] objectAtIndex:idx];
     
-    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.2f",posAtIndex.time]];
-    [currentPaceValue setText:[NSString stringWithFormat:@"%.2f",posAtIndex.pace]];
+    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.2f",metaForPos.time]];
+    [currentPaceValue setText:[NSString stringWithFormat:@"%.2f",metaForPos.pace]];
     
 }
-
-/*
--(CPTFill *)barFillForBarPlot:(CPTBarPlot *)plot recordIndex:(NSUInteger)index
-{
-    if ([plot.identifier isEqual: kPlot] && index == selectedBarIndex)
-    {
-        CPTFill *fillColor = [CPTFill fillWithColor:[CPTColor clearColor]];
-        return fillColor;
-    }
-    return nil;
-}
-*/
 
 #pragma mark - Map opening
 
@@ -1325,7 +1286,7 @@
     } completion:^(BOOL finished) {
         //autozoom
         if(run.live && !paused)
-            [self autoZoomMap:[tLocs lastObject]];
+            [self autoZoomMap:[run.pos lastObject]];
         if (completion) {
             completion();
         }
@@ -1449,6 +1410,7 @@
     
     
     //convert current run to a historical run now that it is saved!
+    run.live = false;
     [self setRun:run];
     
     

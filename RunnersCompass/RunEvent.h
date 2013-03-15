@@ -9,16 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "RunMap.h"
 
-@interface RunPos : NSObject{
-    CGPoint pos;
-    CGFloat elevation;
+@interface CLLocationMeta : NSObject{
     NSTimeInterval pace;
     NSTimeInterval time;
 }
 
-@property (nonatomic) CGPoint pos;
-@property (nonatomic) CGFloat elevation;
-@property (nonatomic) NSTimeInterval pace;
+@property (nonatomic) NSTimeInterval pace;//seconds per km
 @property (nonatomic) NSTimeInterval time;//seconds after the pausePoint
 
 
@@ -71,11 +67,21 @@ typedef enum
 
 
 
-//data ( all arrays of RunPos) , must be strong to retain
+//data 
+
+
+//used during run
 @property (nonatomic, strong) NSMutableArray * pos; //actual CLLocation positions
+@property (nonatomic, strong) NSMutableArray * posMeta; //CLLocationMeta data
+
+//processed later
 @property (nonatomic, strong) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * distanceCheckpointsMeta; //metrics @ km checkpoints
+
 @property (nonatomic, strong) NSMutableArray * checkpoints; //metrics by time unit for graph
-@property (nonatomic, strong) NSMutableArray * pausePoints; //NSDate for pauses
+@property (nonatomic, strong) NSMutableArray * checkpointsMeta; //metrics by time unit for graph
+
+@property (nonatomic, strong) NSMutableArray * pausePoints; //NSTimerInterval
 @property (nonatomic, strong) RunMap *map;
 
 
@@ -83,6 +89,6 @@ typedef enum
 -(id)initWithNoTarget;
 
 +(NSString * )stringForMetric:(RunMetric) metric;
-
-
++(NSString*)getTimeString:(NSTimeInterval)timeToFormat;
++(NSString*)getPaceString:(NSTimeInterval)paceToFormat;
 @end
