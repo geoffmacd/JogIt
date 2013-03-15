@@ -349,7 +349,7 @@
         [runs insertObject:run atIndex:0];
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell" owner:self options:nil]objectAtIndex:0];
         [cell setAssociated:run];
-        [cell setDelegate:self];
+        [cell setDelegate:self];//something wrong here to do with gesture
         [cells insertObject:cell atIndex:0];
         
         //reload table

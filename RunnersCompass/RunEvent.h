@@ -72,7 +72,7 @@ typedef enum
 
 
 //data ( all arrays of RunPos) , must be strong to retain
-@property (nonatomic, strong) NSMutableArray * pos; //actual positions
+@property (nonatomic, strong) NSMutableArray * pos; //actual CLLocation positions
 @property (nonatomic, strong) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
 @property (nonatomic, strong) NSMutableArray * checkpoints; //metrics by time unit for graph
 @property (nonatomic, strong) NSMutableArray * pausePoints; //NSDate for pauses

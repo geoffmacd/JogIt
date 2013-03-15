@@ -27,7 +27,7 @@
 #define paceGraphSplitObjects 100
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
-
+#define logRequiredAccuracy 50 //50m maximum
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -70,6 +70,7 @@
     NSTimeInterval lastMapTouch;
     NSTimeInterval lastCalculate;
     BOOL readyForPathInit;
+    NSInteger badSignalCount;
 }
 
 
@@ -133,3 +134,28 @@
 
 @end
 
+#define RAD_TO_DEG(r) ((r) * (180 / M_PI))
+
+@interface CLLocation (Direction)
+- (CLLocationDirection)directionToLocation:(CLLocation *)location;
+@end
+
+// .m
+@implementation CLLocation (Direction)
+
+- (CLLocationDirection)directionToLocation:(CLLocation *)location {
+    
+    CLLocationCoordinate2D coord1 = self.coordinate;
+    CLLocationCoordinate2D coord2 = location.coordinate;
+    
+    CLLocationDegrees deltaLong = coord2.longitude - coord1.longitude;
+    CLLocationDegrees yComponent = sin(deltaLong) * cos(coord2.latitude);
+    CLLocationDegrees xComponent = (cos(coord1.latitude) * sin(coord2.latitude)) - (sin(coord1.latitude) * cos(coord2.latitude) * cos(deltaLong));
+    
+    CLLocationDegrees radians = atan2(yComponent, xComponent);
+    CLLocationDegrees degrees = RAD_TO_DEG(radians) + 360;
+    
+    return fmod(degrees, 360);
+}
+
+@end

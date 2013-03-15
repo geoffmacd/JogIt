@@ -81,6 +81,7 @@
         live = true;
         ghost = false;
     
+    
         map = [[RunMap alloc] init];
         return self;
     }

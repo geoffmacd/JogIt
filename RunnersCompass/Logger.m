@@ -7,6 +7,8 @@
 //
 
 #import "Logger.h"
+#import <objc/objc-api.h>
+
 
 @interface LoggerViewController ()
 
@@ -597,40 +599,34 @@
 }
 
 
--(void)calculate
+-(void)calculate:(CLLocation*)latest
 {
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
     
-    CLLocation *latest = [tLocs lastObject];
-    
     NSInteger countOfLoc = [tLocs count] ;
 
-    if(countOfLoc > 5)
+    
+    if(latest.horizontalAccuracy <= logRequiredAccuracy && latest.verticalAccuracy <= logRequiredAccuracy && countOfLoc >= 5)
     {
-        NSArray * prevLocArray = [NSArray arrayWithObjects:[tLocs objectAtIndex:(countOfLoc -2)], [tLocs objectAtIndex:(countOfLoc -3)],[tLocs objectAtIndex:(countOfLoc -4)],[tLocs objectAtIndex:(countOfLoc -5)], nil];
+
         
-        //determine weighting, 0.5,0.25,0.125
-        CLLocationDistance weightedDistance = 0.0;
-        for(int i = 0; i < 3; i++)
-        {
-            //for each determine weighting
-            CLLocationDistance distance =[latest distanceFromLocation:[prevLocArray objectAtIndex:i]];
-            CLLocationDistance distanceToSecondLatest =[[prevLocArray objectAtIndex:0] distanceFromLocation:[prevLocArray objectAtIndex:i]];
-            
-            CLLocationDistance normalizedDistance = distance - distanceToSecondLatest;
-            
-            
-            //weight with index, subtract distance from nearest
-            weightedDistance += normalizedDistance  *(1/pow(2.0,i));
-        }
+        CLLocation *prior = [tLocs lastObject];
+        CLLocation *prior2 = [tLocs objectAtIndex:countOfLoc-2];
+        CLLocation *prior3 = [tLocs objectAtIndex:countOfLoc-3];
+        CLLocation *prior4 = [tLocs objectAtIndex:countOfLoc-4];
+
+        CLLocationDistance distanceToAdd = [self calcDistance:latest withPrior1:prior prior2:prior2 prior3:prior3 prior4:prior4];
+        run.distance += distanceToAdd;
         
         
-        run.distance += weightedDistance/1000;
         run.avgPace =  run.time / run.distance;
         
+        NSLog(@"%f distance added", distanceToAdd);
+        
         //set current pace
-        CLLocationDistance paceDistance = [[tLocs objectAtIndex:(countOfLoc -5)] distanceFromLocation:latest];//m
-        CLLocationSpeed currentPace = 5.0 / paceDistance;//s/m
+        CLLocationDistance paceDistance = distanceToAdd;
+        NSTimeInterval paceTimeInterval = latest.timestamp.timeIntervalSinceReferenceDate - prior.timestamp.timeIntervalSinceReferenceDate;
+        CLLocationSpeed currentPace = paceTimeInterval / paceDistance;//s/m
         CLLocationSpeed adjustedPace = (currentPace * 1000); //min / km
         
         
@@ -652,8 +648,138 @@
         stringToSetTime = [NSString stringWithFormat:@"%2d:%2d", minutes,seconds];
         [paceLabel setText:stringToSetTime];
         
+        [tLocs addObject:latest];
+        
+        //decrement bad signal count
+        if(badSignalCount > 0 )
+            badSignalCount--;
+        
+    }
+    else{
+        
+        if(countOfLoc < 5)
+            [tLocs addObject:latest];
+        
+        //incremenet bad signal count and wait for better signal
+        badSignalCount++;
     }
     
+    
+}
+
+-(CLLocationDistance)calcDistance:(CLLocation *)latest withPrior1: (CLLocation*)pr1 prior2:(CLLocation*)pr2 prior3:(CLLocation*)pr3 prior4:(CLLocation*)pr4
+{
+    
+    CGFloat sdRatio1 = [self calcRatio:latest with:pr1];
+    
+    
+    if(sdRatio1 < 0.3)
+    {
+        NSLog(@"non-consecutive");
+        return [latest distanceFromLocation:pr1];
+    }
+    else
+    {
+        switch([self maxAcceptablePriorWithHeading:latest with:pr2 with:pr3 with:pr4])
+        {
+            case 2:
+                NSLog(@"second consecutive");
+                return [latest distanceFromLocation:pr2] - [pr1 distanceFromLocation:pr2];
+                break;
+            case 3:
+                NSLog(@"third consecutive");
+                return [latest distanceFromLocation:pr3] - [pr1 distanceFromLocation:pr3];
+                break;
+            case 4:
+                NSLog(@"fourth consecutive");
+                return [latest distanceFromLocation:pr4] - [pr1 distanceFromLocation:pr4];
+                break;
+            case 0:
+                //unacceptable
+                NSLog(@"invalidated! consecutive");
+                return [latest distanceFromLocation:pr1];
+                break;
+                
+        }
+        
+    }
+    
+    return [latest distanceFromLocation:pr1];
+}
+
+
+-(CGFloat)calcRatio:(CLLocation*)pt1 with: (CLLocation *)pt2
+{
+    CGFloat accuracy1 = MAX(pt1.horizontalAccuracy, pt1.verticalAccuracy);
+    CGFloat accuracy2 = MAX(pt2.horizontalAccuracy, pt2.verticalAccuracy);
+    
+    CLLocationDistance distance = [pt1 distanceFromLocation:pt2];
+    
+    
+    //take the min accuracy
+    CGFloat ratio = MIN(accuracy1,accuracy2) / distance;
+    
+    return ratio;
+    
+}
+
+
+-(NSInteger)maxAcceptablePriorWithHeading:(CLLocation*)latest with:(CLLocation *)pt2 with: (CLLocation *)pt3 with:(CLLocation *)pt4
+{
+    //sample three times to prevent squiggly running
+    
+    NSInteger consistencyCount= 0;
+    
+    if(NSLocationInRange(fabs(pt4.course - latest.course), NSMakeRange(-15, 30)) && [self calcRatio:pt4 with:latest] < 0.2)
+    {
+        //in approx same direction
+        consistencyCount++;
+    }
+    else
+    {
+        consistencyCount =0;
+    }
+    
+    if(NSLocationInRange(fabs(pt3.course - latest.course), NSMakeRange(-20, 40)) && [self calcRatio:pt3 with:latest] < 0.3)
+    {
+        //in approx same direction
+        consistencyCount++;
+    }
+    else
+    {
+        consistencyCount =0;
+    }
+    
+    if(NSLocationInRange(fabs(pt2.course - latest.course), NSMakeRange(-30, 60))&& [self calcRatio:pt2 with:latest] < 0.4)
+    {
+        //in approx same direction
+        consistencyCount++;
+    }
+    else
+    {
+        consistencyCount = 0;
+    }
+    
+    switch (consistencyCount) {
+        case 0:
+            return 0;
+            break;
+        case 1:
+            return 2;
+            break;
+        case 2:
+            return 3;
+            break;
+        case 3:
+            return 4;
+            break;
+            
+        default:
+            return 0;
+            break;
+    }
+    
+    return 0;
     
 }
 
@@ -664,14 +790,9 @@
     CLLocation *newLocation = [locations lastObject];
     CLLocation *oldLocation = [tLocs lastObject];
     
-    [tLocs addObjectsFromArray:locations];
-
+    //[tLocs addObjectsFromArray:locations];
     
-    NSLog(@"lat%f - lon%f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
-    
-    //don't know when more than one will come
-    if([locations count] > 1)
-        NSLog(@"more than one location");
+    NSLog(@"%d  - lat%f - lon%f  - accur %f , %f", [tLocs count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy);
 
     
     //add anotation to map
@@ -701,6 +822,9 @@
                 
                 [mapButton setImage:newMapIcon forState:UIControlStateNormal];
                 timeSinceMapIconRefresh = timeSinceMapCenter;
+                
+                //add an inital position
+                [tLocs addObject:newLocation];
                 
                 readyForPathInit = false;
                 
@@ -742,10 +866,10 @@
 
                 }
                 
-                //update metrics every 5 seconds
-                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 5))
+                //update metrics every 3 seconds
+                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 3))
                 {
-                    [self calculate];
+                    [self calculate:newLocation];
                     
                     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
                 }
