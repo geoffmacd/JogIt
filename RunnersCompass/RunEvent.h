@@ -12,6 +12,7 @@
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;
     NSTimeInterval time;
+    
 }
 
 @property (nonatomic) NSTimeInterval pace;//seconds per km
@@ -75,11 +76,11 @@ typedef enum
 @property (nonatomic, strong) NSMutableArray * posMeta; //CLLocationMeta data
 
 //processed later
-@property (nonatomic, strong) NSMutableArray * distanceCheckpoints; //metrics @ km checkpoints
-@property (nonatomic, strong) NSMutableArray * distanceCheckpointsMeta; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * kmCheckpoints; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * kmCheckpointsMeta; //metrics @ km checkpoints
 
-@property (nonatomic, strong) NSMutableArray * checkpoints; //metrics by time unit for graph
-@property (nonatomic, strong) NSMutableArray * checkpointsMeta; //metrics by time unit for graph
+@property (nonatomic, strong) NSMutableArray * minCheckpoints; //metrics by time unit for graph
+@property (nonatomic, strong) NSMutableArray * minCheckpointsMeta; //metrics by time unit for graph
 
 @property (nonatomic, strong) NSMutableArray * pausePoints; //NSTimerInterval
 @property (nonatomic, strong) RunMap *map;

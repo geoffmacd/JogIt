@@ -120,12 +120,6 @@
     //load most recent run on startup, but not intended any other time
     RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
     loadRun.live = false;
-    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:300];
-    //begin run now with no other pause points
-    [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
-    
-    
-    [loadRun setCheckpoints:loadPos];
     
     [self setRun:loadRun];
     
@@ -187,25 +181,6 @@
 
 #pragma mark - Managing runs
 
-/*
--(void) countdownCycle
-{
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         
-                         [countdownLabel setText:[NSString stringWithFormat:@"%.f", countdown]];
-                         
-                     }
-                     completion:^(BOOL finish){
-                         countdown -= 0.5;
-                         
-                        [self countdownCycle];
-                     }
-     ];
-}
-*/
-
-
 
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate
 {
@@ -214,14 +189,7 @@
     
     //load most recent run on startup, but not intended any other time
     RunEvent * loadRun = newRunTemplate;
-    NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
-    //begin run now with no other pause points
-    [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
-    
-    [loadRun setCheckpoints:loadPos];
-    
     [self setRun:loadRun];
-    
     
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
@@ -369,23 +337,53 @@
     
     [self updateHUD];
     
+    if(barPlot)
+    {
+        [barChart removePlot:barPlot];
+        [barChart removePlot:selectedPlot];
+        
+        selectedPlot = nil;
+        barPlot = nil;
+    }
+    
+    [self updateChart];
+    
+    /*
     //set size of view of graph to be equal to that of the split load
     CGRect paceGraphRect = chart.frame;
     paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
-    //set origin so that view is drawn for split filling up the last possible view
-    paceGraphRect.origin = CGPointMake(([[run checkpoints] count] * paceGraphBarWidth) - paceGraphRect.size.width, 0.0);
+    if([[run minCheckpointsMeta] count] < paceGraphSplitObjects)
+    {
+        paceGraphRect.origin = CGPointMake(0, 0);
+    }
+    else    //set origin so that view is drawn for split filling up the last possible view
+    {
+        paceGraphRect.origin = CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceGraphRect.size.width, 0.0);
+    }
     [chart setFrame:paceGraphRect];
     
     
     //draw bar graph with new data from run
-    lastCacheMinute = [[run checkpoints] count] - paceGraphSplitObjects;
-    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
+    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
     [self setupGraphForView:chart withRange:firstRangeToShow];
     
     
-    //set scroll to be at the end of run
-    [paceScroll setContentSize:CGSizeMake([[run checkpoints] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
-    [paceScroll setContentOffset:CGPointMake(([[run checkpoints] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+    if([[run minCheckpointsMeta] count] < paceGraphSplitObjects)
+    {
+        //set scroll to be at start of empty run
+        [paceScroll setContentSize:CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake((paceGraphSplitObjects * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+    }
+    else{
+        
+        //set scroll to be at the end of run
+        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+        
+    }
+    
+    */
     
 }
 
@@ -511,6 +509,8 @@
     readyForPathInit = true; //to restart path at the current users location
     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
     
+    //[run.pausePoints addObject:[NSNumber numberWithInt:[NSDate timeIntervalSinceReferenceDate]]];
+    
 }
 
 
@@ -544,6 +544,16 @@
     
     //update time with 1 second
     run.time += 1;
+    
+    
+    //update hud if multiple of 60, therefore one minute
+    if(!((int)run.time % 3))
+    {
+        //add one checkpoint representing past 60 seconds
+        
+        [self updateChart];
+    }
+    
     
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
@@ -588,16 +598,7 @@
         
         
         [self addPosToRun:latest withPace:adjustedPace];
-        
-        //update hud if multiple of 60, therefore one minute
-        if(!((int)run.time % 60))
-        {
-            //add one checkpoint representing past 60 seconds
-            
-            
-            
-            //[self updateChart];
-        }
+
         
         //decrement bad signal count
         if(badSignalCount > 0 )
@@ -625,8 +626,8 @@
     metaToAdd.time = run.time;
     
     //add both 
-    [run.pos addObject:locToAdd];
     [run.posMeta addObject:metaToAdd];
+    [run.pos addObject:locToAdd];
     
 }
 
@@ -747,7 +748,7 @@
                 timeSinceMapIconRefresh = timeSinceMapCenter;
                 
                 //add an inital position
-                [self addPosToRun:newLocation withPace:0];
+                [self addPosToRun:newLocation withPace:100000];
                 
                 readyForPathInit = false;
                 
@@ -789,15 +790,15 @@
 
                 }
                 
-                //update metrics every 3 seconds
-                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 3))
+                //update metrics every 1 seconds
+                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 1))
                 {
                     [self calculate:newLocation];
                     
                     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
                 }
                 
-                
+                /*
                 //update metrics every 3 seconds
                 if(timeSinceChartReload < ([NSDate timeIntervalSinceReferenceDate] - 60))
                 {
@@ -806,6 +807,7 @@
                     
                     timeSinceChartReload = [NSDate timeIntervalSinceReferenceDate];
                 }
+                 */
                 
             }
         }
@@ -993,7 +995,7 @@
         [chart setFrame:newGraphViewRect];
     }
     else if(curViewMinute > lastCacheMinute + paceGraphSplitObjects - paceGraphSplitLoadOffset &&
-            !(curViewMinute + paceGraphSplitLoadOffset >= [[run checkpoints] count]))
+            !(curViewMinute + paceGraphSplitLoadOffset >= [[run minCheckpoints] count]))
     {
         //reload to right
         lastCacheMinute += paceGraphSplitObjects - paceGraphSplitLoadOffset;
@@ -1015,9 +1017,124 @@
 
 #pragma mark - BarChart
 
+-(CGFloat)maxYForChart
+{
+    CGFloat maxYPace = 0.0f;
+    
+    //find max
+    for(CLLocationMeta * meta in run.minCheckpointsMeta)
+    {
+        CGFloat tempValue = 100.0f/meta.pace;
+        if(tempValue > maxYPace)
+        {
+            maxYPace = tempValue;
+        }
+        
+    }
+    
+    //constraint pace to at least 1 m/s
+    if(maxYPace < 1.0f)
+        maxYPace = 1.0f;
+    
+    
+    return maxYPace + 0.1f; //add small amount to not cutoff top
+    
+}
 
 -(void)updateChart
 {
+    //add meta data for recent minute, or create chart
+    
+    
+    if(barPlot)
+    {
+        //aggregrate last minute, starting at most recent
+        NSInteger index = [run.posMeta count] - 1;
+        NSInteger currentTime = run.time - 1;
+        CLLocationMeta * lastMeta;
+        NSTimeInterval paceSum = 0;
+        
+        if(index >= 0)
+        {
+            do {
+                
+                lastMeta = [run.posMeta objectAtIndex:index];
+                if(lastMeta)
+                {
+                    //aggregate pace
+                    paceSum += [lastMeta pace];
+                }
+                
+                index--;
+                
+                //until we have reached 60 seconds ago
+            } while ((currentTime - 3) < [lastMeta time] && index >= 0);
+            
+
+            NSTimeInterval avgPaceInMin = paceSum / ( [run.posMeta count] - index + 2);
+            
+            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
+            newMinMeta.pace = avgPaceInMin;
+            newMinMeta.time = currentTime;
+            
+            //add meta and loc to array
+            [run.minCheckpointsMeta addObject:newMinMeta];
+            [run.minCheckpoints addObject:[run.pos lastObject]];
+        }
+    }
+    
+    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
+    
+    //set size of view of graph to be equal to that of the split load if not already
+    CGRect paceGraphRect = chart.frame;
+    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
+    if(lastCacheMinute < 0)
+    {
+        paceGraphRect.origin = CGPointMake(0, 0);
+    }
+    else    //set origin so that view is drawn for split filling up the last possible view
+    {
+        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
+    }
+    [chart setFrame:paceGraphRect];
+    
+    
+    if(!barPlot)
+    {
+        //if bar graph not yet loaded
+        
+        //draw bar graph with new data from run
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+        [self setupGraphForView:chart withRange:firstRangeToShow];
+        
+        
+    }
+    else{
+        //if loaded, just update ranges
+        
+        //set x range and y range for new graph config
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        
+        
+        [barPlot reloadData];
+    }
+    
+    //scroll to latest value
+    if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
+    {
+        //set scroll to be at start of empty run
+        [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake(0, 0)];
+    }
+    else{
+        
+        //set scroll to be at the end of run
+        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+    }
+    
+    
     
 }
 
@@ -1055,7 +1172,7 @@
     
     // Add plot space for horizontal bar charts
     plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(100.0f)];
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
     plotSpace.xRange = range;
     
     //[plotSpace setAllowsUserInteraction:true];
@@ -1081,7 +1198,7 @@
     // add bar plot to view, all bar customization done here
     CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
     barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
-    barPlot.baseValue  = CPTDecimalFromString(@"2");
+    barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.identifier = kPlot;
     barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
@@ -1108,7 +1225,7 @@
     selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
     selectedPlot.barCornerRadius               = CPTFloat(5.0);
     selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    selectedPlot.baseValue  = CPTDecimalFromString(@"2");
+    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
     
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
@@ -1163,25 +1280,31 @@
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
     //return number of checkpoints for run to determine # of bars
-    return [[run checkpoints] count];
+    //return the full width of the chart view to ensure bars are not autoshrunk
+    return ([[run minCheckpointsMeta] count] < paceGraphSplitObjects) ? paceGraphSplitObjects : [[run minCheckpointsMeta] count];
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
-    NSDecimalNumber *num = nil;
+    NSNumber *num = nil;
     CLLocationMeta * metaForPos;
-    NSInteger xCoord;
+    
+    if(index + 1 > [[run minCheckpointsMeta] count])
+    {
+        return [NSNumber numberWithInt:0];
+    }
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
             case CPTBarPlotFieldBarLocation:
                 //x location of index
                 
-                metaForPos = [[run checkpoints] objectAtIndex:index];
+                metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
                 
-                xCoord = metaForPos.time;
+                //lastPause = [run.pausePoints lastObject];
                 
-                num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:xCoord];
+                //divide time by 60 seconds to get minute index, then minus half a minute to center bar plots
+                num = [NSNumber  numberWithInt:((metaForPos.time)/3) + 1];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -1190,20 +1313,22 @@
                 {
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
                     {
-                        metaForPos = [[run checkpoints] objectAtIndex:index];
-                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:metaForPos.pace];
+                        metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
+                        //must invert number 
+                        num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
                     }
                 }
                 else{
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedBarIndex && index <= (selectedBarIndex + numMinutesAtKmSelected))))
                     {
-                        metaForPos = [[run checkpoints] objectAtIndex:index];
-                        num = (NSDecimalNumber *)[NSDecimalNumber numberWithUnsignedInteger:metaForPos.pace];
+                        metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
+                        num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
                     }
                 }
                 break;
         }
     }
+    
     
     return num;
 }
@@ -1223,10 +1348,10 @@
     
     
     //change "current pace" and value to respective value at checkpoint
-    CLLocationMeta * metaForPos = [[run checkpoints] objectAtIndex:idx];
+    CLLocationMeta * metaForPos = [[run minCheckpointsMeta] objectAtIndex:idx];
     
-    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.2f",metaForPos.time]];
-    [currentPaceValue setText:[NSString stringWithFormat:@"%.2f",metaForPos.pace]];
+    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.1f",metaForPos.time]];
+    [currentPaceValue setText:[NSString stringWithFormat:@"%.1f",metaForPos.pace]];
     
 }
 
@@ -1432,7 +1557,7 @@
         //already in this mode, cycle to next km
         selectedBarIndex -= 15;
         if(selectedBarIndex < 0)    //cycle to beginning if necessary
-            selectedBarIndex = [[run checkpoints] count] - 15;
+            selectedBarIndex = [[run minCheckpoints] count] - 15;
         
     }
     //reload labels/selection

@@ -22,9 +22,9 @@
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
 #define mapDragPullYOffset 20
-#define paceGraphBarWidth 22
+#define paceGraphBarWidth 25
 #define paceGraphSplitLoadOffset 20
-#define paceGraphSplitObjects 100
+#define paceGraphSplitObjects 30
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //50m maximum
@@ -62,7 +62,6 @@
     BOOL kmPaceShowMode;
     NSUInteger numMinutesAtKmSelected;
     CLLocationManager *locationManager;
-    NSMutableArray *tLocs;
     NSMutableArray *crumbPaths;
     NSMutableArray *crumbPathViews;
     NSTimeInterval timeSinceMapCenter;

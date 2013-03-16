@@ -34,10 +34,13 @@
 @synthesize avgPace;
 @synthesize time;
 @synthesize live,metric,ghost;
-@synthesize checkpoints,distanceCheckpoints,pos,pausePoints;
+@synthesize minCheckpointsMeta, minCheckpoints;
+@synthesize kmCheckpoints,kmCheckpointsMeta;
 @synthesize metricGoal;
 @synthesize eventType;
 @synthesize map;
+@synthesize pos,posMeta;
+@synthesize pausePoints;
 
 
 +(NSString * )stringForMetric:(RunMetric) metric
@@ -141,7 +144,13 @@
         live = true;
         ghost = false;
         pos  = [[NSMutableArray alloc] initWithCapacity:1000];
-    
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
+        //[pausePoints addObject:[NSNumber numberWithInt:[NSDate timeIntervalSinceReferenceDate]]];
         map = [[RunMap alloc] init];
         return self;
     }

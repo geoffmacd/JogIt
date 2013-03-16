@@ -67,14 +67,7 @@
         
         //load most recent run on startup, but not intended any other time
         RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
-        loadRun.live = false;
-        NSMutableArray * loadPos = [[NSMutableArray alloc] initWithCapacity:1000];
-        //begin run now with no other pause points
-        [loadRun setPausePoints:[[NSMutableArray alloc] initWithObjects:[NSDate date]  , nil]];
         
-        
-        //[loadRun setPos:loadPos];
-        [loadRun setCheckpoints:loadPos];
         //for every 10 days before today 
         [loadRun setDate:[loadRun.date dateByAddingTimeInterval:-(86400 * i * 10)]];
                           
