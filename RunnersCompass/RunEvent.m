@@ -70,6 +70,13 @@
 
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat
 {
+    //expects paceToFormat as s/km
+    
+    
+    //if it is 0 , just return 0:00 right away
+    if(paceToFormat == 0)
+        return @"0:00";
+    
     NSInteger minutes,seconds;
     
     minutes = paceToFormat/ 60;

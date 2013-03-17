@@ -90,7 +90,7 @@
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
+    //locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
     //[locationManager startUpdatingLocation];
     
     //init paths
@@ -155,7 +155,7 @@
         [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
     }
     
-    [self setLabelsForKMSelection:selectedBarIndex];
+    [self setPaceLabels];
     
 }
 
@@ -250,7 +250,7 @@
                                                                            //animate the view controller
                                                                            //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
                                                                            [delegate pauseAnimation:^{
-                                                                               [self startRun];
+                                                                               //[self startRun];
                                                                            }];
                                                                            
                                                                            
@@ -331,7 +331,6 @@
         [map setUserTrackingMode:MKUserTrackingModeFollow];
     }
     
-    
     [self drawMapOverlayForRun];
     [self setLabelsForUnits];
     
@@ -347,44 +346,6 @@
     }
     
     [self updateChart];
-    
-    /*
-    //set size of view of graph to be equal to that of the split load
-    CGRect paceGraphRect = chart.frame;
-    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
-    if([[run minCheckpointsMeta] count] < paceGraphSplitObjects)
-    {
-        paceGraphRect.origin = CGPointMake(0, 0);
-    }
-    else    //set origin so that view is drawn for split filling up the last possible view
-    {
-        paceGraphRect.origin = CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceGraphRect.size.width, 0.0);
-    }
-    [chart setFrame:paceGraphRect];
-    
-    
-    //draw bar graph with new data from run
-    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
-    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
-    [self setupGraphForView:chart withRange:firstRangeToShow];
-    
-    
-    if([[run minCheckpointsMeta] count] < paceGraphSplitObjects)
-    {
-        //set scroll to be at start of empty run
-        [paceScroll setContentSize:CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake((paceGraphSplitObjects * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
-    }
-    else{
-        
-        //set scroll to be at the end of run
-        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
-        
-    }
-    
-    */
-    
 }
 
 
@@ -429,10 +390,6 @@
     }
     else
     {
-        //disable km selection mode
-        kmPaceShowMode = false;
-        selectedBarIndex = -1;
-        [self setLabelsForKMSelection:selectedBarIndex];
         
         [UIView transitionWithView:pauseImage
                           duration:0.3f
@@ -460,6 +417,8 @@
                             [finishBut setHidden:true];
                             //start run
                             [self startRun];
+
+                            
                         }];
         
         
@@ -509,7 +468,12 @@
     readyForPathInit = true; //to restart path at the current users location
     lastCalculate = [NSDate timeIntervalSinceReferenceDate];
     
-    //[run.pausePoints addObject:[NSNumber numberWithInt:[NSDate timeIntervalSinceReferenceDate]]];
+    //disable km selection mode
+    kmPaceShowMode = false;
+    numMinutesAtKmSelected = -1;
+    selectedMinIndex = [[run minCheckpointsMeta] count];
+    selectedKmIndex = [[run kmCheckpointsMeta] count];
+    [self setPaceLabels];
     
 }
 
@@ -541,23 +505,44 @@
 {
     //process 1 second gone by in timer
     
-    
     //update time with 1 second
     run.time += 1;
     
-    
     //update hud if multiple of 60, therefore one minute
-    if(!((int)run.time % 3))
+    if(!((int)run.time % barPeriod))
     {
         //add one checkpoint representing past 60 seconds
         
         [self updateChart];
     }
     
+    if(selectedKmIndex == [[run kmCheckpointsMeta] count] )
+    {
+        //need current time update to lastKMLabel
+        
+        
+        DataTest* data = [DataTest sharedData];
+        NSString *distanceUnitText = [data.prefs getDistanceUnit];
+        NSTimeInterval timeToAdjust = 0;
+        
+        if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
+        {
+            CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
+            //get distance from km just by looking at index
+            timeToAdjust = priorKmMeta.time;
+        }
+        
+        //show current time in the current km
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
+        [lastKmPace setText:paceForCurrentIndex];
+    }
     
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
     [timeLabel setText:stringToSetTime];
+    
+    
+    
 }
 
 
@@ -576,6 +561,7 @@
         NSTimeInterval paceTimeInterval = latest.timestamp.timeIntervalSinceReferenceDate - prior.timestamp.timeIntervalSinceReferenceDate;
 
         CLLocationDistance distanceToAdd = [self calcDistance:latest];
+        CLLocationDistance oldRunDistance = run.distance;
         run.distance += distanceToAdd;
         
         //add calories @ 0.08 cal per minute per lb
@@ -589,33 +575,85 @@
         CLLocationDistance paceDistance = distanceToAdd;
         CLLocationSpeed currentPace = paceTimeInterval / paceDistance;//s/m
         NSTimeInterval adjustedPace = (currentPace * 1000); //s / km
-        NSString * stringToSetTime = [RunEvent getPaceString:adjustedPace];
-        [currentPaceValue setText:stringToSetTime];
         
-        
-        //update hud too
-        [self updateHUD];
-        
-        
+    
         [self addPosToRun:latest withPace:adjustedPace];
 
-        
         //decrement bad signal count
         if(badSignalCount > 0 )
             badSignalCount--;
         
+        //check if a new km was created
+        if((NSInteger)(oldRunDistance/1000) != (NSInteger)(run.distance/1000))
+        {
+            //add to object
+            CLLocationMeta * newKM = [[CLLocationMeta alloc] init];
+            CLLocationMeta * lastPosMeta = [[run posMeta] lastObject] ;
+            newKM.time = [lastPosMeta time]; //set time to most recent
+            newKM.pace = 0;
+            CLLocationMeta * pos;
+            CLLocationMeta * oldKM = [[run kmCheckpointsMeta] lastObject];
+            
+            //aggregrate past position until we get to the time of the last km or start
+            NSInteger numPosCounted = 0;
+            
+            for(int i = [[run posMeta] count] - 1; i >= 0; i--)
+            {
+                //get posMeta and see if time is less than last km's time
+                pos = [[run posMeta] objectAtIndex:i];
+                
+                if([[run kmCheckpointsMeta] count] > 0)
+                {
+                    if(pos.time <= [oldKM time])
+                    {
+                        //all positions have been accounted for
+                        break;
+                    }
+                }
+                
+                if(pos.time <= 0)
+                {
+                    newKM.pace += pos.pace;
+                    numPosCounted++;
+                    break;
+                }
+                
+                
+                newKM.pace += pos.pace;
+                numPosCounted++;
+            }
+            
+            //breaked at last km end position
+            //aggregrate pace
+            newKM.pace =  newKM.pace / (numPosCounted);
+            
+            //add to array
+            [[run kmCheckpointsMeta] addObject:newKM];
+            [[run kmCheckpoints] addObject:latest];
+            
+        }
+        
+        
     }
     else{
-        
+        /*
         if(countOfLoc < 1)
             [self addPosToRun:latest withPace:0];
+         */
         
         //incremenet bad signal count and wait for better signal
         NSLog(@"bad signal - cant process");
         badSignalCount++;
     }
     
+    kmPaceShowMode = false;
+    selectedMinIndex = [[run minCheckpointsMeta] count] ;
+    selectedKmIndex = [[run kmCheckpointsMeta] count];
+    [self setPaceLabels];
     
+    
+    //update hud too after distance
+    [self updateHUD];
 }
 
 -(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd
@@ -637,13 +675,10 @@
     
     //set distance in km
     [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
-    
-    //avg pace
-    NSString * stringToSetTime = [RunEvent getPaceString:(run.avgPace * 1000)];
-    [paceLabel setText:stringToSetTime];
+
     
     //update time displayed
-    stringToSetTime = [RunEvent getTimeString:run.time];
+    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
     [timeLabel setText:stringToSetTime];
     
     [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
@@ -720,8 +755,8 @@
 
     
     //add anotation to map
-    if (newLocation.timestamp > oldLocation.timestamp)
-    {
+    //if (newLocation.timestamp > oldLocation.timestamp)
+    //{
 		
 		// make sure the old and new coordinates are different
         if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&
@@ -748,7 +783,7 @@
                 timeSinceMapIconRefresh = timeSinceMapCenter;
                 
                 //add an inital position
-                [self addPosToRun:newLocation withPace:100000];
+                [self addPosToRun:newLocation withPace:0];
                 
                 readyForPathInit = false;
                 
@@ -775,8 +810,19 @@
                     [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
                 }
                 
+                [self calculate:newLocation];
+                //update metrics every 1 seconds
+                /*
+                 if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - calcPeriod))
+                 {
+                 [self calculate:newLocation];
+                 
+                 lastCalculate = [NSDate timeIntervalSinceReferenceDate];
+                 }
+                 */
+                
                 //reload map icon every 30 seconds, must happen before animation to prevent image being captured during meaningless position
-                if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - 30))
+                if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod))
                 {
                     [self reloadMapIcon];
                     
@@ -784,34 +830,15 @@
                 
                 //zoom every 5 seconds, or 30 seconds inMapView
                 //also do not auto zoom if user has recently scrolled
-                if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - (inMapView ? 5 : 30))) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - 15)))
+                if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
                 {
                     [self autoZoomMap:newLocation];
 
                 }
-                
-                //update metrics every 1 seconds
-                if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - 1))
-                {
-                    [self calculate:newLocation];
-                    
-                    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
-                }
-                
-                /*
-                //update metrics every 3 seconds
-                if(timeSinceChartReload < ([NSDate timeIntervalSinceReferenceDate] - 60))
-                {
-                    
-                    [self updateChart];
-                    
-                    timeSinceChartReload = [NSDate timeIntervalSinceReferenceDate];
-                }
-                 */
-                
+            
             }
         }
-    }
+    //}
 }
 
 
@@ -1024,6 +1051,9 @@
     //find max
     for(CLLocationMeta * meta in run.minCheckpointsMeta)
     {
+        if(meta.pace == 0)
+            continue;
+        
         CGFloat tempValue = 100.0f/meta.pace;
         if(tempValue > maxYPace)
         {
@@ -1050,7 +1080,8 @@
     {
         //aggregrate last minute, starting at most recent
         NSInteger index = [run.posMeta count] - 1;
-        NSInteger currentTime = run.time - 1;
+        NSInteger sumCount = 0;
+        NSInteger currentTime = run.time;
         CLLocationMeta * lastMeta;
         NSTimeInterval paceSum = 0;
         
@@ -1059,19 +1090,19 @@
             do {
                 
                 lastMeta = [run.posMeta objectAtIndex:index];
-                if(lastMeta)
-                {
-                    //aggregate pace
-                    paceSum += [lastMeta pace];
-                }
+                //aggregate pace
+                paceSum += [lastMeta pace];
+                sumCount++;
                 
                 index--;
                 
                 //until we have reached 60 seconds ago
-            } while ((currentTime - 3) < [lastMeta time] && index >= 0);
+            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
             
+            if(index == 0)
+                sumCount--;
 
-            NSTimeInterval avgPaceInMin = paceSum / ( [run.posMeta count] - index + 2);
+            NSTimeInterval avgPaceInMin = paceSum / sumCount;
             
             CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
             newMinMeta.pace = avgPaceInMin;
@@ -1238,37 +1269,249 @@
 
 #pragma mark - KM Selection methods
 
-
-
--(void)setLabelsForKMSelection:(NSInteger) indexSelected
+-(NSInteger) getMinBarIndexForKMSelecton:(NSInteger) kmIndex
 {
+    if([[run kmCheckpointsMeta] count] > kmIndex - 1 && (kmIndex-1 >= 0))
+    {
+        CLLocationMeta * previousKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex-1];
+        NSTimeInterval kmStartTime = [previousKM time];
+        
+        //get all minutes within these bounds
+        NSTimeInterval time;
+        NSInteger minIndex = 0;
+        
+        for (CLLocationMeta * min in [run minCheckpointsMeta])
+        {
+            time = [min time];
+            
+            if(time > kmStartTime)
+                return minIndex;
+            
+            minIndex++;
+        }
+        
+        return  [[run minCheckpointsMeta] count] - 1;
+    }
+    
+    return 0;
+}
+
+
+-(NSInteger) getBarCountForKMSelection:(NSInteger) kmIndex
+{
+    
+    if([[run kmCheckpointsMeta] count] > kmIndex)
+    {
+        CLLocationMeta * selectedKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex];
+        NSTimeInterval kmEndTime = [selectedKM time];
+        NSTimeInterval kmStartTime;
+        if([[run kmCheckpointsMeta] count] > 0 && kmIndex-1 >= 0)
+        {
+            CLLocationMeta * previousKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex-1];
+            kmStartTime = [previousKM time];
+        }
+        else
+        {
+            kmStartTime = 0;
+        }
+        
+        //get all minutes within these bounds
+        NSTimeInterval time;
+        NSInteger numBars = 0;
+        
+        for (CLLocationMeta * min in [run minCheckpointsMeta])
+        {
+            time = [min time];
+            
+            if(time > kmStartTime && time < kmEndTime)
+                numBars++;
+            
+        }
+        
+        return  numBars;
+    }
+    else{
+        //next km doesnt exist to get end time
+        NSTimeInterval kmStartTime;
+        if([[run kmCheckpointsMeta] count]  > 0 && kmIndex-1 >= 0)
+        {
+            CLLocationMeta * previousKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex-1];
+            kmStartTime = [previousKM time];
+        }
+        else
+        {
+            kmStartTime = 0;
+        }
+        
+        //get all minutes within these bounds
+        NSTimeInterval time;
+        NSInteger numBars = 0;
+        
+        for (CLLocationMeta * min in [run minCheckpointsMeta])
+        {
+            time = [min time];
+            
+            if(time > kmStartTime)
+                numBars++;
+            
+        }
+        
+        return  numBars;
+    }
+    
+    return [[run minCheckpointsMeta] count];
+}
+
+
+
+-(void)setPaceLabels
+{
+    //responible for two bottom sections
     
     DataTest* data = [DataTest sharedData];
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
-    //set the labels to be for the km if this method was called with an index
-    if(indexSelected >= 0 )
+    //avg pace
+    NSString * stringToSetTime = [RunEvent getPaceString:(run.avgPace * 1000)];
+    [paceLabel setText:stringToSetTime];
+    
+    
+    //current pace/selected pace
+    CLLocationMeta * selectedMinMeta;
+    NSString * selectedPaceLabel;
+    NSString * selectedPaceString;
+    if([[run minCheckpointsMeta] count] == 0)
     {
-        //RunPos * selectionCheckpoint = [[run checkpoints] objectAtIndex:indexSelected];
+        // nothing logged yet, just put 0:00
+        selectedMinMeta = [[run minCheckpointsMeta] lastObject];
+        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = @"0:00";
+    }
+    else if(selectedMinIndex == [[run minCheckpointsMeta] count])
+    {
+        // current pace
+        selectedMinMeta = [[run posMeta] lastObject];
+        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
+    }
+    else if(kmPaceShowMode){
         
-        
-        //set the label to say 'KM 4' or 'Km 17'
-        //[lastKmLabel setText:[NSString stringWithFormat:@"%@ %.f ", distanceUnitText, selectionCheckpoint.pos.x]];
-        
-        //load fake values
-        [lastKmPace setText:@"4:42"];
-        [oldpace1 setText:@"4:12"];
-        [oldpace2 setText:@"4:37"];
-        [oldpace3 setText:@"4:44"];
+        //km paceshow mode so still say current pace
+        selectedMinMeta = [[run posMeta] lastObject];
+        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
     }
     else{
         
-        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"CurrentWord", @"Current word"), distanceUnitText]];
-        //load fake values
-        [lastKmPace setText:@"4:42"];
-        [oldpace1 setText:@"4:42"];
-        [oldpace2 setText:@"4:11"];
-        [oldpace3 setText:@"4:59"];
+        //selection mode of one bar
+        selectedMinMeta = [[run posMeta] lastObject];
+        selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
+    }
+    [currentPaceLabel setText:selectedPaceLabel];
+    [currentPaceValue setText:selectedPaceString];
+    
+
+    
+    
+    if([[run kmCheckpointsMeta] count] == 0)
+    {
+        //no km's so far, just set lastKm to be time
+        
+        //set the label to say 'KM 4' or 'Km 17'
+        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
+        
+        //load current
+        [lastKmPace setText:[RunEvent getPaceString:run.time]];
+        
+        //set old to be empty
+        NSString * paceForOld = @"";
+        [oldpace1 setText:paceForOld];
+        [oldpace2 setText:paceForOld];
+        [oldpace3 setText:paceForOld];
+    }
+    else if(selectedKmIndex == [[run kmCheckpointsMeta] count])
+    {
+        //show current km in lastKmLabel
+
+        CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+        CLLocationMeta * oldKMMeta;
+        //get distance from km just by looking at index
+        
+        //set the label to say 'KM 4' or 'Km 17'
+        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
+        
+        //show current time in the current km
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - priorKmMeta.time)];
+        //[lastKmPace setText:paceForCurrentIndex];
+        
+        //load old values
+        NSString * paceForOld;
+        if(selectedKmIndex - 1  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace1 setText:paceForOld];
+        if(selectedKmIndex - 2  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace2 setText:paceForOld];
+        if(selectedKmIndex - 3  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace3 setText:paceForOld];
+    }
+    else{
+        //showing only prior kms, since selection is not the last one
+        
+        CLLocationMeta * selectionKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex];
+        CLLocationMeta * oldKMMeta;
+        //get distance from km just by looking at index
+        
+        //set the label to say 'KM 4' or 'Km 17'
+        [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
+        
+        //load current
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace]];
+        [lastKmPace setText:paceForCurrentIndex];
+        
+        //load old values
+        NSString * paceForOld;
+        if(selectedKmIndex - 1  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace1 setText:paceForOld];
+        if(selectedKmIndex - 2  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace2 setText:paceForOld];
+        if(selectedKmIndex - 3  >= 0)
+        {
+            oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+        }
+        else
+            paceForOld = @"";
+        [oldpace3 setText:paceForOld];
     }
     
 }
@@ -1301,28 +1544,33 @@
                 
                 metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
                 
-                //lastPause = [run.pausePoints lastObject];
-                
                 //divide time by 60 seconds to get minute index, then minus half a minute to center bar plots
-                num = [NSNumber  numberWithInt:((metaForPos.time)/3) + 1];
+                num = [NSNumber  numberWithInt:((metaForPos.time)/barPeriod)];
                 break;
                 
             case CPTBarPlotFieldBarTip:
                 //y location of bar
                 if(!kmPaceShowMode)
                 {
-                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
+                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedMinIndex))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        //must invert number 
-                        num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
+                        //must invert number
+                        if(metaForPos.pace == 0)
+                            num = [NSNumber numberWithFloat:0.1f];
+                        else
+                            num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
                     }
                 }
                 else{
-                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedBarIndex && index <= (selectedBarIndex + numMinutesAtKmSelected))))
+                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedMinIndex && index <= (selectedMinIndex + numMinutesAtKmSelected))))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
+                        //must invert number
+                        if(metaForPos.pace == 0)
+                            num = [NSNumber numberWithFloat:0.1f];
+                        else
+                            num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
                     }
                 }
                 break;
@@ -1338,20 +1586,16 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
-    //set the select pace
-    selectedBarIndex = idx;
-    [self setLabelsForKMSelection:idx];
+    //set the  minute
     
     kmPaceShowMode = false;
+    numMinutesAtKmSelected = 1;
+    selectedMinIndex = idx;
+    selectedKmIndex = [[run kmCheckpointsMeta] count];
     
+    //set all pace labels for this minute
+    [self setPaceLabels];
     [selectedPlot reloadData];
-    
-    
-    //change "current pace" and value to respective value at checkpoint
-    CLLocationMeta * metaForPos = [[run minCheckpointsMeta] objectAtIndex:idx];
-    
-    [currentPaceLabel setText:[NSString stringWithFormat:@"Minute %.1f",metaForPos.time]];
-    [currentPaceValue setText:[NSString stringWithFormat:@"%.1f",metaForPos.pace]];
     
 }
 
@@ -1549,25 +1793,27 @@
         kmPaceShowMode = true;
         
         //start at last km
-        selectedBarIndex = 285;
-        numMinutesAtKmSelected = 15;
-        
+        selectedKmIndex = [[run kmCheckpointsMeta] count];
     }
     else{
         //already in this mode, cycle to next km
-        selectedBarIndex -= 15;
-        if(selectedBarIndex < 0)    //cycle to beginning if necessary
-            selectedBarIndex = [[run minCheckpoints] count] - 15;
+        selectedKmIndex --;
+        if(selectedKmIndex < 0)    //cycle to beginning if necessary
+            selectedKmIndex = [[run kmCheckpointsMeta] count];
         
     }
+    
     //reload labels/selection
+    selectedMinIndex = [self getMinBarIndexForKMSelecton:selectedKmIndex];
+    numMinutesAtKmSelected = [self getBarCountForKMSelection:selectedKmIndex];
+    [self setPaceLabels];
     [selectedPlot reloadData];
-    [self setLabelsForKMSelection:selectedBarIndex];
     
     //scroll to selected index
     CGRect rectToScroll = paceScroll.frame;
-    rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedBarIndex, 0.0);
+    rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedMinIndex, 0.0);
     [paceScroll scrollRectToVisible:rectToScroll animated:true];
+    
 }
 
 - (IBAction)statusButTapped:(id)sender {

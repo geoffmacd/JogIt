@@ -28,6 +28,11 @@
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //50m maximum
+#define calcPeriod 1 //every 2 seconds
+#define barPeriod 2 //bar represents 10 seconds
+#define autoZoomPeriod 4 //15 seconds before auto zoom
+#define userDelaysAutoZoom 5 //5 second delays before autozoom
+#define reloadMapIconPeriod 4 //15 second reload map icon period
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -46,7 +51,6 @@
 @interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
 {
     UIActionSheet *sheet;
-    NSInteger selectedBarIndex;
     CPTXYGraph *barChart;
     NSTimer *timer;
     CPTBarPlot * selectedPlot;
@@ -59,8 +63,12 @@
     UIScrollView *mapScroll;
     NSTimer * shadeTimer;
     CGFloat countdown;
+    
     BOOL kmPaceShowMode;
+    NSInteger selectedMinIndex;
+    NSInteger selectedKmIndex;
     NSUInteger numMinutesAtKmSelected;
+    
     CLLocationManager *locationManager;
     NSMutableArray *crumbPaths;
     NSMutableArray *crumbPathViews;
