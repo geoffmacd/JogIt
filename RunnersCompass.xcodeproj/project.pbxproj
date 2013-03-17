@@ -52,6 +52,7 @@
 		67AF65E816D9B152004A484C /* CreateGoalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65E716D9B151004A484C /* CreateGoalCell.xib */; };
 		67AF65ED16D9B3F3004A484C /* Goal.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65EC16D9B3F2004A484C /* Goal.m */; };
 		67AF65F416D9E5C2004A484C /* DataTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65F316D9E5C1004A484C /* DataTest.m */; };
+		67B1288416F58445003A15A5 /* KMAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B1288316F58445003A15A5 /* KMAnnotation.m */; };
 		67B257EF16EFF13B00CF337E /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B257D316EFF13A00CF337E /* add.png */; };
 		67B257F016EFF13B00CF337E /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B257D416EFF13A00CF337E /* add@2x.png */; };
 		67B257F116EFF13B00CF337E /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B257D516EFF13A00CF337E /* background.png */; };
@@ -235,6 +236,8 @@
 		67AF65EC16D9B3F2004A484C /* Goal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goal.m; sourceTree = "<group>"; };
 		67AF65F216D9E5C0004A484C /* DataTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTest.h; sourceTree = "<group>"; };
 		67AF65F316D9E5C1004A484C /* DataTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTest.m; sourceTree = "<group>"; };
+		67B1288216F58445003A15A5 /* KMAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMAnnotation.h; sourceTree = "<group>"; };
+		67B1288316F58445003A15A5 /* KMAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMAnnotation.m; sourceTree = "<group>"; };
 		67B257D316EFF13A00CF337E /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		67B257D416EFF13A00CF337E /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add@2x.png"; sourceTree = "<group>"; };
 		67B257D516EFF13A00CF337E /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -788,6 +791,8 @@
 		67FC068616A111A100491C97 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				67B1288216F58445003A15A5 /* KMAnnotation.h */,
+				67B1288316F58445003A15A5 /* KMAnnotation.m */,
 				67A8D58D16F143230070E38B /* Overlay */,
 				67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */,
 				67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */,
@@ -1003,6 +1008,7 @@
 				67A8D59216F143380070E38B /* CrumbPath.m in Sources */,
 				67A8D59316F143380070E38B /* CrumbPathView.m in Sources */,
 				67A8D59616F150EE0070E38B /* Util.m in Sources */,
+				67B1288416F58445003A15A5 /* KMAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

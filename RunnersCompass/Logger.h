@@ -15,9 +15,10 @@
 #import "CrumbPath.h"
 #import "CrumbPathView.h"
 #import "Util.h"
+#import "KMAnnotation.h"
 
 
-#define mapZoomDefault 500 //m
+#define mapZoomDefault 4000 //m
 #define mapViewYOffset 173
 #define mapDragCutoff 250
 #define mapDragPreventOpposite 5
@@ -33,6 +34,7 @@
 #define autoZoomPeriod 4 //15 seconds before auto zoom
 #define userDelaysAutoZoom 5 //5 second delays before autozoom
 #define reloadMapIconPeriod 4 //15 second reload map icon period
+#define autoPauseDelay 5 //5 seconds before app pauses
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -72,6 +74,7 @@
     CLLocationManager *locationManager;
     NSMutableArray *crumbPaths;
     NSMutableArray *crumbPathViews;
+    
     NSTimeInterval timeSinceMapCenter;
     NSTimeInterval timeSinceMapIconRefresh;
     NSTimeInterval lastMapTouch;
@@ -80,6 +83,8 @@
     NSInteger badSignalCount;
     NSInteger consecutiveHeadingCount;
     NSInteger timeSinceChartReload;
+    NSInteger autoPauseCount;
+    NSMutableArray *mapAnnotations;
 }
 
 

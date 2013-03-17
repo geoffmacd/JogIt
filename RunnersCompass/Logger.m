@@ -7,7 +7,6 @@
 //
 
 #import "Logger.h"
-#import <objc/objc-api.h>
 
 
 @interface LoggerViewController ()
@@ -98,6 +97,8 @@
     crumbPathViews = [[NSMutableArray alloc] initWithCapacity:100];
     readyForPathInit = true;
     
+    //map annotations
+    mapAnnotations = [[NSMutableArray alloc] initWithCapacity:10];
     
     [map setShowsUserLocation:YES];
     [map setDelegate:self];
@@ -249,9 +250,7 @@
                                                                            
                                                                            //animate the view controller
                                                                            //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
-                                                                           [delegate pauseAnimation:^{
-                                                                               //[self startRun];
-                                                                           }];
+                                                                           [delegate pauseAnimation:nil];
                                                                            
                                                                            
                                                                        }];
@@ -346,6 +345,8 @@
     }
     
     [self updateChart];
+    
+    autoPauseCount = 0;
 }
 
 
@@ -375,7 +376,7 @@
         finishBut.alpha = 0.0f;
         [finishBut setHidden:false];
         [UIView transitionWithView:finishBut
-                          duration:0.3f
+                          duration:0.5f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 1.0f;
@@ -384,9 +385,6 @@
                             //stop location updates
                             [self stopRun];
                         }];
-        
-        
-        
     }
     else
     {
@@ -409,7 +407,7 @@
         
         finishBut.alpha = 1.0f;
         [UIView transitionWithView:finishBut
-                          duration:0.3f
+                          duration:0.5f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 0.0f;
@@ -420,11 +418,7 @@
 
                             
                         }];
-        
-        
     }
-    
-    
 }
 
 
@@ -475,24 +469,29 @@
     selectedKmIndex = [[run kmCheckpointsMeta] count];
     [self setPaceLabels];
     
+    //reset count
+    autoPauseCount = 0;
 }
 
 
 -(void) stopRun
 {
-    //stop timer updating
-    [timer invalidate];
-    
     
     //stop updates
     NSLog(@"stopped tracking.....");
     [locationManager stopUpdatingLocation];
     
+    //set map to follow user before starting track
+    [map setUserTrackingMode:MKUserTrackingModeFollow];
+    
+    //stop timer updating
+    [timer invalidate];
+    
+    
     //only zoom if there exists a last point
     if([run.pos lastObject])
     {
         [self autoZoomMap:[run.pos lastObject]];
-        
     }
     
     //update map icon one last time
@@ -508,6 +507,26 @@
     //update time with 1 second
     run.time += 1;
     
+    CLLocationMeta * lastMeta = [run.posMeta lastObject];
+    CLLocationMeta * lastBar = [[run minCheckpointsMeta] lastObject];
+    if(lastMeta.time  <= lastBar.time)
+    {
+        //autoPauseCount++;
+        
+        if(autoPauseCount > autoPauseDelay)
+        {
+            //pause logger
+            [delegate pauseAnimation:nil];
+        }
+    }
+    else{
+        
+        //decrement to reduce autopause chance
+        if(autoPauseCount > 0)
+            autoPauseCount--;
+    }
+    
+    
     //update hud if multiple of 60, therefore one minute
     if(!((int)run.time % barPeriod))
     {
@@ -516,10 +535,9 @@
         [self updateChart];
     }
     
-    if(selectedKmIndex == [[run kmCheckpointsMeta] count] )
+    if(selectedKmIndex == [[run kmCheckpointsMeta] count])
     {
         //need current time update to lastKMLabel
-        
         
         DataTest* data = [DataTest sharedData];
         NSString *distanceUnitText = [data.prefs getDistanceUnit];
@@ -631,15 +649,22 @@
             [[run kmCheckpointsMeta] addObject:newKM];
             [[run kmCheckpoints] addObject:latest];
             
+            //add annotation
+            KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
+            
+            DataTest* data = [DataTest sharedData];
+            NSString *distanceUnitText = [data.prefs getDistanceUnit];
+            newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
+            newAnnotation.paceString = [RunEvent getPaceString:[newKM pace]];
+            newAnnotation.kmCoord = [latest coordinate];
+            
+            //add to array
+            [mapAnnotations addObject:newAnnotation];
+            //actually add to map
+            [map addAnnotation:newAnnotation];
         }
-        
-        
     }
     else{
-        /*
-        if(countOfLoc < 1)
-            [self addPosToRun:latest withPace:0];
-         */
         
         //incremenet bad signal count and wait for better signal
         NSLog(@"bad signal - cant process");
@@ -752,11 +777,10 @@
     CLLocation *oldLocation = [run.pos lastObject];
     
     NSLog(@"%d  - lat%f - lon%f  - accur %f , %f  -speed %f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy , newLocation.speed);
-
     
     //add anotation to map
-    //if (newLocation.timestamp > oldLocation.timestamp)
-    //{
+    if (newLocation.timestamp > oldLocation.timestamp)
+    {
 		
 		// make sure the old and new coordinates are different
         if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&
@@ -795,7 +819,6 @@
                 // far enough from the previous location, use the returned updateRect to redraw just
                 // the changed area.
 
-                //
                 MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
                 
                 if (!MKMapRectIsNull(updateRect))
@@ -810,22 +833,13 @@
                     [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
                 }
                 
+                //calculate every time
                 [self calculate:newLocation];
-                //update metrics every 1 seconds
-                /*
-                 if(lastCalculate < ([NSDate timeIntervalSinceReferenceDate] - calcPeriod))
-                 {
-                 [self calculate:newLocation];
-                 
-                 lastCalculate = [NSDate timeIntervalSinceReferenceDate];
-                 }
-                 */
                 
                 //reload map icon every 30 seconds, must happen before animation to prevent image being captured during meaningless position
                 if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod))
                 {
                     [self reloadMapIcon];
-                    
                 }
                 
                 //zoom every 5 seconds, or 30 seconds inMapView
@@ -833,12 +847,23 @@
                 if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
                 {
                     [self autoZoomMap:newLocation];
-
                 }
             
             }
+            //decrement to reduce autopause chance
+            if(autoPauseCount > 0)
+                autoPauseCount--;
         }
-    //}
+        else{
+            autoPauseCount++;
+            
+            if(autoPauseCount > autoPauseDelay)
+            {
+                //pause logger
+                [delegate pauseAnimation:nil];
+            }
+        }
+    }
 }
 
 
@@ -849,7 +874,14 @@
     
     timeSinceMapIconRefresh = [NSDate timeIntervalSinceReferenceDate];
     
+    //only remove annotations if in mapview to avoid dropping them every 5 seconds
+    if(!inMapView)
+        [map removeAnnotations:mapAnnotations];
+    
     UIImage * newMapIcon = [Util imageWithView:map];
+    
+    if(!inMapView)
+        [map addAnnotations:mapAnnotations];
     
     //blur
     //newMapIcon = [newMapIcon imageWithGaussianBlur9];
@@ -965,6 +997,43 @@
         lastMapTouch = [NSDate timeIntervalSinceReferenceDate];
     }
 }
+
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // in case it's the user location, we already have an annotation, so just return nil
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    if ([annotation isKindOfClass:[KMAnnotation class]]) 
+    {
+        // try to dequeue an existing pin view first
+        static NSString *kmAnnotationIdentifier = @"kmAnnotationIdentifier";
+        
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+        [map dequeueReusableAnnotationViewWithIdentifier:kmAnnotationIdentifier];
+        if (pinView == nil)
+        {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                                  initWithAnnotation:annotation reuseIdentifier:kmAnnotationIdentifier];
+            customPinView.pinColor = MKPinAnnotationColorRed;//MKPinAnnotationColorPurple;
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            return customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+        
+    return nil;
+}
+
+
 
 #pragma mark - ScrollView Delegate
 
@@ -1082,11 +1151,13 @@
         NSInteger index = [run.posMeta count] - 1;
         NSInteger sumCount = 0;
         NSInteger currentTime = run.time;
-        CLLocationMeta * lastMeta;
+        CLLocationMeta * lastMeta ;
         NSTimeInterval paceSum = 0;
         
-        if(index >= 0)
+        
+        if(index >= 0 )
         {
+            
             do {
                 
                 lastMeta = [run.posMeta objectAtIndex:index];
