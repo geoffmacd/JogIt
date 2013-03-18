@@ -206,7 +206,7 @@
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
     //to make corners same as those for the app
-    [self.backVC.view.layer setCornerRadius:5.0f];
+    [self.backVC.view.layer setCornerRadius:8.0f];
     [self.backVC.view.layer setMasksToBounds:true];
     
     

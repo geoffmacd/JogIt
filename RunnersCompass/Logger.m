@@ -482,7 +482,7 @@
     {
         //add one checkpoint representing past 60 seconds
         
-        [self updateChart];
+        [self calcOnTick];
     }
     
     if(selectedKmIndex == [[run kmCheckpointsMeta] count])
@@ -511,8 +511,56 @@
     
 }
 
+-(void)calcOnTick
+{
+    
+    //add meta data for recent minute, or create chart
+    if(barPlot)
+    {
+        //aggregrate last minute, starting at most recent
+        NSInteger index = [run.posMeta count] - 1;
+        NSInteger sumCount = 0;
+        NSInteger currentTime = run.time;
+        CLLocationMeta * lastMeta ;
+        NSTimeInterval paceSum = 0;
+        
+        
+        if(index >= 0 )
+        {
+            
+            do {
+                
+                lastMeta = [run.posMeta objectAtIndex:index];
+                //aggregate pace
+                paceSum += [lastMeta pace];
+                sumCount++;
+                
+                index--;
+                
+                //until we have reached 60 seconds ago
+            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
+            
+            if(index == 0)
+                sumCount--;
+            
+            NSTimeInterval avgPaceInMin = paceSum / sumCount;
+            
+            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
+            newMinMeta.pace = avgPaceInMin;
+            newMinMeta.time = currentTime;
+            
+            //add meta and loc to array
+            [run.minCheckpointsMeta addObject:newMinMeta];
+            [run.minCheckpoints addObject:[run.pos lastObject]];
+        }
+    }
+    
+    //then visually update chart
+    [self updateChart];
+}
 
--(void)calculate:(CLLocation*)latest
+
+-(void)calcOnUpdate:(CLLocation*)latest
 {
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
     
@@ -847,7 +895,7 @@
                     }
                     
                     //calculate every time
-                    [self calculate:newLocation];
+                    [self calcOnUpdate:newLocation];
                     
                     //reload map icon
                     //do not capture image if user has recently touched and map has been re-centered
@@ -1052,12 +1100,13 @@
     }
     
     
-    
+    /*
     //zoom map to user location, no animation
     CLLocation * lastPos = [run.pos lastObject];
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(lastPos.coordinate, mapZoomDefault, mapZoomDefault);
     [map setRegion:region animated:NO];
-    
+    */
+    [self zoomToEntireRun];
     
     //set initial map icon
     UIImage * newMapIcon = [Util imageWithView:map];
@@ -1514,48 +1563,6 @@
 
 -(void)updateChart
 {
-    //add meta data for recent minute, or create chart
-    
-    
-    if(barPlot)
-    {
-        //aggregrate last minute, starting at most recent
-        NSInteger index = [run.posMeta count] - 1;
-        NSInteger sumCount = 0;
-        NSInteger currentTime = run.time;
-        CLLocationMeta * lastMeta ;
-        NSTimeInterval paceSum = 0;
-        
-        
-        if(index >= 0 )
-        {
-            
-            do {
-                
-                lastMeta = [run.posMeta objectAtIndex:index];
-                //aggregate pace
-                paceSum += [lastMeta pace];
-                sumCount++;
-                
-                index--;
-                
-                //until we have reached 60 seconds ago
-            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
-            
-            if(index == 0)
-                sumCount--;
-
-            NSTimeInterval avgPaceInMin = paceSum / sumCount;
-            
-            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
-            newMinMeta.pace = avgPaceInMin;
-            newMinMeta.time = currentTime;
-            
-            //add meta and loc to array
-            [run.minCheckpointsMeta addObject:newMinMeta];
-            [run.minCheckpoints addObject:[run.pos lastObject]];
-        }
-    }
     
     lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
     
