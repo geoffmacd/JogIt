@@ -18,11 +18,11 @@
 #import "KMAnnotation.h"
 
 
-#define mapZoomDefault 4000 //m
+#define mapZoomDefault 1000 //m
 #define mapViewYOffset 173
-#define mapDragCutoff 250
+#define mapDragCutoff 300
 #define mapDragPreventOpposite 5
-#define mapDragPullYOffset 20
+#define mapDragPullYOffset 30
 #define paceGraphBarWidth 25
 #define paceGraphSplitLoadOffset 20
 #define paceGraphSplitObjects 30
@@ -34,7 +34,7 @@
 #define autoZoomPeriod 4 //15 seconds before auto zoom
 #define userDelaysAutoZoom 5 //5 second delays before autozoom
 #define reloadMapIconPeriod 4 //15 second reload map icon period
-#define autoPauseDelay 5 //5 seconds before app pauses
+#define autoPauseDelay 10 //5 seconds before app pauses
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -61,6 +61,8 @@
     NSInteger lastCacheMinute;
     BOOL scrollEnabled;
     BOOL paused;
+    BOOL pausedForAuto;
+    NSInteger autoPauseRestartCount;
     BOOL inMapView;
     UIScrollView *mapScroll;
     NSTimer * shadeTimer;
@@ -83,8 +85,11 @@
     NSInteger badSignalCount;
     NSInteger consecutiveHeadingCount;
     NSInteger timeSinceChartReload;
-    NSInteger autoPauseCount;
     NSMutableArray *mapAnnotations;
+    
+    BOOL waitingForMapToLoad;
+    NSInteger loadingMapTiles;
+
 }
 
 
@@ -143,8 +148,12 @@
 - (IBAction)statusButTapped:(id)sender;
 - (IBAction)ghostButTapped:(id)sender;
 
+
 -(void) stopRun;
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
+-(void)updateHUD;
+
+
 
 @end
 

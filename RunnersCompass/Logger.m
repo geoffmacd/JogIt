@@ -72,6 +72,7 @@
     kmPaceShowMode= false;
     inMapView = false;
     paused = true;
+
     
     //localization
     [timeTitle setText:NSLocalizedString(@"TimeTitle", "Logger title for time")];
@@ -88,7 +89,7 @@
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
     //[locationManager startUpdatingLocation];
     
@@ -133,54 +134,8 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)setLabelsForUnits
-{
-    DataTest* data = [DataTest sharedData];
-    NSString *distanceUnitText = [data.prefs getDistanceUnit];
-    
-    [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
-    [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
-    
-    [distanceUnitLabel setText:distanceUnitText];
-    
-    if(!run.live)
-    {
-        //set title
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        [dateFormatter setLocale:usLocale];
-        
-        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
-    }
-    
-    [self setPaceLabels];
-    
-}
 
-#pragma mark -
-#pragma mark Action sheet delegate methods
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"Button %d", buttonIndex);
-    
-    if(buttonIndex == 0)
-    {
-        //start ghost run
-        
-        //set as ghost run
-        run.ghost = true;
-        //do standard newRun except with this run object
-        [delegate selectedGhostRun:run];
-        
-    }
-    //coninute otherwise
-}
-
-#pragma mark - Managing runs
+#pragma mark - Loading runs
 
 
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate
@@ -278,6 +233,7 @@
         
         //hide goal image
         [goalAchievedImage setHidden:true];
+        
     }
     else
     {
@@ -325,12 +281,9 @@
         
         //hide ghost
         [ghostBut setHidden:true];
-        
-        //set map to follow user before starting track
-        [map setUserTrackingMode:MKUserTrackingModeFollow];
     }
     
-    [self drawMapOverlayForRun];
+    [self drawMapForHistoricRun];
     [self setLabelsForUnits];
     
     [self updateHUD];
@@ -346,7 +299,8 @@
     
     [self updateChart];
     
-    autoPauseCount = 0;
+
+    [map setShowsUserLocation:true];
 }
 
 
@@ -438,7 +392,7 @@
 
 
 
-#pragma mark - Managing Live run
+#pragma mark - Managing Live Run
 
 -(void)startRun
 {
@@ -470,16 +424,19 @@
     [self setPaceLabels];
     
     //reset count
-    autoPauseCount = 0;
+    pausedForAuto = false;
 }
 
 
 -(void) stopRun
 {
-    
-    //stop updates
-    NSLog(@"stopped tracking.....");
-    [locationManager stopUpdatingLocation];
+    //if autopause caused this, do not stop location updates
+    if(!pausedForAuto)
+    {
+        //stop updates
+        NSLog(@"stopped tracking.....");
+        [locationManager stopUpdatingLocation];
+    }
     
     //set map to follow user before starting track
     [map setUserTrackingMode:MKUserTrackingModeFollow];
@@ -495,7 +452,7 @@
     }
     
     //update map icon one last time
-    [self reloadMapIcon];
+    [self reloadMapIcon:!inMapView];
     
 }
 
@@ -507,23 +464,16 @@
     //update time with 1 second
     run.time += 1;
     
-    CLLocationMeta * lastMeta = [run.posMeta lastObject];
-    CLLocationMeta * lastBar = [[run minCheckpointsMeta] lastObject];
-    if(lastMeta.time  <= lastBar.time)
+    CLLocation * last = [run.pos lastObject];
+    
+    //if last position determined was more than 5 seconds ago, pause
+    if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
     {
-        //autoPauseCount++;
+        NSLog(@"Autopaused");
         
-        if(autoPauseCount > autoPauseDelay)
-        {
-            //pause logger
-            [delegate pauseAnimation:nil];
-        }
-    }
-    else{
+        pausedForAuto = true;
         
-        //decrement to reduce autopause chance
-        if(autoPauseCount > 0)
-            autoPauseCount--;
+        [delegate pauseAnimation:nil];
     }
     
     
@@ -539,8 +489,6 @@
     {
         //need current time update to lastKMLabel
         
-        DataTest* data = [DataTest sharedData];
-        NSString *distanceUnitText = [data.prefs getDistanceUnit];
         NSTimeInterval timeToAdjust = 0;
         
         if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
@@ -569,7 +517,8 @@
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
     
     NSInteger countOfLoc = [run.pos count] ;
-
+    
+    DataTest* data = [DataTest sharedData];
     
     if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc >= 1)
     {
@@ -580,20 +529,33 @@
 
         CLLocationDistance distanceToAdd = [self calcDistance:latest];
         CLLocationDistance oldRunDistance = run.distance;
-        run.distance += distanceToAdd;
-        
-        //add calories @ 0.08 cal per minute per lb
-        run.calories += (paceTimeInterval / 60) * 0.08  * [[[[DataTest sharedData] prefs] weight] integerValue];
-        
-        run.avgPace =  run.time / run.distance;
-        
-        NSLog(@"%f distance added", distanceToAdd);
         
         //set current pace
         CLLocationDistance paceDistance = distanceToAdd;
         CLLocationSpeed currentPace = paceTimeInterval / paceDistance;//s/m
         NSTimeInterval adjustedPace = (currentPace * 1000); //s / km
+        NSTimeInterval speedmMin = 60 / currentPace;
         
+        
+        //1.distance
+        run.distance += distanceToAdd;
+        NSLog(@"%f distance added", distanceToAdd);
+        
+        //2.climbed
+        //constrain to reasonable value?
+        CLLocationDistance climbed = latest.altitude - prior.altitude;
+        run.climbed += climbed;
+        
+        //3.pace
+        run.avgPace =  run.time / run.distance;
+        
+        //4.calories
+        CGFloat grade = climbed / distanceToAdd;
+        NSInteger weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
+        run.calories += (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
+        
+        //5.cadence
+        //6.stride
     
         [self addPosToRun:latest withPace:adjustedPace];
 
@@ -652,7 +614,6 @@
             //add annotation
             KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
             
-            DataTest* data = [DataTest sharedData];
             NSString *distanceUnitText = [data.prefs getDistanceUnit];
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
             newAnnotation.paceString = [RunEvent getPaceString:[newKM pace]];
@@ -677,7 +638,7 @@
     [self setPaceLabels];
     
     
-    //update hud too after distance
+    //update hud too after distance,calories, avg pace
     [self updateHUD];
 }
 
@@ -692,21 +653,6 @@
     [run.posMeta addObject:metaToAdd];
     [run.pos addObject:locToAdd];
     
-}
-
--(void)updateHUD
-{
-    //set text for labels
-    
-    //set distance in km
-    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
-
-    
-    //update time displayed
-    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
-    [timeLabel setText:stringToSetTime];
-    
-    [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
 }
 
 -(CLLocationDistance)calcDistance:(CLLocation *)latest 
@@ -768,6 +714,49 @@
     return distanceToAdd;
 }
 
+#pragma mark - HUD Management
+
+-(void)setLabelsForUnits
+{
+    DataTest* data = [DataTest sharedData];
+    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    
+    [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    
+    [distanceUnitLabel setText:distanceUnitText];
+    
+    if(!run.live)
+    {
+        //set title
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        
+        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [dateFormatter setLocale:usLocale];
+        
+        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+    }
+    
+    [self setPaceLabels];
+    
+}
+
+-(void)updateHUD
+{
+    //set text for labels
+    
+    //set distance in km
+    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
+    
+    
+    //update time displayed
+    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
+    [timeLabel setText:stringToSetTime];
+    
+    [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
+}
 
 #pragma mark - Location Manager Delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
@@ -778,6 +767,8 @@
     
     NSLog(@"%d  - lat%f - lon%f  - accur %f , %f  -speed %f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy , newLocation.speed);
     
+
+    
     //add anotation to map
     if (newLocation.timestamp > oldLocation.timestamp)
     {
@@ -786,81 +777,94 @@
         if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&
             (oldLocation.coordinate.longitude != newLocation.coordinate.longitude))
         {
-            if (readyForPathInit)
+            //if currently paused due to autopause, restart
+            if(pausedForAuto)
             {
-                // This is the first time we're getting a location update, so create
-                // the CrumbPath and add it to the map.
-                //
-                CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
-                [self.map addOverlay:newPath];
-                [crumbPaths addObject:newPath];
+                autoPauseRestartCount++;
                 
-                // On the first location update only, zoom map to user location
-                MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
-                [self.map setRegion:region animated:YES];
-                timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
-                
-                //set initial map icon
-                UIImage * newMapIcon = [Util imageWithView:map];
-                
-                [mapButton setImage:newMapIcon forState:UIControlStateNormal];
-                timeSinceMapIconRefresh = timeSinceMapCenter;
-                
-                //add an inital position
-                [self addPosToRun:newLocation withPace:0];
-                
-                readyForPathInit = false;
-                
+                if(autoPauseRestartCount >  4)
+                {
+                    NSLog(@"unpause autupause");
+                    pausedForAuto = false;
+                    autoPauseRestartCount = 0;
+                    
+                    //add one recent pos to eliminate immediate autopaused because most recent was old
+                    [self addPosToRun:newLocation withPace:0];
+                    
+                    [delegate pauseAnimation:nil];
+                    return;
+                }
             }
-            else
-            {
-                // This is a subsequent location update.
-                // If the crumbs MKOverlay model object determines that the current location has moved
-                // far enough from the previous location, use the returned updateRect to redraw just
-                // the changed area.
-
-                MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
+            else{
+                //decrement counter to ensure it does not happen often
+                if(autoPauseRestartCount > 0)
+                    autoPauseRestartCount--;
                 
-                if (!MKMapRectIsNull(updateRect))
-                {
-                    // There is a non null update rect.
-                    // Compute the currently visible map zoom scale
-                    MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
-                    // Find out the line width at this zoom scale and outset the updateRect by that amount
-                    CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
-                    updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
-                    // Ask the overlay view to update just the changed area.
-                    [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+                if (readyForPathInit){
+                    // This is the first time we're getting a location update, so create
+                    // the CrumbPath and add it to the map.
+                    //
+                    CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
+                    [self.map addOverlay:newPath];
+                    [crumbPaths addObject:newPath];
+                    
+                    // On the first location update only, zoom map to user location
+                    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
+                    [self.map setRegion:region animated:YES];
+                    timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
+                    
+                    //set initial map icon
+                    UIImage * newMapIcon = [Util imageWithView:map];
+                    
+                    [mapButton setImage:newMapIcon forState:UIControlStateNormal];
+                    timeSinceMapIconRefresh = timeSinceMapCenter;
+                    
+                    //add an inital position
+                    [self addPosToRun:newLocation withPace:0];
+                    
+                    readyForPathInit = false;
+                    
                 }
-                
-                //calculate every time
-                [self calculate:newLocation];
-                
-                //reload map icon every 30 seconds, must happen before animation to prevent image being captured during meaningless position
-                if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod))
+                else
                 {
-                    [self reloadMapIcon];
+                    // This is a subsequent location update.
+                    // If the crumbs MKOverlay model object determines that the current location has moved
+                    // far enough from the previous location, use the returned updateRect to redraw just
+                    // the changed area.
+                    
+                    MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
+                    
+                    if (!MKMapRectIsNull(updateRect))
+                    {
+                        // There is a non null update rect.
+                        // Compute the currently visible map zoom scale
+                        MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
+                        // Find out the line width at this zoom scale and outset the updateRect by that amount
+                        CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+                        updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
+                        // Ask the overlay view to update just the changed area.
+                        [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+                    }
+                    
+                    //calculate every time
+                    [self calculate:newLocation];
+                    
+                    //reload map icon
+                    //do not capture image if user has recently touched and map has been re-centered
+                    if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod) &&
+                       (lastMapTouch  < timeSinceMapCenter))
+                    {
+                        [self reloadMapIcon:!inMapView];
+                    }
+                    
+                    //zoom map
+                    //do not zoom if user has recently touched
+                    if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
+                    {
+                        [self autoZoomMap:newLocation];
+                    }
+                    
                 }
-                
-                //zoom every 5 seconds, or 30 seconds inMapView
-                //also do not auto zoom if user has recently scrolled
-                if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
-                {
-                    [self autoZoomMap:newLocation];
-                }
-            
-            }
-            //decrement to reduce autopause chance
-            if(autoPauseCount > 0)
-                autoPauseCount--;
-        }
-        else{
-            autoPauseCount++;
-            
-            if(autoPauseCount > autoPauseDelay)
-            {
-                //pause logger
-                [delegate pauseAnimation:nil];
             }
         }
     }
@@ -869,18 +873,18 @@
 
 #pragma mark - Map Custom Functions
 
--(void) reloadMapIcon
+-(void) reloadMapIcon: (BOOL) removeAnnotationsForImage
 {
     
     timeSinceMapIconRefresh = [NSDate timeIntervalSinceReferenceDate];
     
     //only remove annotations if in mapview to avoid dropping them every 5 seconds
-    if(!inMapView)
+    if(removeAnnotationsForImage)
         [map removeAnnotations:mapAnnotations];
     
     UIImage * newMapIcon = [Util imageWithView:map];
     
-    if(!inMapView)
+    if(removeAnnotationsForImage)
         [map addAnnotations:mapAnnotations];
     
     //blur
@@ -900,15 +904,92 @@
     
 }
 
--(void)drawMapOverlayForRun
+-(void)zoomToEntireRun
+{
+    //zoom out to show entire course based on all positions for completeness
+    CLLocation *lastPos = [[run pos] lastObject];
+    CLLocationCoordinate2D lastCoord = [lastPos coordinate];
+    
+    CLLocationDegrees minLat = lastCoord.latitude;
+    CLLocationDegrees maxLat = lastCoord.latitude;
+    CLLocationDegrees minLong = lastCoord.longitude;
+    CLLocationDegrees maxLong = lastCoord.longitude;
+    
+    for(CLLocation * pos in [run pos])
+    {
+        CLLocationCoordinate2D newCoord = [pos coordinate];
+        
+        if(!CLLocationCoordinate2DIsValid(newCoord))
+            continue;
+        
+        if(newCoord.latitude < minLat)
+            minLat = newCoord.latitude;
+        
+        if(newCoord.latitude > maxLat)
+            maxLat = newCoord.latitude;
+        
+        if(newCoord.longitude < minLong)
+            minLong = newCoord.longitude;
+        
+        if(newCoord.longitude > maxLong)
+            maxLong = newCoord.longitude;
+    }
+    
+    CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake((minLat+maxLat)/2, (minLong+maxLong)/2);
+    
+    if(CLLocationCoordinate2DIsValid(centerCoord))
+    {
+        MKCoordinateSpan span = MKCoordinateSpanMake(maxLat-minLat, maxLong - minLong);
+        
+        //make region at center coord with a span determined by the bottom left and top right points
+        MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, span);
+        
+        //ensure that map is loaded before capturing view
+        [map setRegion:region animated:false];
+        
+    }
+    
+}
+
+-(void)mapIconFinishedForFinishTapped
 {
     
-    //reset live variables,caches,etc
+    if(loadingMapTiles > 0)
+    {
+        //come back every 0.2s to see if map was loaded
+        [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:0.2];
+        return;
+    }
+    
+    NSLog(@"saving map thumbnail");
+    waitingForMapToLoad = false;
+    
+    [self reloadMapIcon:true];
+    
+    //reset show user loc
+    [map setShowsUserLocation:true];
+    
+    //set the run to have the correct picture in table cell
+    run.map.thumbnail = [mapButton imageForState:UIControlStateNormal];
+    
+    
+    //go back to menu and add to table at top
+    [delegate finishedRun:run];
+}
+
+-(void)drawMapForHistoricRun
+{
+    
+    //reset variables
     [map removeOverlays:crumbPaths];
+    [map removeAnnotations:mapAnnotations];
+    [mapAnnotations removeAllObjects];
     [crumbPathViews removeAllObjects];
     [crumbPaths removeAllObjects];
     
     readyForPathInit = true;
+    
+    DataTest* data = [DataTest sharedData];
     
     //redraw crumb paths for positions
     
@@ -947,6 +1028,30 @@
         }
     }
     
+    //need both pos and meta for KM to get pace for annotation display
+    for(int i = 0; i < [[run kmCheckpoints] count]; i++)
+    {
+        CLLocation * kmPos = [[run kmCheckpoints] objectAtIndex:i];
+        CLLocationMeta * kmMeta = [[run kmCheckpointsMeta] objectAtIndex:i];
+        
+        
+        //add annotation
+        KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
+        
+        NSString *distanceUnitText = [data.prefs getDistanceUnit];
+        //km is just the index plus 1
+        newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
+        newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace]];
+        newAnnotation.kmCoord = [kmPos coordinate];
+        
+        //add to array
+        [mapAnnotations addObject:newAnnotation];
+        //actually add to map
+        [map addAnnotation:newAnnotation];
+
+    }
+    
+    
     
     //zoom map to user location, no animation
     CLLocation * lastPos = [run.pos lastObject];
@@ -972,32 +1077,6 @@
     }
     return [crumbPathViews lastObject];
 }
-
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
-{
-    //check for network errors, throw up popup?
-}
-
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated
-{
-    
-    
-}
-
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    if([NSDate timeIntervalSinceReferenceDate] < timeSinceMapCenter + 0.5)
-    {
-        //scrolling was caused programmatically do nothing
-    }
-    else{
-        //user scrolled
-        //set time to lastMapTouch
-        
-        lastMapTouch = [NSDate timeIntervalSinceReferenceDate];
-    }
-}
-
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -1031,6 +1110,53 @@
     }
         
     return nil;
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
+{
+    NSLog(@"finished loading tiles..");
+    
+    if(waitingForMapToLoad)
+    {
+        loadingMapTiles--;
+    }
+}
+
+- (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
+{
+    NSLog(@"start loading tiles..");
+    
+    if(waitingForMapToLoad)
+    {
+        loadingMapTiles++;
+    
+    }
+}
+
+- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
+{
+    //check for network errors, throw up popup?
+    
+    if(waitingForMapToLoad)
+    {
+        loadingMapTiles = 0;
+    }
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    //call finish run after map has updated to ensure entire map tile is drawn
+    
+    if([NSDate timeIntervalSinceReferenceDate] < timeSinceMapCenter + 0.5)
+    {
+        //scrolling was caused programmatically do nothing
+    }
+    else{
+        //user scrolled
+        //set time to lastMapTouch
+        
+        lastMapTouch = [NSDate timeIntervalSinceReferenceDate];
+    }
 }
 
 
@@ -1106,234 +1232,6 @@
     }
 
     
-    
-}
-
-
-
-#pragma mark - BarChart
-
--(CGFloat)maxYForChart
-{
-    CGFloat maxYPace = 0.0f;
-    
-    //find max
-    for(CLLocationMeta * meta in run.minCheckpointsMeta)
-    {
-        if(meta.pace == 0)
-            continue;
-        
-        CGFloat tempValue = 100.0f/meta.pace;
-        if(tempValue > maxYPace)
-        {
-            maxYPace = tempValue;
-        }
-        
-    }
-    
-    //constraint pace to at least 1 m/s
-    if(maxYPace < 1.0f)
-        maxYPace = 1.0f;
-    
-    
-    return maxYPace + 0.1f; //add small amount to not cutoff top
-    
-}
-
--(void)updateChart
-{
-    //add meta data for recent minute, or create chart
-    
-    
-    if(barPlot)
-    {
-        //aggregrate last minute, starting at most recent
-        NSInteger index = [run.posMeta count] - 1;
-        NSInteger sumCount = 0;
-        NSInteger currentTime = run.time;
-        CLLocationMeta * lastMeta ;
-        NSTimeInterval paceSum = 0;
-        
-        
-        if(index >= 0 )
-        {
-            
-            do {
-                
-                lastMeta = [run.posMeta objectAtIndex:index];
-                //aggregate pace
-                paceSum += [lastMeta pace];
-                sumCount++;
-                
-                index--;
-                
-                //until we have reached 60 seconds ago
-            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
-            
-            if(index == 0)
-                sumCount--;
-
-            NSTimeInterval avgPaceInMin = paceSum / sumCount;
-            
-            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
-            newMinMeta.pace = avgPaceInMin;
-            newMinMeta.time = currentTime;
-            
-            //add meta and loc to array
-            [run.minCheckpointsMeta addObject:newMinMeta];
-            [run.minCheckpoints addObject:[run.pos lastObject]];
-        }
-    }
-    
-    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
-    
-    //set size of view of graph to be equal to that of the split load if not already
-    CGRect paceGraphRect = chart.frame;
-    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
-    if(lastCacheMinute < 0)
-    {
-        paceGraphRect.origin = CGPointMake(0, 0);
-    }
-    else    //set origin so that view is drawn for split filling up the last possible view
-    {
-        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
-    }
-    [chart setFrame:paceGraphRect];
-    
-    
-    if(!barPlot)
-    {
-        //if bar graph not yet loaded
-        
-        //draw bar graph with new data from run
-        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
-        [self setupGraphForView:chart withRange:firstRangeToShow];
-        
-        
-    }
-    else{
-        //if loaded, just update ranges
-        
-        //set x range and y range for new graph config
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
-        
-        
-        [barPlot reloadData];
-    }
-    
-    //scroll to latest value
-    if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
-    {
-        //set scroll to be at start of empty run
-        [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake(0, 0)];
-    }
-    else{
-        
-        //set scroll to be at the end of run
-        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
-    }
-    
-    
-    
-}
-
-
--(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
-{
-
-    
-    // Create barChart from theme
-    barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
-    [barChart applyTheme:theme];
-    hostingView.hostedGraph = barChart;
-    
-    // Border
-    barChart.plotAreaFrame.borderLineStyle = nil;
-    barChart.plotAreaFrame.cornerRadius    = 0.0f;
-    
-    // Paddings for view
-    barChart.paddingLeft   = 0.0f;
-    barChart.paddingRight  = 0.0f;
-    barChart.paddingTop    = 0.0f;
-    barChart.paddingBottom = 0.0f;
-    
-    //plot area
-    barChart.plotAreaFrame.paddingLeft   = 0.0f;
-    barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
-    barChart.plotAreaFrame.paddingRight  = 0.0f;
-    barChart.plotAreaFrame.paddingBottom = 10.0f;
-    
-    //look modification
-    barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
-    barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
-    
-    
-    // Add plot space for horizontal bar charts
-    plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
-    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
-    plotSpace.xRange = range;
-    
-    //[plotSpace setAllowsUserInteraction:true];
-    
-    //x-axis
-    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
-    CPTXYAxis *x          = axisSet.xAxis;
-    x.labelingPolicy = CPTAxisLabelingPolicyNone;
-    
-    
-    //axis line style
-    CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
-    majorLineStyle.lineCap   = kCGLineCapRound;
-    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.3)];
-    majorLineStyle.lineWidth = CPTFloat(0.0);
-    x.axisLineStyle                  = majorLineStyle;
-    
-    //y-axis
-    CPTXYAxis *y = axisSet.yAxis;
-    y.labelingPolicy = CPTAxisLabelingPolicyNone;
-    
-     
-    // add bar plot to view, all bar customization done here
-    CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
-    barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
-    barPlot.baseValue  = CPTDecimalFromString(@"0");
-    barPlot.dataSource = self;
-    barPlot.identifier = kPlot;
-    barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
-    barPlot.barWidthsAreInViewCoordinates = NO;
-    barPlot.barCornerRadius               = CPTFloat(5.0);
-    barPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor lightGrayColor] endingColor:[CPTColor lightGrayColor]];
-    fillGradient.angle = 0.0f;
-    barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
-    barPlot.delegate = self;
-    
-    
-    [barChart addPlot:barPlot toPlotSpace:plotSpace];
-    
-
-    
-    
-    //selected Plot
-    selectedPlot = [[CPTBarPlot alloc] init];
-    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
-    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
-	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
-    selectedPlot.lineStyle = selectedBorderLineStyle;
-    selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
-    selectedPlot.barCornerRadius               = CPTFloat(5.0);
-    selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
-    
-    selectedPlot.dataSource = self;
-    selectedPlot.identifier = kSelectedPlot;
-    selectedPlot.delegate = self;
-    
-    [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
     
 }
 
@@ -1482,7 +1380,7 @@
     [currentPaceLabel setText:selectedPaceLabel];
     [currentPaceValue setText:selectedPaceString];
     
-
+    
     
     
     if([[run kmCheckpointsMeta] count] == 0)
@@ -1504,17 +1402,14 @@
     else if(selectedKmIndex == [[run kmCheckpointsMeta] count])
     {
         //show current km in lastKmLabel
-
-        CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+        
         CLLocationMeta * oldKMMeta;
         //get distance from km just by looking at index
         
         //set the label to say 'KM 4' or 'Km 17'
         [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
         
-        //show current time in the current km
-        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - priorKmMeta.time)];
-        //[lastKmPace setText:paceForCurrentIndex];
+        //lastKmPace value  not set here, because it is being updated every second in tick
         
         //load old values
         NSString * paceForOld;
@@ -1588,8 +1483,232 @@
 }
 
 
+#pragma mark - Manage Pace Chart
+
+-(CGFloat)maxYForChart
+{
+    CGFloat maxYPace = 0.0f;
+    
+    //find max
+    for(CLLocationMeta * meta in run.minCheckpointsMeta)
+    {
+        if(meta.pace == 0)
+            continue;
+        
+        CGFloat tempValue = 100.0f/meta.pace;
+        if(tempValue > maxYPace)
+        {
+            maxYPace = tempValue;
+        }
+        
+    }
+    
+    //constraint pace to at least 1 m/s
+    if(maxYPace < 1.0f)
+        maxYPace = 1.0f;
+    
+    
+    return maxYPace + 0.1f; //add small amount to not cutoff top
+    
+}
+
+-(void)updateChart
+{
+    //add meta data for recent minute, or create chart
+    
+    
+    if(barPlot)
+    {
+        //aggregrate last minute, starting at most recent
+        NSInteger index = [run.posMeta count] - 1;
+        NSInteger sumCount = 0;
+        NSInteger currentTime = run.time;
+        CLLocationMeta * lastMeta ;
+        NSTimeInterval paceSum = 0;
+        
+        
+        if(index >= 0 )
+        {
+            
+            do {
+                
+                lastMeta = [run.posMeta objectAtIndex:index];
+                //aggregate pace
+                paceSum += [lastMeta pace];
+                sumCount++;
+                
+                index--;
+                
+                //until we have reached 60 seconds ago
+            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
+            
+            if(index == 0)
+                sumCount--;
+
+            NSTimeInterval avgPaceInMin = paceSum / sumCount;
+            
+            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
+            newMinMeta.pace = avgPaceInMin;
+            newMinMeta.time = currentTime;
+            
+            //add meta and loc to array
+            [run.minCheckpointsMeta addObject:newMinMeta];
+            [run.minCheckpoints addObject:[run.pos lastObject]];
+        }
+    }
+    
+    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
+    
+    //set size of view of graph to be equal to that of the split load if not already
+    CGRect paceGraphRect = chart.frame;
+    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
+    if(lastCacheMinute < 0)
+    {
+        paceGraphRect.origin = CGPointMake(0, 0);
+    }
+    else    //set origin so that view is drawn for split filling up the last possible view
+    {
+        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
+    }
+    [chart setFrame:paceGraphRect];
+    
+    
+    if(!barPlot)
+    {
+        //if bar graph not yet loaded
+        
+        //draw bar graph with new data from run
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+        [self setupGraphForView:chart withRange:firstRangeToShow];
+        
+        
+    }
+    else{
+        //if loaded, just update ranges
+        
+        //set x range and y range for new graph config
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        
+        
+        [barPlot reloadData];
+    }
+    
+    //scroll to latest value
+    if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
+    {
+        //set scroll to be at start of empty run
+        [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake(0, 0)];
+    }
+    else{
+        
+        //set scroll to be at the end of run
+        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
+        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+    }
+    
+}
+
+
+-(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
+{
+
+    
+    // Create barChart from theme
+    barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
+    CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
+    [barChart applyTheme:theme];
+    hostingView.hostedGraph = barChart;
+    
+    // Border
+    barChart.plotAreaFrame.borderLineStyle = nil;
+    barChart.plotAreaFrame.cornerRadius    = 0.0f;
+    
+    // Paddings for view
+    barChart.paddingLeft   = 0.0f;
+    barChart.paddingRight  = 0.0f;
+    barChart.paddingTop    = 0.0f;
+    barChart.paddingBottom = 0.0f;
+    
+    //plot area
+    barChart.plotAreaFrame.paddingLeft   = 0.0f;
+    barChart.plotAreaFrame.paddingTop    = 0.0;//nothing
+    barChart.plotAreaFrame.paddingRight  = 0.0f;
+    barChart.plotAreaFrame.paddingBottom = 10.0f;
+    
+    //look modification
+    barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
+    
+    
+    // Add plot space for horizontal bar charts
+    plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+    plotSpace.xRange = range;
+    
+    //[plotSpace setAllowsUserInteraction:true];
+    
+    //x-axis
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
+    CPTXYAxis *x          = axisSet.xAxis;
+    x.labelingPolicy = CPTAxisLabelingPolicyNone;
+    
+    
+    //axis line style
+    CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
+    majorLineStyle.lineCap   = kCGLineCapRound;
+    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.3)];
+    majorLineStyle.lineWidth = CPTFloat(0.0);
+    x.axisLineStyle                  = majorLineStyle;
+    
+    //y-axis
+    CPTXYAxis *y = axisSet.yAxis;
+    y.labelingPolicy = CPTAxisLabelingPolicyNone;
+    
+     
+    // add bar plot to view, all bar customization done here
+    CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
+    barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
+    barPlot.baseValue  = CPTDecimalFromString(@"0");
+    barPlot.dataSource = self;
+    barPlot.identifier = kPlot;
+    barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
+    barPlot.barWidthsAreInViewCoordinates = NO;
+    barPlot.barCornerRadius               = CPTFloat(5.0);
+    barPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor lightGrayColor] endingColor:[CPTColor lightGrayColor]];
+    fillGradient.angle = 0.0f;
+    barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
+    barPlot.delegate = self;
+    
+    
+    [barChart addPlot:barPlot toPlotSpace:plotSpace];
+    
+
+    
+    
+    //selected Plot
+    selectedPlot = [[CPTBarPlot alloc] init];
+    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
+    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
+	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
+    selectedPlot.lineStyle = selectedBorderLineStyle;
+    selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
+    selectedPlot.barCornerRadius               = CPTFloat(5.0);
+    selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
+    
+    selectedPlot.dataSource = self;
+    selectedPlot.identifier = kSelectedPlot;
+    selectedPlot.delegate = self;
+    
+    [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
+    
+}
+
 #pragma mark -
-#pragma mark Plot Data Source Methods
+#pragma mark Pace Chart Data Source
 
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
@@ -1653,7 +1772,7 @@
 }
 
 
-#pragma mark - Bar Plot deleget methods
+#pragma mark - Pace Chart Delegate
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
@@ -1670,8 +1789,7 @@
     
 }
 
-#pragma mark - Map opening
-
+#pragma mark - Map View Slider Methods
 
 
 - (void)closeMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
@@ -1695,7 +1813,7 @@
     } completion:^(BOOL finished) {
         //reload icon to refresh
         if(run.live && !paused)
-            [self reloadMapIcon];
+            [self reloadMapIcon:true];
         if (completion) {
             completion();
         }
@@ -1735,6 +1853,25 @@
 }
 
 
+#pragma mark -
+#pragma mark Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button %d", buttonIndex);
+    
+    if(buttonIndex == 0)
+    {
+        //start ghost run
+        
+        //set as ghost run
+        run.ghost = true;
+        //do standard newRun except with this run object
+        [delegate selectedGhostRun:run];
+        
+    }
+    //coninute otherwise
+}
 
 
 #pragma mark - UI Actions
@@ -1805,7 +1942,6 @@
             //translate on the finger of the user with current.y
             CGRect mapRect;
             mapRect.size =  mapView.frame.size;
-            //mapRect.origin = CGPointMake(0, (inMapView ? (self.view.frame.size.height - mapView.frame.size.height)  : mapViewYOffset) + current.y);
             mapRect.origin = CGPointMake(0, (inMapView ? mapViewYOffset - mapDragPullYOffset : self.view.frame.size.height - mapDragPullYOffset) + current.y);
             
             
@@ -1842,17 +1978,20 @@
 
 - (IBAction)finishTapped:(id)sender {
     
-    //set the run to have the correct picture in table cell
-    run.map.thumbnail = [mapButton imageForState:UIControlStateNormal];
+    //run object must be cleanup to save in appdelegate where it is stored
     
-    //go back to menu and add to table at top
-    [delegate finishedRun:run];
+    waitingForMapToLoad = true;
+    loadingMapTiles = 0;
+    
+    //hide user location for when saving run
+    [map setShowsUserLocation:false];
+    
+    //zoom to show entire map
+    [self zoomToEntireRun];
     
     
-    //convert current run to a historical run now that it is saved!
-    run.live = false;
-    [self setRun:run];
-    
+    //call remainder after 0.5s delay to ensure map is loaded
+    [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:1.5];
     
 }
 

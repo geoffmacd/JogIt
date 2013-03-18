@@ -96,7 +96,7 @@
         [target performSelector:successAction withObject:[NSNumber numberWithInt:self.selectedIndex] withObject:origin];
         return;
     }
-    NSLog(@"Invalid target/action ( %s / %s ) combination used for RunFormPicker", object_getClassName(target), (char *)successAction);
+
 }
 
 - (void)notifyTarget:(id)target didCancelWithAction:(SEL)cancelAction origin:(id)origin {

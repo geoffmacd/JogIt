@@ -27,13 +27,13 @@
 }
 
 //both menu and logger delegate method
-- (void)finishedRun:(RunEvent *)run
+- (void)finishedRun:(RunEvent *)runToSave
 {
     //finish and clean run in logger if it exists
     [self.backVC stopRun];
     
     //send run to menu to add it to list
-    [self.frontVC finishedRun:run];
+    [self.frontVC finishedRun:runToSave];
     
     //if it is in logger view
     if(!self.viewController.isOpen)
@@ -41,12 +41,17 @@
         [self.viewController openSlider:true completion:^{
             
             //handle case where run is being deleted and logger view is not valid
-            if(!run)
+            if(!runToSave)
             {
                 
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
                 
+            }
+            else{
+                //set run to be historical
+                //do not close
+                [self loadRun:runToSave close:false];
             }
              
         }];
@@ -60,12 +65,12 @@
     
 }
 
--(void)selectedGhostRun:(RunEvent *)run
+-(void)selectedGhostRun:(RunEvent *)runToGhost
 {
     //launch new run with this run, call same methods as for any new run
     
     //call same method as with the startcell
-    [self.frontVC selectedNewRun:run];
+    [self.frontVC selectedNewRun:runToGhost];
 }
 
 
@@ -237,9 +242,8 @@
     
     
     //we would stopUpdating if we wanted to stop map updateshere
-    
-    
-    
+
+    [self.backVC updateHUD];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -247,6 +251,8 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
     //we would startUp[dating if we wanted to start map updateshere
+    
+    //updateHUD here
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

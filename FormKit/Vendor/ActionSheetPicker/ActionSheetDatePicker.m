@@ -95,8 +95,6 @@
         self.onActionSheetDone(self, self.selectedDate, origin);
         return;
     }
-    
-    NSAssert(NO, @"Invalid target/action ( %s / %s ) combination used for ActionSheetPicker", object_getClassName(target), (char *)action);
 }
 
 - (void)eventForDatePicker:(id)sender {
