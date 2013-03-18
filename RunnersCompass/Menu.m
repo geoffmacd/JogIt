@@ -329,12 +329,19 @@
         //must be at 0th index to be at top and reload correctly
         [runs insertObject:run atIndex:0];
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell" owner:self options:nil]objectAtIndex:0];
-        [cell setAssociated:run];
-        [cell setDelegate:self];//something wrong here to do with gesture
+        
+        [cell setDelegate:self];
         [cells insertObject:cell atIndex:0];
         
+        [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        //can only call this after insertRow and adding object since will crash if setExpand:False is called with cell not loaded into table
+        [cell setAssociated:run];
+        
+        
+        
         //reload table
-        [MenuTable reloadData];
+        //[MenuTable reloadData];
     }
     
     
