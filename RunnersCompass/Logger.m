@@ -23,7 +23,7 @@
 @synthesize panGesture;
 @synthesize statusBut;
 @synthesize finishBut;
-@synthesize mapButton;
+@synthesize mapButton,hamburgerBut;
 @synthesize dragButton;
 @synthesize map;
 @synthesize shadeView;
@@ -2035,6 +2035,8 @@
 
 - (IBAction)statusButTapped:(id)sender {
     
+    [statusBut.layer setBorderWidth:0.0f];
+    
     //action depends on if the run is live
     if(run.live)
     {
@@ -2076,17 +2078,62 @@
 
 - (IBAction)ghostButTapped:(id)sender {
     
-        //only if it is historical
-        if(!run.live)
-        {
-            
-            //ask user if they want to start a ghost run
-            [self shouldUserGhostRun];
-            
-        }
+    [ghostBut.layer setBorderWidth:0.0f];
+    
+    //only if it is historical
+    if(!run.live)
+    {
+        
+        //ask user if they want to start a ghost run
+        [self shouldUserGhostRun];
+        
+    }
+}
+
+- (IBAction)hamburgerTouched:(id)sender {
+    [hamburgerBut.layer setCornerRadius:5.0f];
+    [hamburgerBut.layer setMasksToBounds:true];
+    
+    [hamburgerBut.layer setBorderWidth:0.5f];
+    [hamburgerBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    
+}
+
+- (IBAction)hamburgerUnTouched:(id)sender {
+    [hamburgerBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)ghostButTouched:(id)sender {
+    [ghostBut.layer setCornerRadius:5.0f];
+    [ghostBut.layer setMasksToBounds:true];
+    
+    [ghostBut.layer setBorderWidth:0.5f];
+    [ghostBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)ghostButUnTouched:(id)sender {
+    
+    [ghostBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)statusTouched:(id)sender {
+    [statusBut.layer setCornerRadius:5.0f];
+    [statusBut.layer setMasksToBounds:true];
+    
+    [statusBut.layer setBorderWidth:0.5f];
+    [statusBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)statusUntouched:(id)sender {
+    
+    [statusBut.layer setBorderWidth:0.0f];
 }
 
 - (IBAction)hamburgerTapped:(id)sender {
+    
+    
+    [hamburgerBut.layer setBorderWidth:0.0f];
+    
     [delegate menuButtonPressed:sender];
     
 }

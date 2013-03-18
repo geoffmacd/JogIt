@@ -136,6 +136,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *distanceTitle;
 @property (strong, nonatomic) IBOutlet UILabel *timeTitle;
 @property (strong, nonatomic) IBOutlet UILabel *swipeToPauseLabel;
+@property (strong, nonatomic) IBOutlet UIButton *hamburgerBut;
 
 
 
@@ -147,6 +148,12 @@
 - (IBAction)invisibleButtonTapped:(id)sender;
 - (IBAction)statusButTapped:(id)sender;
 - (IBAction)ghostButTapped:(id)sender;
+- (IBAction)hamburgerTouched:(id)sender;
+- (IBAction)hamburgerUnTouched:(id)sender;
+- (IBAction)ghostButTouched:(id)sender;
+- (IBAction)ghostButUnTouched:(id)sender;
+- (IBAction)statusTouched:(id)sender;
+- (IBAction)statusUntouched:(id)sender;
 
 
 -(void) stopRun;
