@@ -377,9 +377,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         duration = firstStageAnimationClose;
     }
     [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
-        CGRect rect = _slidingScrollView.frame;
-        rect.origin.x = _sliderOpeningWidth;
-        _slidingScrollView.frame = rect;
+    
+        _slidingScrollView.contentOffset = CGPointMake(0, 0);
     } completion:^(BOOL finished) {
         _animating = NO;
         self.view.userInteractionEnabled = YES;
