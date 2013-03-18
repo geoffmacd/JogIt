@@ -445,14 +445,14 @@
     [timer invalidate];
     
     
+    //update map icon one last time
+    [self reloadMapIcon:!inMapView];
+    
     //only zoom if there exists a last point
     if([run.pos lastObject])
     {
         [self autoZoomMap:[run.pos lastObject]];
     }
-    
-    //update map icon one last time
-    [self reloadMapIcon:!inMapView];
     
 }
 
@@ -619,41 +619,16 @@
             CLLocationMeta * lastPosMeta = [[run posMeta] lastObject] ;
             newKM.time = [lastPosMeta time]; //set time to most recent
             newKM.pace = 0;
-            CLLocationMeta * pos;
-            CLLocationMeta * oldKM = [[run kmCheckpointsMeta] lastObject];
             
-            //aggregrate past position until we get to the time of the last km or start
-            NSInteger numPosCounted = 0;
-            
-            for(int i = [[run posMeta] count] - 1; i >= 0; i--)
+            //get pace from difference in most recent pos time and last km object if exists
+            NSTimeInterval paceToAdjustRunTime = 0;
+            if([[run kmCheckpoints] count] > 0)
             {
-                //get posMeta and see if time is less than last km's time
-                pos = [[run posMeta] objectAtIndex:i];
+                CLLocationMeta * oldKM = [[run kmCheckpointsMeta] lastObject];
+                paceToAdjustRunTime = [oldKM time];
                 
-                if([[run kmCheckpointsMeta] count] > 0)
-                {
-                    if(pos.time <= [oldKM time])
-                    {
-                        //all positions have been accounted for
-                        break;
-                    }
-                }
-                
-                if(pos.time <= 0)
-                {
-                    newKM.pace += pos.pace;
-                    numPosCounted++;
-                    break;
-                }
-                
-                
-                newKM.pace += pos.pace;
-                numPosCounted++;
             }
-            
-            //breaked at last km end position
-            //aggregrate pace
-            newKM.pace =  newKM.pace / (numPosCounted);
+            newKM.pace =  newKM.time - paceToAdjustRunTime;
             
             //add to array
             [[run kmCheckpointsMeta] addObject:newKM];
