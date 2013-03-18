@@ -433,7 +433,7 @@
 
 -(void)paceRunStart:(NSNumber*)selectedIndex
 {
-    CGFloat pace = 0.5 + ([selectedIndex intValue] * 0.5);
+    CGFloat pace = [selectedIndex integerValue] ; //min/km to m/s
     
     RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace];
     
@@ -445,7 +445,7 @@
 {
     CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000];
     
     [self selectedNewRun:new];
     
@@ -453,7 +453,7 @@
 
 -(void)timeRunStart:(NSNumber*)selectedIndex
 {
-    CGFloat time = 0.5 + ([selectedIndex intValue] * 0.5);
+    NSTimeInterval time = ([selectedIndex intValue] * 60);
     
     RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time];
     
@@ -463,7 +463,7 @@
 
 -(void)caloriesRunStart:(NSNumber*)selectedIndex
 {
-    CGFloat calories = 0.5 + ([selectedIndex intValue] * 0.5);
+    CGFloat calories = 25 + ([selectedIndex intValue] * 25);
     
     RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories];
     

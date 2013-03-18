@@ -157,7 +157,6 @@
         minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-        //[pausePoints addObject:[NSNumber numberWithInt:[NSDate timeIntervalSinceReferenceDate]]];
         map = [[RunMap alloc] init];
         return self;
     }
@@ -172,16 +171,16 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
+                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value]];
                 break;
             case MetricTypeCalories:
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value, @"KM"];
+                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value/1000.0, @"KM"];
                 break;
             case MetricTypeTime:
-                name = [NSString stringWithFormat:@"%@ %@ • %f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
+                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
                 break;
                 
             case MetricTypeCadence:
@@ -196,13 +195,20 @@
         metricGoal = value;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
-        distance = 4.1f;
-        calories = 301.5f;
-        avgPace = 264;
-        time = 2063;
+        distance = 0;
+        calories = 0;
+        avgPace = 0;
+        time = 0;
         live = true;
         ghost = false;
         pos  = [[NSMutableArray alloc] initWithCapacity:1000];
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
+        map = [[RunMap alloc] init];
         return self;
     }
     return nil;

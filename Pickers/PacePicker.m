@@ -29,12 +29,14 @@
 
 @interface PacePicker()
 @property (nonatomic,retain) NSArray *data;
-@property (nonatomic,assign) NSInteger selectedIndex;
+@property (nonatomic,assign) NSInteger selectedIndexMin;
+@property (nonatomic,assign) NSInteger selectedIndexSecond;
 @end
 
 @implementation PacePicker
 @synthesize data = _data;
-@synthesize selectedIndex = _selectedIndex;
+@synthesize selectedIndexMin;
+@synthesize selectedIndexSecond;
 @synthesize onRunFormDone = _onRunFormDone;
 @synthesize onRunFormCancel = _onRunFormCancel;
 
@@ -63,7 +65,8 @@
     self = [self initWithTarget:target successAction:successAction cancelAction:cancelActionOrNil origin:origin];
     if (self) {
         self.data = data;
-        self.selectedIndex = index;
+        self.selectedIndexSecond = index;
+        self.selectedIndexMin = 0;
         self.title = title;
     }
     return self;
@@ -77,7 +80,8 @@
     stringPicker.delegate = self;
     stringPicker.dataSource = self;
     stringPicker.showsSelectionIndicator = YES;
-    [stringPicker selectRow:self.selectedIndex inComponent:0 animated:NO];
+    [stringPicker selectRow:self.selectedIndexSecond inComponent:0 animated:NO];
+    [stringPicker selectRow:self.selectedIndexMin inComponent:0 animated:NO];
     
     //need to keep a reference to the picker so we can clear the DataSource / Delegate when dismissing
     self.pickerView = stringPicker;
@@ -87,11 +91,11 @@
 
 - (void)notifyTarget:(id)target didSucceedWithAction:(SEL)successAction origin:(id)origin {    
     if (self.onRunFormDone) {
-        _onRunFormDone(self, self.selectedIndex, [self.data objectAtIndex:self.selectedIndex]);
+        _onRunFormDone(self, (self.selectedIndexMin + (self.selectedIndexSecond*60)), [self.data objectAtIndex:self.selectedIndexSecond]);
         return;
     }
     else if (target && [target respondsToSelector:successAction]) {
-        [target performSelector:successAction withObject:[NSNumber numberWithInt:self.selectedIndex] withObject:origin];
+        [target performSelector:successAction withObject:[NSNumber numberWithInt:(self.selectedIndexMin + (self.selectedIndexSecond*60))] withObject:origin];
         return;
     }
 }
@@ -108,7 +112,10 @@
 #pragma mark - UIPickerViewDelegate / DataSource
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.selectedIndex = row;
+    if(component == 0)
+        self.selectedIndexSecond = row;
+    else
+        self.selectedIndexMin = row;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

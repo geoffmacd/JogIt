@@ -223,6 +223,8 @@
     
     //hide these by default unless newrun overrides them
     [finishBut setHidden:true];
+    //hide goal image, until we decide to display it
+    [goalAchievedImage setHidden:true];
     
     //set title
     if(!run.live)
@@ -231,19 +233,11 @@
         [statusBut setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
         [ghostBut setHidden:false];
         
-        //hide goal image
-        [goalAchievedImage setHidden:true];
-        
     }
     else
     {
         //hide red x if it is not a targeted run
-        if(run.metric == NoMetricType)
-        {
-            //hide goal image
-            [goalAchievedImage setHidden:true];
-        }
-        else
+        if(run.metric != NoMetricType)
         {
             //if it is, set the image to be besides the label
             CGRect metricRect;
@@ -262,16 +256,17 @@
                 case MetricTypeDistance:
                     metricRect = distanceLabel.frame;
                     break;
-                    
+                case MetricTypeStride:
+                case MetricTypeClimbed:
+                case MetricTypeCadence:
                 default:
                     break;
             }
             
             imageRect.origin = metricRect.origin;
             imageRect.origin.x += metricRect.size.width;
-            imageRect.origin.y += metricRect.size.height/4;
+            imageRect.origin.y += metricRect.size.height/6;
             [goalAchievedImage setFrame:imageRect];
-            [goalAchievedImage setHidden:false];
             
         }
         
@@ -329,13 +324,15 @@
         
         finishBut.alpha = 0.0f;
         [finishBut setHidden:false];
+        runTitle.alpha = 1.0f;
         [UIView transitionWithView:finishBut
                           duration:0.5f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 1.0f;
+                            runTitle.alpha = 0.0f;
                         } completion:^(BOOL finish){
-                            
+                            [runTitle setHidden:true];
                             //stop location updates
                             [self stopRun];
                         }];
@@ -360,11 +357,14 @@
         
         
         finishBut.alpha = 1.0f;
+        [runTitle setHidden:false];
+        runTitle.alpha = 0.0f;
         [UIView transitionWithView:finishBut
                           duration:0.5f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 0.0f;
+                            runTitle.alpha = 1.0f;
                         } completion:^(BOOL finish){
                             [finishBut setHidden:true];
                             //start run
@@ -503,11 +503,68 @@
         [lastKmPace setText:paceForCurrentIndex];
     }
     
+    //check if goal has been achieved
+    [self determineGoalAchieved];
+    
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
     [timeLabel setText:stringToSetTime];
-    
-    
+}
+
+-(void)determineGoalAchieved
+{
+    switch (run.metric) {
+        case NoMetricType:
+            //do nothing
+            return;
+            break;
+            
+        case MetricTypePace:
+            if(run.avgPace*1000 <= run.metricGoal)
+            {
+                [goalAchievedImage setHidden:false];
+            }
+            else{
+                
+                [goalAchievedImage setHidden:true];
+            }
+            break;
+        case MetricTypeDistance:
+            if(run.distance >= run.metricGoal)
+            {
+                [goalAchievedImage setHidden:false];
+            }
+            else{
+                
+                [goalAchievedImage setHidden:true];
+            }
+            break;
+        case MetricTypeCalories:
+            if(run.calories >= run.metricGoal)
+            {
+                [goalAchievedImage setHidden:false];
+            }
+            else{
+                
+                [goalAchievedImage setHidden:true];
+            }
+            break;
+        case MetricTypeTime:
+            if(run.time >= run.metricGoal)
+            {
+                [goalAchievedImage setHidden:false];
+            }
+            else{
+                
+                [goalAchievedImage setHidden:true];
+            }
+            break;
+        case MetricTypeStride:
+        case MetricTypeCadence:
+        case MetricTypeClimbed:
+        default:
+            break;
+    }
     
 }
 
