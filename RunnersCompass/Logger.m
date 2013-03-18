@@ -272,8 +272,6 @@
         
         [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         
-        [runTitle setText:run.name];
-        
         //hide ghost
         [ghostBut setHidden:true];
     }
@@ -298,6 +296,142 @@
     [map setShowsUserLocation:true];
 }
 
+
+-(void)shouldUserGhostRun
+{
+    sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"GhostRun", @"Question for starting ghost run")//@"Do you want to ghost race yourself?"
+                                        delegate:self
+                               cancelButtonTitle:NSLocalizedString(@"CancelWord", @"cancel word")
+                          destructiveButtonTitle:NSLocalizedString(@"GhostRunStart", @"word for starting ghost run")
+                               otherButtonTitles:nil];
+    
+    
+    // Show the sheet in view
+    
+    [sheet showInView:self.parentViewController.view];
+}
+
+
+
+#pragma mark - Managing Live Run
+
+-(void)startRun
+{
+    //stop map following user
+    [map setUserTrackingMode:MKUserTrackingModeNone];
+    
+    //start updates
+    NSLog(@"started tracking.....");
+    [locationManager startUpdatingLocation];
+    
+    
+    //set timer up
+    if(![timer isValid])
+    {
+        
+        //schedule on run loop to increase priority
+        timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
+    
+    readyForPathInit = true; //to restart path at the current users location
+    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
+    
+    //disable km selection mode
+    kmPaceShowMode = false;
+    numMinutesAtKmSelected = -1;
+    selectedMinIndex = [[run minCheckpointsMeta] count];
+    selectedKmIndex = [[run kmCheckpointsMeta] count];
+    [self setPaceLabels];
+    
+    //reset count
+    pausedForAuto = false;
+    timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
+}
+
+
+-(void) stopRun
+{
+    //if autopause caused this, do not stop location updates
+    if(!pausedForAuto)
+    {
+        //stop updates
+        NSLog(@"stopped tracking.....");
+        [locationManager stopUpdatingLocation];
+    }
+    
+    //set map to follow user before starting track
+    [map setUserTrackingMode:MKUserTrackingModeFollow];
+    
+    //stop timer updating
+    [timer invalidate];
+    
+    
+    //update map icon one last time
+    [self reloadMapIcon:!inMapView];
+    
+    //only zoom if there exists a last point
+    if([run.pos lastObject])
+    {
+        [self autoZoomMap:[run.pos lastObject]];
+    }
+    
+}
+
+
+-(void)tick
+{
+    //process 1 second gone by in timer
+    
+    //update time with 1 second
+    run.time += 1;
+    
+    CLLocation * last = [run.pos lastObject];
+    
+    //if last position determined was more than 5 seconds ago, pause
+    if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
+    {
+        NSLog(@"Autopaused");
+        
+        pausedForAuto = true;
+        
+        [delegate pauseAnimation:nil];
+    }
+    
+    
+    //update hud if multiple of 60, therefore one minute
+    if(!((int)run.time % barPeriod))
+    {
+        //add one checkpoint representing past 60 seconds
+        
+        [self calcOnTick];
+    }
+    
+    if(selectedKmIndex == [[run kmCheckpointsMeta] count])
+    {
+        //need current time update to lastKMLabel
+        
+        NSTimeInterval timeToAdjust = 0;
+        
+        if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
+        {
+            CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
+            //get distance from km just by looking at index
+            timeToAdjust = priorKmMeta.time;
+        }
+        
+        //show current time in the current km
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
+        [lastKmPace setText:paceForCurrentIndex];
+    }
+    
+    //check if goal has been achieved
+    [self determineGoalAchieved];
+    
+    //update time displayed
+    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
+    [timeLabel setText:stringToSetTime];
+}
 
 
 - (void)didReceivePause:(NSNotification *)notification
@@ -369,146 +503,10 @@
                             [finishBut setHidden:true];
                             //start run
                             [self startRun];
-
+                            
                             
                         }];
     }
-}
-
-
--(void)shouldUserGhostRun
-{
-    sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"GhostRun", @"Question for starting ghost run")//@"Do you want to ghost race yourself?"
-                                        delegate:self
-                               cancelButtonTitle:NSLocalizedString(@"CancelWord", @"cancel word")
-                          destructiveButtonTitle:NSLocalizedString(@"GhostRunStart", @"word for starting ghost run")
-                               otherButtonTitles:nil];
-    
-    
-    // Show the sheet in view
-    
-    [sheet showInView:self.parentViewController.view];
-}
-
-
-
-#pragma mark - Managing Live Run
-
--(void)startRun
-{
-    //stop map following user
-    [map setUserTrackingMode:MKUserTrackingModeNone];
-    
-    //start updates
-    NSLog(@"started tracking.....");
-    [locationManager startUpdatingLocation];
-    
-    
-    //set timer up
-    if(![timer isValid])
-    {
-        
-        //schedule on run loop to increase priority
-        timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    }
-    
-    readyForPathInit = true; //to restart path at the current users location
-    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
-    
-    //disable km selection mode
-    kmPaceShowMode = false;
-    numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count];
-    selectedKmIndex = [[run kmCheckpointsMeta] count];
-    [self setPaceLabels];
-    
-    //reset count
-    pausedForAuto = false;
-}
-
-
--(void) stopRun
-{
-    //if autopause caused this, do not stop location updates
-    if(!pausedForAuto)
-    {
-        //stop updates
-        NSLog(@"stopped tracking.....");
-        [locationManager stopUpdatingLocation];
-    }
-    
-    //set map to follow user before starting track
-    [map setUserTrackingMode:MKUserTrackingModeFollow];
-    
-    //stop timer updating
-    [timer invalidate];
-    
-    
-    //update map icon one last time
-    [self reloadMapIcon:!inMapView];
-    
-    //only zoom if there exists a last point
-    if([run.pos lastObject])
-    {
-        [self autoZoomMap:[run.pos lastObject]];
-    }
-    
-}
-
-
--(void)tick
-{
-    //process 1 second gone by in timer
-    
-    //update time with 1 second
-    run.time += 1;
-    
-    CLLocation * last = [run.pos lastObject];
-    
-    //if last position determined was more than 5 seconds ago, pause
-    if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
-    {
-        NSLog(@"Autopaused");
-        
-        pausedForAuto = true;
-        
-        [delegate pauseAnimation:nil];
-    }
-    
-    
-    //update hud if multiple of 60, therefore one minute
-    if(!((int)run.time % barPeriod))
-    {
-        //add one checkpoint representing past 60 seconds
-        
-        [self calcOnTick];
-    }
-    
-    if(selectedKmIndex == [[run kmCheckpointsMeta] count])
-    {
-        //need current time update to lastKMLabel
-        
-        NSTimeInterval timeToAdjust = 0;
-        
-        if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
-        {
-            CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
-            //get distance from km just by looking at index
-            timeToAdjust = priorKmMeta.time;
-        }
-        
-        //show current time in the current km
-        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
-        [lastKmPace setText:paceForCurrentIndex];
-    }
-    
-    //check if goal has been achieved
-    [self determineGoalAchieved];
-    
-    //update time displayed
-    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
-    [timeLabel setText:stringToSetTime];
 }
 
 -(void)determineGoalAchieved
@@ -818,6 +816,14 @@
         
         [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
     }
+    else{
+        
+        [runTitle setText:run.name];
+    }
+    
+    //ensure it is visible
+    [runTitle setHidden:false];
+    runTitle.alpha = 1.0f;
     
     [self setPaceLabels];
     
@@ -865,7 +871,6 @@
                 if(autoPauseRestartCount >  4)
                 {
                     NSLog(@"unpause autupause");
-                    pausedForAuto = false;
                     autoPauseRestartCount = 0;
                     
                     //add one recent pos to eliminate immediate autopaused because most recent was old

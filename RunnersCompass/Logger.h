@@ -79,6 +79,7 @@
     
     NSTimeInterval timeSinceMapCenter;
     NSTimeInterval timeSinceMapIconRefresh;
+    NSTimeInterval timeSinceUnpause;
     NSTimeInterval lastMapTouch;
     NSTimeInterval lastCalculate;
     BOOL readyForPathInit;
