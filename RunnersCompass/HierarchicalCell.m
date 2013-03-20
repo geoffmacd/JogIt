@@ -60,6 +60,20 @@
     [delegate updateGestureFailForCell:swipeGesture];
     
     
+    
+    //setup gestures
+    UITapGestureRecognizer * headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTap:)];
+    [headerTap setNumberOfTapsRequired:1];
+    [headerTap setCancelsTouchesInView:true];
+    //add to view
+    [headerView addGestureRecognizer:headerTap];
+    UITapGestureRecognizer * expandTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(expandViewTap:)];
+    [expandTap setNumberOfTapsRequired:1];
+    [expandTap setCancelsTouchesInView:true];
+    //add to view
+    [expandedView addGestureRecognizer:expandTap];
+    
+    
     //tells heirarchical cell to get out of deletion mode, sent by 4 things:: new runs, selected runs, tapping other cells and navigation to other screens
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(resetDeletionMode)
