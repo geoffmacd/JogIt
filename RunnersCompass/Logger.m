@@ -39,6 +39,7 @@
 @synthesize ghostBut;
 @synthesize timeTitle,distanceTitle,caloriesTitle,avgPaceTitle;
 @synthesize swipeToPauseLabel;
+@synthesize lowSignalImage;
 
 #pragma mark - Lifecycle
 
@@ -54,6 +55,16 @@
     [mapButton.layer setBorderWidth: 1.0];
     [mapButton.layer setCornerRadius: 5.0];
     [mapButton.layer setMasksToBounds:YES];
+    
+    //setup low signal gif but dont start
+    lowSignalImage.animationImages = [[NSArray alloc] initWithObjects:
+                                           [UIImage imageNamed:@"lowsignal.png"],
+                                           [UIImage imageNamed:@"lowsignal1.png"],
+                                           [UIImage imageNamed:@"lowsignal2.png"],
+                                           [UIImage imageNamed:@"lowsignal3.png"],
+                                           nil];
+    lowSignalImage.animationRepeatCount = 0;
+    lowSignalImage.animationDuration = 2;
     
     [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [map.layer setBorderWidth: 1.0];
@@ -851,6 +862,30 @@
     //add anotation to map
     if (newLocation.timestamp > oldLocation.timestamp)
     {
+        //deter accuracy for low signal
+        CLLocationAccuracy newAccuracy = newLocation.horizontalAccuracy;
+        accuracyCount++;
+        avgAccuracy += newAccuracy;
+        //evaluate if more than 5
+        if(accuracyCount  > 5)
+        {
+            if(avgAccuracy > 5 * accuracyCount)
+            {
+                //display
+                [lowSignalImage startAnimating];
+                [lowSignalImage setHidden:false];
+            }
+            else{
+                //hide
+                [lowSignalImage setHidden:true];
+                [lowSignalImage stopAnimating];
+            }
+            
+            //reset
+            accuracyCount = 0;
+            avgAccuracy = 0;
+        }
+        
 		
 		// make sure the old and new coordinates are different
         if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&

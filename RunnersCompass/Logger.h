@@ -90,6 +90,10 @@
     
     BOOL waitingForMapToLoad;
     NSInteger loadingMapTiles;
+    
+    //low signal
+    CLLocationAccuracy avgAccuracy;
+    NSInteger accuracyCount;
 
 }
 
@@ -138,6 +142,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeTitle;
 @property (strong, nonatomic) IBOutlet UILabel *swipeToPauseLabel;
 @property (strong, nonatomic) IBOutlet UIButton *hamburgerBut;
+@property (strong, nonatomic) IBOutlet UIImageView *lowSignalImage;
 
 
 

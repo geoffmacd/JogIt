@@ -35,6 +35,14 @@
 		674C90B916F956350078DD8E /* PredictorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90B516F956350078DD8E /* PredictorVC.m */; };
 		674C90BB16F958350078DD8E /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90BA16F958350078DD8E /* Predictor.xib */; };
 		674C90BF16F9697F0078DD8E /* lightgraybutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90BE16F9697F0078DD8E /* lightgraybutton.png */; };
+		674C90C816F9716C0078DD8E /* lowsignal.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C016F9716C0078DD8E /* lowsignal.png */; };
+		674C90C916F9716C0078DD8E /* lowsignal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C116F9716C0078DD8E /* lowsignal@2x.png */; };
+		674C90CA16F9716C0078DD8E /* lowsignal1.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C216F9716C0078DD8E /* lowsignal1.png */; };
+		674C90CB16F9716C0078DD8E /* lowsignal1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C316F9716C0078DD8E /* lowsignal1@2x.png */; };
+		674C90CC16F9716C0078DD8E /* lowsignal2.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C416F9716C0078DD8E /* lowsignal2.png */; };
+		674C90CD16F9716C0078DD8E /* lowsignal2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C516F9716C0078DD8E /* lowsignal2@2x.png */; };
+		674C90CE16F9716C0078DD8E /* lowsignal3.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C616F9716C0078DD8E /* lowsignal3.png */; };
+		674C90CF16F9716C0078DD8E /* lowsignal3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C716F9716C0078DD8E /* lowsignal3@2x.png */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
@@ -210,6 +218,14 @@
 		674C90B516F956350078DD8E /* PredictorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictorVC.m; sourceTree = "<group>"; };
 		674C90BA16F958350078DD8E /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
 		674C90BE16F9697F0078DD8E /* lightgraybutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightgraybutton.png; sourceTree = "<group>"; };
+		674C90C016F9716C0078DD8E /* lowsignal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal.png; sourceTree = "<group>"; };
+		674C90C116F9716C0078DD8E /* lowsignal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal@2x.png"; sourceTree = "<group>"; };
+		674C90C216F9716C0078DD8E /* lowsignal1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal1.png; sourceTree = "<group>"; };
+		674C90C316F9716C0078DD8E /* lowsignal1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal1@2x.png"; sourceTree = "<group>"; };
+		674C90C416F9716C0078DD8E /* lowsignal2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal2.png; sourceTree = "<group>"; };
+		674C90C516F9716C0078DD8E /* lowsignal2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal2@2x.png"; sourceTree = "<group>"; };
+		674C90C616F9716C0078DD8E /* lowsignal3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal3.png; sourceTree = "<group>"; };
+		674C90C716F9716C0078DD8E /* lowsignal3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal3@2x.png"; sourceTree = "<group>"; };
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
@@ -588,22 +604,23 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				674C90BE16F9697F0078DD8E /* lightgraybutton.png */,
-				67B2581F16F00B2D00CF337E /* fatperson.png */,
-				67B2582016F00B2D00CF337E /* fatperson@2x.png */,
-				67B2582116F00B2D00CF337E /* flag.png */,
-				67B2582216F00B2E00CF337E /* flag@2x.png */,
-				67B2582316F00B2E00CF337E /* odometer.png */,
-				67B2582416F00B2E00CF337E /* odometer@2x.png */,
-				67B2582516F00B2E00CF337E /* whiteclock.png */,
-				67B2582616F00B2E00CF337E /* whiteclock@2x.png */,
-				67B2581316EFFC2C00CF337E /* progress-bar-bg.png */,
-				67B2581416EFFC2C00CF337E /* progress-bar-fill.png */,
-				67B2580B16EFF8D900CF337E /* celldivision.png */,
+				674C90C016F9716C0078DD8E /* lowsignal.png */,
+				674C90C116F9716C0078DD8E /* lowsignal@2x.png */,
+				674C90C216F9716C0078DD8E /* lowsignal1.png */,
+				674C90C316F9716C0078DD8E /* lowsignal1@2x.png */,
+				674C90C416F9716C0078DD8E /* lowsignal2.png */,
+				674C90C516F9716C0078DD8E /* lowsignal2@2x.png */,
+				674C90C616F9716C0078DD8E /* lowsignal3.png */,
+				674C90C716F9716C0078DD8E /* lowsignal3@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
 				67B257D616EFF13A00CF337E /* background@2x.png */,
+				67B2580B16EFF8D900CF337E /* celldivision.png */,
+				67B2581F16F00B2D00CF337E /* fatperson.png */,
+				67B2582016F00B2D00CF337E /* fatperson@2x.png */,
+				67B2582116F00B2D00CF337E /* flag.png */,
+				67B2582216F00B2E00CF337E /* flag@2x.png */,
 				67B257D716EFF13A00CF337E /* garbage.png */,
 				67B257D816EFF13A00CF337E /* garbage@2x.png */,
 				67B257D916EFF13A00CF337E /* ghost.png */,
@@ -614,8 +631,13 @@
 				67B257DE16EFF13A00CF337E /* greencheck@2x.png */,
 				67B257DF16EFF13A00CF337E /* hamburger.png */,
 				67B257E016EFF13A00CF337E /* hamburger@2x.png */,
+				674C90BE16F9697F0078DD8E /* lightgraybutton.png */,
+				67B2582316F00B2E00CF337E /* odometer.png */,
+				67B2582416F00B2E00CF337E /* odometer@2x.png */,
 				67B257E116EFF13A00CF337E /* pause.png */,
 				67B257E216EFF13A00CF337E /* pause@2x.png */,
+				67B2581316EFFC2C00CF337E /* progress-bar-bg.png */,
+				67B2581416EFFC2C00CF337E /* progress-bar-fill.png */,
 				67B257E316EFF13A00CF337E /* pull.png */,
 				67B257E416EFF13A00CF337E /* pull@2x.png */,
 				67B257E516EFF13A00CF337E /* record.png */,
@@ -628,6 +650,8 @@
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,
 				67B257EE16EFF13B00CF337E /* triangle@2x.png */,
+				67B2582516F00B2E00CF337E /* whiteclock.png */,
+				67B2582616F00B2E00CF337E /* whiteclock@2x.png */,
 			);
 			path = "Retina Graphics";
 			sourceTree = SOURCE_ROOT;
@@ -950,6 +974,14 @@
 				674C90B716F956350078DD8E /* PredictHeaderCell.xib in Resources */,
 				674C90BB16F958350078DD8E /* Predictor.xib in Resources */,
 				674C90BF16F9697F0078DD8E /* lightgraybutton.png in Resources */,
+				674C90C816F9716C0078DD8E /* lowsignal.png in Resources */,
+				674C90C916F9716C0078DD8E /* lowsignal@2x.png in Resources */,
+				674C90CA16F9716C0078DD8E /* lowsignal1.png in Resources */,
+				674C90CB16F9716C0078DD8E /* lowsignal1@2x.png in Resources */,
+				674C90CC16F9716C0078DD8E /* lowsignal2.png in Resources */,
+				674C90CD16F9716C0078DD8E /* lowsignal2@2x.png in Resources */,
+				674C90CE16F9716C0078DD8E /* lowsignal3.png in Resources */,
+				674C90CF16F9716C0078DD8E /* lowsignal3@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
