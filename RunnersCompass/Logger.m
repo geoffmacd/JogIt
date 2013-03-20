@@ -101,8 +101,8 @@
     //map annotations
     mapAnnotations = [[NSMutableArray alloc] initWithCapacity:10];
     
-    [map setShowsUserLocation:YES];
-    [map setDelegate:self];
+    //set map hidden until user goes into logger during setRun to lower loading 
+    [map setHidden:true];
 }
 
 -(void) viewDidLayoutSubviews
@@ -117,15 +117,6 @@
     CGRect shadeRect = self.view.frame;
     [shadeView setFrame:shadeRect];
     [self.view addSubview:shadeView];
-    
-    
-    //load most recent run on startup, but not intended any other time
-    RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
-    loadRun.live = false;
-    
-    [self setRun:loadRun];
-    
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -221,6 +212,7 @@
 {
     run = _run;
     
+    
     //hide these by default unless newrun overrides them
     [finishBut setHidden:true];
     //hide goal image, until we decide to display it
@@ -292,8 +284,11 @@
     
     [self updateChart];
     
-
+    //load map 
+    [map setHidden:false];
     [map setShowsUserLocation:true];
+    [map setDelegate:self];
+
 }
 
 
@@ -305,12 +300,10 @@
                           destructiveButtonTitle:NSLocalizedString(@"GhostRunStart", @"word for starting ghost run")
                                otherButtonTitles:nil];
     
-    
     // Show the sheet in view
     
     [sheet showInView:self.parentViewController.view];
 }
-
 
 
 #pragma mark - Managing Live Run
@@ -1245,20 +1238,14 @@
     }
 }
 
-
-
 #pragma mark - ScrollView Delegate
-
-
 
 -(CGFloat)convertToX:(NSInteger) minute
 {
     CGFloat x =  paceGraphBarWidth * minute;
     
     return x;
-    
 }
-
 
 -(NSInteger)convertToCheckpointMinute:(CGFloat)x
 {
@@ -1347,7 +1334,6 @@
         
         return  [[run minCheckpointsMeta] count] - 1;
     }
-    
     return 0;
 }
 
@@ -1634,7 +1620,6 @@
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
         
-        
         [barPlot reloadData];
     }
     
@@ -1651,7 +1636,6 @@
         [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
         [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
     }
-    
 }
 
 
@@ -1698,7 +1682,6 @@
     CPTXYAxis *x          = axisSet.xAxis;
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
     
-    
     //axis line style
     CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
     majorLineStyle.lineCap   = kCGLineCapRound;
@@ -1729,8 +1712,6 @@
     
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
-
-    
     
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
@@ -1748,7 +1729,6 @@
     selectedPlot.delegate = self;
     
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
-    
 }
 
 #pragma mark -
@@ -1810,8 +1790,6 @@
                 break;
         }
     }
-    
-    
     return num;
 }
 
@@ -1865,7 +1843,6 @@
     }];
 }
 
-
 - (void)openMapWithSmoothAnimation:(BOOL)animated completion:(void(^)(void))completion {
     CGFloat duration = 0.0f;
     if (animated) {
@@ -1896,7 +1873,6 @@
     }];
 }
 
-
 #pragma mark -
 #pragma mark Action Sheet Delegate
 
@@ -1916,7 +1892,6 @@
     }
     //coninute otherwise
 }
-
 
 #pragma mark - UI Actions
 
@@ -2087,7 +2062,6 @@
         //share the run
         NSArray *activityItems;
         
-        
         //log text message
         NSString * messageToSend = NSLocalizedString(@"LoggerShareMsg", "message to be sent with sharing");
         
@@ -2107,8 +2081,6 @@
         
         UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
-        
-        
         
     }
 }
