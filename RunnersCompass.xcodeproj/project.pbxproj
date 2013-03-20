@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
-		6703F4E816B75F12006A8F88 /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E716B75F12006A8F88 /* Performance.xib */; };
 		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
 		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
@@ -23,11 +22,14 @@
 		672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA39116B4C87E00B7DEE6 /* StartCell.xib */; };
 		672AA39D16B4F70300B7DEE6 /* FlatToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */; };
 		672AA3B416B5990700B7DEE6 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA3B316B5990700B7DEE6 /* SettingsViewController.m */; };
-		672AA3C716B5A6D300B7DEE6 /* PerformanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */; };
 		672AA43816B5AE6700B7DEE6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */; };
 		672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */; };
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
 		6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6735780C16D71CE1004A92D1 /* TimePicker.m */; };
+		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
+		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
+		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
+		674C90AF16F94EF10078DD8E /* PermHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90AB16F94EF10078DD8E /* PermHeaderCell.xib */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
@@ -162,7 +164,6 @@
 
 /* Begin PBXFileReference section */
 		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
-		6703F4E716B75F12006A8F88 /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
@@ -187,14 +188,18 @@
 		672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatToolbar.m; sourceTree = "<group>"; };
 		672AA3B216B5990700B7DEE6 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		672AA3B316B5990700B7DEE6 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceViewController.h; sourceTree = "<group>"; };
-		672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceViewController.m; sourceTree = "<group>"; };
 		672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
 		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
 		6735780B16D71CE1004A92D1 /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
 		6735780C16D71CE1004A92D1 /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
+		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
+		674C90A716F94EF10078DD8E /* PerformanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceVC.h; sourceTree = "<group>"; };
+		674C90A816F94EF10078DD8E /* PerformanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceVC.m; sourceTree = "<group>"; };
+		674C90A916F94EF10078DD8E /* PermHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermHeaderCell.h; sourceTree = "<group>"; };
+		674C90AA16F94EF10078DD8E /* PermHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermHeaderCell.m; sourceTree = "<group>"; };
+		674C90AB16F94EF10078DD8E /* PermHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PermHeaderCell.xib; sourceTree = "<group>"; };
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
@@ -475,12 +480,15 @@
 		672AA3C416B5A6B800B7DEE6 /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				674C90A616F94EF10078DD8E /* Performance.xib */,
+				674C90A716F94EF10078DD8E /* PerformanceVC.h */,
+				674C90A816F94EF10078DD8E /* PerformanceVC.m */,
+				674C90A916F94EF10078DD8E /* PermHeaderCell.h */,
+				674C90AA16F94EF10078DD8E /* PermHeaderCell.m */,
+				674C90AB16F94EF10078DD8E /* PermHeaderCell.xib */,
 				67C8E30016D0740900E4DE11 /* ChartCell.h */,
 				67C8E30116D0740900E4DE11 /* ChartCell.m */,
 				67C8E30316D0742E00E4DE11 /* ChartCell.xib */,
-				6703F4E716B75F12006A8F88 /* Performance.xib */,
-				672AA3C516B5A6D300B7DEE6 /* PerformanceViewController.h */,
-				672AA3C616B5A6D300B7DEE6 /* PerformanceViewController.m */,
 				67AF65C616D88FF8004A484C /* Predictor.xib */,
 				67AF65C716D88FF8004A484C /* PredictorViewController.h */,
 				67AF65C816D88FF8004A484C /* PredictorViewController.m */,
@@ -877,7 +885,6 @@
 				672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */,
 				672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */,
 				6703F4E516B75F07006A8F88 /* Settings.xib in Resources */,
-				6703F4E816B75F12006A8F88 /* Performance.xib in Resources */,
 				6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */,
 				67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */,
 				67C8E31316D19C4E00E4DE11 /* CreateGoal.xib in Resources */,
@@ -928,6 +935,8 @@
 				67B2582C16F00B2E00CF337E /* odometer@2x.png in Resources */,
 				67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */,
 				67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */,
+				674C90AC16F94EF10078DD8E /* Performance.xib in Resources */,
+				674C90AF16F94EF10078DD8E /* PermHeaderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -949,7 +958,6 @@
 				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,
 				672AA39D16B4F70300B7DEE6 /* FlatToolbar.m in Sources */,
 				672AA3B416B5990700B7DEE6 /* SettingsViewController.m in Sources */,
-				672AA3C716B5A6D300B7DEE6 /* PerformanceViewController.m in Sources */,
 				672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */,
 				67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */,
 				67B2FCD916C5FDFA008694F1 /* FKBadgeField.m in Sources */,
@@ -1009,6 +1017,8 @@
 				67A8D59316F143380070E38B /* CrumbPathView.m in Sources */,
 				67A8D59616F150EE0070E38B /* Util.m in Sources */,
 				67B1288416F58445003A15A5 /* KMAnnotation.m in Sources */,
+				674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */,
+				674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,7 @@
 #import "RunEvent.h"
 #import "Logger.h"
 #import "JSSlidingViewController.h"
-#import "PerformanceViewController.h"
+#import "PerformanceVC.h"
 #import "SettingsViewController.h"
 #import "GoalsViewController.h"
 #import "CreateGoalViewController.h"
@@ -364,15 +364,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //save run and add it to the menu if it exists
     if(run)
     {
-        HierarchicalCell * cell = (HierarchicalCell * )[MenuTable dequeueReusableCellWithIdentifier:cellID];
-        
         //must be at 0th index to be at top and reload correctly
         [runs insertObject:run atIndex:0];
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [cells removeAllObjects];
         [MenuTable reloadData];
-        
-        
     }
     
     //refresh start cell
@@ -415,7 +411,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //nav bar cleanup
     [self cleanupForNav];
     
-    PerformanceViewController * vc = [[PerformanceViewController alloc] initWithNibName:@"Performance" bundle:nil];
+    PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
     [self presentViewController:vc animated:true completion:nil];
 }
 - (IBAction)goalsNavPressed:(id)sender {
