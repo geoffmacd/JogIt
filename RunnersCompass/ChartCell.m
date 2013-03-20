@@ -35,7 +35,9 @@
     
     loadedGraph = false;//load later
     
-    [self setExpand:false withAnimation:false];
+    //[self setExpand:false withAnimation:false];
+    expanded = false;
+    [delegate cellDidChangeHeight:self];
     
     //set title to match the metric
     [headerLabel setText:[RunEvent stringForMetric:associated]];

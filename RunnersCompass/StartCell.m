@@ -25,7 +25,8 @@
 
     locked = false;
     
-    [self setExpand:false withAnimation:false];
+    expanded = false;
+    [expandedView setHidden:true];
     
     [headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     
