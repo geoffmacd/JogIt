@@ -48,7 +48,6 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UILabel *paceUnit;
 @property (strong, nonatomic) IBOutlet UILabel *minUnit;
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
-@property (weak, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 @property (strong, nonatomic) IBOutlet UIButton *garbageBut;
 
 //delegate
@@ -60,6 +59,7 @@ typedef enum
 @property (weak, nonatomic) HierarchicalCell *parent;
 @property (nonatomic, setter = setAssociated:) RunEvent * associatedRun;
 @property HierarchicalType type;
+@property (strong, nonatomic) UISwipeGestureRecognizer *swipeGesture;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

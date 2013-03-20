@@ -18,6 +18,8 @@
 #import "RunFormPicker.h"
 #import "Analysis.h"
 
+#import "SJCell.h"
+
 
 
 @implementation MenuViewController
@@ -26,7 +28,7 @@
 @synthesize runInProgressAsFarAsICanTell;
 @synthesize settingsBut,performanceBut,goalsBut;
 
-
+static NSString * cellID = @"HierarchicalCellPrototype";
 
 #pragma mark -
 #pragma mark View Lifecycle
@@ -85,6 +87,12 @@
     
     runInProgressAsFarAsICanTell = false;
     
+    
+    //load cell
+    [MenuTable registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
+    UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
+    
+    [MenuTable registerNib:nib forCellReuseIdentifier:cellID];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,7 +143,8 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return number of historic runs 
+    //return number of historic run
+    //remember to add run to array before reloading table
     return [runs count];
 }
 
@@ -146,15 +155,41 @@
     
 
     if(row >= [cells count]){
+        
+        /*
+        
+        static NSString * cellID = @"SJ";
+        
+        [tableView registerClass:[SJCell class] forCellReuseIdentifier:cellID];
+        UINib * nib = [UINib nibWithNibName:@"CustomCell" bundle:[NSBundle mainBundle]] ;
+        
+        [tableView registerNib:nib forCellReuseIdentifier:cellID];
+        
+        SJCell * testCell = (SJCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
+        
+        [[testCell label] setText:@"steve jobs"];
+        
+        NSString * test  =[[testCell label] text];
+        
+        if(testCell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:testCell options:nil];
+            testCell = [nib objectAtIndex:0];
+            [testCell setValue:cellID forKey:@"reuseIdentifier"];
+            
+        }
+
+        
         HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
                                                  owner:self
-                                                                options:nil]objectAtIndex:0];
+         options:nil]objectAtIndex:0];
+         */
         
+        HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
         
+        [cells addObject:cell];
         [cell setDelegate:self];
         [cell setAssociated:[runs objectAtIndex:row]];
 
-        [cells addObject:cell];
         
         return cell;
     }
@@ -170,36 +205,44 @@
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat height;
-    NSUInteger row = [indexPath row];
-    if(row < [cells count]){
-        HierarchicalCell * cell = [cells objectAtIndex:row];
-    
-        height = [cell getHeightRequired];
-    }
-    else{
-        height = 48.0f;
-    }
-    
-    
-    return height;
-    
-}
-
-
 
 #pragma mark -
 #pragma mark Menu Table delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //never called, since the cells button is called first 
-    /*
+    CGFloat height;
     NSUInteger row = [indexPath row];
     
-    if(row > ([cells count]) || row == 0)
+    if(row >= [cells count]){
+        
+        HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
+        
+        [cells addObject:cell];
+        [cell setDelegate:self];
+        [cell setAssociated:[runs objectAtIndex:row]];
+        
+        height = 48.0f;
+    }
+    else{
+        
+        HierarchicalCell * cell = [cells objectAtIndex:row];
+        
+        height = [cell getHeightRequired];
+    }
+
+    return height;
+}
+
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger row = [indexPath row];
+    
+    //shouldnt happen
+    if(row > ([cells count]))
         return;
     
     
@@ -215,8 +258,9 @@
             [MenuTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
         }
     }
-     */
-    
+    else{
+        [cell setExpand:false withAnimation:true];
+    }
 }
 
 
@@ -242,7 +286,7 @@
         NSIndexPath *path = [MenuTable indexPathForCell:sender];
         [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
     }
-    else if([cells count] > 1)
+    else if([cells count] > 1 )
     {
         if(sender == [cells objectAtIndex:([cells count] - 2)])
         {
@@ -258,7 +302,6 @@
     [self.delegate updateGesturesNeededtoFail:cellGesture];
 }
 
-
 #pragma mark -
 #pragma mark Start Cell Delegate
 
@@ -267,7 +310,6 @@
     //selected the headerview of start cell when run is in progress, slide back to logger
     [self.delegate selectedRunInProgress:shouldDiscard];
 
-    
 }
 
 -(void)selectedNewRun:(RunEvent *) run
@@ -288,8 +330,6 @@
     [start.folderImage setHidden:true];
     
 }
-
-
 
 
 #pragma mark -
@@ -316,37 +356,26 @@
         [start.folderImage setHidden:false];
     
     }
-    
 }
 
 -(void) finishedRun:(RunEvent*)run
 {
     
     //save run and add it to the menu if it exists
-    
     if(run)
     {
+        HierarchicalCell * cell = (HierarchicalCell * )[MenuTable dequeueReusableCellWithIdentifier:cellID];
+        
         //must be at 0th index to be at top and reload correctly
         [runs insertObject:run atIndex:0];
-        HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell" owner:self options:nil]objectAtIndex:0];
-        
-        [cell setDelegate:self];
-        [cells insertObject:cell atIndex:0];
-        
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
-        
-        //can only call this after insertRow and adding object since will crash if setExpand:False is called with cell not loaded into table
-        [cell setAssociated:run];
-        
+        [cells removeAllObjects];
+        [MenuTable reloadData];
         
         
-        //reload table
-        //[MenuTable reloadData];
     }
     
-    
     //refresh start cell
-    
     runInProgressAsFarAsICanTell = false;
     [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     start.locked = false;//to prevent expanding
@@ -365,9 +394,8 @@
     //for discarding active run
     if(buttonIndex == 0)
     {
+        //pass nil
         [self.delegate finishedRun:nil];
-        
-        
     }
 }
 
@@ -381,11 +409,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
-    
-    
 }
-
-
 - (IBAction)performanceNavPressed:(id)sender {
     
     //nav bar cleanup
@@ -394,7 +418,6 @@
     PerformanceViewController * vc = [[PerformanceViewController alloc] initWithNibName:@"Performance" bundle:nil];
     [self presentViewController:vc animated:true completion:nil];
 }
-
 - (IBAction)goalsNavPressed:(id)sender {
     
     //nav bar cleanup
@@ -402,7 +425,6 @@
     
     if(!core.curGoal)
     {
-        
         GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
         CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
         
@@ -410,15 +432,12 @@
             
             [vc presentViewController:vc2 animated:true completion:nil];
         }];
-        
-        
     }
     else
     {
         GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
         
         [self presentViewController:vc animated:true completion:nil];
-    
     }
 }
 
@@ -432,9 +451,6 @@
     [self presentViewController:vc animated:true completion:nil];
 }
 
-
-
-
 #pragma mark -
 #pragma mark StartCell Actions
 
@@ -447,7 +463,6 @@
     [self selectedNewRun:new];
     
 }
-
 -(void)distanceRunStart:(NSNumber*)selectedIndex
 {
     CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
@@ -457,7 +472,6 @@
     [self selectedNewRun:new];
     
 }
-
 -(void)timeRunStart:(NSNumber*)selectedIndex
 {
     NSTimeInterval time = ([selectedIndex intValue] * 60);
@@ -467,7 +481,6 @@
     [self selectedNewRun:new];
     
 }
-
 -(void)caloriesRunStart:(NSNumber*)selectedIndex
 {
     CGFloat calories = 25 + ([selectedIndex intValue] * 25);
@@ -477,8 +490,6 @@
     [self selectedNewRun:new];
     
 }
-
-
 -(void)justGoStart
 {
     
@@ -487,7 +498,6 @@
     [self selectedNewRun:new];
     
 }
-
 - (IBAction)paceTapped:(id)sender {
     PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [core.prefs getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
@@ -496,7 +506,6 @@
     [pace showRunFormPicker];
     
 }
-
 - (IBAction)timeTapped:(id)sender {
     
     TimePicker *time = [[TimePicker alloc] initWithTitle:@"Time" rows:nil initialSelection:0 target:self successAction:@selector(timeRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
@@ -507,9 +516,6 @@
 }
 
 - (IBAction)calorieTapped:(id)sender {
-    
-    
-    
     CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(caloriesRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [cal addCustomButtonWithTitle:@"PR" value:nil];
@@ -520,7 +526,6 @@
 - (IBAction)justGoTapped:(id)sender {
     
     [self justGoStart];
-    
 }
 
 - (IBAction)distanceTapped:(id)sender {
@@ -539,13 +544,13 @@
     UIButton * cellButtonTapped = sender;
     NSUInteger indexOfCell = 10000;
     
+    //must find owner of the button that this was tapped by
     for(int i = 0; i < [cells count]; i++)
     {
         if([cellButtonTapped isDescendantOfView:[cells objectAtIndex:i]])
         {
             indexOfCell = i;
             break;
-            
         }
     }
     
@@ -569,7 +574,10 @@
         
         //commit and reload table here
         [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
-    
+        
+        //reload 
+        [MenuTable reloadData];
+
     }
     else{
         NSLog(@"Cant find cell to delete");

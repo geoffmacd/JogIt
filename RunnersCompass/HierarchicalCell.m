@@ -15,9 +15,9 @@
 @synthesize headerLabel;
 @synthesize expandedView;
 @synthesize headerView;
-@synthesize swipeGesture;
 @synthesize garbageBut;
 @synthesize paceLabel,calLabel,calUnit,timeLabel,minUnit,paceUnit;
+
 
 @synthesize delegate;
 
@@ -26,6 +26,7 @@
 @synthesize expanded;
 @synthesize type;
 @synthesize deletionMode;
+@synthesize swipeGesture;
 
 
 
@@ -44,13 +45,19 @@
     UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
     [headerView setBackgroundColor:col];
     
-    //set state
-    [self setExpand:false withAnimation:false];
+    //set unexpanded
+    expanded = false;
     deletionMode = false;
+    [expandedView setHidden:true];
     
-    
+    //setup swipe gesture
+    swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(cellSwipedRight:)];
+    //set right direction
+    [swipeGesture setDirection:UISwipeGestureRecognizerDirectionRight];
+    //add to view
+    [self addGestureRecognizer:swipeGesture];
     //prevent uiscrollview from overriding right swipe gesture
-    [delegate updateGestureFailForCell:self.swipeGesture];
+    [delegate updateGestureFailForCell:swipeGesture];
     
     
     //tells heirarchical cell to get out of deletion mode, sent by 4 things:: new runs, selected runs, tapping other cells and navigation to other screens
@@ -115,10 +122,8 @@
     
     if(expanded){
         
-        
         [AnimationUtil rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:90];
-        
         
         if(animate)
         {
@@ -126,9 +131,8 @@
             
         }
         
-        
-        
     }else{
+        
         
         if(animate)
         {
@@ -140,8 +144,6 @@
                     curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
-    
-    
     if(!animate)
     {
         [expandedView setHidden:!open];
@@ -149,6 +151,8 @@
     
     if(delegate)
         [delegate cellDidChangeHeight:self];
+    else
+        return;
     
 }
 

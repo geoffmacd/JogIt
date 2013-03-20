@@ -15,9 +15,7 @@
 			<string>IBUIButton</string>
 			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
-			<string>IBUISwipeGestureRecognizer</string>
 			<string>IBUITableViewCell</string>
-			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -58,10 +56,6 @@
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<object class="NSCustomResource" key="IBUIImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">map.JPG</string>
-										</object>
 									</object>
 									<object class="IBUILabel" id="1035793873">
 										<reference key="NSNextResponder" ref="941116554"/>
@@ -251,7 +245,7 @@
 								<string key="NSFrame">{{0, 47}, {320, 124}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="981189565"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor" id="1022311671">
 									<int key="NSColorSpace">3</int>
@@ -347,13 +341,14 @@
 								<string key="NSFrameSize">{320, 48}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="174088637"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 									<reference key="NSCustomColorSpace" ref="232377523"/>
 								</object>
+								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<int key="IBUIContentMode">5</int>
 								<reference key="IBUIGestureRecognizers" ref="0"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -386,14 +381,9 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="648043000"/>
-				<string key="IBUIReuseIdentifier">HierarchyTableCellPrototype</string>
+				<string key="IBUIReuseIdentifier">HierarchicalCellPrototype</string>
 				<real value="172" key="IBUIRowHeight"/>
 			</object>
-			<object class="IBUISwipeGestureRecognizer" id="1053375444">
-				<bool key="IBUIDelaysTouchesEnded">NO</bool>
-			</object>
-			<object class="IBUITapGestureRecognizer" id="468913213"/>
-			<object class="IBUITapGestureRecognizer" id="849384263"/>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -446,24 +436,6 @@
 					<int key="connectionID">553</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="1053375444"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">555</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">swipeGesture</string>
-						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="1053375444"/>
-					</object>
-					<int key="connectionID">557</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">garbageBut</string>
 						<reference key="source" ref="438365395"/>
@@ -512,66 +484,6 @@
 					<int key="connectionID">568</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="849384263"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">539</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">headerViewTap:</string>
-						<reference key="source" ref="849384263"/>
-						<reference key="destination" ref="438365395"/>
-					</object>
-					<int key="connectionID">541</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="245450979"/>
-						<reference key="destination" ref="849384263"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">540</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="941116554"/>
-						<reference key="destination" ref="468913213"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">535</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">expandViewTap:</string>
-						<reference key="source" ref="468913213"/>
-						<reference key="destination" ref="438365395"/>
-					</object>
-					<int key="connectionID">536</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="468913213"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">538</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">cellSwipedRight:</string>
-						<reference key="source" ref="1053375444"/>
-						<reference key="destination" ref="438365395"/>
-					</object>
-					<int key="connectionID">558</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">garbageTapped:</string>
 						<reference key="source" ref="230533418"/>
@@ -608,18 +520,6 @@
 							<reference ref="245450979"/>
 						</array>
 						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">526</int>
-						<reference key="object" ref="468913213"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Tap Gesture Recognizer - Expand</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">346</int>
-						<reference key="object" ref="849384263"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Tap Gesture Recognizer - Header</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">349</int>
@@ -705,14 +605,10 @@
 						<reference key="parent" ref="941116554"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">554</int>
-						<reference key="object" ref="1053375444"/>
-						<reference key="parent" ref="0"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">559</int>
 						<reference key="object" ref="230533418"/>
 						<reference key="parent" ref="245450979"/>
+						<string key="objectName">garbage</string>
 					</object>
 				</array>
 			</object>
@@ -722,7 +618,6 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="201.CustomClassName">HierarchicalCell</string>
 				<string key="201.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="346.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="349.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="359.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -731,20 +626,18 @@
 				<string key="523.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="524.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="525.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="526.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="542.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="549.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="550.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="551.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="552.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="554.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="559.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">568</int>
+			<int key="maxID">575</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -773,15 +666,16 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="calLabel">UILabel</string>
 						<string key="calUnit">UILabel</string>
+						<string key="expandBut">UIButton</string>
 						<string key="expandedView">UIView</string>
 						<string key="folderImage">UIImageView</string>
 						<string key="garbageBut">UIButton</string>
+						<string key="headerBut">UIButton</string>
 						<string key="headerLabel">UILabel</string>
 						<string key="headerView">UIView</string>
 						<string key="minUnit">UILabel</string>
 						<string key="paceLabel">UILabel</string>
 						<string key="paceUnit">UILabel</string>
-						<string key="swipeGesture">UISwipeGestureRecognizer</string>
 						<string key="thumbnailImage">UIImageView</string>
 						<string key="timeLabel">UILabel</string>
 					</dictionary>
@@ -794,6 +688,10 @@
 							<string key="name">calUnit</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="expandBut">
+							<string key="name">expandBut</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="expandedView">
 							<string key="name">expandedView</string>
 							<string key="candidateClassName">UIView</string>
@@ -804,6 +702,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="garbageBut">
 							<string key="name">garbageBut</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="headerBut">
+							<string key="name">headerBut</string>
 							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="headerLabel">
@@ -825,10 +727,6 @@
 						<object class="IBToOneOutletInfo" key="paceUnit">
 							<string key="name">paceUnit</string>
 							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="swipeGesture">
-							<string key="name">swipeGesture</string>
-							<string key="candidateClassName">UISwipeGestureRecognizer</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="thumbnailImage">
 							<string key="name">thumbnailImage</string>
@@ -909,7 +807,6 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="celldivision.png">{320, 3}</string>
 			<string key="garbage.png">{16, 21}</string>
-			<string key="map.JPG">{16, 16}</string>
 			<string key="triangle.png">{18, 18}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
