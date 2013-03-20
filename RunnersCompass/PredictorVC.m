@@ -6,13 +6,12 @@
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
-#import "PerformanceVC.h"
-#import "ChartCell.h"
 #import "PredictorVC.h"
+#import "ChartCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 
-@implementation PerformanceVC
+@implementation PredictorVC
 
 @synthesize table,header, weekly;
 
@@ -55,7 +54,7 @@
     //deliver goalheadercell
     if(!header)
     {
-        header = (PermHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"PermHeaderCell"
+        header = (PredictHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"PredictHeaderCell"
                                                                        owner:self
                                                                      options:nil]objectAtIndex:0];
         
@@ -73,7 +72,7 @@
 {
     if(!header)
     {
-        header =  (PermHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"PermHeaderCell"
+        header =  (PredictHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"PredictHeaderCell"
                                                                         owner:self
                                                                       options:nil]objectAtIndex:0];
         //round corners
@@ -178,15 +177,6 @@
 
 - (IBAction)doneTapped:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
-}
-
-- (IBAction)predictTapped:(id)sender {
-    PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor2" bundle:nil];
-    
-    
-    [self presentViewController:vc animated:true completion:^{
-        
-    }];
 }
 
 - (IBAction)weeklyTapped:(id)sender {

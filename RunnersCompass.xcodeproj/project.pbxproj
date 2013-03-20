@@ -30,6 +30,10 @@
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
 		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
 		674C90AF16F94EF10078DD8E /* PermHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90AB16F94EF10078DD8E /* PermHeaderCell.xib */; };
+		674C90B616F956350078DD8E /* PredictHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90B116F956340078DD8E /* PredictHeaderCell.m */; };
+		674C90B716F956350078DD8E /* PredictHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90B216F956340078DD8E /* PredictHeaderCell.xib */; };
+		674C90B916F956350078DD8E /* PredictorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90B516F956350078DD8E /* PredictorVC.m */; };
+		674C90BB16F958350078DD8E /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90BA16F958350078DD8E /* Predictor.xib */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
 		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
@@ -46,8 +50,6 @@
 		67A8D59316F143380070E38B /* CrumbPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59116F143380070E38B /* CrumbPathView.m */; };
 		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
-		67AF65C916D88FF8004A484C /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65C616D88FF8004A484C /* Predictor.xib */; };
-		67AF65CA16D88FF8004A484C /* PredictorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65C816D88FF8004A484C /* PredictorViewController.m */; };
 		67AF65D316D9A139004A484C /* GoalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65D216D9A138004A484C /* GoalCell.m */; };
 		67AF65D516D9A151004A484C /* GoalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65D416D9A151004A484C /* GoalCell.xib */; };
 		67AF65E616D9B13D004A484C /* CreateGoalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65E516D9B13C004A484C /* CreateGoalCell.m */; };
@@ -200,6 +202,12 @@
 		674C90A916F94EF10078DD8E /* PermHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermHeaderCell.h; sourceTree = "<group>"; };
 		674C90AA16F94EF10078DD8E /* PermHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermHeaderCell.m; sourceTree = "<group>"; };
 		674C90AB16F94EF10078DD8E /* PermHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PermHeaderCell.xib; sourceTree = "<group>"; };
+		674C90B016F956340078DD8E /* PredictHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictHeaderCell.h; sourceTree = "<group>"; };
+		674C90B116F956340078DD8E /* PredictHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictHeaderCell.m; sourceTree = "<group>"; };
+		674C90B216F956340078DD8E /* PredictHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PredictHeaderCell.xib; sourceTree = "<group>"; };
+		674C90B416F956350078DD8E /* PredictorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictorVC.h; sourceTree = "<group>"; };
+		674C90B516F956350078DD8E /* PredictorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictorVC.m; sourceTree = "<group>"; };
+		674C90BA16F958350078DD8E /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
@@ -228,9 +236,6 @@
 		67A8D59516F150EE0070E38B /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
 		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
-		67AF65C616D88FF8004A484C /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
-		67AF65C716D88FF8004A484C /* PredictorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictorViewController.h; sourceTree = "<group>"; };
-		67AF65C816D88FF8004A484C /* PredictorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictorViewController.m; sourceTree = "<group>"; };
 		67AF65D116D9A138004A484C /* GoalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalCell.h; sourceTree = "<group>"; };
 		67AF65D216D9A138004A484C /* GoalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalCell.m; sourceTree = "<group>"; };
 		67AF65D416D9A151004A484C /* GoalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalCell.xib; sourceTree = "<group>"; };
@@ -480,6 +485,12 @@
 		672AA3C416B5A6B800B7DEE6 /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				674C90BA16F958350078DD8E /* Predictor.xib */,
+				674C90B016F956340078DD8E /* PredictHeaderCell.h */,
+				674C90B116F956340078DD8E /* PredictHeaderCell.m */,
+				674C90B216F956340078DD8E /* PredictHeaderCell.xib */,
+				674C90B416F956350078DD8E /* PredictorVC.h */,
+				674C90B516F956350078DD8E /* PredictorVC.m */,
 				674C90A616F94EF10078DD8E /* Performance.xib */,
 				674C90A716F94EF10078DD8E /* PerformanceVC.h */,
 				674C90A816F94EF10078DD8E /* PerformanceVC.m */,
@@ -489,9 +500,6 @@
 				67C8E30016D0740900E4DE11 /* ChartCell.h */,
 				67C8E30116D0740900E4DE11 /* ChartCell.m */,
 				67C8E30316D0742E00E4DE11 /* ChartCell.xib */,
-				67AF65C616D88FF8004A484C /* Predictor.xib */,
-				67AF65C716D88FF8004A484C /* PredictorViewController.h */,
-				67AF65C816D88FF8004A484C /* PredictorViewController.m */,
 			);
 			name = Performance;
 			sourceTree = "<group>";
@@ -889,7 +897,6 @@
 				67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */,
 				67C8E31316D19C4E00E4DE11 /* CreateGoal.xib in Resources */,
 				67C8E31D16D1A1E500E4DE11 /* EditGoalViewController.xib in Resources */,
-				67AF65C916D88FF8004A484C /* Predictor.xib in Resources */,
 				67AF65D516D9A151004A484C /* GoalCell.xib in Resources */,
 				67AF65E816D9B152004A484C /* CreateGoalCell.xib in Resources */,
 				67902E5E16DAC900007D19BC /* Goals.xib in Resources */,
@@ -937,6 +944,8 @@
 				67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */,
 				674C90AC16F94EF10078DD8E /* Performance.xib in Resources */,
 				674C90AF16F94EF10078DD8E /* PermHeaderCell.xib in Resources */,
+				674C90B716F956350078DD8E /* PredictHeaderCell.xib in Resources */,
+				674C90BB16F958350078DD8E /* Predictor.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1003,7 +1012,6 @@
 				67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */,
 				6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */,
 				67AED68A16D72069007F6943 /* PacePicker.m in Sources */,
-				67AF65CA16D88FF8004A484C /* PredictorViewController.m in Sources */,
 				67AF65D316D9A139004A484C /* GoalCell.m in Sources */,
 				67AF65E616D9B13D004A484C /* CreateGoalCell.m in Sources */,
 				67AF65ED16D9B3F3004A484C /* Goal.m in Sources */,
@@ -1019,6 +1027,8 @@
 				67B1288416F58445003A15A5 /* KMAnnotation.m in Sources */,
 				674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */,
 				674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */,
+				674C90B616F956350078DD8E /* PredictHeaderCell.m in Sources */,
+				674C90B916F956350078DD8E /* PredictorVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
