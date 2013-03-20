@@ -18,8 +18,6 @@
     self.label.text = @"389 Cal";
     self.dateLabel.text = @"January 17th";
     
-    //UIImage *trackImg = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-    //UIImage *progressImg = [[UIImage imageNamed:@"progress.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
     UIImage *background = [[UIImage imageNamed:@"progress-bar-bg.png"]
                            resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)];
     UIImage *fill = [[UIImage imageNamed:@"progress-bar-fill.png"]

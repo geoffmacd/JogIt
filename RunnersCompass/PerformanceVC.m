@@ -181,7 +181,7 @@
 }
 
 - (IBAction)predictTapped:(id)sender {
-    PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor2" bundle:nil];
+    PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
     
     
     [self presentViewController:vc animated:true completion:^{

@@ -31,7 +31,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;//highlights button but doesnt look like touch highlight in real button
+        self.selectionStyle = UITableViewCellSelectionStyleGray;//highlights button but doesnt look like touch highlight in real button
         self.textLabel.textColor = [UIColor whiteColor];
         self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
         self.textLabel.textAlignment = UITextAlignmentCenter;

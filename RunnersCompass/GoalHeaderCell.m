@@ -28,10 +28,10 @@
     //set rounded corners on button
     [doneBut.layer setCornerRadius:8.0f];
     [goalButton.layer setCornerRadius:8.0f];
+    [doneBut.layer setMasksToBounds:true];
+    [goalButton.layer setMasksToBounds:true];
     
     //set progress bar
-    //UIImage *trackImg = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
-    //UIImage *progressImg = [[UIImage imageNamed:@"progress.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 20, 20, 20)];
     UIImage *background = [[UIImage imageNamed:@"progress-bar-bg.png"]
                            resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 4)];
     UIImage *fill = [[UIImage imageNamed:@"progress-bar-fill.png"]

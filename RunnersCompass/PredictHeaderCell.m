@@ -18,6 +18,7 @@
     
     //set rounded corners on button
     [doneBut.layer setCornerRadius:8.0f];
+    [doneBut.layer setMasksToBounds:true];
     
     //localized buttons in IB
     [weeklyBut setTitle:NSLocalizedString(@"WeeklyButton", @"button for weekly") forState:UIControlStateNormal];

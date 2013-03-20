@@ -19,6 +19,9 @@
     //set rounded corners on button
     [doneBut.layer setCornerRadius:8.0f];
     [predictBut.layer setCornerRadius:8.0f];
+    [doneBut.layer setMasksToBounds:true];
+    [predictBut.layer setMasksToBounds:true];
+    
     
     //localized buttons in IB
     [predictBut setTitle:NSLocalizedString(@"PredictButtonTitle", @"button for prediction view") forState:UIControlStateNormal];

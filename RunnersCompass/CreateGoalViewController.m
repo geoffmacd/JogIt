@@ -171,7 +171,9 @@
         [header.doneBut.layer setCornerRadius:8.0f];
         [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
         
+        [header.doneBut.layer setMasksToBounds:true];
         [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
+
     }
     
     return header;
@@ -187,9 +189,12 @@
                                                                   owner:self
                                                                       options:nil]objectAtIndex:0];
         //set rounded corners on button
-        [header.doneBut.layer setCornerRadius:8.0f];        [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+        [header.doneBut.layer setCornerRadius:8.0f];
+        [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
         
+        [header.doneBut.layer setMasksToBounds:true];
         [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
+        
         
     }
     
