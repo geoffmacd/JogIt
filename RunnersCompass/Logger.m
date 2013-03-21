@@ -49,6 +49,7 @@
     
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
+    [finishBut.layer setMasksToBounds:true];
     
     
     [mapButton.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
