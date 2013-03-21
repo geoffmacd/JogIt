@@ -32,6 +32,7 @@
     StartCell * start;
     
     DataTest * core;
+    BOOL showingNoRuns;
     
 }
 
@@ -45,6 +46,9 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *goalsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *performanceBut;
+@property (strong, nonatomic) IBOutlet UIImageView *runningManImage;
+@property (strong, nonatomic) IBOutlet UILabel *noRunsLabel;
+@property (strong, nonatomic) IBOutlet UIView *noRunView;
 
 
 //actions

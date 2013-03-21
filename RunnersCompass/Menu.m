@@ -27,6 +27,8 @@
 @synthesize MenuTable;
 @synthesize runInProgressAsFarAsICanTell;
 @synthesize settingsBut,performanceBut,goalsBut;
+@synthesize runningManImage,noRunsLabel;
+@synthesize noRunView;
 
 static NSString * cellID = @"HierarchicalCellPrototype";
 
@@ -87,6 +89,12 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     runInProgressAsFarAsICanTell = false;
     
+    //no run stuff
+    //[runningManImage setHidden:true];
+    //[noRunsLabel setHidden:true];
+    showingNoRuns = false;
+    [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
+    
     
     //load cell
     [MenuTable registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
@@ -143,8 +151,28 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
+    if([runs count] == 0)
+    {
+        //if no runs exist, then display running man
+        showingNoRuns = true;
+        //[runningManImage setHidden:false];
+        //[noRunsLabel setHidden:false];
+        
+        [MenuTable setBackgroundView:noRunView];
+        
+    }
+    else{
+        if(showingNoRuns)
+        {
+            showingNoRuns = false;
+            //[runningManImage setHidden:true];
+            //[noRunsLabel setHidden:true];
+            [MenuTable setBackgroundView:nil];
+        }
+    }
+    
     //return number of historic run
-    //remember to add run to array before reloading table
     return [runs count];
 }
 
