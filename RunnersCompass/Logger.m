@@ -113,6 +113,9 @@
     //map annotations
     mapAnnotations = [[NSMutableArray alloc] initWithCapacity:10];
     
+    //pos queue
+    posQueue = [[NSMutableArray alloc] initWithCapacity:10];
+    
     //set map hidden until user goes into logger during setRun to lower loading 
     [map setHidden:true];
 }
@@ -329,8 +332,7 @@
     NSLog(@"started tracking.....");
     [locationManager startUpdatingLocation];
     
-    
-    //set timer up
+    //set timer up to run once a second
     if(![timer isValid])
     {
         
@@ -339,8 +341,8 @@
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
     
-    readyForPathInit = true; //to restart path at the current users location
-    lastCalculate = [NSDate timeIntervalSinceReferenceDate];
+    //to restart path at the current users location
+    readyForPathInit = true;
     
     //disable km selection mode
     kmPaceShowMode = false;
@@ -349,9 +351,13 @@
     selectedKmIndex = [[run kmCheckpointsMeta] count];
     [self setPaceLabels];
     
-    //reset count
+    //reset autopause variables
     pausedForAuto = false;
     timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
+    
+    //tells to process first pos directly without calcing pace
+    needsStartPos = true;
+    
 }
 
 
@@ -360,7 +366,7 @@
     //if autopause caused this, do not stop location updates
     if(!pausedForAuto)
     {
-        //stop updates
+        //stop updates otherwise for battery life etc
         NSLog(@"stopped tracking.....");
         [locationManager stopUpdatingLocation];
     }
@@ -370,7 +376,6 @@
     
     //stop timer updating
     [timer invalidate];
-    
     
     //update map icon one last time
     [self reloadMapIcon:!inMapView];
@@ -383,59 +388,223 @@
     
 }
 
+-(void)evalAccuracy:(CLLocationAccuracy)accuracyToAccumulate
+{
+    
+    accuracyCount++;
+    avgAccuracy += accuracyToAccumulate;
+    //evaluate if more than 5
+    if(accuracyCount  > 5)
+    {
+        if(avgAccuracy > 5 * accuracyCount)
+        {
+            //display
+            [lowSignalImage startAnimating];
+            [lowSignalImage setHidden:false];
+        }
+        else{
+            //hide
+            [lowSignalImage setHidden:true];
+            [lowSignalImage stopAnimating];
+        }
+        
+        //reset
+        accuracyCount = 0;
+        avgAccuracy = 0;
+    }
+    
+}
+
+
+-(void)evalAutopause:(CLLocationSpeed)speedToConsider
+{
+    if(pausedForAuto && speedToConsider > minSpeedUnpause)
+    {
+        //get closer to unpausing
+        autoPauseRestartCount++;
+        
+        if(autoPauseRestartCount >  unPauseDelay)
+        {
+            NSLog(@"Unpausing from autopause");
+            autoPauseRestartCount = 0;
+            
+            //trigger restart
+            [delegate pauseAnimation:nil];
+        }
+    }
+    else{
+        //further away from unpausing because to slow or now in autopause
+        if(autoPauseRestartCount > 0)
+            autoPauseRestartCount--;
+    }
+
+    //if last position determined was more than 5 seconds ago, autopause
+    if(speedToConsider == 0)
+    {
+        CLLocation * last = [run.pos lastObject];
+        
+        //ensure it hasn't recently autopaused
+        if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
+        {
+            NSLog(@"Autopaused - no location updates");
+            
+            pausedForAuto = true;
+            
+            [delegate pauseAnimation:nil];
+        }
+    }else{
+        
+        //if current pace is less than
+        if(speedToConsider < autoPauseSpeed && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate] )
+        {
+            NSLog(@"Autopaused - pace too slow");
+            
+            pausedForAuto = true;
+            
+            [delegate pauseAnimation:nil];
+            
+        }
+    }
+    
+}
+
+-(void) updateMapOverlay:(CLLocation*)newLocation
+{
+    if (readyForPathInit){
+        // This is the first time we're getting a location update, so create
+        // the CrumbPath and add it to the map.
+        CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
+        [map addOverlay:newPath];
+        [crumbPaths addObject:newPath];
+
+        //inform method, path has already started drawing again
+        readyForPathInit = false;
+    }
+    else
+    {
+        // This is a subsequent location update.
+        // If the crumbs MKOverlay model object determines that the current location has moved
+        // far enough from the previous location, use the returned updateRect to redraw just
+        // the changed area.
+        
+        MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
+        
+        if (!MKMapRectIsNull(updateRect))
+        {
+            // There is a non null update rect.
+            // Compute the currently visible map zoom scale
+            MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
+            // Find out the line width at this zoom scale and outset the updateRect by that amount
+            CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+            updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
+            // Ask the overlay view to update just the changed area.
+            [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+        }
+    }
+}
+
+
 
 -(void)tick
 {
-    //process 1 second gone by in timer
+    /*process 1 second gone by in timer
+     Responsible for:
+     -updating Meta data for only one run object of highest accuracy and deleting other
+     -updating UI information
+     -determining if a new minute is to be added to chart
+     -determing if run should be autopaused or unpaused
+     -deter if accuray is awful
+     -determining if a new km happend
+     */
+    
     
     //update time with 1 second
     run.time += 1;
     
-    CLLocation * last = [run.pos lastObject];
     
-    //if last position determined was more than 5 seconds ago, pause
-    if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
+    //NSInteger posCount = [run.pos count];
+    //NSInteger metaCount = [run.posMeta count];
+    NSInteger queueCount = [posQueue count];
+    
+    //determine how many new positions were added by core location , choose latest
+    if(queueCount > 0)
     {
-        NSLog(@"Autopaused");
+        CLLocation * newLocation = [posQueue lastObject];
         
-        pausedForAuto = true;
+        //see if first pos since unpause
+        if(needsStartPos)
+        {
+            //no pace
+            [self addPosToRun:newLocation withPace:0];
+            
+            needsStartPos = false;
+        }
         
-        [delegate pauseAnimation:nil];
+        //1. deter accuracy for low signal
+        [self evalAccuracy:newLocation.horizontalAccuracy];
+        
+        //2. determine if we should pause or unpause
+        [self evalAutopause:newLocation.speed];
+        
+        //3. draw new map overlay
+        [self updateMapOverlay:newLocation];
+        
+        //4. calculate distance
+        [self calcMetrics:newLocation];
+        
+        //5.reload map icon
+        //do not capture image if user has recently touched and map has been re-centered
+        if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod) &&
+           (timeSinceMapTouch  < timeSinceMapCenter))
+        {
+            //only do so if not in map mode
+            if(!inMapView)
+                [self reloadMapIcon:true];
+        }
+        
+        //6. Center map
+        //do not zoom if user has recently touched
+        if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) &&
+           (timeSinceMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
+        {
+            [self autoZoomMap:newLocation];
+        }
+        
     }
+    else
+    {
+        //core location did not update once, we can only update graphical times, no distance
+        //potentially autopause
+        
+        //1. eval wheter we should pause
+        [self evalAutopause:0];
+        
+        //cannot center map or reload icon or draw map because nothing happend
+        //ignoring accuracy for now
+    }
+
+    //position independant information processed from here on:
     
+    //6. update avgPace
+    run.avgPace =  run.time / run.distance;
     
-    //update hud if multiple of 60, therefore one minute
+    //7. Update Chart every minute
     if(!((int)run.time % barPeriod))
     {
         //add one checkpoint representing past 60 seconds
-        
-        [self calcOnTick];
+        [self addMinute];
     }
     
-    if(selectedKmIndex == [[run kmCheckpointsMeta] count])
-    {
-        //need current time update to lastKMLabel
-        
-        NSTimeInterval timeToAdjust = 0;
-        
-        if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
-        {
-            CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
-            //get distance from km just by looking at index
-            timeToAdjust = priorKmMeta.time;
-        }
-        
-        //show current time in the current km
-        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
-        [lastKmPace setText:paceForCurrentIndex];
-    }
     
-    //check if goal has been achieved
+    //9. Check if goal has been achieved
     [self determineGoalAchieved];
     
-    //update time displayed
-    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
-    [timeLabel setText:stringToSetTime];
+    //10. Update labels below
+    [self updateHUD];
+    
+    
+    //clear queue
+    [posQueue removeAllObjects];
 }
 
 
@@ -571,7 +740,7 @@
     
 }
 
--(void)calcOnTick
+-(void)addMinute
 {
     
     //add meta data for recent minute, or create chart
@@ -583,7 +752,6 @@
         NSInteger currentTime = run.time;
         CLLocationMeta * lastMeta ;
         NSTimeInterval paceSum = 0;
-        
         
         if(index >= 0 )
         {
@@ -612,6 +780,10 @@
             //add meta and loc to array
             [run.minCheckpointsMeta addObject:newMinMeta];
             [run.minCheckpoints addObject:[run.pos lastObject]];
+            
+            //should be same size at this point
+            NSAssert([run.minCheckpoints count] == [run.minCheckpointsMeta count], @"KM position and meta data arrays not same size!!");
+            
         }
     }
     
@@ -620,7 +792,7 @@
 }
 
 
--(void)calcOnUpdate:(CLLocation*)latest
+-(void)calcMetrics:(CLLocation*)latest
 {
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
     
@@ -628,13 +800,13 @@
     
     DataTest* data = [DataTest sharedData];
     
+    //only calculate if beyond min accuracy and their is at least one object to compare to 
     if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc >= 1)
     {
-
-        
+        //latest already added, get one behind
         CLLocation *prior = [run.pos lastObject];
+        
         NSTimeInterval paceTimeInterval = latest.timestamp.timeIntervalSinceReferenceDate - prior.timestamp.timeIntervalSinceReferenceDate;
-
         CLLocationDistance distanceToAdd = [self calcDistance:latest];
         CLLocationDistance oldRunDistance = run.distance;
         
@@ -654,8 +826,7 @@
         CLLocationDistance climbed = latest.altitude - prior.altitude;
         run.climbed += climbed;
         
-        //3.pace
-        run.avgPace =  run.time / run.distance;
+        //3.avg pace calced in position independant
         
         //4.calories
         CGFloat grade = climbed / distanceToAdd;
@@ -665,12 +836,9 @@
         //5.cadence
         //6.stride
     
+        //add meta to array
         [self addPosToRun:latest withPace:adjustedPace];
 
-        //decrement bad signal count
-        if(badSignalCount > 0 )
-            badSignalCount--;
-        
         //check if a new km was created
         if((NSInteger)(oldRunDistance/1000) != (NSInteger)(run.distance/1000))
         {
@@ -694,14 +862,17 @@
             [[run kmCheckpointsMeta] addObject:newKM];
             [[run kmCheckpoints] addObject:latest];
             
+            //should be same size at this point
+            NSAssert([run.kmCheckpointsMeta count] == [run.kmCheckpoints count], @"KM position and meta data arrays not same size!!");
+            
+            
             //add annotation
             KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
-            
+            //illustrate with pace @ KM ##
             NSString *distanceUnitText = [data.prefs getDistanceUnit];
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
             newAnnotation.paceString = [RunEvent getPaceString:[newKM pace]];
             newAnnotation.kmCoord = [latest coordinate];
-            
             //add to array
             [mapAnnotations addObject:newAnnotation];
             //actually add to map
@@ -710,19 +881,11 @@
     }
     else{
         
-        //incremenet bad signal count and wait for better signal
-        NSLog(@"bad signal - cant process");
-        badSignalCount++;
     }
     
     kmPaceShowMode = false;
     selectedMinIndex = [[run minCheckpointsMeta] count] ;
     selectedKmIndex = [[run kmCheckpointsMeta] count];
-    [self setPaceLabels];
-    
-    
-    //update hud too after distance,calories, avg pace
-    [self updateHUD];
 }
 
 -(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd
@@ -732,32 +895,35 @@
     metaToAdd.pace = paceToAdd;
     metaToAdd.time = run.time;
     
-    //add both 
+    //add to array
     [run.posMeta addObject:metaToAdd];
     [run.pos addObject:locToAdd];
     
+    //should be same size at this point
+    NSAssert([run.pos count] == [run.posMeta count], @"Run position and meta data arrays not same size!!");
 }
 
 -(CLLocationDistance)calcDistance:(CLLocation *)latest 
 {
     
-    CLLocation * prior = [run.pos lastObject];
     NSInteger locCount = [run.pos count];
+    CLLocation * prior = [run.pos lastObject];
     CLLocationDistance distanceToAdd = 0.0;
     
-    if(consecutiveHeadingCount)
+    if(consecutiveHeadingCount > 0)
     {
      
         CLLocationDirection cumulativeCourseDifferential = 0;
         
-        for(int i = 1; i <= consecutiveHeadingCount; i++)
+        //ensure array range respected
+        for(int i = 1; i <= consecutiveHeadingCount && (locCount - i) >= 0; i++)
         {
             //invalidate consequtive run only if cumulative error is too large or course differential is too big
             CLLocation * considerPt = [run.pos objectAtIndex:(locCount - i)];
             
             if(!NSLocationInRange(fabs(considerPt.course - latest.course), NSMakeRange(-20, 40)))
             {
-                //invalid
+                //invalid, discontinue
                 consecutiveHeadingCount = 0;
                 break;
             }
@@ -766,14 +932,13 @@
             
             if(cumulativeCourseDifferential > 50)
             {
+                //discontinue seris
                 consecutiveHeadingCount = 0;
                 break;
             }
-            
         }
         
-        
-        //calc distance if still availabe
+        //calc distance if still available
         distanceToAdd = [latest distanceFromLocation:[run.pos objectAtIndex:(locCount - consecutiveHeadingCount - 1)]] - [prior distanceFromLocation:[run.pos objectAtIndex:(locCount - consecutiveHeadingCount - 1)]];
         
         //incremenet if it did not fail on prior
@@ -836,8 +1001,28 @@
 
 -(void)updateHUD
 {
-    //set text for labels
+    //Update Pace
+    [self setPaceLabels];
     
+    //Update last KM Pace if no km selected
+    if(selectedKmIndex == [[run kmCheckpointsMeta] count])
+    {
+        //need current time update to lastKMLabel
+        
+        NSTimeInterval timeToAdjust = 0;
+        
+        if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
+        {
+            CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
+            //get distance from km just by looking at index
+            timeToAdjust = priorKmMeta.time;
+        }
+        
+        //show current time in the current km
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
+        [lastKmPace setText:paceForCurrentIndex];
+    }
+
     //set distance in km
     [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
     
@@ -854,135 +1039,24 @@
     
     //last should the last object in run.pos
     CLLocation *newLocation = [locations lastObject];
-    CLLocation *oldLocation = [run.pos lastObject];
+    //CLLocation *oldLocation = [run.pos lastObject];
     
-    NSLog(@"%d  - lat%f - lon%f  - accur %f , %f  -speed %f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.verticalAccuracy , newLocation.speed);
+    NSLog(@"%d  - lat%f - lon%f - accur%f - alt%f - speed%f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.altitude, newLocation.speed);
     
-
+    [posQueue addObject:newLocation];
     
-    //add anotation to map
+    /*
+    //just add to array and process in tick() if new
     if (newLocation.timestamp > oldLocation.timestamp)
     {
-        //deter accuracy for low signal
-        CLLocationAccuracy newAccuracy = newLocation.horizontalAccuracy;
-        accuracyCount++;
-        avgAccuracy += newAccuracy;
-        //evaluate if more than 5
-        if(accuracyCount  > 5)
-        {
-            if(avgAccuracy > 5 * accuracyCount)
-            {
-                //display
-                [lowSignalImage startAnimating];
-                [lowSignalImage setHidden:false];
-            }
-            else{
-                //hide
-                [lowSignalImage setHidden:true];
-                [lowSignalImage stopAnimating];
-            }
-            
-            //reset
-            accuracyCount = 0;
-            avgAccuracy = 0;
-        }
-        
-		
-		// make sure the old and new coordinates are different
-        if ((oldLocation.coordinate.latitude != newLocation.coordinate.latitude) &&
-            (oldLocation.coordinate.longitude != newLocation.coordinate.longitude))
-        {
-            //if currently paused due to autopause, restart
-            if(pausedForAuto)
-            {
-                autoPauseRestartCount++;
-                
-                if(autoPauseRestartCount >  4)
-                {
-                    NSLog(@"unpause autupause");
-                    autoPauseRestartCount = 0;
-                    
-                    //add one recent pos to eliminate immediate autopaused because most recent was old
-                    [self addPosToRun:newLocation withPace:0];
-                    
-                    [delegate pauseAnimation:nil];
-                    return;
-                }
-            }
-            else{
-                //decrement counter to ensure it does not happen often
-                if(autoPauseRestartCount > 0)
-                    autoPauseRestartCount--;
-                
-                if (readyForPathInit){
-                    // This is the first time we're getting a location update, so create
-                    // the CrumbPath and add it to the map.
-                    //
-                    CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
-                    [self.map addOverlay:newPath];
-                    [crumbPaths addObject:newPath];
-                    
-                    // On the first location update only, zoom map to user location
-                    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
-                    [self.map setRegion:region animated:YES];
-                    timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
-                    
-                    //set initial map icon
-                    UIImage * newMapIcon = [Util imageWithView:map];
-                    
-                    [mapButton setImage:newMapIcon forState:UIControlStateNormal];
-                    timeSinceMapIconRefresh = timeSinceMapCenter;
-                    
-                    //add an inital position
-                    [self addPosToRun:newLocation withPace:0];
-                    
-                    readyForPathInit = false;
-                    
-                }
-                else
-                {
-                    // This is a subsequent location update.
-                    // If the crumbs MKOverlay model object determines that the current location has moved
-                    // far enough from the previous location, use the returned updateRect to redraw just
-                    // the changed area.
-                    
-                    MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
-                    
-                    if (!MKMapRectIsNull(updateRect))
-                    {
-                        // There is a non null update rect.
-                        // Compute the currently visible map zoom scale
-                        MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
-                        // Find out the line width at this zoom scale and outset the updateRect by that amount
-                        CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
-                        updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
-                        // Ask the overlay view to update just the changed area.
-                        [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
-                    }
-                    
-                    //calculate every time
-                    [self calcOnUpdate:newLocation];
-                    
-                    //reload map icon
-                    //do not capture image if user has recently touched and map has been re-centered
-                    if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod) &&
-                       (lastMapTouch  < timeSinceMapCenter))
-                    {
-                        [self reloadMapIcon:!inMapView];
-                    }
-                    
-                    //zoom map
-                    //do not zoom if user has recently touched
-                    if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) && (lastMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
-                    {
-                        [self autoZoomMap:newLocation];
-                    }
-                    
-                }
-            }
-        }
+        [run.pos addObject:newLocation];
     }
-}
+    else
+    {
+        NSLog(@"%@  and %@ not logged", [newLocation.timestamp description], [oldLocation.timestamp description]);
+    }
+     */
+ }
 
 
 #pragma mark - Map Custom Functions
@@ -1012,7 +1086,7 @@
 {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
     //animated to prevent jumpy
-    [self.map setRegion:region animated:(inMapView ? YES : NO)];
+    [map setRegion:region animated:(inMapView ? YES : NO)];
     
     timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
     
@@ -1090,6 +1164,7 @@
     //go back to menu and add to table at top
     [delegate finishedRun:run];
 }
+
 
 -(void)drawMapForHistoricRun
 {
@@ -1270,7 +1345,7 @@
         //user scrolled
         //set time to lastMapTouch
         
-        lastMapTouch = [NSDate timeIntervalSinceReferenceDate];
+        timeSinceMapTouch = [NSDate timeIntervalSinceReferenceDate];
     }
 }
 
@@ -1448,7 +1523,7 @@
     DataTest* data = [DataTest sharedData];
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
-    //avg pace
+    //show avg pace
     NSString * stringToSetTime = [RunEvent getPaceString:(run.avgPace * 1000)];
     [paceLabel setText:stringToSetTime];
     
@@ -1487,8 +1562,6 @@
     }
     [currentPaceLabel setText:selectedPaceLabel];
     [currentPaceValue setText:selectedPaceString];
-    
-    
     
     
     if([[run kmCheckpointsMeta] count] == 0)

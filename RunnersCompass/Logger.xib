@@ -638,7 +638,7 @@
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="924007125"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="822190213">
+						<object class="NSColor" key="IBUIBackgroundColor" id="913199901">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 						</object>
@@ -649,7 +649,7 @@
 						<bool key="IBUIReversesTitleShadowWhenHighlighted">YES</bool>
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
-						<reference key="IBUITintColor" ref="822190213"/>
+						<reference key="IBUITintColor" ref="913199901"/>
 						<string key="IBUINormalTitle">FINISH</string>
 						<reference key="IBUIHighlightedTitleColor" ref="95674980"/>
 						<reference key="IBUINormalTitleColor" ref="128024892"/>
@@ -717,10 +717,6 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="540343434"/>
-						<object class="NSCustomResource" key="IBUINormalImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">map.JPG</string>
-						</object>
 						<reference key="IBUIFontDescription" ref="89732543"/>
 						<reference key="IBUIFont" ref="172300636"/>
 					</object>
@@ -2177,7 +2173,6 @@
 			<string key="greencheck.png">{25, 25}</string>
 			<string key="hamburger.png">{20, 20}</string>
 			<string key="lightgraybutton.png">{300, 44}</string>
-			<string key="map.JPG">{16, 16}</string>
 			<string key="pause.png">{25, 25}</string>
 			<string key="pull.png">{30, 15}</string>
 		</dictionary>

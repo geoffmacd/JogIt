@@ -595,6 +595,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     CGPoint co = scrollView.contentOffset;
 
     
+    //NSLog(@"slider scrolled : %f", co.x);
+    
     if (self.isOpen == NO && self.isAnimatingInterfaceOrientation == NO) {
         if (co.x < self.sliderOpeningWidth) {
             [self scrollViewWillBeginDragging:scrollView];
@@ -604,6 +606,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 
         }
     }
+    
     
     //if the scroll view is less than the full view of the logger (@320), it must be scrolling back
     if(co.x <  self.view.bounds.size.width && isSetupForPauseScroll)

@@ -35,6 +35,9 @@
 #define userDelaysAutoZoom 5 //5 second delays before autozoom
 #define reloadMapIconPeriod 4 //15 second reload map icon period
 #define autoPauseDelay 10 //5 seconds before app pauses
+#define autoPauseSpeed 0.4 //speed app pauses at 
+#define unPauseDelay 3
+#define minSpeedUnpause 1 //m/s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -52,7 +55,10 @@
 
 @interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
 {
+    //for ghost run
     UIActionSheet *sheet;
+    
+    //pace chart
     CPTXYGraph *barChart;
     NSTimer *timer;
     CPTBarPlot * selectedPlot;
@@ -60,48 +66,62 @@
     CPTXYPlotSpace *plotSpace;
     NSInteger lastCacheMinute;
     BOOL scrollEnabled;
-    BOOL paused;
-    BOOL pausedForAuto;
-    NSInteger autoPauseRestartCount;
-    BOOL inMapView;
-    UIScrollView *mapScroll;
-    NSTimer * shadeTimer;
-    CGFloat countdown;
     
+    //general paused
+    BOOL paused;
+    
+    //count for when to restart after autopausing
+    NSInteger autoPauseRestartCount;
+    BOOL pausedForAuto;
+    
+    //is user looking at full map
+    BOOL inMapView;
+    
+    //km selection
     BOOL kmPaceShowMode;
     NSInteger selectedMinIndex;
     NSInteger selectedKmIndex;
     NSUInteger numMinutesAtKmSelected;
     
+    //core location
     CLLocationManager *locationManager;
-    NSMutableArray *crumbPaths;
-    NSMutableArray *crumbPathViews;
     
+    //times
     NSTimeInterval timeSinceMapCenter;
     NSTimeInterval timeSinceMapIconRefresh;
     NSTimeInterval timeSinceUnpause;
-    NSTimeInterval lastMapTouch;
-    NSTimeInterval lastCalculate;
-    BOOL readyForPathInit;
-    NSInteger badSignalCount;
-    NSInteger consecutiveHeadingCount;
-    NSInteger timeSinceChartReload;
-    NSMutableArray *mapAnnotations;
+    NSTimeInterval timeSinceMapTouch;
+
+    //quetostore positions not processed
+    NSMutableArray *posQueue;
     
+    //starting point for calcs from recent unpause
+    BOOL needsStartPos;
+    
+    //for increased accuracy, smoothes out lines
+    NSInteger consecutiveHeadingCount;
+    
+    //km markers on map
+    NSMutableArray *mapAnnotations;
+    //run overlay on map
+    BOOL readyForPathInit;
+    NSMutableArray *crumbPaths;
+    NSMutableArray *crumbPathViews;
+    
+    //for finishing map loading before screen grab
     BOOL waitingForMapToLoad;
     NSInteger loadingMapTiles;
     
     //low signal
     CLLocationAccuracy avgAccuracy;
     NSInteger accuracyCount;
-
 }
 
 
 //delegate
 @property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
 
-//objects
+//objects need to accesed by delegate
 @property (nonatomic, strong, setter = setRun:) RunEvent * run;
 @property (nonatomic) BOOL paused;
 
@@ -162,6 +182,7 @@
 - (IBAction)statusUntouched:(id)sender;
 
 
+//exposed methods
 -(void) stopRun;
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 -(void)updateHUD;
@@ -170,13 +191,13 @@
 
 @end
 
-#define RAD_TO_DEG(r) ((r) * (180 / M_PI))
 
+//for distance calculations
+
+#define RAD_TO_DEG(r) ((r) * (180 / M_PI))
 @interface CLLocation (Direction)
 - (CLLocationDirection)directionToLocation:(CLLocation *)location;
 @end
-
-// .m
 @implementation CLLocation (Direction)
 
 - (CLLocationDirection)directionToLocation:(CLLocation *)location {
