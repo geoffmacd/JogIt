@@ -40,7 +40,7 @@
         case GoalTypeOneDistance:
             emptyGoal = [[Goal alloc] initWithType:goalType];
             [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
-            [goalImage setImage:[UIImage imageNamed:@"flag.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"medal.png"]];
             break;
         case GoalTypeRace:
             emptyGoal = [[Goal alloc] initWithType:goalType];

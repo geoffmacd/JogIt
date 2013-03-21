@@ -450,7 +450,7 @@
                           duration:0.3f
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
-                            pauseImage.image = [UIImage imageNamed:@"pause invert.png"];
+                            pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
                         } completion:NULL];
         
         [UIView transitionWithView:statusBut

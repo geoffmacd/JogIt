@@ -54,9 +54,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         start = cell;
     }
     
-    [settingsBut setImage:[UIImage imageNamed:@"settings"]];
-    
-    
     runs = [[NSMutableArray alloc] initWithCapacity:3];
     cells = [[NSMutableArray alloc] initWithCapacity:3];
     

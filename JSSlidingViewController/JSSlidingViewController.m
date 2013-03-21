@@ -174,7 +174,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [_slidingScrollView addSubview:self.frontViewControllerDropShadow_right];
     
     
-    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pause invert.png"]];
+    self.pauseImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"whitepause.png"]];
     self.pauseImage.frame = CGRectMake(frame.size.width + _sliderOpeningWidth, (frame.size.height - pauseImageSize)/2, pauseImageSize, pauseImageSize);
     [_slidingScrollView addSubview:self.pauseImage];
 }
@@ -601,6 +601,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
             [self willOpen];
             _isOpen = YES;
             [self didOpen];
+
         }
     }
     
@@ -611,7 +612,8 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         //will be triggered by the hamburger button or manual sliding
         [self resetScrollToPause];
         
-    } else if(isSetupForPauseScroll)
+    }
+    else if(isSetupForPauseScroll)
     {
         //expand image instead
         CGFloat differential = co.x - self.view.bounds.size.width;
