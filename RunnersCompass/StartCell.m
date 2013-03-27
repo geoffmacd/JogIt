@@ -95,16 +95,6 @@
     
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-    
-}
-*/
-
 - (IBAction)headerTapped:(id)sender {
     
     //custom lock property for start cell
@@ -113,6 +103,46 @@
     else
         [delegate selectedRunInProgress:false];     //do not want to discard run if header is hit
     
+}
+
+- (IBAction)justGoTouched:(id)sender {
+    [justGoBut.layer setCornerRadius:5.0f];
+    [justGoBut.layer setMasksToBounds:true];
+    
+    [justGoBut.layer setBorderWidth:0.5f];
+    [justGoBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)distanceTouched:(id)sender {
+    [distanceBut.layer setCornerRadius:5.0f];
+    [distanceBut.layer setMasksToBounds:true];
+    
+    [distanceBut.layer setBorderWidth:0.5f];
+    [distanceBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)paceTouched:(id)sender {
+    [paceBut.layer setCornerRadius:5.0f];
+    [paceBut.layer setMasksToBounds:true];
+    
+    [paceBut.layer setBorderWidth:0.5f];
+    [paceBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)timeTouched:(id)sender {
+    [timeBut.layer setCornerRadius:5.0f];
+    [timeBut.layer setMasksToBounds:true];
+    
+    [timeBut.layer setBorderWidth:0.5f];
+    [timeBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)calorieTouched:(id)sender {
+    [caloriesBut.layer setCornerRadius:5.0f];
+    [caloriesBut.layer setMasksToBounds:true];
+    
+    [caloriesBut.layer setBorderWidth:0.5f];
+    [caloriesBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
 }
 
 - (IBAction)addRunTapped:(id)sender {
@@ -125,19 +155,44 @@
 }
 
 
+
 - (IBAction)paceTapped:(id)sender {
+    [paceBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)paceUntapped:(id)sender {
+    [paceBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)timeUntapped:(id)sender {
+    [timeBut.layer setBorderWidth:0.0f];
 }
 
 - (IBAction)timeTapped:(id)sender {
+    [timeBut.layer setBorderWidth:0.0f];
 }
 
+- (IBAction)calorieUntapped:(id)sender {
+    [caloriesBut.layer setBorderWidth:0.0f];
+}
 - (IBAction)calorieTapped:(id)sender {
+    [caloriesBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)justGoUntapped:(id)sender {
+    [justGoBut.layer setBorderWidth:0.0f];
 }
 
 - (IBAction)justGoTapped:(id)sender {
+    [justGoBut.layer setBorderWidth:0.0f];
 }
 
 - (IBAction)distanceTapped:(id)sender {
+    [distanceBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)distanceUntapped:(id)sender {
+    [distanceBut.layer setBorderWidth:0.0f];
 }
 
 

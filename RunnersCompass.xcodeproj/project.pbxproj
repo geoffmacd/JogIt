@@ -148,6 +148,16 @@
 		67C8E31D16D1A1E500E4DE11 /* EditGoalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E31B16D1A1E500E4DE11 /* EditGoalViewController.xib */; };
 		67C8E34E16D1D4E300E4DE11 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C8E34B16D1D4D100E4DE11 /* libCorePlot-CocoaTouch.a */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
+		67CFCCB8170280B10028CF70 /* calories.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB0170280B10028CF70 /* calories.png */; };
+		67CFCCB9170280B10028CF70 /* calories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB1170280B10028CF70 /* calories@2x.png */; };
+		67CFCCBA170280B10028CF70 /* distance.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB2170280B10028CF70 /* distance.png */; };
+		67CFCCBB170280B10028CF70 /* distance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB3170280B10028CF70 /* distance@2x.png */; };
+		67CFCCBC170280B10028CF70 /* shoe.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB4170280B10028CF70 /* shoe.png */; };
+		67CFCCBD170280B10028CF70 /* shoe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB5170280B10028CF70 /* shoe@2x.png */; };
+		67CFCCBE170280B10028CF70 /* speed.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB6170280B10028CF70 /* speed.png */; };
+		67CFCCBF170280B10028CF70 /* speed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB7170280B10028CF70 /* speed@2x.png */; };
+		67CFCCC4170281BB0028CF70 /* bigclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC2170281BB0028CF70 /* bigclock.png */; };
+		67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC3170281BB0028CF70 /* bigclock@2x.png */; };
 		67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059316D7150800A20B6F /* CaloriePicker.m */; };
 		67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059B16D71B5000A20B6F /* DistancePicker.m */; };
 		67F6D51C16FA871D00790A22 /* runningman.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D51A16FA871D00790A22 /* runningman.png */; };
@@ -400,6 +410,16 @@
 		67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
 		67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPrefs.m; sourceTree = "<group>"; };
+		67CFCCB0170280B10028CF70 /* calories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calories.png; sourceTree = "<group>"; };
+		67CFCCB1170280B10028CF70 /* calories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calories@2x.png"; sourceTree = "<group>"; };
+		67CFCCB2170280B10028CF70 /* distance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = distance.png; sourceTree = "<group>"; };
+		67CFCCB3170280B10028CF70 /* distance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "distance@2x.png"; sourceTree = "<group>"; };
+		67CFCCB4170280B10028CF70 /* shoe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoe.png; sourceTree = "<group>"; };
+		67CFCCB5170280B10028CF70 /* shoe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shoe@2x.png"; sourceTree = "<group>"; };
+		67CFCCB6170280B10028CF70 /* speed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speed.png; sourceTree = "<group>"; };
+		67CFCCB7170280B10028CF70 /* speed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speed@2x.png"; sourceTree = "<group>"; };
+		67CFCCC2170281BB0028CF70 /* bigclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigclock.png; sourceTree = "<group>"; };
+		67CFCCC3170281BB0028CF70 /* bigclock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigclock@2x.png"; sourceTree = "<group>"; };
 		67D7059216D7150800A20B6F /* CaloriePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaloriePicker.h; sourceTree = "<group>"; };
 		67D7059316D7150800A20B6F /* CaloriePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaloriePicker.m; sourceTree = "<group>"; };
 		67D7059A16D71B5000A20B6F /* DistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePicker.h; sourceTree = "<group>"; };
@@ -620,6 +640,16 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67CFCCC2170281BB0028CF70 /* bigclock.png */,
+				67CFCCC3170281BB0028CF70 /* bigclock@2x.png */,
+				67CFCCB0170280B10028CF70 /* calories.png */,
+				67CFCCB1170280B10028CF70 /* calories@2x.png */,
+				67CFCCB2170280B10028CF70 /* distance.png */,
+				67CFCCB3170280B10028CF70 /* distance@2x.png */,
+				67CFCCB4170280B10028CF70 /* shoe.png */,
+				67CFCCB5170280B10028CF70 /* shoe@2x.png */,
+				67CFCCB6170280B10028CF70 /* speed.png */,
+				67CFCCB7170280B10028CF70 /* speed@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -1014,6 +1044,16 @@
 				67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */,
 				672152F616FA9B35003E15F8 /* settingsicon.png in Resources */,
 				672152F716FA9B35003E15F8 /* settingsicon@2x.png in Resources */,
+				67CFCCB8170280B10028CF70 /* calories.png in Resources */,
+				67CFCCB9170280B10028CF70 /* calories@2x.png in Resources */,
+				67CFCCBA170280B10028CF70 /* distance.png in Resources */,
+				67CFCCBB170280B10028CF70 /* distance@2x.png in Resources */,
+				67CFCCBC170280B10028CF70 /* shoe.png in Resources */,
+				67CFCCBD170280B10028CF70 /* shoe@2x.png in Resources */,
+				67CFCCBE170280B10028CF70 /* speed.png in Resources */,
+				67CFCCBF170280B10028CF70 /* speed@2x.png in Resources */,
+				67CFCCC4170281BB0028CF70 /* bigclock.png in Resources */,
+				67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

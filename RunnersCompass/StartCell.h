@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "RunEvent.h"
 
 
@@ -44,13 +45,23 @@
 @property BOOL locked;//for whether currently expanded
 
 //UI actions
+- (IBAction)justGoUntapped:(id)sender;
 - (IBAction)justGoTapped:(id)sender;
 - (IBAction)distanceTapped:(id)sender;
+- (IBAction)distanceUntapped:(id)sender;
 - (IBAction)paceTapped:(id)sender;
+- (IBAction)paceUntapped:(id)sender;
+- (IBAction)timeUntapped:(id)sender;
+- (IBAction)calorieUntapped:(id)sender;
 - (IBAction)timeTapped:(id)sender;
 - (IBAction)calorieTapped:(id)sender;
 - (IBAction)addRunTapped:(id)sender;
 - (IBAction)headerTapped:(id)sender;
+- (IBAction)justGoTouched:(id)sender;
+- (IBAction)distanceTouched:(id)sender;
+- (IBAction)paceTouched:(id)sender;
+- (IBAction)timeTouched:(id)sender;
+- (IBAction)calorieTouched:(id)sender;
 
 
 -(CGFloat)getHeightRequired;
