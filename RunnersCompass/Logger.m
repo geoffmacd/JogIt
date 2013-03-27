@@ -527,9 +527,12 @@
     NSInteger queueCount = [posQueue count];
     
     //determine how many new positions were added by core location , choose latest
-    if(queueCount > 0)
+    //only process every 3 seconds to get better information
+    if(queueCount > 0 && ((int)run.time) % 3 == 0)
     {
         CLLocation * newLocation = [posQueue lastObject];
+        //clear queue asap
+        [posQueue removeAllObjects];
         
         //see if first pos since unpause
         if(needsStartPos)
@@ -603,8 +606,6 @@
     [self updateHUD];
     
     
-    //clear queue
-    [posQueue removeAllObjects];
 }
 
 
@@ -811,8 +812,7 @@
         CLLocationDistance oldRunDistance = run.distance;
         
         //set current pace
-        CLLocationDistance paceDistance = distanceToAdd;
-        CLLocationSpeed currentPace = paceTimeInterval / paceDistance;//s/m
+        CLLocationSpeed currentPace = paceTimeInterval / (distanceToAdd < 0.5 ? 0.1 : distanceToAdd);//s/m
         NSTimeInterval adjustedPace = (currentPace * 1000); //s / km
         NSTimeInterval speedmMin = 60 / currentPace;
         
@@ -829,9 +829,10 @@
         //3.avg pace calced in position independant
         
         //4.calories
-        CGFloat grade = climbed / distanceToAdd;
-        NSInteger weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
-        run.calories += (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
+        CGFloat grade = climbed / (distanceToAdd < 3 ? 1000 : distanceToAdd);
+        CGFloat weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
+        CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
+        run.calories += calsToAdd;
         
         //5.cadence
         //6.stride

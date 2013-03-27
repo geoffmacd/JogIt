@@ -94,7 +94,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //load cell
     [MenuTable registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
     UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
-    
     [MenuTable registerNib:nib forCellReuseIdentifier:cellID];
 }
 
