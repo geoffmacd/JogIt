@@ -72,4 +72,16 @@
     }
 }
 
++(void)shakeView:(UIView *)viewToShake
+{
+    
+    CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+    anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-distanceToShake, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(distanceToShake, 0.0f, 0.0f) ] ] ;
+    anim.autoreverses = YES ;
+    anim.repeatCount = 2.0f ;
+    anim.duration = shakeDuration ;
+    
+    [ viewToShake.layer addAnimation:anim forKey:nil ] ;
+}
+
 @end

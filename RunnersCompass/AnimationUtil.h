@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -16,9 +17,13 @@
 
 #define cellDropAnimationTime 0.3f
 #define folderRotationAnimationTime 0.2f
+#define distanceToShake 2.5f
+#define shakeDuration 0.07f
 
 @interface AnimationUtil : NSObject
 +(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open;
 + (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
               curve:(int)curve degrees:(CGFloat)degrees;
+
++(void)shakeView:(UIView *)viewToShake;
 @end

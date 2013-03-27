@@ -349,6 +349,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [start.folderImage setHidden:false];
     
     }
+    else{
+        //shake run in progress title
+        [AnimationUtil shakeView:start.headerLabel];
+    }
 }
 
 -(void) finishedRun:(RunEvent*)run
