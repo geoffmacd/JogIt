@@ -87,8 +87,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     runInProgressAsFarAsICanTell = false;
     
     //no run stuff
-    //[runningManImage setHidden:true];
-    //[noRunsLabel setHidden:true];
     showingNoRuns = false;
     [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
     
@@ -153,8 +151,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     {
         //if no runs exist, then display running man
         showingNoRuns = true;
-        //[runningManImage setHidden:false];
-        //[noRunsLabel setHidden:false];
         
         [MenuTable setBackgroundView:noRunView];
         
@@ -163,8 +159,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         if(showingNoRuns)
         {
             showingNoRuns = false;
-            //[runningManImage setHidden:true];
-            //[noRunsLabel setHidden:true];
             [MenuTable setBackgroundView:nil];
         }
     }
@@ -180,34 +174,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
 
     if(row >= [cells count]){
-        
-        /*
-        
-        static NSString * cellID = @"SJ";
-        
-        [tableView registerClass:[SJCell class] forCellReuseIdentifier:cellID];
-        UINib * nib = [UINib nibWithNibName:@"CustomCell" bundle:[NSBundle mainBundle]] ;
-        
-        [tableView registerNib:nib forCellReuseIdentifier:cellID];
-        
-        SJCell * testCell = (SJCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
-        
-        [[testCell label] setText:@"steve jobs"];
-        
-        NSString * test  =[[testCell label] text];
-        
-        if(testCell == nil){
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:testCell options:nil];
-            testCell = [nib objectAtIndex:0];
-            [testCell setValue:cellID forKey:@"reuseIdentifier"];
-            
-        }
-
-        
-        HierarchicalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"HierarchicalCell"
-                                                 owner:self
-         options:nil]objectAtIndex:0];
-         */
         
         HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
         
@@ -344,9 +310,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //set logger with this run
     [self.delegate newRun:run animate:true];
     
-    runInProgressAsFarAsICanTell = true;
     
     //modifiy header to indicate progressing run
+    runInProgressAsFarAsICanTell = true;
+    [start.timeLabel setHidden:false];
     start.headerLabel.text = NSLocalizedString(@"RunInProgressTitle", @"start cell title for runs in progress");
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
@@ -374,6 +341,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         //refresh start cell
         runInProgressAsFarAsICanTell = false;
+        [start.timeLabel setHidden:true];
         [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
         start.locked = false;//to prevent expanding
         [start.garbageBut setHidden:true];
@@ -398,11 +366,19 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //refresh start cell
     runInProgressAsFarAsICanTell = false;
+    [start.timeLabel setHidden:true];
     [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     start.locked = false;//to prevent expanding
     [start.garbageBut setHidden:true];
     [start.addRunButton setHidden:false];
     [start.folderImage setHidden:false];
+}
+
+-(void)updateTimeString:(NSString *)updatedTimeString
+{
+    //update label
+    [start.timeLabel setText:updatedTimeString];
+    
 }
 
 #pragma mark -

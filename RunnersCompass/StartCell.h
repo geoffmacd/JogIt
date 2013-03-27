@@ -36,6 +36,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *timeBut;
 @property (strong, nonatomic) IBOutlet UIButton *caloriesBut;
 @property (strong, nonatomic) IBOutlet UIButton *garbageBut;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;

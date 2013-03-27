@@ -18,7 +18,7 @@
 @synthesize delegate;
 @synthesize addRunButton;
 @synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
-@synthesize expanded,locked,garbageBut;
+@synthesize expanded,locked,garbageBut,timeLabel;
 
 -(void)setup
 {
@@ -36,6 +36,10 @@
     [caloriesBut setTitle:NSLocalizedString(@"CaloriesRunTargetButton", @"CaloriesRunTargetButton") forState:UIControlStateNormal];
     [paceBut setTitle:NSLocalizedString(@"PaceRunTargetButton", @"PaceRunTargetButton") forState:UIControlStateNormal];
     [distanceBut setTitle:NSLocalizedString(@"DistanceRunTargetButton", @"DistanceRunTargetButton") forState:UIControlStateNormal];
+    
+    //time label
+    [timeLabel setText:@""];
+    [timeLabel setHidden:true];
     
 }
 

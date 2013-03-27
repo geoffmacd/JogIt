@@ -1026,10 +1026,12 @@
     //set distance in km
     [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
     
-    
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
     [timeLabel setText:stringToSetTime];
+    
+    //update start header cell in menu
+    [delegate updateRunTimeForMenu:stringToSetTime];
     
     [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
 }

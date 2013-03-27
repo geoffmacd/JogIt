@@ -74,6 +74,14 @@
 }
 
 
+-(void)updateRunTimeForMenu:(NSString *)updateTimeString
+{
+    //update menu string for run in progress
+    [self.frontVC updateTimeString:updateTimeString];
+    
+}
+
+
 
 #pragma mark - Menu Delegate Methods
 

@@ -48,6 +48,7 @@
 - (void)finishedRun:(RunEvent *)run;
 - (void)pauseAnimation:(void(^)(void))completion;
 -(void)selectedGhostRun:(RunEvent *)run;
+-(void)updateRunTimeForMenu:(NSString *)updateTimeString;
 
 @end
 

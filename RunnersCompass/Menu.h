@@ -57,6 +57,9 @@
 - (IBAction)settingsNavPressed:(id)sender;
 - (IBAction)garbageTapped:(id)sender;
 
+
+
 - (void)finishedRun:(RunEvent *)run;
+-(void)updateTimeString:(NSString *)updatedTimeString;
 
 @end
