@@ -123,7 +123,7 @@
     [minUnit setText: NSLocalizedString(@"TimeShort", @"Shortform units for time")];
     
     //Set values
-    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace*1000]];
+    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace]];
     [timeLabel setText:[RunEvent getTimeString:associatedRun.time]];
     [calLabel setText:[NSString stringWithFormat:@"%.0f", associatedRun.calories]];
 }

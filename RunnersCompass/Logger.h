@@ -29,8 +29,8 @@
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //50m maximum
-#define calcPeriod 1 //every 2 seconds
-#define barPeriod 2 //bar represents 10 seconds
+#define calcPeriod 3 //every 2 seconds
+#define barPeriod 3 //bar represents 10 seconds
 #define autoZoomPeriod 4 //15 seconds before auto zoom
 #define userDelaysAutoZoom 5 //5 second delays before autozoom
 #define reloadMapIconPeriod 4 //15 second reload map icon period
@@ -38,6 +38,8 @@
 #define autoPauseSpeed 0.4 //speed app pauses at 
 #define unPauseDelay 3
 #define minSpeedUnpause 1 //m/s
+#define paceChartMaxYMin 0.5//m/s
+#define paceChartCutoffOffset 0.1//m/s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 

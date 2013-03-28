@@ -70,8 +70,44 @@
 
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat
 {
-    //expects paceToFormat as s/km
+    //expects paceToFormat as m/s
+    //need to transform to s/km
     
+    
+    //if it is 0 , just return 0:00 right away
+    if(paceToFormat == 0)
+        return @"0:00";
+    
+    paceToFormat = 1000 / paceToFormat;
+    
+    NSInteger minutes,seconds;
+    
+    minutes = paceToFormat/ 60;
+    seconds = paceToFormat - (minutes * 60);
+    
+    NSString * minuteTime;
+    NSString * secondTime;
+    NSString *stringToSetTime;
+    
+    if(minutes < 10)
+        minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+    else
+        minuteTime = [NSString stringWithFormat:@"%d",minutes];
+    
+    if(seconds < 10)
+        secondTime = [NSString stringWithFormat:@"0%d",seconds];
+    else
+        secondTime = [NSString stringWithFormat:@"%d",seconds];
+    
+    stringToSetTime = [NSString stringWithFormat:@"%@:%@",minuteTime,secondTime];
+    
+    return stringToSetTime;
+    
+}
+
++(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat
+{
+    //expects paceToFormat as s 
     
     //if it is 0 , just return 0:00 right away
     if(paceToFormat == 0)

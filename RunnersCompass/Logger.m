@@ -285,6 +285,7 @@
     
     [self drawMapForHistoricRun];
     [self setLabelsForUnits];
+    [self setPaceLabels];
     
     [self updateHUD];
     
@@ -330,6 +331,8 @@
     
     //start updates
     NSLog(@"started tracking.....");
+    //tells to process first pos directly without calcing pace
+    needsStartPos = true;
     [locationManager startUpdatingLocation];
     
     //set timer up to run once a second
@@ -355,9 +358,8 @@
     pausedForAuto = false;
     timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
     
-    //tells to process first pos directly without calcing pace
-    needsStartPos = true;
     
+    consecutiveHeadingCount = 0;
 }
 
 
@@ -528,20 +530,11 @@
     
     //determine how many new positions were added by core location , choose latest
     //only process every 3 seconds to get better information
-    if(queueCount > 0 && ((int)run.time) % 3 == 0)
+    if(queueCount > 0 && ((int)run.time) % calcPeriod == 0 && !needsStartPos)
     {
         CLLocation * newLocation = [posQueue lastObject];
-        //clear queue asap
+        //clear queue asap for next location update sometime in tick() method
         [posQueue removeAllObjects];
-        
-        //see if first pos since unpause
-        if(needsStartPos)
-        {
-            //no pace
-            [self addPosToRun:newLocation withPace:0];
-            
-            needsStartPos = false;
-        }
         
         //1. deter accuracy for low signal
         [self evalAccuracy:newLocation.horizontalAccuracy];
@@ -588,21 +581,20 @@
 
     //position independant information processed from here on:
     
-    //6. update avgPace
-    run.avgPace =  run.time / run.distance;
+    //7. update avgPace, m / s
+    run.avgPace =  run.distance / run.time;
     
-    //7. Update Chart every minute
+    //8. Update Chart every minute
     if(!((int)run.time % barPeriod))
     {
         //add one checkpoint representing past 60 seconds
         [self addMinute];
     }
     
-    
     //9. Check if goal has been achieved
     [self determineGoalAchieved];
     
-    //10. Update labels below
+    //10. Update labels, disable selection mode
     [self updateHUD];
     
     
@@ -693,7 +685,7 @@
             break;
             
         case MetricTypePace:
-            if(run.avgPace*1000 <= run.metricGoal)
+            if(run.avgPace >= run.metricGoal)
             {
                 [goalAchievedImage setHidden:false];
             }
@@ -754,7 +746,7 @@
         CLLocationMeta * lastMeta ;
         NSTimeInterval paceSum = 0;
         
-        if(index >= 0 )
+        if(index >= 0 && [run.posMeta count] > index)
         {
             
             do {
@@ -769,13 +761,11 @@
                 //until we have reached 60 seconds ago
             } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
             
-            if(index == 0)
-                sumCount--;
             
             NSTimeInterval avgPaceInMin = paceSum / sumCount;
             
             CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
-            newMinMeta.pace = avgPaceInMin;
+            newMinMeta.pace = avgPaceInMin; //m/s
             newMinMeta.time = currentTime;
             
             //add meta and loc to array
@@ -787,6 +777,13 @@
             
         }
     }
+    
+    //disable selection, update selection
+    kmPaceShowMode = false;
+    numMinutesAtKmSelected = -1;
+    selectedMinIndex = [[run minCheckpointsMeta] count];
+    selectedKmIndex = [[run kmCheckpointsMeta] count];
+    [selectedPlot reloadData];
     
     //then visually update chart
     [self updateChart];
@@ -812,9 +809,8 @@
         CLLocationDistance oldRunDistance = run.distance;
         
         //set current pace
-        CLLocationSpeed currentPace = paceTimeInterval / (distanceToAdd < 0.5 ? 0.1 : distanceToAdd);//s/m
-        NSTimeInterval adjustedPace = (currentPace * 1000); //s / km
-        NSTimeInterval speedmMin = 60 / currentPace;
+        CLLocationSpeed currentPace = distanceToAdd/ paceTimeInterval; //m/s
+        NSTimeInterval speedmMin = 60  * currentPace; // m /min
         
         
         //1.distance
@@ -829,7 +825,9 @@
         //3.avg pace calced in position independant
         
         //4.calories
-        CGFloat grade = climbed / (distanceToAdd < 3 ? 1000 : distanceToAdd);
+        CGFloat grade = 0;
+        if(distanceToAdd > 0.5)
+            grade = climbed / distanceToAdd;
         CGFloat weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
         CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
         run.calories += calsToAdd;
@@ -838,7 +836,7 @@
         //6.stride
     
         //add meta to array
-        [self addPosToRun:latest withPace:adjustedPace];
+        [self addPosToRun:latest withPace:currentPace];
 
         //check if a new km was created
         if((NSInteger)(oldRunDistance/1000) != (NSInteger)(run.distance/1000))
@@ -847,7 +845,6 @@
             CLLocationMeta * newKM = [[CLLocationMeta alloc] init];
             CLLocationMeta * lastPosMeta = [[run posMeta] lastObject] ;
             newKM.time = [lastPosMeta time]; //set time to most recent
-            newKM.pace = 0;
             
             //get pace from difference in most recent pos time and last km object if exists
             NSTimeInterval paceToAdjustRunTime = 0;
@@ -857,7 +854,8 @@
                 paceToAdjustRunTime = [oldKM time];
                 
             }
-            newKM.pace =  newKM.time - paceToAdjustRunTime;
+            newKM.pace =  newKM.time - paceToAdjustRunTime;//s / km
+            newKM.pace = 1000 / newKM.pace; //m/s
             
             //add to array
             [[run kmCheckpointsMeta] addObject:newKM];
@@ -891,6 +889,7 @@
 
 -(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd
 {
+    //pace in m/s
     CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
     
     metaToAdd.pace = paceToAdd;
@@ -917,7 +916,7 @@
         CLLocationDirection cumulativeCourseDifferential = 0;
         
         //ensure array range respected
-        for(int i = 1; i <= consecutiveHeadingCount && (locCount - i) >= 0; i++)
+        for(int i = 1; i <= consecutiveHeadingCount && locCount > 0; i++)
         {
             //invalidate consequtive run only if cumulative error is too large or course differential is too big
             CLLocation * considerPt = [run.pos objectAtIndex:(locCount - i)];
@@ -996,7 +995,6 @@
     [runTitle setHidden:false];
     runTitle.alpha = 1.0f;
     
-    [self setPaceLabels];
     
 }
 
@@ -1020,7 +1018,7 @@
         }
         
         //show current time in the current km
-        NSString * paceForCurrentIndex = [RunEvent getPaceString:(run.time - timeToAdjust)];
+        NSString * paceForCurrentIndex = [RunEvent getCurKMPaceString:(run.time - timeToAdjust)];
         [lastKmPace setText:paceForCurrentIndex];
     }
 
@@ -1042,23 +1040,24 @@
     
     //last should the last object in run.pos
     CLLocation *newLocation = [locations lastObject];
-    //CLLocation *oldLocation = [run.pos lastObject];
     
     NSLog(@"%d  - lat%f - lon%f - accur%f - alt%f - speed%f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.altitude, newLocation.speed);
     
-    [posQueue addObject:newLocation];
     
-    /*
-    //just add to array and process in tick() if new
-    if (newLocation.timestamp > oldLocation.timestamp)
+    //see if first pos since unpause
+    if(needsStartPos)
     {
-        [run.pos addObject:newLocation];
+        //no pace
+        [self addPosToRun:newLocation withPace:0];
+        
+        needsStartPos = false;
     }
-    else
-    {
-        NSLog(@"%@  and %@ not logged", [newLocation.timestamp description], [oldLocation.timestamp description]);
+    else{
+        
+        //just add to queue
+        [posQueue addObject:newLocation];
     }
-     */
+
  }
 
 
@@ -1427,7 +1426,7 @@
 
 -(NSInteger) getMinBarIndexForKMSelecton:(NSInteger) kmIndex
 {
-    if([[run kmCheckpointsMeta] count] > kmIndex - 1 && (kmIndex-1 >= 0))
+    if([[run kmCheckpointsMeta] count] > kmIndex - 1 && kmIndex > 0)
     {
         CLLocationMeta * previousKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex-1];
         NSTimeInterval kmStartTime = [previousKM time];
@@ -1455,7 +1454,7 @@
 -(NSInteger) getBarCountForKMSelection:(NSInteger) kmIndex
 {
     
-    if([[run kmCheckpointsMeta] count] > kmIndex)
+    if([[run kmCheckpointsMeta] count] > kmIndex && kmIndex > 0)
     {
         CLLocationMeta * selectedKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex];
         NSTimeInterval kmEndTime = [selectedKM time];
@@ -1527,7 +1526,7 @@
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
     //show avg pace
-    NSString * stringToSetTime = [RunEvent getPaceString:(run.avgPace * 1000)];
+    NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace];
     [paceLabel setText:stringToSetTime];
     
     
@@ -1575,7 +1574,7 @@
         [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
         
         //load current
-        [lastKmPace setText:[RunEvent getPaceString:run.time]];
+        [lastKmPace setText:[RunEvent getCurKMPaceString:run.time]];
         
         //set old to be empty
         NSString * paceForOld = @"";
@@ -1678,21 +1677,22 @@
     {
         if(meta.pace == 0)
             continue;
+        if(meta.pace > 100)
+            break;
         
-        CGFloat tempValue = 100.0f/meta.pace;
-        if(tempValue > maxYPace)
+        if(meta.pace > maxYPace)
         {
-            maxYPace = tempValue;
+            maxYPace = meta.pace;
         }
         
     }
     
-    //constraint pace to at least 1 m/s
-    if(maxYPace < 1.0f)
-        maxYPace = 1.0f;
+    //constraint pace to at least 0.5 m/s
+    if(maxYPace < paceChartMaxYMin)
+        maxYPace = paceChartMaxYMin;
     
     
-    return maxYPace + 0.1f; //add small amount to not cutoff top
+    return maxYPace + paceChartCutoffOffset; //add small amount to not cutoff top
     
 }
 
@@ -1858,9 +1858,17 @@
     NSNumber *num = nil;
     CLLocationMeta * metaForPos;
     
-    if(index + 1 > [[run minCheckpointsMeta] count])
+    if([[run minCheckpointsMeta] count] <= index)
     {
-        return [NSNumber numberWithInt:0];
+        if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
+            switch ( fieldEnum ) {
+                case CPTBarPlotFieldBarLocation:
+                    //x location of index
+                    return [NSNumber numberWithFloat:index-0.5];
+                case CPTBarPlotFieldBarTip:
+                    return [NSNumber numberWithInt:0];
+            }
+        }
     }
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
@@ -1871,7 +1879,7 @@
                 metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
                 
                 //divide time by 60 seconds to get minute index, then minus half a minute to center bar plots
-                num = [NSNumber  numberWithInt:((metaForPos.time)/barPeriod)];
+                num = [NSNumber  numberWithFloat:((metaForPos.time)/barPeriod)-0.5];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -1881,22 +1889,14 @@
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedMinIndex))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        //must invert number
-                        if(metaForPos.pace == 0)
-                            num = [NSNumber numberWithFloat:0.1f];
-                        else
-                            num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
+                        num = [NSNumber numberWithFloat:metaForPos.pace];
                     }
                 }
                 else{
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedMinIndex && index <= (selectedMinIndex + numMinutesAtKmSelected))))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        //must invert number
-                        if(metaForPos.pace == 0)
-                            num = [NSNumber numberWithFloat:0.1f];
-                        else
-                            num = [NSNumber numberWithFloat:100.0f/metaForPos.pace];//converted to m/s
+                        num = [NSNumber numberWithFloat:metaForPos.pace];
                     }
                 }
                 break;

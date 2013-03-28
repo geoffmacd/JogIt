@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RunMap.h"
+#define convertMSTOminKM 16.6666666666666
 
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;
@@ -90,6 +91,7 @@ typedef enum
 -(id)initWithNoTarget;
 
 +(NSString * )stringForMetric:(RunMetric) metric;
++(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat;
 +(NSString*)getTimeString:(NSTimeInterval)timeToFormat;
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat;
 @end

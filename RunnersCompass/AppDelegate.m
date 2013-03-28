@@ -251,7 +251,7 @@
     
     //we would stopUpdating if we wanted to stop map updateshere
 
-    [self.backVC updateHUD];
+    //[self.backVC updateHUD];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
