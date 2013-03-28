@@ -358,7 +358,7 @@
     pausedForAuto = false;
     timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
     
-    
+    //reset counter
     consecutiveHeadingCount = 0;
 }
 
@@ -1047,10 +1047,15 @@
     //see if first pos since unpause
     if(needsStartPos)
     {
+        needsStartPos = false;
+        
         //no pace
         [self addPosToRun:newLocation withPace:0];
         
-        needsStartPos = false;
+        //auto zoom and reload map icon
+        [self reloadMapIcon:true];
+        [self autoZoomMap:newLocation];
+        
     }
     else{
         
