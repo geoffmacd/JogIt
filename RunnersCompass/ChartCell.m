@@ -35,30 +35,27 @@
     
     loadedGraph = false;//load later
     
-    //[self setExpand:false withAnimation:false];
-    expanded = false;
-    [delegate cellDidChangeHeight:self];
+    [self setExpand:false withAnimation:false];
     
     //set title to match the metric
     [headerLabel setText:[RunEvent stringForMetric:associated]];
     
-    
     [scrollView setDelegate:self];
-    
     
     //localized buttons in IB
     [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
     [allTimeLabel setText:NSLocalizedString(@"PerformanceAllTimeLabel", @"label for all time performance")];
-
-    
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly
 {
     weekly = toWeekly;
     
-    NSInteger highest= 0;
-    NSInteger lowest= 1000000;
+    NSTimeInterval highest= 0;
+    NSTimeInterval lowest= 1000000;
+    NSTimeInterval allTime = 0;
+    NSNumber* current;
+    NSNumber* previous;
     
     //set weekly labels, with localization
     if(toWeekly)
@@ -69,18 +66,18 @@
         //set all time high and selected
         for(NSNumber * num in weeklyValues)
         {
-            if([num integerValue] > highest)
-                highest = [num integerValue];
+            allTime += [num floatValue];
             
-            if([num integerValue] < lowest)
-                lowest = [num integerValue];
+            if([num floatValue] > highest)
+                highest = [num floatValue];
+            
+            if([num floatValue] < lowest)
+                lowest = [num floatValue];
         }
         
         //set value for previous,current
-        NSNumber* current = [weeklyValues objectAtIndex:0];
-        NSNumber* previous = [weeklyValues objectAtIndex:1];
-        [currentValueLabel setText:[current stringValue]];
-        [previousValueLabel setText:[previous stringValue]];
+        current = [weeklyValues objectAtIndex:0];
+        previous = [weeklyValues objectAtIndex:1];
     }
     else
     {
@@ -90,25 +87,47 @@
         //set all time high and selected
         for(NSNumber * num in monthlyValues)
         {
-            if([num integerValue] > highest)
-                highest = [num integerValue];
-            if([num integerValue] < lowest)
-                lowest = [num integerValue];
+            allTime += [num floatValue];
+            
+            if([num floatValue] > highest)
+                highest = [num floatValue];
+            if([num floatValue] < lowest)
+                lowest = [num floatValue];
         }
         
         //set value for previous,current
-        NSNumber* current = [monthlyValues objectAtIndex:0];
-        NSNumber* previous = [monthlyValues objectAtIndex:1];
-        [currentValueLabel setText:[current stringValue]];
-        [previousValueLabel setText:[previous stringValue]];
+        current = [monthlyValues objectAtIndex:0];
+        previous = [monthlyValues objectAtIndex:1];
     }
     
+    switch(associated)
+    {
+        case MetricTypeDistance:
+            [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [current floatValue]]];
+            [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [previous floatValue]]];
+            [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", allTime]];
+            break;
+        case MetricTypePace:
+            [currentValueLabel setText:[RunEvent getPaceString:[current integerValue]]];
+            [previousValueLabel setText:[RunEvent getPaceString:[previous integerValue]]];
+            [allTimeValueLabel setText:[RunEvent getPaceString:allTime]];
+            break;
+        case MetricTypeTime:
+            [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
+            [previousValueLabel setText:[RunEvent getTimeString:[previous integerValue]]];
+            [allTimeValueLabel setText:[RunEvent getTimeString:allTime]];
+            break;
+        case MetricTypeCalories:
+            [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
+            [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
+            [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
+            break;
+    }
     
     //deter chart y range
     minY = 0;
     maxY = highest + 1.0f;
     
-    [allTimeValueLabel setText:[NSString stringWithFormat:@"%d", highest]];
     
     //reload data if already loaded
     if(loadedGraph)
@@ -153,7 +172,6 @@
     [self setExpand:!expanded withAnimation:true];
 }
 
-
 -(void) setAssociated:(RunMetric) metricToAssociate
 {
     associated = metricToAssociate;
@@ -161,8 +179,6 @@
     
     [self setup];
 }
-
-
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
@@ -180,7 +196,6 @@
         {
             [AnimationUtil cellLayerAnimate:scrollView toOpen:true];
             [AnimationUtil cellLayerAnimate:statView toOpen:true];
-            
         }
         
         
@@ -229,6 +244,13 @@
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
     }
+    
+    if(!animate)
+    {
+        [scrollView setHidden:!open];
+        [statView setHidden:!open];
+    }
+    
     
     
     [delegate cellDidChangeHeight:self];
@@ -504,7 +526,23 @@
     else
         valueToDisplay = [monthlyValues objectAtIndex:idx];
     
-    [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
+    
+    switch(associated)
+    {
+        case MetricTypeDistance:
+            [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
+            break;
+        case MetricTypePace:
+            [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue]]];
+            break;
+        case MetricTypeTime:
+            [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
+            break;
+        case MetricTypeCalories:
+            [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
+            break;
+    }
+    
     
 }
 

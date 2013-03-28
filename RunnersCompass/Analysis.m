@@ -17,13 +17,13 @@
 {
     runMeta = runToAnalyze;
     
-    weeklyRace = [[NSMutableArray alloc] initWithCapacity:10];
-    monthlyRace = [[NSMutableArray alloc] initWithCapacity:10];
-    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:10];
-    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:10];
+    weeklyRace = [[NSMutableArray alloc] initWithCapacity:4];
+    monthlyRace = [[NSMutableArray alloc] initWithCapacity:4];
+    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:4];
+    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:4];
     
     //init arrays within arrays representing week/month units
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 4; i++)
     {
         NSMutableArray * arrayToAdd = [[NSMutableArray alloc] initWithCapacity:100];
         NSMutableArray * arrayToAdd2 = [[NSMutableArray alloc] initWithCapacity:100];
@@ -36,7 +36,7 @@
     }
     
     
-    //for the last 10 years fill out zeros
+    //for the last 100 weeks fill out zeros
     for(NSMutableArray * array1 in weeklyMeta)
     {
         for(int i = 0; i < 100; i++)
@@ -45,6 +45,7 @@
             [array1 addObject:value];
         }
     }
+    
     
     NSDate * today = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -72,13 +73,31 @@
         {
             
             //modify the value for this in each metric
-            for(NSMutableArray * array1 in weeklyMeta)
+            for(NSInteger i = MetricTypeDistance; i <= MetricTypeCalories; i++)
             {
-                //set the value of this index
-                NSNumber * currentDistance = [array1 objectAtIndex:indexToInsert];
-                NSNumber * newValue = [NSNumber numberWithFloat:[currentDistance floatValue] + run.distance];
+                NSMutableArray * array = [weeklyMeta objectAtIndex:i-1];
+                
+                //set the value of this index, increment previously added runs in week
+                NSNumber * currentDistance = [array objectAtIndex:indexToInsert];
+                NSNumber * newValue;
+                switch(i)
+                {
+                    case MetricTypeDistance:
+                        newValue = [NSNumber numberWithFloat:[currentDistance floatValue] + (run.distance/1000)];
+                        break;
+                    case MetricTypePace:
+                        //need to figure this one out
+                        newValue = [NSNumber numberWithFloat:[currentDistance floatValue] + run.avgPace];
+                        break;
+                    case MetricTypeTime:
+                        newValue = [NSNumber numberWithFloat:[currentDistance floatValue] + run.time];
+                        break;
+                    case MetricTypeCalories:
+                        newValue = [NSNumber numberWithFloat:[currentDistance floatValue] + run.calories];
+                        break;
+                }
                 //replace value
-                [array1 replaceObjectAtIndex:indexToInsert withObject:newValue];
+                [array replaceObjectAtIndex:indexToInsert withObject:newValue];
             }
             
         }

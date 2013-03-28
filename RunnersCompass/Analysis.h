@@ -11,7 +11,7 @@
 
 @interface Analysis : NSObject
 
-//array of array holds metadata for every run including time,pace,calories,etc
+//array of array holds metadata for every run including time,pace,calories, distance
 @property (nonatomic, strong) NSMutableArray * runMeta;
 
 //array of array per metric holds values per week

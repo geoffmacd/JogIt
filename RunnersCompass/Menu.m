@@ -57,9 +57,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     runs = [[NSMutableArray alloc] initWithCapacity:3];
     cells = [[NSMutableArray alloc] initWithCapacity:3];
     
+    /*
     RunMap * map = [RunMap alloc];
 
-    
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
     for(NSInteger i=0;i <12; i++)
@@ -79,10 +79,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [runs addObject:loadRun];
         
     }
+    */
     
-    //fake analysis data
-    Analysis * analysisToSet = [[Analysis alloc] setupFakeWithRuns:runs];
-    [core setAnalysis:analysisToSet];
     
     runInProgressAsFarAsICanTell = false;
     
@@ -414,6 +412,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //nav bar cleanup
     [self cleanupForNav];
+    
+    //prepare analyze data
+    //fake analysis data
+    Analysis * analysisToSet = [[Analysis alloc] setupFakeWithRuns:runs];
+    [core setAnalysis:analysisToSet];
     
     PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
     [self presentViewController:vc animated:true completion:nil];

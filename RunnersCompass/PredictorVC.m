@@ -95,7 +95,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of charts
-    return MetricTypeStride;
+    return MetricTypeCalories;
 }
 
 // Customize the appearance of table view cells.
@@ -111,7 +111,7 @@
         
         [cell setDelegate:self];
         //set data for cells with array at index of the metric
-        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row+1];
+        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row];
         [cell setWeeklyValues:valuesToSet];
         [cell setMonthlyValues:valuesToSet];
         [cell setTimePeriod:weekly];
