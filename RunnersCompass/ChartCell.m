@@ -117,8 +117,8 @@
     //always average paces for races
     if(raceCell)
     {
-        allTime = allTime / recordCount;
-        
+        if(recordCount > 0)
+            allTime = allTime / recordCount;
         
         [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
         [previousValueLabel setText:[RunEvent getTimeString:[previous integerValue]]];
@@ -137,8 +137,8 @@
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", allTime]];
                 break;
             case MetricTypePace:
-                [currentValueLabel setText:[RunEvent getPaceString:[current integerValue]]];
-                [previousValueLabel setText:[RunEvent getPaceString:[previous integerValue]]];
+                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue]]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue]]];
                 [allTimeValueLabel setText:[RunEvent getPaceString:allTime]];
                 break;
             case MetricTypeTime:

@@ -30,7 +30,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         self.backgroundColor = [UIColor clearColor];
         self.pagingEnabled = YES;
         self.bounces = NO;//now customized so that it is on only during a live run
-        self.scrollsToTop = NO;
+        self.scrollsToTop = false;
         self.showsVerticalScrollIndicator = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
@@ -700,6 +700,11 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
         }
         self.view.userInteractionEnabled = YES;
     }
+}
+
+-(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    return false;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

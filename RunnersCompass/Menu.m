@@ -84,19 +84,19 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
     }
     
-    
-    
     runInProgressAsFarAsICanTell = false;
     
     //no run stuff
     showingNoRuns = false;
     [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
     
-    
     //load cell
     [MenuTable registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
     UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
     [MenuTable registerNib:nib forCellReuseIdentifier:cellID];
+    
+    //allow menu table to scroll to top
+    [MenuTable setScrollsToTop:true];
 }
 
 - (void)didReceiveMemoryWarning

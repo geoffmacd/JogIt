@@ -71,6 +71,7 @@
     [map.layer setBorderWidth: 1.0];
     
     [paceScroll setDelegate:self];
+    [paceScroll setScrollsToTop:false];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self
@@ -1424,6 +1425,11 @@
 
     
     
+}
+
+-(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
+{
+    return false;
 }
 
 
