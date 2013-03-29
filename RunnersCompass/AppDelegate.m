@@ -69,6 +69,7 @@
 {
     //launch new run with this run, call same methods as for any new run
     
+    
     //call same method as with the startcell
     [self.frontVC selectedNewRun:runToGhost];
 }

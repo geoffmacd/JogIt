@@ -41,6 +41,7 @@
 @synthesize map;
 @synthesize pos,posMeta;
 @synthesize pausePoints;
+@synthesize associatedRun;
 
 
 +(NSString * )stringForMetric:(RunMetric) metric

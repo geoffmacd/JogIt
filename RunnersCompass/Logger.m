@@ -40,6 +40,7 @@
 @synthesize timeTitle,distanceTitle,caloriesTitle,avgPaceTitle;
 @synthesize swipeToPauseLabel;
 @synthesize lowSignalImage;
+@synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 
 #pragma mark - Lifecycle
 
@@ -92,6 +93,7 @@
     [avgPaceTitle setText:NSLocalizedString(@"PaceTitle", "Logger title for pace")];
     [caloriesTitle setText:NSLocalizedString(@"CaloriesTitle", "Logger title for calories")];
     [distanceTitle setText:NSLocalizedString(@"DistanceTitle", "Logger title for distance")];
+    [ghostDistanceTitle setText:NSLocalizedString(@"GhostDistanceTitle", "Logger title for ghost distance")];
     [finishBut setTitle:NSLocalizedString(@"FinishButton", "Logger finish button title") forState:UIControlStateNormal];
     [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
     [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
@@ -133,6 +135,9 @@
     CGRect shadeRect = self.view.frame;
     [shadeView setFrame:shadeRect];
     [self.view addSubview:shadeView];
+    
+    timeLabelx = timeLabel.frame.origin.x;
+    timeTitlex = timeTitle.frame.origin.x;
 }
 
 - (void)didReceiveMemoryWarning
@@ -241,6 +246,7 @@
         [statusBut setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
         [ghostBut setHidden:false];
         
+        [self resetGhostRun];
     }
     else
     {
@@ -282,6 +288,16 @@
         
         //hide ghost
         [ghostBut setHidden:true];
+        
+        //hide labels for ghost
+        if(run.ghost)
+        {
+            [self enableGhostRun];
+        }
+        else
+        {
+            [self resetGhostRun];
+        }
     }
     
     [self drawMapForHistoricRun];
@@ -322,6 +338,52 @@
     [sheet showInView:self.parentViewController.view];
 }
 
+-(void)enableGhostRun
+{
+    //hide avgpace and calories
+    [paceLabel setHidden:true];
+    [paceUnitLabel2 setHidden:true];
+    [caloriesLabel setHidden:true];
+    [caloriesTitle setHidden:true];
+    [avgPaceTitle setHidden:true];
+    
+    //unhide ghost distance
+    [ghostDistance setHidden:false];
+    [ghostDistanceTitle setHidden:false];
+    [ghostDistanceUnitLabel setHidden:false];
+    
+    //move time to middle
+    CGFloat center = self.view.frame.size.width/2;
+    CGRect labelFrame = timeLabel.frame;
+    labelFrame.origin.x = center - (labelFrame.size.width/2);
+    [timeLabel setFrame:labelFrame];
+    CGRect titleFrame = timeTitle.frame;
+    titleFrame.origin.x = center - (titleFrame.size.width/2);
+    [timeTitle setFrame:titleFrame];
+}
+
+-(void)resetGhostRun
+{
+    //unhide avgpace and calories
+    [paceLabel setHidden:false];
+    [paceUnitLabel2 setHidden:false];
+    [caloriesLabel setHidden:false];
+    [caloriesTitle setHidden:false];
+    [avgPaceTitle setHidden:false];
+    
+    //hide ghost distance
+    [ghostDistance setHidden:true];
+    [ghostDistanceTitle setHidden:true];
+    [ghostDistanceUnitLabel setHidden:true];
+    
+    //move time back
+    CGRect labelFrame = timeLabel.frame;
+    labelFrame.origin.x = timeLabelx;
+    [timeLabel setFrame:labelFrame];
+    CGRect titleFrame = timeTitle.frame;
+    titleFrame.origin.x = timeTitlex;
+    [timeTitle setFrame:titleFrame];
+}
 
 #pragma mark - Managing Live Run
 
@@ -974,6 +1036,7 @@
     [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
     
     [distanceUnitLabel setText:distanceUnitText];
+    [ghostDistanceUnitLabel setText:distanceUnitText];
     
     if(!run.live)
     {
@@ -2012,6 +2075,7 @@
         
         //set as ghost run
         run.ghost = true;
+        run.associatedRun = run;
         //do standard newRun except with this run object
         [delegate selectedGhostRun:run];
         
@@ -2119,8 +2183,6 @@
 
 }
 
-
-
 - (IBAction)finishTapped:(id)sender {
     
     //run object must be cleanup to save in appdelegate where it is stored
@@ -2207,48 +2269,7 @@
         
         UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
-        
     }
-}
-
-- (IBAction)ghostButTapped:(id)sender {
-    
-    [ghostBut.layer setBorderWidth:0.0f];
-    
-    //only if it is historical
-    if(!run.live)
-    {
-        
-        //ask user if they want to start a ghost run
-        [self shouldUserGhostRun];
-        
-    }
-}
-
-- (IBAction)hamburgerTouched:(id)sender {
-    [hamburgerBut.layer setCornerRadius:5.0f];
-    [hamburgerBut.layer setMasksToBounds:true];
-    
-    [hamburgerBut.layer setBorderWidth:0.5f];
-    [hamburgerBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
-    
-}
-
-- (IBAction)hamburgerUnTouched:(id)sender {
-    [hamburgerBut.layer setBorderWidth:0.0f];
-}
-
-- (IBAction)ghostButTouched:(id)sender {
-    [ghostBut.layer setCornerRadius:5.0f];
-    [ghostBut.layer setMasksToBounds:true];
-    
-    [ghostBut.layer setBorderWidth:0.5f];
-    [ghostBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
-}
-
-- (IBAction)ghostButUnTouched:(id)sender {
-    
-    [ghostBut.layer setBorderWidth:0.0f];
 }
 
 - (IBAction)statusTouched:(id)sender {
@@ -2266,10 +2287,49 @@
 
 - (IBAction)hamburgerTapped:(id)sender {
     
-    
     [hamburgerBut.layer setBorderWidth:0.0f];
     
     [delegate menuButtonPressed:sender];
     
 }
+
+- (IBAction)hamburgerTouched:(id)sender {
+    [hamburgerBut.layer setCornerRadius:5.0f];
+    [hamburgerBut.layer setMasksToBounds:true];
+    
+    [hamburgerBut.layer setBorderWidth:0.5f];
+    [hamburgerBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    
+}
+
+- (IBAction)hamburgerUnTouched:(id)sender {
+    [hamburgerBut.layer setBorderWidth:0.0f];
+}
+
+- (IBAction)ghostButTapped:(id)sender {
+    
+    [ghostBut.layer setBorderWidth:0.0f];
+    
+    //only if it is historical
+    if(!run.live)
+    {
+        
+        //ask user if they want to start a ghost run
+        [self shouldUserGhostRun];
+    }
+}
+
+- (IBAction)ghostButTouched:(id)sender {
+    [ghostBut.layer setCornerRadius:5.0f];
+    [ghostBut.layer setMasksToBounds:true];
+    
+    [ghostBut.layer setBorderWidth:0.5f];
+    [ghostBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
+- (IBAction)ghostButUnTouched:(id)sender {
+    
+    [ghostBut.layer setBorderWidth:0.0f];
+}
+
 @end

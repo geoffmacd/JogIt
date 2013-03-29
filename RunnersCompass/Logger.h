@@ -120,6 +120,8 @@
     
     //low signal
     CLLocationAccuracy avgAccuracy;
+    
+    CGFloat timeTitlex,timeLabelx;
 }
 
 
@@ -154,10 +156,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *lastKmPace;
 @property (strong, nonatomic) IBOutlet UIImageView *goalAchievedImage;
 @property (strong, nonatomic) IBOutlet UILabel *distanceUnitLabel;
+@property (strong, nonatomic) IBOutlet UILabel *ghostDistanceUnitLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel1;
 @property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel2;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *ghostDistance;
 @property (strong, nonatomic) IBOutlet UILabel *caloriesLabel;
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 @property (strong, nonatomic) IBOutlet UIButton *ghostBut;
@@ -168,6 +172,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *swipeToPauseLabel;
 @property (strong, nonatomic) IBOutlet UIButton *hamburgerBut;
 @property (strong, nonatomic) IBOutlet UIImageView *lowSignalImage;
+@property (strong, nonatomic) IBOutlet UILabel *ghostDistanceTitle;
 
 
 

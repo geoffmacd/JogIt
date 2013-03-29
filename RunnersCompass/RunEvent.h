@@ -65,6 +65,7 @@ typedef enum
 @property (nonatomic) CGFloat metricGoal;
 @property (nonatomic) BOOL live;
 @property (nonatomic) BOOL ghost;
+@property (nonatomic) RunEvent * associatedRun;
 
 //total/averages for display/data collection
 
