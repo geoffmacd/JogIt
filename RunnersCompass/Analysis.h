@@ -26,4 +26,6 @@
 
 
 -(id)setupFakeWithRuns:(NSMutableArray *)runToAnalyze;
+
+-(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace;
 @end

@@ -94,8 +94,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return number of charts
-    return MetricTypeCalories;
+    return RaceTypeFullMarathon;
 }
 
 // Customize the appearance of table view cells.
@@ -111,13 +110,13 @@
         
         [cell setDelegate:self];
         //set data for cells with array at index of the metric
-        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row];
-        [cell setWeeklyValues:valuesToSet];
-        [cell setMonthlyValues:valuesToSet];
-        [cell setTimePeriod:weekly];
-        //must be last
+        NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row];
+        NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row];
+        [cell setWeeklyValues:weeklyValuesToSet];
+        [cell setMonthlyValues:monthlyValuesToSet];
+        [cell setRaceCell:true];
         [cell setAssociated:row+1];//convert row to runmetric assuming
-        
+        [cell setTimePeriod:weekly];
         
         return cell;
     }

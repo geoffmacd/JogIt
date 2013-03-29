@@ -116,6 +116,7 @@
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
         [cell setWeeklyValues:weeklyValuesToSet];
         [cell setMonthlyValues:monthlyValuesToSet];
+        [cell setRaceCell:false];
         [cell setAssociated:row+1];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         

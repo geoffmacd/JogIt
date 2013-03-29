@@ -31,7 +31,7 @@ typedef enum {
     EventTypeBike,
     EventTypeWalk,
     EventTypeHike
-} RunType;
+} EventType;
 
 typedef enum 
 {
@@ -46,11 +46,21 @@ typedef enum
     MetricTypeStride
 } RunMetric;
 
+typedef enum
+{
+    NoRaceType,
+    RaceType5Km,
+    RaceType10Km,
+    RaceType10Mile,
+    RaceTypeHalfMarathon,
+    RaceTypeFullMarathon
+} RaceType;
+
 
 //meta data
 @property (nonatomic) NSString *name;//customized in init, to be displayed on the logger, not the hierarchial cells
 @property (nonatomic) NSDate *date;//just set to now for all events on init
-@property (nonatomic) RunType eventType;//not useful yet
+@property (nonatomic) EventType eventType;//not useful yet
 @property (nonatomic) RunMetric metric;
 @property (nonatomic) CGFloat metricGoal;
 @property (nonatomic) BOOL live;
@@ -95,4 +105,5 @@ typedef enum
 +(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat;
 +(NSString*)getTimeString:(NSTimeInterval)timeToFormat;
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat;
++(NSString * )stringForRace:(RaceType) metric;
 @end

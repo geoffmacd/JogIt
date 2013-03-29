@@ -25,7 +25,7 @@
 @synthesize scrollView;
 @synthesize selectedLabel,allTimeLabel;
 @synthesize weeklyValues,monthlyValues;
-
+@synthesize raceCell;
 
 #pragma mark - Lifecycle
 
@@ -38,7 +38,10 @@
     [self setExpand:false withAnimation:false];
     
     //set title to match the metric
-    [headerLabel setText:[RunEvent stringForMetric:associated]];
+    if(!raceCell)
+        [headerLabel setText:[RunEvent stringForMetric:associated]];
+    else
+        [headerLabel setText:[RunEvent stringForRace:associated]];
     
     [scrollView setDelegate:self];
     
@@ -111,33 +114,48 @@
         previous = [monthlyValues objectAtIndex:1];
     }
     
-    //calc alltime avg pace if associated is pace
-    if(associated == MetricTypePace)
-        allTime = allTime / recordCount;
-    
-    switch(associated)
+    //always average paces for races
+    if(raceCell)
     {
-        case MetricTypeDistance:
-            [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [current floatValue]]];
-            [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [previous floatValue]]];
-            [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", allTime]];
-            break;
-        case MetricTypePace:
-            [currentValueLabel setText:[RunEvent getPaceString:[current integerValue]]];
-            [previousValueLabel setText:[RunEvent getPaceString:[previous integerValue]]];
-            [allTimeValueLabel setText:[RunEvent getPaceString:allTime]];
-            break;
-        case MetricTypeTime:
-            [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
-            [previousValueLabel setText:[RunEvent getTimeString:[previous integerValue]]];
-            [allTimeValueLabel setText:[RunEvent getTimeString:allTime]];
-            break;
-        case MetricTypeCalories:
-            [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
-            [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
-            [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
-            break;
+        allTime = allTime / recordCount;
+        
+        
+        [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
+        [previousValueLabel setText:[RunEvent getTimeString:[previous integerValue]]];
+        [allTimeValueLabel setText:[RunEvent getTimeString:allTime]];
     }
+    else{
+        //calc alltime avg pace if associated is pace
+        if(associated == MetricTypePace)
+            allTime = allTime / recordCount;
+        
+        switch(associated)
+        {
+            case MetricTypeDistance:
+                [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [current floatValue]]];
+                [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [previous floatValue]]];
+                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", allTime]];
+                break;
+            case MetricTypePace:
+                [currentValueLabel setText:[RunEvent getPaceString:[current integerValue]]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous integerValue]]];
+                [allTimeValueLabel setText:[RunEvent getPaceString:allTime]];
+                break;
+            case MetricTypeTime:
+                [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
+                [previousValueLabel setText:[RunEvent getTimeString:[previous integerValue]]];
+                [allTimeValueLabel setText:[RunEvent getTimeString:allTime]];
+                break;
+            case MetricTypeCalories:
+                [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
+                [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
+                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
+                break;
+        }
+    }
+    
+    
+
     
     //deter chart y range
     minY = 0;
@@ -541,21 +559,26 @@
     else
         valueToDisplay = [monthlyValues objectAtIndex:idx];
     
-    
-    switch(associated)
+    if(raceCell)
     {
-        case MetricTypeDistance:
-            [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
-            break;
-        case MetricTypePace:
-            [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue]]];
-            break;
-        case MetricTypeTime:
-            [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
-            break;
-        case MetricTypeCalories:
-            [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
-            break;
+        [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
+    }
+    else{
+        switch(associated)
+        {
+            case MetricTypeDistance:
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
+                break;
+            case MetricTypePace:
+                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue]]];
+                break;
+            case MetricTypeTime:
+                [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
+                break;
+            case MetricTypeCalories:
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
+                break;
+        }
     }
     
     

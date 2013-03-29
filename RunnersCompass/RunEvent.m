@@ -68,6 +68,27 @@
     return @"UNKNOWNMETRIC";
 }
 
++(NSString * )stringForRace:(RaceType) metric
+{
+    switch(metric)
+    {
+        case RaceType5Km:
+            return NSLocalizedString(@"5kRace", @"race name");
+        case RaceType10Km:
+            return NSLocalizedString(@"10kRace", @"race name");
+        case RaceType10Mile:
+            return NSLocalizedString(@"10mileRace", @"race name");
+        case RaceTypeHalfMarathon:
+            return NSLocalizedString(@"halfmarathonRace", @"race name");
+        case RaceTypeFullMarathon:
+            return NSLocalizedString(@"fullmarathonRace", @"race name");
+        case NoRaceType:
+            return @"UNKNOWNMETRIC";
+    }
+    
+    return @"UNKNOWNMETRIC";
+}
+
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat
 {
     //expects paceToFormat as m/s

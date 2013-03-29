@@ -66,6 +66,7 @@
 @property (nonatomic, setter = setAssociated:) RunMetric associated;
 @property(nonatomic, setter = setTimePeriod:) BOOL weekly;
 @property BOOL loadedGraph;
+@property BOOL raceCell;
 @property (strong) NSMutableArray * weeklyValues;
 @property (strong) NSMutableArray * monthlyValues;
 

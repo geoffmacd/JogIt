@@ -25,13 +25,16 @@
     //init arrays within arrays representing week/month units
     for(int i = 0; i < MetricTypeActivityCount; i++)
     {
-        NSMutableArray * arrayToAdd = [[NSMutableArray alloc] initWithCapacity:100];
         NSMutableArray * arrayToAdd2 = [[NSMutableArray alloc] initWithCapacity:100];
         NSMutableArray * arrayToAdd3 = [[NSMutableArray alloc] initWithCapacity:100];
-        NSMutableArray * arrayToAdd4 = [[NSMutableArray alloc] initWithCapacity:100];
-        [weeklyRace addObject:arrayToAdd];
         [weeklyMeta addObject:arrayToAdd2];
         [monthlyMeta addObject:arrayToAdd3];
+    }
+    for(int i = 0; i < RaceTypeFullMarathon; i++)
+    {
+        NSMutableArray * arrayToAdd = [[NSMutableArray alloc] initWithCapacity:100];
+        NSMutableArray * arrayToAdd4 = [[NSMutableArray alloc] initWithCapacity:100];
+        [weeklyRace addObject:arrayToAdd];
         [monthlyRace addObject:arrayToAdd4];
     }
     
@@ -47,6 +50,24 @@
     }
     //for the last 100 weeks fill out zeros
     for(NSMutableArray * array1 in monthlyMeta)
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            NSNumber * value = [NSNumber numberWithInt:0];
+            [array1 addObject:value];
+        }
+    }
+    //for the last 100 weeks fill out zeros
+    for(NSMutableArray * array1 in weeklyRace)
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            NSNumber * value = [NSNumber numberWithInt:0];
+            [array1 addObject:value];
+        }
+    }
+    //for the last 100 weeks fill out zeros
+    for(NSMutableArray * array1 in monthlyRace)
     {
         for(int i = 0; i < 100; i++)
         {
@@ -105,7 +126,7 @@
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.calories];
                         break;
                     case MetricTypeActivityCount:
-                        newValue = [NSNumber numberWithInt:[currentValue integerValue] + 1];
+                        newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
                         break;
                 }
                 //replace value
@@ -129,6 +150,10 @@
     
     //convert weekly values to monthy
     [self analyzeWeeklyForMonthly];
+    
+    //predict race imes
+    [self analyzeWeeklyRaces];
+    [self analyzeMonthlyRaces];
     
     return self;
     
@@ -173,7 +198,7 @@
                     newValue = [NSNumber numberWithFloat:[currentWeeklyValue floatValue] + [currentMonthlyValue floatValue]];
                     break;
                 case MetricTypeActivityCount:
-                    newValue = [NSNumber numberWithInt:[currentMonthlyValue integerValue] + 1];
+                    newValue = [NSNumber numberWithFloat:[currentMonthlyValue floatValue] + 1];
                     break;
             }
             
@@ -191,7 +216,6 @@
         }
     }
     
-    
     //process avg paces per week
     for(NSInteger i = 0; i < [monthlyMeta count]; i++)
     {
@@ -202,6 +226,91 @@
         NSNumber * monthAvgPace = [NSNumber numberWithFloat:[curMonthPaceSum floatValue] / [monthCount integerValue]];
         [paceArray replaceObjectAtIndex:i withObject:monthAvgPace];
     }
+}
+
+-(void)analyzeWeeklyRaces
+{
+    //analyze race times based on pace in that week
+    
+    NSMutableArray * paceArray = [weeklyMeta objectAtIndex:MetricTypePace-1];
+    
+    for(NSInteger i = 0; i < [paceArray count]; i++)
+    {
+        NSNumber * weeklyAvgPace = [paceArray objectAtIndex:i];
+        NSTimeInterval weeklyPace = [weeklyAvgPace floatValue];
+        
+        //calc race time based on that avg pace
+        NSNumber * raceTime;
+        
+        for(NSInteger j = 0; j < [weeklyRace count]; j++)
+        {
+            NSMutableArray * weeklyRaceMetric = [weeklyRace objectAtIndex:j];
+            
+            raceTime = [NSNumber numberWithFloat:[self timeForRace:j+1 WithPace:weeklyPace]];
+            
+            //replace value
+            [weeklyRaceMetric replaceObjectAtIndex:i withObject:raceTime];
+        }
+    }
+}
+
+
+-(void)analyzeMonthlyRaces
+{
+    //analyze race times based on pace in that week
+    
+    NSMutableArray * paceArray = [monthlyMeta objectAtIndex:MetricTypePace-1];
+    
+    for(NSInteger i = 0; i < [paceArray count]; i++)
+    {
+        NSNumber * monthlyAvgPace = [paceArray objectAtIndex:i];
+        NSTimeInterval monthlyPace = [monthlyAvgPace floatValue];
+        
+        //calc race time based on that avg pace
+        NSNumber * raceTime;
+        
+        for(NSInteger j = 0; j < [monthlyRace count]; j++)
+        {
+            NSMutableArray * monthlyRaceMetric = [monthlyRace objectAtIndex:j];
+            
+            raceTime = [NSNumber numberWithFloat:[self timeForRace:j+1 WithPace:monthlyPace]];
+            
+            //replace value
+            [monthlyRaceMetric replaceObjectAtIndex:i withObject:raceTime];
+        }
+    }
+}
+
+-(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace
+{
+    NSTimeInterval time;
+    //need seconds from a m/s value with a certain distance
+    
+    if(paceForRace == 0)
+        return 0;
+    
+    switch (raceType) {
+        case RaceType10Km:
+            time = 10000 / paceForRace;
+            break;
+        case RaceType10Mile:
+            time = 16093.4 / paceForRace;
+            break;
+        case RaceType5Km:
+            time = 5000 / paceForRace;
+            break;
+        case RaceTypeFullMarathon:
+            time = 42194.988 / paceForRace;
+            break;
+        case RaceTypeHalfMarathon:
+            time = 21097.494 / paceForRace;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return time;
 }
 
 @end
