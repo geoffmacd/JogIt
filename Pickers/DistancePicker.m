@@ -119,6 +119,7 @@
     //return self.data.count;
     if(component == 0)
         return 100;
+    return 0;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {

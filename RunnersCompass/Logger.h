@@ -34,9 +34,8 @@
 #define autoZoomPeriod 4 //seconds before auto zoom
 #define userDelaysAutoZoom 5 //second delays before autozoom
 #define reloadMapIconPeriod 4 // second reload map icon period
-#define autoPauseDelay 10 // seconds before app pauses
-#define autoPauseSpeed 0.4 //speed app pauses at 
-#define unPauseDelay 3
+#define autoPauseDelay 9 // seconds before app pauses
+#define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
 #define paceChartCutoffOffset 0.1//m/s
@@ -54,6 +53,7 @@
 - (void)pauseAnimation:(void(^)(void))completion;
 -(void)selectedGhostRun:(RunEvent *)run;
 -(void)updateRunTimeForMenu:(NSString *)updateTimeString;
+-(UserPrefs *)curUserPrefs;
 
 @end
 
@@ -121,16 +121,21 @@
     //low signal
     CLLocationAccuracy avgAccuracy;
     
+    //positions for labels for ghost runs
     CGFloat timeTitlex,timeLabelx;
+    
 }
 
 
+//objects need to accesed by delegate:
+
 //delegate
 @property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
-
-//objects need to accesed by delegate
+//user preferences
 @property (nonatomic, strong, setter = setRun:) RunEvent * run;
 @property (nonatomic) BOOL paused;
+//APP IS IN BACKGROUND
+@property (nonatomic,setter = setInBackground:) BOOL inBackground;
 
 
 //UI

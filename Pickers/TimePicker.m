@@ -122,6 +122,7 @@
         return 10;
     if(component == 1)
         return 60;
+    return 0;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {

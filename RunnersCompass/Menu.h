@@ -21,6 +21,7 @@
 - (void)finishedRun:(RunEvent *)run;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete;
 -(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail;
+-(UserPrefs *)curUserPrefs;
 
 @end
 
@@ -30,8 +31,6 @@
     NSMutableArray * runs;
     NSMutableArray * cells;
     StartCell * start;
-    
-    DataTest * core;
     BOOL showingNoRuns;
     
 }

@@ -113,7 +113,7 @@
                 switch(i)
                 {
                     case MetricTypeDistance:
-                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + (oldRun.distance/1000)];
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + (oldRun.distance)];
                         break;
                     case MetricTypePace:
                         //need to figure this one out
@@ -283,7 +283,7 @@
 
 -(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace
 {
-    NSTimeInterval time;
+    NSTimeInterval time = 0;
     //need seconds from a m/s value with a certain distance
     
     if(paceForRace == 0)

@@ -67,6 +67,7 @@
 @property(nonatomic, setter = setTimePeriod:) BOOL weekly;
 @property BOOL loadedGraph;
 @property BOOL raceCell;
+@property (nonatomic, assign) BOOL metric;
 @property (strong) NSMutableArray * weeklyValues;
 @property (strong) NSMutableArray * monthlyValues;
 

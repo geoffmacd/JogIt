@@ -40,9 +40,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     [super viewDidLoad];
     
-    
-	core = [DataTest sharedData];
-    
     if(!start)
     {
         StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
@@ -294,6 +291,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [self.delegate updateGesturesNeededtoFail:cellGesture];
 }
 
+-(UserPrefs*)getPrefs
+{
+    UserPrefs * prefs = [self.delegate curUserPrefs];
+    
+    return prefs;
+    
+}
+
 #pragma mark -
 #pragma mark Start Cell Delegate
 
@@ -420,9 +425,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //prepare analyze data
     //fake analysis data
     Analysis * analysisToSet = [[Analysis alloc] setupFakeWithRuns:runs];
-    [core setAnalysis:analysisToSet];
     
     PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
+    [vc setAnalysis:analysisToSet];
+    [vc setMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    
     [self presentViewController:vc animated:true completion:nil];
 }
 - (IBAction)goalsNavPressed:(id)sender {
@@ -430,22 +437,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //nav bar cleanup
     [self cleanupForNav];
     
-    if(!core.curGoal)
-    {
-        GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
-        CreateGoalViewController * vc2 = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
-        
-        [self presentViewController:vc animated:true completion:^{
-            
-            [vc presentViewController:vc2 animated:true completion:nil];
-        }];
-    }
-    else
-    {
-        GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
-        
-        [self presentViewController:vc animated:true completion:nil];
-    }
+    
+    GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
+    [self presentViewController:vc animated:true completion:nil];
+    
 }
 
 - (IBAction)settingsNavPressed:(id)sender {
@@ -455,6 +450,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     SettingsViewController * vc = [[SettingsViewController alloc] initWithNibName:@"Settings" bundle:nil];
     
+    //set current settings
+    [vc setPrefsToChange:[self.delegate curUserPrefs]];
     [self presentViewController:vc animated:true completion:nil];
 }
 
@@ -465,7 +462,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     CGFloat pace = [selectedIndex integerValue] ; //min/km to m/s
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     
     [self selectedNewRun:new];
     
@@ -474,7 +471,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000 withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     
     [self selectedNewRun:new];
     
@@ -483,7 +480,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     NSTimeInterval time = ([selectedIndex intValue] * 60);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     
     [self selectedNewRun:new];
     
@@ -492,7 +489,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     CGFloat calories = 25 + ([selectedIndex intValue] * 25);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     
     [self selectedNewRun:new];
     
@@ -506,7 +503,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
 }
 - (IBAction)paceTapped:(id)sender {
-    PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [core.prefs getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [[self.delegate curUserPrefs] getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [pace addCustomButtonWithTitle:@"PR" value:nil];
     
@@ -538,7 +535,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 - (IBAction)distanceTapped:(id)sender {
     
     
-    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [core.prefs getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [[self.delegate curUserPrefs] getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
     [distance addCustomButtonWithTitle:@"PR" value:nil];
     

@@ -14,6 +14,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
 {
     UIActionSheet *  sheet;
+    UserPrefs * userPrefs;
 }
 
 @property (strong, nonatomic) UIWindow *window;

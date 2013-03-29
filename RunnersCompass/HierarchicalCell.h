@@ -24,6 +24,7 @@
 -(void)cellDidChangeHeight:(id) sender;
 -(void)selectedRun:(id)sender;
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
+-(UserPrefs*)getPrefs;
 
 @end
 

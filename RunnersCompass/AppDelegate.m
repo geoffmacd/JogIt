@@ -61,7 +61,20 @@
 
 - (void)pauseAnimation:(void(^)(void))completion {
     
-    [self.viewController pauseWithBounceAnimation:completion];
+    //if in logger view, continue pause with bounce
+    if(!self.viewController.isOpen || !self.backVC.inBackground)
+    {
+        [self.viewController pauseWithBounceAnimation:completion];
+    }
+    else
+    {
+        //if in menu view or in background,pause silently
+        //just send notification to logger without animating
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"pauseToggleNotification"
+         object:self.viewController.pauseImage];
+        
+    }
     
 }
 
@@ -82,6 +95,10 @@
     
 }
 
+-(UserPrefs *)curUserPrefs
+{
+    return userPrefs;
+}
 
 
 #pragma mark - Menu Delegate Methods
@@ -189,28 +206,37 @@
         [self.viewController setLocked:true];
         
     }
-    
 }
-
 
 -(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail
 {
     
     UIPanGestureRecognizer * gestureFromSlider = [self.viewController getSliderPanGesture];
-    
         
     [gestureFromSlider requireGestureRecognizerToFail:gestureToFail];
-    
-    
 }
 
-#pragma mark - App Lifecycle Delegate 
 
+#pragma mark - App Lifecycle Delegate
+
+-(void)settingsChanged:(NSNotification *)notification
+{
+    //set new settings
+    userPrefs = (UserPrefs *) [notification object];
+    
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    //user preferences
+    userPrefs = [UserPrefs defaultUser];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(settingsChanged:)
+                                                 name:@"settingsChangedNotification"
+                                               object:nil];
     
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
@@ -235,6 +261,7 @@
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
+    
     return YES;//to indicate success
 }
 
@@ -250,18 +277,16 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     
-    //we would stopUpdating if we wanted to stop map updateshere
-
-    //[self.backVC updateHUD];
+    //alert logger view
+    [self.backVC setInBackground:true];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    //we would startUp[dating if we wanted to start map updateshere
-    
-    //updateHUD here
+    //alert logger view
+    [self.backVC setInBackground:false];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

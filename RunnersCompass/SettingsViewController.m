@@ -16,7 +16,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefs,oldMetric;
+@synthesize formModel,prefsToChange,oldMetric;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,23 +34,24 @@
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
     
-    self.prefs = [[DataTest sharedData] prefs];
-    oldMetric = [self.prefs.metric boolValue];
+    oldMetric = [prefsToChange.metric boolValue];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
         [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
             NSLog(@"save pressed");
-            NSLog(@"%@", self.prefs);
             
-            if(oldMetric != [self.prefs.metric boolValue])
+            if(oldMetric != [prefsToChange.metric boolValue])
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadUnitsNotification"
                                                                 object:nil];
             }
             
-            [[DataTest sharedData] setPrefs:self.prefs];
+            //give nottification to update settings on app delegate
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"settingsChangedNotification"
+             object:prefsToChange];
             [self dismissViewControllerAnimated:true completion:nil];
         }];
         
@@ -88,7 +89,7 @@
         NSLog(@"did change model value");
     }];
     
-    [self.formModel loadFieldsWithObject:self.prefs ];
+    [self.formModel loadFieldsWithObject:prefsToChange ];
     
 }
 

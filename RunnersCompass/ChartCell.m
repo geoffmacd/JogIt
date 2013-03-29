@@ -26,6 +26,7 @@
 @synthesize selectedLabel,allTimeLabel;
 @synthesize weeklyValues,monthlyValues;
 @synthesize raceCell;
+@synthesize metric;
 
 #pragma mark - Lifecycle
 
@@ -132,14 +133,14 @@
         switch(associated)
         {
             case MetricTypeDistance:
-                [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [current floatValue]]];
-                [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [previous floatValue]]];
-                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", allTime]];
+                [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[current floatValue] withMetric:metric]]];
+                [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[previous floatValue] withMetric:metric]]];
+                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:allTime withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue]]];
-                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue]]];
-                [allTimeValueLabel setText:[RunEvent getPaceString:allTime]];
+                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue] withMetric:metric]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue] withMetric:metric]];
+                [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:metric]];
                 break;
             case MetricTypeTime:
                 [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
@@ -150,6 +151,9 @@
                 [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
                 [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
+                break;
+                
+            default:
                 break;
         }
     }
@@ -567,10 +571,10 @@
         switch(associated)
         {
             case MetricTypeDistance:
-                [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[valueToDisplay floatValue]]];
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:[valueToDisplay floatValue] withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue]]];
+                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue] withMetric:metric]];
                 break;
             case MetricTypeTime:
                 [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];

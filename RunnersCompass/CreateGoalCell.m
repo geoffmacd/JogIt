@@ -15,12 +15,11 @@
 @synthesize goalImage,button,curCheckImage;
 
 
--(void)setup:(GoalType) goalType
+-(void)setup:(GoalType) goalType withCurrentGoalType:(GoalType) curType
 {
-    DataTest * core = [DataTest sharedData];
-    if(core.curGoal)
+    if(curType)
     {
-        if(core.curGoal.type == goalType)
+        if(curType == goalType)
         {
             //show checkmark
             [curCheckImage setHidden:false];

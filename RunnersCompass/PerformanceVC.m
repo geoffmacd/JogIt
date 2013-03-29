@@ -14,7 +14,7 @@
 
 @implementation PerformanceVC
 
-@synthesize table,header, weekly;
+@synthesize table,header, weekly, analysis, metric;
 
 
 
@@ -29,8 +29,6 @@
     
     //add ChartViewControllers to views
     cells = [[NSMutableArray alloc] initWithCapacity:10];
-    
-    analysis = [[DataTest sharedData] analysis];
     
 }
 
@@ -111,6 +109,7 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
+        [cell setMetric:metric];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
@@ -184,6 +183,8 @@
 - (IBAction)predictTapped:(id)sender {
     PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
     
+    [vc setAnalysis:analysis];
+    [vc setMetric:metric];
     
     [self presentViewController:vc animated:true completion:^{
         

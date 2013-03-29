@@ -13,7 +13,7 @@
 
 @implementation PredictorVC
 
-@synthesize table,header, weekly;
+@synthesize table,header, weekly, analysis, metric;
 
 
 
@@ -29,7 +29,6 @@
     //add ChartViewControllers to views
     cells = [[NSMutableArray alloc] initWithCapacity:10];
     
-    analysis = [[DataTest sharedData] analysis];
     
 }
 
@@ -109,6 +108,7 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
+        [cell setMetric:metric];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row];

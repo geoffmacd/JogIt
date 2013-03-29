@@ -44,9 +44,9 @@
 @synthesize associatedRun;
 
 
-+(NSString * )stringForMetric:(RunMetric) metric
++(NSString * )stringForMetric:(RunMetric) metricForDisplay
 {
-    switch(metric)
+    switch(metricForDisplay)
     {
         case MetricTypeCalories:
             return NSLocalizedString(@"CaloriesMetric", @"Calorie name for title or goal");
@@ -63,15 +63,16 @@
         case MetricTypeStride:
             return NSLocalizedString(@"StrideMetric", @"Stride name for title or goal");
         case NoMetricType:
+        default:
             return @"UNKNOWNMETRIC";
     }
     
     return @"UNKNOWNMETRIC";
 }
 
-+(NSString * )stringForRace:(RaceType) metric
++(NSString * )stringForRace:(RaceType) metricForDisplay
 {
-    switch(metric)
+    switch(metricForDisplay)
     {
         case RaceType5Km:
             return NSLocalizedString(@"5kRace", @"race name");
@@ -90,7 +91,17 @@
     return @"UNKNOWNMETRIC";
 }
 
-+(NSString*)getPaceString:(NSTimeInterval)paceToFormat
++(CGFloat)getDisplayDistance:(CGFloat)distanceToDisplayInM withMetric:(BOOL)metricForDisplay
+{
+    distanceToDisplayInM = distanceToDisplayInM / 1000;
+    
+    if(!metricForDisplay)
+        distanceToDisplayInM = convertKMToMile * distanceToDisplayInM;
+    
+    return distanceToDisplayInM;
+}
+
++(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay
 {
     //expects paceToFormat as m/s
     //need to transform to s/km
@@ -100,6 +111,12 @@
         return @"0:00";
     
     paceToFormat = 1000 / paceToFormat;
+    
+    //convert to min/mile if necessary
+    if(!metricForDisplay)
+    {
+        paceToFormat = paceToFormat / convertKMToMile;
+    }
     
     //constrain to 30:00
     if(paceToFormat > 1800)
@@ -132,7 +149,8 @@
 
 +(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat
 {
-    //expects paceToFormat as s 
+    //expects paceToFormat as s
+    //not a complete km so no mile conversion
     
     //if it is 0 , just return 0:00 right away
     if(paceToFormat == 0)
@@ -232,7 +250,7 @@
     return nil;
 }
 
--(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value
+-(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metricForDisplay
 {
     self = [super init];
     
@@ -240,22 +258,19 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value]];
+                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay]];
                 break;
             case MetricTypeCalories:
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value/1000.0, @"KM"];
+                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], @"KM"];
                 break;
             case MetricTypeTime:
                 name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
                 break;
                 
-            case MetricTypeCadence:
-            case MetricTypeStride:
-            case MetricTypeClimbed:
-            case NoMetricType:
+            default:
                 name = nil;
                 break;
                 

@@ -12,7 +12,7 @@
 
 @interface CreateGoalCell : UITableViewCell
 
--(void)setup:(GoalType) metric;
+-(void)setup:(GoalType) goalType withCurrentGoalType:(GoalType) curType;
 
 @property (strong, nonatomic) IBOutlet UIImageView *goalImage;
 @property (strong, nonatomic) IBOutlet UIButton *button;

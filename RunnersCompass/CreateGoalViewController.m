@@ -101,7 +101,8 @@
     CreateGoalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"CreateGoalCell"
                                                       owner:self
                                                     options:nil]objectAtIndex:0];
-    [cell setup:row];
+    [cell setup:row withCurrentGoalType:
+     [[[DataTest sharedData] curGoal] type]];
     
     return cell;
     

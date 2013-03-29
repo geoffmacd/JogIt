@@ -14,12 +14,12 @@
 @interface PredictorVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
     NSMutableArray * cells;
-    Analysis * analysis;
 }
 
 @property(retain) PredictHeaderCell * header;
 @property (nonatomic, assign) BOOL weekly;
-
+@property (nonatomic, assign) BOOL metric;
+@property(retain) Analysis * analysis;
 
 
 @property (strong, nonatomic) IBOutlet UITableView *table;

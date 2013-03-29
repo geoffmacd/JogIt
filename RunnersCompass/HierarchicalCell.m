@@ -109,12 +109,12 @@
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
     
-    DataTest* data = [DataTest sharedData];
-    NSString *distanceUnitText = [data.prefs getDistanceUnit];
-    
+    UserPrefs * prefs = [delegate getPrefs];
+    NSString * distanceUnitText = [prefs getDistanceUnit];
+    BOOL metricUnit = [prefs.metric integerValue];
     
     //Set Title
-    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", associatedRun.distance/1000,  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
+    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //Set units for localization/units
@@ -123,7 +123,7 @@
     [minUnit setText: NSLocalizedString(@"TimeShort", @"Shortform units for time")];
     
     //Set values
-    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace]];
+    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace withMetric:metricUnit]];
     [timeLabel setText:[RunEvent getTimeString:associatedRun.time]];
     [calLabel setText:[NSString stringWithFormat:@"%.0f", associatedRun.calories]];
 }

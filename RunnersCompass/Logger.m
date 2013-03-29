@@ -41,6 +41,7 @@
 @synthesize swipeToPauseLabel;
 @synthesize lowSignalImage;
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
+@synthesize inBackground;
 
 #pragma mark - Lifecycle
 
@@ -83,10 +84,11 @@
                                              selector:@selector(setLabelsForUnits)
                                                  name:@"reloadUnitsNotification"
                                                object:nil];
+    
     kmPaceShowMode= false;
     inMapView = false;
     paused = true;
-
+    inBackground = false;
     
     //localization
     [timeTitle setText:NSLocalizedString(@"TimeTitle", "Logger title for time")];
@@ -144,6 +146,19 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)setInBackground:(BOOL)toBackground
+{
+    inBackground = toBackground;
+    
+    //refresh view if coming out of background
+    if(!inBackground)
+    {
+        [self reloadMapIcon:!inMapView];
+        [self updateChart];
+        [self autoZoomMap:[run.pos lastObject]];
+    }
 }
 
 
@@ -421,6 +436,9 @@
     pausedForAuto = false;
     timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
     
+    //clear queue
+    [posQueue removeAllObjects];
+    
     //reset counter
     consecutiveHeadingCount = 0;
 }
@@ -439,7 +457,7 @@
     //set map to follow user before starting track
     [map setUserTrackingMode:MKUserTrackingModeFollow];
     
-    //stop timer updating
+    //stop tick() processing even for autopause
     [timer invalidate];
     
     //update map icon one last time
@@ -481,51 +499,41 @@
 
 -(void)evalAutopause:(CLLocationSpeed)speedToConsider
 {
-    if(pausedForAuto && speedToConsider > minSpeedUnpause)
-    {
-        //get closer to unpausing
-        autoPauseRestartCount++;
-        
-        if(autoPauseRestartCount >  unPauseDelay)
-        {
-            NSLog(@"Unpausing from autopause");
-            autoPauseRestartCount = 0;
-            
-            //trigger restart
-            [delegate pauseAnimation:nil];
-        }
-    }
-    else{
-        //further away from unpausing because to slow or now in autopause
-        if(autoPauseRestartCount > 0)
-            autoPauseRestartCount--;
-    }
 
     //if last position determined was more than 5 seconds ago, autopause
-    if(speedToConsider == 0)
+    if(speedToConsider == -1)
     {
         CLLocation * last = [run.pos lastObject];
         
         //ensure it hasn't recently autopaused
         if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
         {
-            NSLog(@"Autopaused - no location updates");
-            
-            pausedForAuto = true;
-            
-            [delegate pauseAnimation:nil];
+            //determine if autopause is enabled in settings
+            UserPrefs * curSettings = [delegate curUserPrefs];
+            if([curSettings.autopause integerValue] == 1)
+            {
+                NSLog(@"Autopaused - no location updates");
+                
+                pausedForAuto = true;
+                
+                [delegate pauseAnimation:nil];
+            }
         }
     }else{
         
-        //if current pace is less than
+        //if current pace is less than minimum
         if(speedToConsider < autoPauseSpeed && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate] )
         {
-            NSLog(@"Autopaused - pace too slow");
-            
-            pausedForAuto = true;
-            
-            [delegate pauseAnimation:nil];
-            
+            //determine if autopause is enabled in settings
+            UserPrefs * curSettings = [delegate curUserPrefs];
+            if([curSettings.autopause integerValue] == 1)
+            {
+                NSLog(@"Autopaused - pace too slow");
+                
+                pausedForAuto = true;
+                
+                [delegate pauseAnimation:nil];
+            }
         }
     }
     
@@ -583,15 +591,16 @@
     
     //update time with 1 second
     run.time += 1;
+
+    //do not process if it still needs a start position
+    if(needsStartPos)
+        return;
     
-    
-    //NSInteger posCount = [run.pos count];
-    //NSInteger metaCount = [run.posMeta count];
     NSInteger queueCount = [posQueue count];
     
     //determine how many new positions were added by core location , choose latest
     //only process every 3 seconds to get better information
-    if(queueCount > 0 && ((int)run.time) % calcPeriod == 0 && !needsStartPos)
+    if(queueCount > 0 && ((int)run.time) % calcPeriod == 0)
     {
         CLLocation * newLocation = [posQueue lastObject];
         //clear queue asap for next location update sometime in tick() method
@@ -600,14 +609,15 @@
         //1. deter accuracy for low signal
         [self evalAccuracy:newLocation.horizontalAccuracy];
         
-        //2. determine if we should pause or unpause
-        [self evalAutopause:newLocation.speed];
-        
-        //3. draw new map overlay
+        //2. draw new map overlay
         [self updateMapOverlay:newLocation];
         
-        //4. calculate distance
+        //3. calculate distance
         [self calcMetrics:newLocation];
+        
+        //4. determine if we should pause or unpause,with latest pace
+        CLLocationMeta * latestMeta = [[run posMeta] lastObject];
+        [self evalAutopause:latestMeta.pace];
         
         //5.reload map icon
         //do not capture image if user has recently touched and map has been re-centered
@@ -634,7 +644,7 @@
         //potentially autopause
         
         //1. eval wheter we should pause
-        [self evalAutopause:0];
+        [self evalAutopause:-1];
         
         //cannot center map or reload icon or draw map because nothing happend
         //ignoring accuracy for now
@@ -785,9 +795,6 @@
                 [goalAchievedImage setHidden:true];
             }
             break;
-        case MetricTypeStride:
-        case MetricTypeCadence:
-        case MetricTypeClimbed:
         default:
             break;
     }
@@ -857,7 +864,6 @@
     
     NSInteger countOfLoc = [run.pos count] ;
     
-    DataTest* data = [DataTest sharedData];
     
     //only calculate if beyond min accuracy and their is at least one object to compare to 
     if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc >= 1)
@@ -872,7 +878,6 @@
         //set current pace
         CLLocationSpeed currentPace = distanceToAdd/ paceTimeInterval; //m/s
         NSTimeInterval speedmMin = 60  * currentPace; // m /min
-        
         
         //1.distance
         run.distance += distanceToAdd;
@@ -889,14 +894,12 @@
         CGFloat grade = 0;
         if(distanceToAdd > 0.5)
             grade = climbed / distanceToAdd;
-        CGFloat weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
+        UserPrefs * curSettings = [delegate curUserPrefs];
+        CGFloat weight = [[curSettings weight] floatValue] / 2.2046; //weight in kg
         CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
         //only add calories if it is positive
         if(calsToAdd > 0.0f)
             run.calories += calsToAdd;
-        
-        //5.cadence
-        //6.stride
     
         //add meta to array
         [self addPosToRun:latest withPace:currentPace];
@@ -931,9 +934,9 @@
             //add annotation
             KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
             //illustrate with pace @ KM ##
-            NSString *distanceUnitText = [data.prefs getDistanceUnit];
+            NSString *distanceUnitText = [curSettings getDistanceUnit];
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
-            newAnnotation.paceString = [RunEvent getPaceString:[newKM pace]];
+            newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
             newAnnotation.kmCoord = [latest coordinate];
             //add to array
             [mapAnnotations addObject:newAnnotation];
@@ -945,6 +948,7 @@
         
     }
     
+    //update pace chart
     kmPaceShowMode = false;
     selectedMinIndex = [[run minCheckpointsMeta] count] ;
     selectedKmIndex = [[run kmCheckpointsMeta] count];
@@ -1029,8 +1033,8 @@
 
 -(void)setLabelsForUnits
 {
-    DataTest* data = [DataTest sharedData];
-    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    UserPrefs * curSettings = [delegate curUserPrefs];
+    NSString *distanceUnitText = [curSettings getDistanceUnit];
     
     [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
     [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
@@ -1048,7 +1052,7 @@
         NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         [dateFormatter setLocale:usLocale];
         
-        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", run.distance, distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
     }
     else{
         
@@ -1087,7 +1091,7 @@
     }
 
     //set distance in km
-    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", (run.distance/1000)]];
+    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:run.distance withMetric:[[[delegate curUserPrefs] metric] integerValue]]]];
     
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
@@ -1117,7 +1121,7 @@
         [self addPosToRun:newLocation withPace:0];
         
         //auto zoom and reload map icon
-        [self reloadMapIcon:true];
+        [self reloadMapIcon:!inMapView];
         [self autoZoomMap:newLocation];
         
     }
@@ -1125,6 +1129,36 @@
         
         //just add to queue
         [posQueue addObject:newLocation];
+        
+        //posQueue builds up until unpause autopause
+        if(pausedForAuto)
+        {
+            //determine speed between first and last positions if speed is above minimum, unpause
+            if([posQueue count] > 1)
+            {
+                CLLocation * secondLastInQueue = [posQueue objectAtIndex:[posQueue count] -2];
+                CLLocation * lastInQueue = [posQueue lastObject];
+                
+                CLLocationDistance distance = [secondLastInQueue distanceFromLocation:lastInQueue];
+                NSTimeInterval intervalBetweenPos = [lastInQueue.timestamp timeIntervalSinceDate:secondLastInQueue.timestamp];
+                
+                CLLocationSpeed speedBetweenPos = distance / intervalBetweenPos;
+                
+                if(speedBetweenPos > minSpeedUnpause)
+                {
+                    //unpause
+                    [delegate pauseAnimation:nil];
+                    return;
+                }
+            }
+            
+            if([posQueue count] > 10)//trim array if their is too much data
+            {
+                //remove near beginning, but not first position
+                [posQueue removeObjectAtIndex:1];
+            }
+
+        }
     }
 
  }
@@ -1134,6 +1168,9 @@
 
 -(void) reloadMapIcon: (BOOL) removeAnnotationsForImage
 {
+    //crashes sometimes if run in background
+    if(inBackground)
+        return;
     
     timeSinceMapIconRefresh = [NSDate timeIntervalSinceReferenceDate];
     
@@ -1155,6 +1192,9 @@
 
 -(void) autoZoomMap:(CLLocation*)newLocation
 {
+    if(inBackground)
+        return;
+    
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
     //animated to prevent jumpy
     [map setRegion:region animated:(inMapView ? YES : NO)];
@@ -1249,8 +1289,6 @@
     
     readyForPathInit = true;
     
-    DataTest* data = [DataTest sharedData];
-    
     //redraw crumb paths for positions
     
     for(CLLocation * loc in run.pos)
@@ -1294,14 +1332,14 @@
         CLLocation * kmPos = [[run kmCheckpoints] objectAtIndex:i];
         CLLocationMeta * kmMeta = [[run kmCheckpointsMeta] objectAtIndex:i];
         
-        
         //add annotation
         KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
         
-        NSString *distanceUnitText = [data.prefs getDistanceUnit];
+        UserPrefs * curSettings = [delegate curUserPrefs];
+        NSString *distanceUnitText = [curSettings getDistanceUnit];
         //km is just the index plus 1
         newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-        newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace]];
+        newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         newAnnotation.kmCoord = [kmPos coordinate];
         
         //add to array
@@ -1596,13 +1634,13 @@
 {
     //responible for two bottom sections
     
-    DataTest* data = [DataTest sharedData];
-    NSString *distanceUnitText = [data.prefs getDistanceUnit];
+    UserPrefs * curSettings = [delegate curUserPrefs];
+    NSString *distanceUnitText = [curSettings getDistanceUnit];
     
     //update avg pace every 3 seconds
     if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
     {
-        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace];
+        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
         [paceLabel setText:stringToSetTime];
     }
     
@@ -1623,21 +1661,21 @@
         // current pace
         selectedMinMeta = [[run posMeta] lastObject];
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:[[[delegate curUserPrefs] metric] integerValue]];
     }
     else if(kmPaceShowMode){
         
         //km paceshow mode so still say current pace
         selectedMinMeta = [[run posMeta] lastObject];
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:[[[delegate curUserPrefs] metric] integerValue]];
     }
     else{
         
         //selection mode of one bar
         selectedMinMeta = [[run posMeta] lastObject];
         selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:[[[delegate curUserPrefs] metric] integerValue]];
     }
     [currentPaceLabel setText:selectedPaceLabel];
     [currentPaceValue setText:selectedPaceString];
@@ -1676,7 +1714,7 @@
         if(selectedKmIndex - 1  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1684,7 +1722,7 @@
         if(selectedKmIndex - 2  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1692,7 +1730,7 @@
         if(selectedKmIndex - 3  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1709,7 +1747,7 @@
         [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
         
         //load current
-        NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace]];
+        NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         [lastKmPace setText:paceForCurrentIndex];
         
         //load old values
@@ -1717,7 +1755,7 @@
         if(selectedKmIndex - 1  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1725,7 +1763,7 @@
         if(selectedKmIndex - 2  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1733,7 +1771,7 @@
         if(selectedKmIndex - 3  >= 0)
         {
             oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-            paceForOld = [RunEvent getPaceString:[oldKMMeta pace]];
+            paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
         }
         else
             paceForOld = @"";
@@ -1775,6 +1813,9 @@
 
 -(void)updateChart
 {
+    //crashes sometimes if run in background
+    if(inBackground)
+        return;
     
     lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
     
