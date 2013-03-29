@@ -73,12 +73,15 @@
     //expects paceToFormat as m/s
     //need to transform to s/km
     
-    
     //if it is 0 , just return 0:00 right away
     if(paceToFormat == 0)
         return @"0:00";
     
     paceToFormat = 1000 / paceToFormat;
+    
+    //constrain to 30:00
+    if(paceToFormat > 1800)
+        return @"30:00";
     
     NSInteger minutes,seconds;
     
@@ -113,6 +116,10 @@
     if(paceToFormat == 0)
         return @"0:00";
     
+    //constrain to 59:59
+    if(paceToFormat > 3599)
+        return @"59:59";
+    
     NSInteger minutes,seconds;
     
     minutes = paceToFormat/ 60;
@@ -140,6 +147,10 @@
 
 +(NSString*)getTimeString:(NSTimeInterval)timeToFormat
 {
+    if(timeToFormat > 3600000)
+        return @"99:99:99";
+        
+    
     NSInteger hours,minutes,seconds;
     
     hours = timeToFormat / 3600;

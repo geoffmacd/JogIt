@@ -54,6 +54,7 @@
     NSTimeInterval highest= 0;
     NSTimeInterval lowest= 1000000;
     NSTimeInterval allTime = 0;
+    NSInteger recordCount = 0;
     NSNumber* current;
     NSNumber* previous;
     
@@ -66,7 +67,12 @@
         //set all time high and selected
         for(NSNumber * num in weeklyValues)
         {
-            allTime += [num floatValue];
+            //mostly for pace
+            if([num floatValue] > 0)
+            {
+                allTime += [num floatValue];
+                recordCount++;
+            }
             
             if([num floatValue] > highest)
                 highest = [num floatValue];
@@ -87,7 +93,12 @@
         //set all time high and selected
         for(NSNumber * num in monthlyValues)
         {
-            allTime += [num floatValue];
+            //mostly for pace
+            if([num floatValue] > 0)
+            {
+                allTime += [num floatValue];
+                recordCount++;
+            }
             
             if([num floatValue] > highest)
                 highest = [num floatValue];
@@ -99,6 +110,10 @@
         current = [monthlyValues objectAtIndex:0];
         previous = [monthlyValues objectAtIndex:1];
     }
+    
+    //calc alltime avg pace if associated is pace
+    if(associated == MetricTypePace)
+        allTime = allTime / recordCount;
     
     switch(associated)
     {

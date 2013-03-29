@@ -40,6 +40,7 @@ typedef enum
     MetricTypePace,
     MetricTypeTime,
     MetricTypeCalories,
+    MetricTypeActivityCount,
     MetricTypeClimbed,
     MetricTypeCadence,
     MetricTypeStride

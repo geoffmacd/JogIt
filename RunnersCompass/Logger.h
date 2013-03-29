@@ -28,18 +28,21 @@
 #define paceGraphSplitObjects 30
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
-#define logRequiredAccuracy 50 //50m maximum
+#define logRequiredAccuracy 50 //m maximum
 #define calcPeriod 3 //every 2 seconds
 #define barPeriod 3 //bar represents 10 seconds
-#define autoZoomPeriod 4 //15 seconds before auto zoom
-#define userDelaysAutoZoom 5 //5 second delays before autozoom
-#define reloadMapIconPeriod 4 //15 second reload map icon period
-#define autoPauseDelay 10 //5 seconds before app pauses
+#define autoZoomPeriod 4 //seconds before auto zoom
+#define userDelaysAutoZoom 5 //second delays before autozoom
+#define reloadMapIconPeriod 4 // second reload map icon period
+#define autoPauseDelay 10 // seconds before app pauses
 #define autoPauseSpeed 0.4 //speed app pauses at 
 #define unPauseDelay 3
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
 #define paceChartCutoffOffset 0.1//m/s
+#define maxPermittableAccuracy 30 //m
+#define evalAccuracyPeriod 5 //seconds
+#define avgPaceUpdatePeriod 3//s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -117,7 +120,6 @@
     
     //low signal
     CLLocationAccuracy avgAccuracy;
-    NSInteger accuracyCount;
 }
 
 

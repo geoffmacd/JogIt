@@ -393,12 +393,11 @@
 -(void)evalAccuracy:(CLLocationAccuracy)accuracyToAccumulate
 {
     
-    accuracyCount++;
     avgAccuracy += accuracyToAccumulate;
-    //evaluate if more than 5
-    if(accuracyCount  > 5)
+    //evaluate if more than 5 seconds
+    if(((NSInteger)run.time % evalAccuracyPeriod) == 0)
     {
-        if(avgAccuracy > 5 * accuracyCount)
+        if(avgAccuracy > maxPermittableAccuracy * evalAccuracyPeriod)
         {
             //display
             [lowSignalImage startAnimating];
@@ -411,7 +410,6 @@
         }
         
         //reset
-        accuracyCount = 0;
         avgAccuracy = 0;
     }
     
@@ -830,7 +828,9 @@
             grade = climbed / distanceToAdd;
         CGFloat weight = [[[data prefs] weight] floatValue] / 2.2046; //weight in kg
         CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
-        run.calories += calsToAdd;
+        //only add calories if it is positive
+        if(calsToAdd > 0.0f)
+            run.calories += calsToAdd;
         
         //5.cadence
         //6.stride
@@ -1530,9 +1530,12 @@
     DataTest* data = [DataTest sharedData];
     NSString *distanceUnitText = [data.prefs getDistanceUnit];
     
-    //show avg pace
-    NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace];
-    [paceLabel setText:stringToSetTime];
+    //update avg pace every 3 seconds
+    if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
+    {
+        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace];
+        [paceLabel setText:stringToSetTime];
+    }
     
     
     //current pace/selected pace

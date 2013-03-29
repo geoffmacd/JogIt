@@ -57,12 +57,12 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     runs = [[NSMutableArray alloc] initWithCapacity:3];
     cells = [[NSMutableArray alloc] initWithCapacity:3];
     
-    /*
+    
     RunMap * map = [RunMap alloc];
 
     [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
     
-    for(NSInteger i=0;i <12; i++)
+    for(NSInteger i=0;i <80; i++)
     {
     
         
@@ -74,12 +74,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
                           
         [loadRun setLive:false];
         
+        loadRun.calories = arc4random() % 300;
+        loadRun.time = arc4random() % 4000;
+        loadRun.avgPace = arc4random() % 7;
+        loadRun.distance = arc4random() % 10000;
         [loadRun setMap:map];
         
         [runs addObject:loadRun];
         
     }
-    */
+    
     
     
     runInProgressAsFarAsICanTell = false;

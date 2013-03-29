@@ -112,9 +112,10 @@
         
         [cell setDelegate:self];
         //set data for cells with array at index of the metric
-        NSMutableArray * valuesToSet = [analysis.weeklyMeta objectAtIndex:row];
-        [cell setWeeklyValues:valuesToSet];
-        [cell setMonthlyValues:valuesToSet];
+        NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row];
+        NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
+        [cell setWeeklyValues:weeklyValuesToSet];
+        [cell setMonthlyValues:monthlyValuesToSet];
         [cell setAssociated:row+1];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         
