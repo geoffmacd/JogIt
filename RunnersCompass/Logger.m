@@ -177,71 +177,61 @@
     
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
+    countdown = [[[delegate curUserPrefs] countdown] integerValue];
+    [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
     
     //previous notification in app delegate has already changed status to paused
     NSAssert(paused, @"not yet paused from appdelegate notification");
+    
+    [self newRunAnimationLoop];
+}
 
-
-    [UIView animateWithDuration:1.0 animations:^{
-        [countdownLabel setAlpha:0.7f];
-     
+-(void) newRunAnimationLoop
+{
+    if(!paused)
+    {
+        //user has swiped early
+        //start run
+        [shadeView setHidden:true];
+        [shadeView setAlpha:1.0f];
+        return;
     }
+    
+    [UIView animateWithDuration:1.0
+                     animations:^{
+                         
+                         if(countdownLabel.alpha == 0.6f)
+                             [countdownLabel setAlpha:1.0f];
+                         else
+                             [countdownLabel setAlpha:0.6f];
+                         
+                         if(countdown == 1)
+                         {
+                             [shadeView setAlpha:0.1f];
+                         }
+                     }
+     
                      completion:^(BOOL finish){
                          
-                         //swipe early
-                         if(!paused)
+                         countdown--;
+                         [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
+                         
+                         if(countdown > 0)
                          {
-                             [shadeView setHidden:true];
-                             [shadeView setAlpha:1.0f];
-                             [countdownLabel setText:@"3"];
-                             [self startRun];
+                             [self newRunAnimationLoop];
                          }
                          else
                          {
-                             [countdownLabel setText:@"2"];
-                             [UIView animateWithDuration:1.0 animations:^{
-                                 
-                                 [countdownLabel setAlpha:1.0f];
-                                 
-                             }
-                                              completion:^(BOOL finish){
-                                                  
-                                                  //swipe early
-                                                  if(!paused)
-                                                  {
-                                                      [shadeView setHidden:true];
-                                                      [shadeView setAlpha:1.0f];
-                                                      [countdownLabel setText:@"3"];
-                                                      [self startRun];
-                                                  }
-                                                  else
-                                                  {
-                                                      [countdownLabel setText:@"1"];
-                                                      [UIView animateWithDuration:1.0 animations:^{
-                                                          
-                                                          [countdownLabel setAlpha:0.7f];
-                                                          [shadeView setAlpha:0.1f];
-                                                          
-                                                          
-                                                      }
-                                                                       completion:^(BOOL finish){
-                                                                           
-                                                                           
-                                                                           [shadeView setHidden:true];
-                                                                           [shadeView setAlpha:1.0f];
-                                                                           [countdownLabel setText:@"3"];
-                                                                           
-                                                                           //animate the view controller
-                                                                           //this will scroll to the right and automatically start recording with the delegate viewdidsroll method
-                                                                           [delegate pauseAnimation:nil];
-                                                                           
-                                                                           
-                                                                       }];
-                                                      
-                                                  }
-                                              }];
+                             //start run
+                             [shadeView setHidden:true];
+                             [shadeView setAlpha:1.0f];
+                             [delegate pauseAnimation:nil];
                          }
-                     }];
+                         
+                     }
+     ];
+
+    
 }
 
 

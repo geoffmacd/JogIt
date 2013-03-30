@@ -126,6 +126,9 @@
     //positions for labels for ghost runs
     CGFloat timeTitlex,timeLabelx;
     
+    
+    NSInteger countdown;
+    
 }
 
 
