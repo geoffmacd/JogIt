@@ -1252,9 +1252,15 @@
     maxLong += 0.001;
     maxLat += 0.001;
     
+    
     if(CLLocationCoordinate2DIsValid(centerCoord))
     {
         MKCoordinateSpan span = MKCoordinateSpanMake(maxLat-minLat, maxLong - minLong);
+        
+        if(span.latitudeDelta < mapMinSpanForRun)
+            span.latitudeDelta = mapMinSpanForRun;
+        if(span.longitudeDelta < mapMinSpanForRun)
+            span.longitudeDelta = mapMinSpanForRun;
         
         //make region at center coord with a span determined by the bottom left and top right points
         MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, span);
