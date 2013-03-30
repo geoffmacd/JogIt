@@ -42,6 +42,7 @@
 @synthesize lowSignalImage;
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 @synthesize inBackground;
+@synthesize activityIndicator;
 
 #pragma mark - Lifecycle
 
@@ -58,6 +59,9 @@
     [mapButton.layer setBorderWidth: 1.0];
     [mapButton.layer setCornerRadius: 5.0];
     [mapButton.layer setMasksToBounds:YES];
+    
+    [activityIndicator.layer setCornerRadius:5.0];
+    [activityIndicator.layer setMasksToBounds:true];
     
     //setup low signal gif but dont start
     lowSignalImage.animationImages = [[NSArray alloc] initWithObjects:
@@ -1300,6 +1304,10 @@
     run.map.thumbnail = [mapButton imageForState:UIControlStateNormal];
     
     
+    //stop loading indicator
+    [activityIndicator stopAnimating];
+    
+    
     //go back to menu and add to table at top
     [delegate finishedRun:run];
 }
@@ -2242,8 +2250,10 @@
     //zoom to show entire map
     [self zoomToEntireRun];
     
+    //start loading indicator
+    [activityIndicator startAnimating];
     
-    //call remainder after 0.5s delay to ensure map is loaded
+    //ensure map is loaded
     [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:1.5];
     
 }

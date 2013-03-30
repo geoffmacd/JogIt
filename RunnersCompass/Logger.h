@@ -183,6 +183,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *hamburgerBut;
 @property (strong, nonatomic) IBOutlet UIImageView *lowSignalImage;
 @property (strong, nonatomic) IBOutlet UILabel *ghostDistanceTitle;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 
 
