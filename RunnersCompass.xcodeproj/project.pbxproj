@@ -625,18 +625,6 @@
 			name = Localization;
 			sourceTree = "<group>";
 		};
-		67A8D58D16F143230070E38B /* Overlay */ = {
-			isa = PBXGroup;
-			children = (
-				67A8D58E16F143380070E38B /* CrumbPath.h */,
-				67A8D58F16F143380070E38B /* CrumbPath.m */,
-				67A8D59016F143380070E38B /* CrumbPathView.h */,
-				67A8D59116F143380070E38B /* CrumbPathView.m */,
-			);
-			name = Overlay;
-			path = ../Pickers;
-			sourceTree = "<group>";
-		};
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
@@ -892,7 +880,10 @@
 				67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */,
 				67B1288216F58445003A15A5 /* KMAnnotation.h */,
 				67B1288316F58445003A15A5 /* KMAnnotation.m */,
-				67A8D58D16F143230070E38B /* Overlay */,
+				67A8D58E16F143380070E38B /* CrumbPath.h */,
+				67A8D58F16F143380070E38B /* CrumbPath.m */,
+				67A8D59016F143380070E38B /* CrumbPathView.h */,
+				67A8D59116F143380070E38B /* CrumbPathView.m */,
 				67A8D59416F150EE0070E38B /* Util.h */,
 				67A8D59516F150EE0070E38B /* Util.m */,
 			);

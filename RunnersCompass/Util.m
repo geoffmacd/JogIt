@@ -39,9 +39,9 @@
 @implementation Util
 
 
-+ (UIImage *) imageWithView:(UIView *)view
++ (UIImage *) imageWithView:(UIView *)view withSize:(CGSize)size
 {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, view.opaque, 0.5);
+    UIGraphicsBeginImageContextWithOptions(size, view.opaque, 1);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage * img = UIGraphicsGetImageFromCurrentImageContext();

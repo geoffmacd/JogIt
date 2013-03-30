@@ -10,7 +10,7 @@
 
 @interface Util : NSObject
 
-+ (UIImage *) imageWithView:(UIView *)view;
++ (UIImage *) imageWithView:(UIView *)view withSize:(CGSize)size;
 
 @end
 

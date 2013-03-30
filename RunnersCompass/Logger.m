@@ -71,6 +71,8 @@
     
     [map.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [map.layer setBorderWidth: 1.0];
+    [map setShowsUserLocation:true];
+    [map setDelegate:self];
     
     [paceScroll setDelegate:self];
     [paceScroll setScrollsToTop:false];
@@ -120,9 +122,6 @@
     
     //pos queue
     posQueue = [[NSMutableArray alloc] initWithCapacity:10];
-    
-    //set map hidden until user goes into logger during setRun to lower loading 
-    [map setHidden:true];
 }
 
 -(void) viewDidLayoutSubviews
@@ -155,9 +154,11 @@
     //refresh view if coming out of background
     if(!inBackground)
     {
-        [self reloadMapIcon:!inMapView];
         [self updateChart];
-        [self autoZoomMap:[run.pos lastObject]];
+        [self autoZoomMap:[run.pos lastObject] animated:false];
+        
+        
+        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
     }
 }
 
@@ -257,11 +258,17 @@
     //set title
     if(!run.live)
     {
+        
         //display ghost and share
         [statusBut setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
         [ghostBut setHidden:false];
         
         [self resetGhostRun];
+        
+        //zoom to entire run
+        [self zoomToEntireRun];
+        [self drawMapForHistoricRun];
+        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
     }
     else
     {
@@ -313,9 +320,11 @@
         {
             [self resetGhostRun];
         }
+        
+        //clear arrays
+        [self drawMapForHistoricRun];
     }
     
-    [self drawMapForHistoricRun];
     [self setLabelsForUnits];
     [self setPaceLabels];
     
@@ -331,12 +340,6 @@
     }
     
     [self updateChart];
-    
-    //load map 
-    [map setHidden:false];
-    [map setShowsUserLocation:true];
-    [map setDelegate:self];
-
 }
 
 
@@ -411,6 +414,10 @@
     NSLog(@"started tracking.....");
     //tells to process first pos directly without calcing pace
     needsStartPos = true;
+    //if the run was autopaused, need to generate first position by stopping and starting
+    if(pausedForAuto)
+        [locationManager stopUpdatingLocation];
+    //begin updating location again
     [locationManager startUpdatingLocation];
     
     //set timer up to run once a second
@@ -466,7 +473,7 @@
     //only zoom if there exists a last point
     if([run.pos lastObject])
     {
-        [self autoZoomMap:[run.pos lastObject]];
+        [self autoZoomMap:[run.pos lastObject] animated:inMapView];
     }
     
 }
@@ -539,42 +546,6 @@
     
 }
 
--(void) updateMapOverlay:(CLLocation*)newLocation
-{
-    if (readyForPathInit){
-        // This is the first time we're getting a location update, so create
-        // the CrumbPath and add it to the map.
-        CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
-        [map addOverlay:newPath];
-        [crumbPaths addObject:newPath];
-
-        //inform method, path has already started drawing again
-        readyForPathInit = false;
-    }
-    else
-    {
-        // This is a subsequent location update.
-        // If the crumbs MKOverlay model object determines that the current location has moved
-        // far enough from the previous location, use the returned updateRect to redraw just
-        // the changed area.
-        
-        MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
-        
-        if (!MKMapRectIsNull(updateRect))
-        {
-            // There is a non null update rect.
-            // Compute the currently visible map zoom scale
-            MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
-            // Find out the line width at this zoom scale and outset the updateRect by that amount
-            CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
-            updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
-            // Ask the overlay view to update just the changed area.
-            [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
-        }
-    }
-}
-
-
 
 -(void)tick
 {
@@ -600,42 +571,52 @@
     
     //determine how many new positions were added by core location , choose latest
     //only process every 3 seconds to get better information
-    if(queueCount > 0 && ((int)run.time) % calcPeriod == 0)
+    if(queueCount > 0)
     {
+        
         CLLocation * newLocation = [posQueue lastObject];
-        //clear queue asap for next location update sometime in tick() method
-        [posQueue removeAllObjects];
         
-        //1. deter accuracy for low signal
-        [self evalAccuracy:newLocation.horizontalAccuracy];
-        
-        //2. draw new map overlay
-        [self updateMapOverlay:newLocation];
-        
-        //3. calculate distance
-        [self calcMetrics:newLocation];
-        
-        //4. determine if we should pause or unpause,with latest pace
-        CLLocationMeta * latestMeta = [[run posMeta] lastObject];
-        [self evalAutopause:latestMeta.pace];
-        
-        //5.reload map icon
-        //do not capture image if user has recently touched and map has been re-centered
-        if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod) &&
-           (timeSinceMapTouch  < timeSinceMapCenter))
+        if(((int)run.time) % calcPeriod == 0)
         {
-            //only do so if not in map mode
-            if(!inMapView)
-                [self reloadMapIcon:true];
+            //clear queue asap for next location update sometime in tick() method
+            [posQueue removeAllObjects];
+            
+            //1. deter accuracy for low signal
+            [self evalAccuracy:newLocation.horizontalAccuracy];
+            
+            //2. draw new map overlay
+            [self updateMapOverlay:newLocation];
+            
+            //3. calculate distance
+            [self calcMetrics:newLocation];
+            
+            //4. determine if we should pause or unpause,with latest pace
+            CLLocationMeta * latestMeta = [[run posMeta] lastObject];
+            [self evalAutopause:latestMeta.pace];
+        }
+        else{
+            
+            //on odd periods only update graphics, so that overlay has processed
+            
+            //1.reload map icon
+            //do not capture image if user has recently touched and map has been re-centered
+            if(timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod) &&
+               (timeSinceMapTouch  < timeSinceMapCenter))
+            {
+                //only do so if not in map mode
+                if(!inMapView)
+                    [self reloadMapIcon:true];
+            }
+            
+            //2. Center map
+            //do not zoom if user has recently touched
+            if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) &&
+               (timeSinceMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
+            {
+                [self autoZoomMap:newLocation animated:inMapView];
+            }
         }
         
-        //6. Center map
-        //do not zoom if user has recently touched
-        if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) &&
-           (timeSinceMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
-        {
-            [self autoZoomMap:newLocation];
-        }
         
     }
     else
@@ -652,23 +633,21 @@
 
     //position independant information processed from here on:
     
-    //7. update avgPace, m / s
+    //5. update avgPace, m / s
     run.avgPace =  run.distance / run.time;
     
-    //8. Update Chart every minute
+    //6. Update Chart every minute
     if(!((int)run.time % barPeriod))
     {
         //add one checkpoint representing past 60 seconds
         [self addMinute];
     }
     
-    //9. Check if goal has been achieved
+    //7. Check if goal has been achieved
     [self determineGoalAchieved];
     
-    //10. Update labels, disable selection mode
+    //8. Update labels, disable selection mode
     [self updateHUD];
-    
-    
 }
 
 
@@ -1121,8 +1100,9 @@
         [self addPosToRun:newLocation withPace:0];
         
         //auto zoom and reload map icon
-        [self reloadMapIcon:!inMapView];
-        [self autoZoomMap:newLocation];
+        [self autoZoomMap:newLocation animated:false];
+        
+        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
         
     }
     else{
@@ -1166,6 +1146,43 @@
 
 #pragma mark - Map Custom Functions
 
+-(void) updateMapOverlay:(CLLocation*)newLocation
+{
+    if (readyForPathInit){
+        // This is the first time we're getting a location update, so create
+        // the CrumbPath and add it to the map.
+        CrumbPath * newPath = [[CrumbPath alloc] initWithCenterCoordinate:newLocation.coordinate];
+        [map addOverlay:newPath];
+        [crumbPaths addObject:newPath];
+        
+        //inform method, path has already started drawing again
+        readyForPathInit = false;
+    }
+    else
+    {
+        // This is a subsequent location update.
+        // If the crumbs MKOverlay model object determines that the current location has moved
+        // far enough from the previous location, use the returned updateRect to redraw just
+        // the changed area.
+        
+        MKMapRect updateRect = [[crumbPaths lastObject] addCoordinate:newLocation.coordinate];
+        
+        if (!MKMapRectIsNull(updateRect))
+        {
+            // There is a non null update rect.
+            // Compute the currently visible map zoom scale
+            MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / mapZoomDefault);
+            // Find out the line width at this zoom scale and outset the updateRect by that amount
+            CGFloat lineWidth = 300;//MKRoadWidthAtZoomScale(currentZoomScale);
+            updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
+            // Ask the overlay view to update just the changed area.
+            [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
+
+        }
+    }
+}
+
+
 -(void) reloadMapIcon: (BOOL) removeAnnotationsForImage
 {
     //crashes sometimes if run in background
@@ -1178,7 +1195,8 @@
     if(removeAnnotationsForImage)
         [map removeAnnotations:mapAnnotations];
     
-    UIImage * newMapIcon = [Util imageWithView:map];
+    CGSize mapSize = map.bounds.size;
+    UIImage * newMapIcon = [Util imageWithView:map withSize:mapSize];
     
     if(removeAnnotationsForImage)
         [map addAnnotations:mapAnnotations];
@@ -1190,14 +1208,14 @@
 }
 
 
--(void) autoZoomMap:(CLLocation*)newLocation
+-(void) autoZoomMap:(CLLocation*)newLocation animated:(BOOL)animate
 {
     if(inBackground)
         return;
     
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(newLocation.coordinate, mapZoomDefault, mapZoomDefault);
     //animated to prevent jumpy
-    [map setRegion:region animated:(inMapView ? YES : NO)];
+    [map setRegion:region animated:animate];
     
     timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
     
@@ -1236,6 +1254,10 @@
     
     CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake((minLat+maxLat)/2, (minLong+maxLong)/2);
     
+    //add 0.001 lat and long to ensure it fits in the screen
+    maxLong += 0.001;
+    maxLat += 0.001;
+    
     if(CLLocationCoordinate2DIsValid(centerCoord))
     {
         MKCoordinateSpan span = MKCoordinateSpanMake(maxLat-minLat, maxLong - minLong);
@@ -1250,13 +1272,31 @@
     
 }
 
+
+
+-(void)mapIconFinishedForSetRun
+{
+    
+    if(timeSinceLastMapLoadFinish + mapLoadSinceFinishWait > [NSDate timeIntervalSinceReferenceDate])
+    {
+        //come back every 1s to see if time is at least 2 seconds since the last map finish load
+        [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:mapLoadSinceFinishWait];
+        return;
+    }
+    
+    waitingForMapToLoad = false;
+    
+    [self reloadMapIcon:true];
+    
+}
+
 -(void)mapIconFinishedForFinishTapped
 {
     
-    if(loadingMapTiles > 0)
+    if(timeSinceLastMapLoadFinish + mapLoadSinceFinishWait > [NSDate timeIntervalSinceReferenceDate])
     {
-        //come back every 0.2s to see if map was loaded
-        [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:0.2];
+        //come back every 1s to see if time is at least 2 seconds since the last map finish load
+        [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:1];
         return;
     }
     
@@ -1264,9 +1304,7 @@
     waitingForMapToLoad = false;
     
     [self reloadMapIcon:true];
-    
-    //reset show user loc
-    [map setShowsUserLocation:true];
+
     
     //set the run to have the correct picture in table cell
     run.map.thumbnail = [mapButton imageForState:UIControlStateNormal];
@@ -1316,9 +1354,9 @@
             {
                 // There is a non null update rect.
                 // Compute the currently visible map zoom scale
-                MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / map.visibleMapRect.size.width);
+                MKZoomScale currentZoomScale = (CGFloat)(map.bounds.size.width / mapZoomDefault);
                 // Find out the line width at this zoom scale and outset the updateRect by that amount
-                CGFloat lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+                CGFloat lineWidth = 300;//MKRoadWidthAtZoomScale(currentZoomScale);
                 updateRect = MKMapRectInset(updateRect, -lineWidth, -lineWidth);
                 // Ask the overlay view to update just the changed area.
                 [[crumbPathViews lastObject] setNeedsDisplayInMapRect:updateRect];
@@ -1356,12 +1394,7 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(lastPos.coordinate, mapZoomDefault, mapZoomDefault);
     [map setRegion:region animated:NO];
     */
-    [self zoomToEntireRun];
-    
-    //set initial map icon
-    UIImage * newMapIcon = [Util imageWithView:map];
-    [mapButton setImage:newMapIcon forState:UIControlStateNormal];
-    
+    //[self zoomToEntireRun];
     
 }
 
@@ -1418,6 +1451,7 @@
     if(waitingForMapToLoad)
     {
         loadingMapTiles--;
+        timeSinceLastMapLoadFinish = [NSDate timeIntervalSinceReferenceDate];
     }
 }
 
@@ -1439,22 +1473,6 @@
     if(waitingForMapToLoad)
     {
         loadingMapTiles = 0;
-    }
-}
-
--(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
-{
-    //call finish run after map has updated to ensure entire map tile is drawn
-    
-    if([NSDate timeIntervalSinceReferenceDate] < timeSinceMapCenter + 0.5)
-    {
-        //scrolling was caused programmatically do nothing
-    }
-    else{
-        //user scrolled
-        //set time to lastMapTouch
-        
-        timeSinceMapTouch = [NSDate timeIntervalSinceReferenceDate];
     }
 }
 
@@ -2095,7 +2113,7 @@
     } completion:^(BOOL finished) {
         //autozoom
         if(run.live && !paused)
-            [self autoZoomMap:[run.pos lastObject]];
+            [self autoZoomMap:[run.pos lastObject] animated:true];
         if (completion) {
             completion();
         }
@@ -2230,9 +2248,6 @@
     
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
-    
-    //hide user location for when saving run
-    [map setShowsUserLocation:false];
     
     //zoom to show entire map
     [self zoomToEntireRun];

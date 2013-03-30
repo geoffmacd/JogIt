@@ -33,7 +33,7 @@
 #define barPeriod 3 //bar represents 10 seconds
 #define autoZoomPeriod 4 //seconds before auto zoom
 #define userDelaysAutoZoom 5 //second delays before autozoom
-#define reloadMapIconPeriod 4 // second reload map icon period
+#define reloadMapIconPeriod 3 // second reload map icon period
 #define autoPauseDelay 9 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
@@ -41,7 +41,8 @@
 #define paceChartCutoffOffset 0.1//m/s
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
-#define avgPaceUpdatePeriod 3//s
+#define avgPaceUpdatePeriod 3//ss
+#define mapLoadSinceFinishWait 3//s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -117,6 +118,7 @@
     //for finishing map loading before screen grab
     BOOL waitingForMapToLoad;
     NSInteger loadingMapTiles;
+    NSTimeInterval timeSinceLastMapLoadFinish;
     
     //low signal
     CLLocationAccuracy avgAccuracy;
