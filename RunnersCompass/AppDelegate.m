@@ -100,6 +100,11 @@
     return userPrefs;
 }
 
+-(Goal *)curGoal
+{
+    return goal;
+}
+
 
 #pragma mark - Menu Delegate Methods
 
@@ -226,6 +231,13 @@
     
 }
 
+-(void)goalChanged:(NSNotification *)notification
+{
+    
+    //set new settings
+    goal = (Goal *) [notification object];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
@@ -236,6 +248,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(settingsChanged:)
                                                  name:@"settingsChangedNotification"
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goalChanged:)
+                                                 name:@"goalChangedNotification"
                                                object:nil];
     
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];

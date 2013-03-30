@@ -7,7 +7,6 @@
 //
 
 #import "CreateGoalCell.h"
-#import "DataTest.h"
 
 
 @implementation CreateGoalCell
@@ -17,7 +16,7 @@
 
 -(void)setup:(GoalType) goalType withCurrentGoalType:(GoalType) curType
 {
-    if(curType)
+    if(curType != GoalTypeNoGoal)
     {
         if(curType == goalType)
         {

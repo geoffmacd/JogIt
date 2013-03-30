@@ -11,11 +11,11 @@
 #import "RunEvent.h"
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
-#import "DataTest.h"
 #import "CrumbPath.h"
 #import "CrumbPathView.h"
 #import "Util.h"
 #import "KMAnnotation.h"
+#import "UserPrefs.h"
 
 
 #define mapZoomDefault 1000 //m

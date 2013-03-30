@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataTest.h"
 #import "GoalHeaderCell.h"
 
 @interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
@@ -19,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *table;
 @property(retain) GoalHeaderCell * header;
+@property(retain) Goal * curGoal;
 
 - (IBAction)done:(id)sender;
 - (IBAction)goalTapped:(id)sender;

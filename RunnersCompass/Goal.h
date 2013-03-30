@@ -13,10 +13,11 @@
 
 typedef enum
 {
+    GoalTypeNoGoal,
     GoalTypeTotalDistance,
     GoalTypeOneDistance,
     GoalTypeCalories,
-    GoalTypeRace,
+    GoalTypeRace
 } GoalType;
 
 @property (nonatomic, retain) NSDate *startDate;

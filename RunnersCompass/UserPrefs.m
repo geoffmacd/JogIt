@@ -10,15 +10,16 @@
 
 @implementation UserPrefs
 
-@synthesize facebook,twitter,autopause,weight,fullname,birthdate,metric,countdown;
+@synthesize autopause,weight,fullname,birthdate,metric,countdown;
+//@synthesize facebook,twitter;
 
 + (id)defaultUser{
     UserPrefs * new = [[UserPrefs alloc] init];
     
     new.countdown = [NSNumber numberWithInt:3];
     new.autopause = [NSNumber numberWithInt:0];
-    new.twitter = [NSNumber numberWithInt:0];
-    new.facebook = [NSNumber numberWithInt:0];
+    //new.twitter = [NSNumber numberWithInt:0];
+    //new.facebook = [NSNumber numberWithInt:0];
     //find systems default unit measure
     NSLocale *locale = [NSLocale currentLocale];
     BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];

@@ -8,7 +8,6 @@
 
 #import "SettingsViewController.h"
 #import "FormKit.h"
-#import "DataTest.h"
 
 @interface SettingsViewController()
 
@@ -76,11 +75,12 @@
         [formMapping mapAttribute:@"countdown" title:NSLocalizedString(@"SettingsCountdown", @"countdown  in settings")type:FKFormAttributeMappingTypeInteger];
 
         
+        /*
         [formMapping sectionWithTitle:NSLocalizedString(@"SettingsSharingHeader", @"sharing header in settings")  identifier:@"sdf"];
         
         [formMapping mapAttribute:@"facebook" title:NSLocalizedString(@"SettingsFacebook", @"fb posting in settings") type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"twitter" title:NSLocalizedString(@"SettingsTwitter", @"twitter posting  in settings")  type:FKFormAttributeMappingTypeBoolean];
-        
+        */
         
         [self.formModel registerMapping:formMapping];
     }];

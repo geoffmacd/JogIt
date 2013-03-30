@@ -10,11 +10,14 @@
 #import "JSSlidingViewController.h"
 #import "Menu.h"
 #import "Logger.h"
+#import "UserPrefs.h"
+#import "Goal.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
 {
     UIActionSheet *  sheet;
     UserPrefs * userPrefs;
+    Goal * goal;
 }
 
 @property (strong, nonatomic) UIWindow *window;

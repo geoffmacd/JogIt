@@ -21,7 +21,7 @@
 @implementation CreateGoalViewController
 
 @synthesize table,header;
-@synthesize tempGoal;
+@synthesize tempGoal,goal;
 
 
 
@@ -64,7 +64,10 @@
     if(buttonIndex == 0)
     {
         //dump old goal, even if user cancels out
-        [[DataTest sharedData] setCurGoal:nil];
+        //send notification to app delegate
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"goalChangedNotification"
+         object:nil];
         
         EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
         [vc setTempGoal:tempGoal];
@@ -101,8 +104,7 @@
     CreateGoalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"CreateGoalCell"
                                                       owner:self
                                                     options:nil]objectAtIndex:0];
-    [cell setup:row withCurrentGoalType:
-     [[[DataTest sharedData] curGoal] type]];
+    [cell setup:row+1 withCurrentGoalType:goal.type];
     
     return cell;
     
@@ -125,13 +127,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    tempGoal = [[Goal alloc] initWithType:[indexPath row]];
-    Goal * curGoal = [[DataTest sharedData] curGoal];
+    tempGoal = [[Goal alloc] initWithType:[indexPath row]+1];
+    Goal * curGoal = goal;
     
     if(curGoal)
     {
         //only discard if the user is not trying to edit the current goal
-        if(curGoal.type != [indexPath row])
+        if(curGoal.type != [indexPath row]+1)
         {
             [self shouldUserDiscardGoal];
         }

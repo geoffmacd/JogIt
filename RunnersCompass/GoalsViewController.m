@@ -18,7 +18,7 @@
 
 @implementation GoalsViewController
 
-@synthesize table,header;
+@synthesize table,header,curGoal;
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -43,15 +43,27 @@
         [runs addObject:run];
         
     }
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goalChanged:)
+                                                 name:@"goalChangedNotification"
+                                               object:nil];
 }
+
+-(void)goalChanged:(NSNotification *)notification
+{
+    
+    //set new settings
+    curGoal = (Goal *) [notification object];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 
 #pragma mark -
@@ -82,8 +94,6 @@
     
     return cell;
     
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,7 +118,8 @@
     {
         header = (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                       owner:self
-                                                    options:nil]objectAtIndex:0];
+                                                               options:nil]objectAtIndex:0];
+        [header setGoal:curGoal];
         [header setup];
     }
     
@@ -124,7 +135,7 @@
         header =  (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                 owner:self
                                               options:nil]objectAtIndex:0];
-        
+        [header setGoal:curGoal];
         [header setup];
     }
     
@@ -143,6 +154,7 @@
 - (IBAction)goalTapped:(id)sender {
     
     CreateGoalViewController  * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
+    [vc setGoal:curGoal];
     
     [self presentViewController:vc animated:true completion:nil];
     

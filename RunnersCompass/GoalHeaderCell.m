@@ -8,7 +8,6 @@
 
 #import "GoalHeaderCell.h"
 #import <QuartzCore/QuartzCore.h>
-#import "DataTest.h"
 #import "RunEvent.h"
 
 @implementation GoalHeaderCell
@@ -17,7 +16,7 @@
 @synthesize targetLabel,targetValue,metricDescriptionLabel,metricDescriptionSubtitle,metricValue;
 
 @synthesize doneBut,goalButton;
-@synthesize progress;
+@synthesize progress,goal;
 
 
 -(void) setup
@@ -46,11 +45,10 @@
 
 -(void)setGoalLabels
 {
-    DataTest * data = [DataTest sharedData];
-    if(data.curGoal)
+    if(goal)
     {
         
-        [goalButton setTitle:[data.curGoal getName] forState:UIControlStateNormal];
+        [goalButton setTitle:[goal getName] forState:UIControlStateNormal];
         
         //dates
         NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -59,19 +57,19 @@
         [formatter setTimeStyle:NSDateFormatterNoStyle];
         [formatter setCalendar:cal];
         [formatter setLocale:[NSLocale currentLocale]];
-        NSString *beganString = [formatter stringFromDate:data.curGoal.startDate];
+        NSString *beganString = [formatter stringFromDate:goal.startDate];
         [beganValue setText:beganString];
-        NSString *targetString = [formatter stringFromDate:data.curGoal.endDate];
+        NSString *targetString = [formatter stringFromDate:goal.endDate];
         [targetValue setText:targetString];
         
         
-        [countValue setText:[NSString stringWithFormat:@"%d", [data.curGoal.activityCount integerValue]]];
-        [metricValue setText:data.curGoal.metricValueChange];
+        [countValue setText:[NSString stringWithFormat:@"%d", [goal.activityCount integerValue]]];
+        [metricValue setText:goal.metricValueChange];
         
         
         //both description labels to be updated
-        [metricDescriptionLabel setText:[data.curGoal stringForDescription]];
-        [metricDescriptionSubtitle setText:[data.curGoal stringForSubtitle]];
+        [metricDescriptionLabel setText:[goal stringForDescription]];
+        [metricDescriptionSubtitle setText:[goal stringForSubtitle]];
         
         //progress bar
         [progress setProgress:0.5];//data.curGoal.progress];

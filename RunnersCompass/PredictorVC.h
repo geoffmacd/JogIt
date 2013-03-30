@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataTest.h"
 #import "ChartCell.h"
 #import "PredictHeaderCell.h"
+#import "Analysis.h"
 
 @interface PredictorVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {

@@ -8,7 +8,6 @@
 
 #import "EditGoalViewController.h"
 #import "FormKit.h"
-#import "DataTest.h"
 
 @interface EditGoalViewController ()
 
@@ -49,9 +48,10 @@
             //confirm goal is valid before saving, this will handle error validation as well
             if([tempGoal validateGoalEntry])
             {
-            
-                //[self.formModel save];//should process goal variable
-                [[DataTest sharedData] setCurGoal:tempGoal];
+                //send notification to app delegate
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:@"goalChangedNotification"
+                 object:tempGoal];
             
                 [[[self presentingViewController] presentingViewController] dismissViewControllerAnimated:true completion:nil];
             }

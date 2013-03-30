@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Goal.h"
 
 @interface GoalHeaderCell : UIView
 
@@ -31,4 +32,5 @@
 @property (nonatomic, retain) IBOutlet UIProgressView *progress;
 
 
+@property (retain) Goal *goal;
 @end

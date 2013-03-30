@@ -15,8 +15,8 @@
 @property (nonatomic, retain) NSNumber *countdown;
 @property (nonatomic, retain) NSNumber *autopause;
 @property (nonatomic, retain) NSNumber *metric;
-@property (nonatomic, retain) NSNumber *facebook;
-@property (nonatomic, retain) NSNumber *twitter;
+//@property (nonatomic, retain) NSNumber *facebook;
+//@property (nonatomic, retain) NSNumber *twitter;
 
 + (id)defaultUser;
 -(NSString*)getDistanceUnit;

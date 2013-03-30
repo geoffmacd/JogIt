@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataTest.h"
 #import "CreateGoalHeaderCell.h"
+#import "Goal.h"
 
 @interface CreateGoalViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
 @property(retain) CreateGoalHeaderCell * header;
+@property (retain) Goal *goal;
 
 @property (weak, nonatomic) IBOutlet UITableView *table;
 

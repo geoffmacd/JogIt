@@ -11,7 +11,8 @@
 #import "StartCell.h"
 #import "JSSlidingViewController.h"
 #import "Logger.h"
-#import "DataTest.h"
+#import "Goal.h"
+#import "Analysis.h"
 
 @protocol MenuViewControllerDelegate <NSObject>
 
@@ -22,6 +23,7 @@
 -(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete;
 -(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail;
 -(UserPrefs *)curUserPrefs;
+-(Goal *)curGoal;
 
 @end
 

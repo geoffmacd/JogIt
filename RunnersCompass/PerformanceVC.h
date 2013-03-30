@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DataTest.h"
 #import "ChartCell.h"
 #import "PermHeaderCell.h"
+#import "Analysis.h"
 
 @interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
