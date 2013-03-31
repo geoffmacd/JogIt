@@ -213,12 +213,12 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
-						<int key="IBUIContentMode">4</int>
+						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">greencheck.png</string>
+							<string key="NSResourceName">greencheck@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="920167502">
@@ -726,7 +726,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{2, 542}, {80, 20}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
-						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -2012,7 +2011,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="background.png">{320, 480}</string>
 			<string key="ghost.png">{25, 25}</string>
-			<string key="greencheck.png">{25, 25}</string>
+			<string key="greencheck@2x.png">{50, 50}</string>
 			<string key="hamburger.png">{20, 20}</string>
 			<string key="lightgraybutton.png">{300, 44}</string>
 			<string key="pause.png">{25, 25}</string>

@@ -406,6 +406,8 @@
     NSLog(@"started tracking.....");
     //tells to process first pos directly without calcing pace
     needsStartPos = true;
+    //clear queue
+    [posQueue removeAllObjects];
     //if the run was autopaused, need to generate first position by stopping and starting
     if(pausedForAuto)
         [locationManager stopUpdatingLocation];
@@ -436,9 +438,6 @@
     //reset autopause variables
     pausedForAuto = false;
     timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
-    
-    //clear queue
-    [posQueue removeAllObjects];
     
     //reset counter
     consecutiveHeadingCount = 0;
@@ -1403,7 +1402,7 @@
     
     waitingForMapToLoad = false;
     
-    [self reloadMapIcon:true];
+    [self reloadMapIcon:!inMapView];
     
 }
 
