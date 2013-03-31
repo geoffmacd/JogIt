@@ -43,10 +43,8 @@
             //handle case where run is being deleted and logger view is not valid
             if(!runToSave)
             {
-                
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
-                
             }
             else{
                 //set run to be historical
@@ -61,7 +59,7 @@
 
 - (void)pauseAnimation:(void(^)(void))completion {
     
-    //if in logger view, continue pause with bounce
+    //if in logger view and not in background, do animation other wise pause
     if(!self.viewController.isOpen || !self.backVC.inBackground)
     {
         [self.viewController pauseWithBounceAnimation:completion];
@@ -73,7 +71,6 @@
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"pauseToggleNotification"
          object:self.viewController.pauseImage];
-        
     }
     
 }
