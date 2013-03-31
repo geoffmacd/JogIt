@@ -88,6 +88,7 @@
     
     //km selection
     BOOL kmPaceShowMode;
+    BOOL selectedPaceShowMode;
     NSInteger selectedMinIndex;
     NSInteger selectedKmIndex;
     NSUInteger numMinutesAtKmSelected;
