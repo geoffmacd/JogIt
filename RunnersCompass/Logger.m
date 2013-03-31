@@ -1900,10 +1900,9 @@
     CLLocationMeta * selectedMinMeta;
     NSString * selectedPaceLabel;
     NSString * selectedPaceString;
-    if([[run minCheckpointsMeta] count] == 0)
+    if([[run posMeta] count] == 0)
     {
-        // nothing logged yet, just put 0:00
-        selectedMinMeta = [[run minCheckpointsMeta] lastObject];
+        // no positions logged yet
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = @"0:00";
     }
@@ -1916,22 +1915,32 @@
     }
     else if(kmPaceShowMode){
         
+        // just display current pace
+        selectedMinMeta = [[run posMeta] lastObject];
+        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
+        
+        /*
         //km paceshow mode so still say current pace
         if(isMetric)
         {
-            selectedMinMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            if([[run kmCheckpointsMeta] count] > selectedKmIndex + 1 && selectedKmIndex >= 1)
+                selectedMinMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
         }
         else{
-            selectedMinMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            if([[run impCheckpointsMeta] count] > selectedKmIndex + 1 && selectedKmIndex >= 1)
+                selectedMinMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
         }
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
+         */
     }
     else if(selectedPaceShowMode){
         
         //selection mode of one bar
         selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex-1];
-        selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
+        //selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
+        selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
     }
     [currentPaceLabel setText:selectedPaceLabel];
@@ -2612,6 +2621,7 @@
     if(!kmPaceShowMode)
     {
         kmPaceShowMode = true;
+        selectedPaceShowMode = false;
         
         //start at last km
         selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
