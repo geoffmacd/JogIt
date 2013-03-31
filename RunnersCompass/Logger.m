@@ -287,9 +287,6 @@
                 case MetricTypeDistance:
                     metricRect = distanceLabel.frame;
                     break;
-                case MetricTypeStride:
-                case MetricTypeClimbed:
-                case MetricTypeCadence:
                 default:
                     break;
             }
@@ -880,7 +877,7 @@
             run.calories += calsToAdd;
     
         //add meta to array
-        [self addPosToRun:latest withPace:currentPace];
+        [self addPosToRun:latest withPace:currentPace withCumulativeDistance:run.distance];
 
         //check if a new km was created
         if((NSInteger)(oldRunDistance/1000) != (NSInteger)(run.distance/1000))
@@ -975,12 +972,13 @@
     }
 }
 
--(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd
+-(void)addPosToRun:(CLLocation*)locToAdd withPace:(NSTimeInterval)paceToAdd withCumulativeDistance:(CGFloat)cumDistance
 {
     //pace in m/s
     CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
     
     metaToAdd.pace = paceToAdd;
+    metaToAdd.distance = cumDistance;
     metaToAdd.time = run.time;
     
     //add to array
@@ -1048,6 +1046,26 @@
     NSLog(@"Consequtive %d", consecutiveHeadingCount);
     
     return distanceToAdd;
+}
+
+-(NSInteger)indexForGhostRunAtTime:(NSTimeInterval)timeToFind
+{
+    
+    if([run.associatedRun.posMeta count] == 0)
+        return -1;
+
+    NSInteger indexToReturn = 0;
+
+    for(CLLocationMeta * position in run.associatedRun.posMeta)
+    {
+        if(position.time == run.time)
+            return indexToReturn;
+        
+        indexToReturn++;
+    }
+    
+    return [run.associatedRun.posMeta lastObject];
+        
 }
 
 #pragma mark - HUD Management
@@ -1148,7 +1166,22 @@
     }
 
     //set distance in km
-    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:run.distance withMetric:[[[delegate curUserPrefs] metric] integerValue]]]];
+    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:run.distance withMetric:isMetric]]];
+    
+    if(run.ghost)
+    {
+        //find associated run position for current run time and display in label
+        NSInteger index = [self indexForGhostRunAtTime:run.time];
+        
+        if(index > -1)
+        {
+            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
+            
+            //set ghost label
+            [ghostDistance setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:ghostPos.distance withMetric:isMetric]]];
+        }
+        
+    }
     
     //update time displayed
     NSString * stringToSetTime = [RunEvent getTimeString:run.time];
@@ -1175,7 +1208,7 @@
         needsStartPos = false;
         
         //no pace
-        [self addPosToRun:newLocation withPace:0];
+        [self addPosToRun:newLocation withPace:0 withCumulativeDistance:run.distance];
         
         //auto zoom and reload map icon
         [self autoZoomMap:newLocation animated:false];
@@ -2487,7 +2520,6 @@
         
         //set as ghost run
         run.ghost = true;
-        run.associatedRun = run;
         //do standard newRun except with this run object
         [delegate selectedGhostRun:run];
         

@@ -15,11 +15,13 @@
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;
     NSTimeInterval time;
+    CGFloat distance;
     
 }
 
 @property (nonatomic) NSTimeInterval pace;//seconds per km
 @property (nonatomic) NSTimeInterval time;//seconds after the pausePoint
+@property (nonatomic) CGFloat distance;//m for distance
 
 
 @end
@@ -104,6 +106,7 @@ typedef enum
 @property (nonatomic, strong) RunMap *map;
 
 
+-(id)initWithGhostRun:(RunEvent*)associatedRunToGhost;
 -(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metric;
 -(id)initWithNoTarget;
 

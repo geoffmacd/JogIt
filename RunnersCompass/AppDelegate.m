@@ -147,9 +147,18 @@
         
     }
     
-    
-    //animate new run
-    [self.backVC newRun:newRunTemplate animate:animate];
+    //ghost run
+    if(newRunTemplate.ghost)
+    {
+        RunEvent * ghostRun = [[RunEvent alloc] initWithGhostRun:newRunTemplate];
+        
+        [self.backVC newRun:ghostRun animate:animate];
+    }
+    else
+    {
+        // new run
+        [self.backVC newRun:newRunTemplate animate:animate];
+    }
     
     //also close slider
     //animate if it is not already in logger view

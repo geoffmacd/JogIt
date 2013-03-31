@@ -11,7 +11,7 @@
 
 @implementation CLLocationMeta
 
-@synthesize time,pace;
+@synthesize time,pace,distance;
 
 - (id)initWithFrame:(CGRect)frame {
     self = [super init];
@@ -222,6 +222,36 @@
     return stringToSetTime;
 }
 
+-(id)initWithGhostRun:(RunEvent*)associatedRunToGhost
+{
+    self = [super init];
+    if (self) {
+        name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
+        metric = NoMetricType;
+        metricGoal = 0.0f;
+        eventType = EventTypeRun;    //for now this is only possible
+        date = [NSDate date];
+        distance = 0;
+        calories = 0;
+        avgPace = 0;
+        time = 0;
+        live = true;
+        ghost = true;
+        associatedRun = associatedRunToGhost;
+        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
+        map = [[RunMap alloc] init];
+        return self;
+    }
+    return nil;
+}
 
 -(id)initWithNoTarget
 {
