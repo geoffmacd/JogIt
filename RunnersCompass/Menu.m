@@ -463,7 +463,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(void)paceRunStart:(NSNumber*)selectedIndex
 {
-    CGFloat pace = [selectedIndex integerValue] ; //min/km to m/s
+    CGFloat pace = [selectedIndex integerValue]; //s/km
+    
+    //need m/s
+    pace = 1000 / pace;
     
     RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     
