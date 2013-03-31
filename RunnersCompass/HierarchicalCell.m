@@ -147,15 +147,14 @@
         
     }else{
         
+        [AnimationUtil rotateImage:folderImage duration:time
+                             curve:UIViewAnimationCurveEaseIn degrees:0];
         
         if(animate)
         {
             [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
             
         }
-        
-        [AnimationUtil rotateImage:folderImage duration:time
-                    curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
     if(!animate)

@@ -188,12 +188,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         HierarchicalCell * curCell = [cells objectAtIndex:row];
         
         return curCell;
-    }
-    
-    
-    
+    } 
 }
-
 
 #pragma mark -
 #pragma mark Menu Table delegate
@@ -211,7 +207,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [cell setDelegate:self];
         [cell setAssociated:[runs objectAtIndex:row]];
         
-        height = 48.0f;
+        height = [cell getHeightRequired];
     }
     else{
         
@@ -225,7 +221,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 
 
-
+/*
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
@@ -252,6 +248,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
 }
 
+*/
 
 #pragma mark -
 #pragma mark HierarchicalCellDelegate
@@ -367,6 +364,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //save run and add it to the menu if it exists
     if(run)
     {
+        //need to close all cells before, otherwise rotated folder images happen for some reason
+        for(HierarchicalCell * cell in cells)
+        {
+            [cell setExpand:false withAnimation:false];
+        }
         //must be at 0th index to be at top and reload correctly
         [runs insertObject:run atIndex:0];
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
