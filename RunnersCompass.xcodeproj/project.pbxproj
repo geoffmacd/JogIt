@@ -138,6 +138,7 @@
 		67B2FD0B16C60013008694F1 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FCFF16C60013008694F1 /* DistancePickerView.m */; };
 		67B2FD0C16C60013008694F1 /* BWLongTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0216C60013008694F1 /* BWLongTextViewController.m */; };
 		67B2FD0D16C60013008694F1 /* BWSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0516C60013008694F1 /* BWSelectViewController.m */; };
+		67B421A41707AE7A006574CF /* MileAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B421A31707AE7A006574CF /* MileAnnotation.m */; };
 		67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */; };
 		67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E30116D0740900E4DE11 /* ChartCell.m */; };
 		67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E30316D0742E00E4DE11 /* ChartCell.xib */; };
@@ -393,6 +394,8 @@
 		67B2FD0216C60013008694F1 /* BWLongTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWLongTextViewController.m; sourceTree = "<group>"; };
 		67B2FD0416C60013008694F1 /* BWSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSelectViewController.h; sourceTree = "<group>"; };
 		67B2FD0516C60013008694F1 /* BWSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSelectViewController.m; sourceTree = "<group>"; };
+		67B421A21707AE7A006574CF /* MileAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MileAnnotation.h; sourceTree = "<group>"; };
+		67B421A31707AE7A006574CF /* MileAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MileAnnotation.m; sourceTree = "<group>"; };
 		67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtil.h; sourceTree = "<group>"; };
 		67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtil.m; sourceTree = "<group>"; };
 		67C8E30016D0740900E4DE11 /* ChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartCell.h; sourceTree = "<group>"; };
@@ -881,6 +884,8 @@
 				67A8D59116F143380070E38B /* CrumbPathView.m */,
 				67A8D59416F150EE0070E38B /* Util.h */,
 				67A8D59516F150EE0070E38B /* Util.m */,
+				67B421A21707AE7A006574CF /* MileAnnotation.h */,
+				67B421A31707AE7A006574CF /* MileAnnotation.m */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -1122,6 +1127,7 @@
 				674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */,
 				674C90B616F956350078DD8E /* PredictHeaderCell.m in Sources */,
 				674C90B916F956350078DD8E /* PredictorVC.m in Sources */,
+				67B421A41707AE7A006574CF /* MileAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RunMap.h"
+#import "UserPrefs.h"
 #define convertMSTOminKM 16.6666666666666
 #define convertKMToMile 0.621371
 
@@ -92,6 +93,9 @@ typedef enum
 //processed later
 @property (nonatomic, strong) NSMutableArray * kmCheckpoints; //metrics @ km checkpoints
 @property (nonatomic, strong) NSMutableArray * kmCheckpointsMeta; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * impCheckpoints; //metrics @ km checkpoints
+@property (nonatomic, strong) NSMutableArray * impCheckpointsMeta; //metrics @ km checkpoints
+
 
 @property (nonatomic, strong) NSMutableArray * minCheckpoints; //metrics by time unit for graph
 @property (nonatomic, strong) NSMutableArray * minCheckpointsMeta; //metrics by time unit for graph

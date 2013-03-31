@@ -33,6 +33,18 @@
     return new;
 }
 
++(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric
+{
+    
+    //should not need to be translated
+    
+    if(forMetric)
+        return NSLocalizedString(@"KmMetricUnitShort", @"shortform for km");
+    else
+        return NSLocalizedString(@"MiImperialUnitShort", @"shortform for mi");
+    
+}
+
 -(NSString*)getDistanceUnit
 {
     

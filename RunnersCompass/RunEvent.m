@@ -36,6 +36,7 @@
 @synthesize live,metric,ghost;
 @synthesize minCheckpointsMeta, minCheckpoints;
 @synthesize kmCheckpoints,kmCheckpointsMeta;
+@synthesize impCheckpoints,impCheckpointsMeta;
 @synthesize metricGoal;
 @synthesize eventType;
 @synthesize map;
@@ -243,6 +244,8 @@
         kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
         map = [[RunMap alloc] init];
         return self;
@@ -264,7 +267,7 @@
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], @"KM"];
+                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay]];
                 break;
             case MetricTypeTime:
                 name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
@@ -291,6 +294,8 @@
         kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
         map = [[RunMap alloc] init];
         return self;

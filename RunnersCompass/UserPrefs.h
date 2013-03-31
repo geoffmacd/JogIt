@@ -19,6 +19,7 @@
 //@property (nonatomic, retain) NSNumber *twitter;
 
 + (id)defaultUser;
++(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric;
 -(NSString*)getDistanceUnit;
 -(NSString*)getTimeStringWithSeconds:(NSTimeInterval) f;
 -(NSString*)getTimeString:(NSTimeInterval) f;

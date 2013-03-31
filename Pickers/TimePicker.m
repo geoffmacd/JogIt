@@ -1,40 +1,16 @@
-//
-//Copyright (c) 2011, Tim Cinel
-//All rights reserved.
-//
-//Redistribution and use in source and binary forms, with or without
-//modification, are permitted provided that the following conditions are met:
-//* Redistributions of source code must retain the above copyright
-//notice, this list of conditions and the following disclaimer.
-//* Redistributions in binary form must reproduce the above copyright
-//notice, this list of conditions and the following disclaimer in the
-//documentation and/or other materials provided with the distribution.
-//* Neither the name of the <organization> nor the
-//names of its contributors may be used to endorse or promote products
-//derived from this software without specific prior written permission.
-//
-//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-//ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-//WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
-//DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-//(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-//åLOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-//ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-//(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-//SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
 
 #import "TimePicker.h"
 
 @interface TimePicker()
 @property (nonatomic,retain) NSArray *data;
-@property (nonatomic,assign) NSInteger selectedIndex;
+@property (nonatomic,assign) NSInteger selectedIndexMin;
+@property (nonatomic,assign) NSInteger selectedIndexSecond;
 @end
 
 @implementation TimePicker
 @synthesize data = _data;
-@synthesize selectedIndex = _selectedIndex;
+@synthesize selectedIndexMin;
+@synthesize selectedIndexSecond;
 @synthesize onRunFormDone = _onRunFormDone;
 @synthesize onRunFormCancel = _onRunFormCancel;
 
@@ -63,7 +39,8 @@
     self = [self initWithTarget:target successAction:successAction cancelAction:cancelActionOrNil origin:origin];
     if (self) {
         self.data = data;
-        self.selectedIndex = index;
+        self.selectedIndexSecond = index;
+        self.selectedIndexMin = 0;
         self.title = title;
     }
     return self;
@@ -77,7 +54,8 @@
     stringPicker.delegate = self;
     stringPicker.dataSource = self;
     stringPicker.showsSelectionIndicator = YES;
-    [stringPicker selectRow:self.selectedIndex inComponent:0 animated:NO];
+    [stringPicker selectRow:self.selectedIndexSecond inComponent:0 animated:NO];
+    [stringPicker selectRow:self.selectedIndexMin inComponent:0 animated:NO];
     
     //need to keep a reference to the picker so we can clear the DataSource / Delegate when dismissing
     self.pickerView = stringPicker;
@@ -85,16 +63,15 @@
     return stringPicker;
 }
 
-- (void)notifyTarget:(id)target didSucceedWithAction:(SEL)successAction origin:(id)origin {    
+- (void)notifyTarget:(id)target didSucceedWithAction:(SEL)successAction origin:(id)origin {
     if (self.onRunFormDone) {
-        _onRunFormDone(self, self.selectedIndex, [self.data objectAtIndex:self.selectedIndex]);
+        _onRunFormDone(self, (self.selectedIndexMin + (self.selectedIndexSecond*60)), [self.data objectAtIndex:self.selectedIndexSecond]);
         return;
     }
     else if (target && [target respondsToSelector:successAction]) {
-        [target performSelector:successAction withObject:[NSNumber numberWithInt:self.selectedIndex] withObject:origin];
+        [target performSelector:successAction withObject:[NSNumber numberWithInt:(self.selectedIndexMin + (self.selectedIndexSecond*60))] withObject:origin];
         return;
     }
-    NSLog(@"Invalid target/action ( %s / %s ) combination used for RunFormPicker", object_getClassName(target), (char *)successAction);
 }
 
 - (void)notifyTarget:(id)target didCancelWithAction:(SEL)cancelAction origin:(id)origin {
@@ -109,7 +86,10 @@
 #pragma mark - UIPickerViewDelegate / DataSource
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.selectedIndex = row;
+    if(component == 0)
+        self.selectedIndexSecond = row;
+    else
+        self.selectedIndexMin = row;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -119,7 +99,7 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     //return self.data.count;
     if(component == 0)
-        return 10;
+        return 12;
     if(component == 1)
         return 60;
     return 0;
@@ -128,35 +108,16 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     //return [self.data objectAtIndex:row];
     if(component == 0)
-        return [NSString stringWithFormat:@"%d hr" , row];
+        return [NSString stringWithFormat:@"%d h" , row];
     
-    return [NSString stringWithFormat:@"%d min" , row];
+    return [NSString stringWithFormat:@"%d m" , row];
     
-      
+    
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     return pickerView.frame.size.width/3;
 }
 
-#pragma mark - Block setters
 
-    // NOTE: Sometimes see crashes when relying on just the copy property. Using Block_copy ensures correct behavior
-/*
-- (void)setOnRunFormDone:(ActionStringDoneBlock)onRunFormDone {
-    if (_onRunFormDone) {
-        Block_release(_onRunFormDone);
-        _onRunFormDone = nil;
-    }
-    _onRunFormDone = Block_copy(onRunFormDone);
-}
-
-- (void)setOnRunFormCancel:(ActionStringCancelBlock)onRunFormCancel {
-    if (_onRunFormCancel) {
-        Block_release(_onRunFormCancel);
-        _onRunFormCancel = nil;
-    }
-    _onRunFormCancel = Block_copy(onRunFormCancel);
-}
-*/
 @end

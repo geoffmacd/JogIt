@@ -904,18 +904,66 @@
             NSAssert([run.kmCheckpointsMeta count] == [run.kmCheckpoints count], @"KM position and meta data arrays not same size!!");
             
             
-            //add annotation
-            KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
-            //illustrate with pace @ KM ##
-            NSString *distanceUnitText = [curSettings getDistanceUnit];
-            newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
-            newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
-            newAnnotation.kmCoord = [latest coordinate];
-            //add to array
-            [mapAnnotations addObject:newAnnotation];
-            //actually add to map
-            [map addAnnotation:newAnnotation];
+            //add annotation if metric
+            if([curSettings.metric integerValue] == 1)
+            {
+                KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
+                //illustrate with pace @ KM ##
+                NSString *distanceUnitText = [curSettings getDistanceUnit];
+                newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
+                newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:true];
+                newAnnotation.kmCoord = [latest coordinate];
+                //add to array
+                [mapAnnotations addObject:newAnnotation];
+                //actually add to map
+                [map addAnnotation:newAnnotation];
+            }
         }
+        
+        //check if a new mile was created
+        if((NSInteger)(oldRunDistance*convertKMToMile/1000) != (NSInteger)(run.distance*convertKMToMile/1000))
+        {
+            //add to object
+            CLLocationMeta * newMile = [[CLLocationMeta alloc] init];
+            CLLocationMeta * lastPosMeta = [[run posMeta] lastObject] ;
+            newMile.time = [lastPosMeta time]; //set time to most recent
+            
+            //get pace from difference in most recent pos time and last km object if exists
+            NSTimeInterval paceToAdjustRunTime = 0;
+            if([[run impCheckpoints] count] > 0)
+            {
+                CLLocationMeta * oldMile = [[run impCheckpointsMeta] lastObject];
+                paceToAdjustRunTime = [oldMile time];
+                
+            }
+            //need to ensure mi paces are still in m/s
+            newMile.pace =  newMile.time - paceToAdjustRunTime;//s / mi
+            newMile.pace = 1000 / (convertKMToMile * newMile.pace); //m/s
+            
+            //add to array
+            [[run impCheckpointsMeta] addObject:newMile];
+            [[run impCheckpoints] addObject:latest];
+            
+            //should be same size at this point
+            NSAssert([run.impCheckpointsMeta count] == [run.impCheckpoints count], @"Mile position and meta data arrays not same size!!");
+            
+            
+            //add annotation if imperial
+            if([curSettings.metric integerValue] == 0)
+            {
+                MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
+                //illustrate with pace @ KM ##
+                NSString *distanceUnitText = [curSettings getDistanceUnit];
+                newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
+                newAnnotation.paceString = [RunEvent getPaceString:[newMile pace] withMetric:false];
+                newAnnotation.mileCoord = [latest coordinate];
+                //add to array
+                [mapAnnotations addObject:newAnnotation];
+                //actually add to map
+                [map addAnnotation:newAnnotation];
+            }
+        }
+
     }
     else{
         
@@ -1007,6 +1055,17 @@
 -(void)setLabelsForUnits
 {
     UserPrefs * curSettings = [delegate curUserPrefs];
+    if([[curSettings metric] integerValue] != currentUnits)
+    {
+        //update map annotations if metric was changed
+        if([mapAnnotations count] > 0)
+        {
+            [map removeAnnotations:mapAnnotations];
+            [mapAnnotations removeAllObjects];
+        }
+        [self drawAllAnnotations];
+    }
+    currentUnits = [curSettings metric];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     
     [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
@@ -1318,6 +1377,60 @@
     [delegate finishedRun:run];
 }
 
+-(void)drawAllAnnotations
+{
+    UserPrefs * curSettings = [delegate curUserPrefs];
+    
+    if([curSettings.metric integerValue] == 1)
+    {
+        //need both pos and meta for KM to get pace for annotation display
+        for(int i = 0; i < [[run kmCheckpoints] count]; i++)
+        {
+            CLLocation * kmPos = [[run kmCheckpoints] objectAtIndex:i];
+            CLLocationMeta * kmMeta = [[run kmCheckpointsMeta] objectAtIndex:i];
+            
+            //add annotation
+            KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
+            
+            UserPrefs * curSettings = [delegate curUserPrefs];
+            NSString *distanceUnitText = [curSettings getDistanceUnit];
+            //km is just the index plus 1
+            newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
+            newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:true];
+            newAnnotation.kmCoord = [kmPos coordinate];
+            
+            //add to array
+            [mapAnnotations addObject:newAnnotation];
+            //actually add to map
+            [map addAnnotation:newAnnotation];
+            
+        }
+    }
+    else
+    {
+        //need both pos and meta for KM to get pace for annotation display
+        for(int i = 0; i < [[run impCheckpoints] count]; i++)
+        {
+            CLLocation * milePos = [[run impCheckpoints] objectAtIndex:i];
+            CLLocationMeta * mileMeta = [[run impCheckpointsMeta] objectAtIndex:i];
+            
+            //add annotation
+            MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
+            
+            NSString *distanceUnitText = [curSettings getDistanceUnit];
+            //km is just the index plus 1
+            newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
+            newAnnotation.paceString = [RunEvent getPaceString:[mileMeta pace] withMetric:false];
+            newAnnotation.mileCoord = [milePos coordinate];
+            
+            //add to array
+            [mapAnnotations addObject:newAnnotation];
+            //actually add to map
+            [map addAnnotation:newAnnotation];
+            
+        }
+    }
+}
 
 -(void)drawMapForHistoricRun
 {
@@ -1368,38 +1481,7 @@
         }
     }
     
-    //need both pos and meta for KM to get pace for annotation display
-    for(int i = 0; i < [[run kmCheckpoints] count]; i++)
-    {
-        CLLocation * kmPos = [[run kmCheckpoints] objectAtIndex:i];
-        CLLocationMeta * kmMeta = [[run kmCheckpointsMeta] objectAtIndex:i];
-        
-        //add annotation
-        KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
-        
-        UserPrefs * curSettings = [delegate curUserPrefs];
-        NSString *distanceUnitText = [curSettings getDistanceUnit];
-        //km is just the index plus 1
-        newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-        newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:[[[delegate curUserPrefs] metric] integerValue]];
-        newAnnotation.kmCoord = [kmPos coordinate];
-        
-        //add to array
-        [mapAnnotations addObject:newAnnotation];
-        //actually add to map
-        [map addAnnotation:newAnnotation];
-
-    }
-    
-    
-    /*
-    //zoom map to user location, no animation
-    CLLocation * lastPos = [run.pos lastObject];
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(lastPos.coordinate, mapZoomDefault, mapZoomDefault);
-    [map setRegion:region animated:NO];
-    */
-    //[self zoomToEntireRun];
-    
+    [self drawAllAnnotations];
 }
 
 #pragma mark - MapKit Delegate
@@ -1420,7 +1502,7 @@
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
     
-    if ([annotation isKindOfClass:[KMAnnotation class]]) 
+    if ([annotation isKindOfClass:[KMAnnotation class]])
     {
         // try to dequeue an existing pin view first
         static NSString *kmAnnotationIdentifier = @"kmAnnotationIdentifier";
@@ -1444,7 +1526,31 @@
         }
         return pinView;
     }
+    else if ([annotation isKindOfClass:[MileAnnotation class]])
+    {
+        // try to dequeue an existing pin view first
+        static NSString *mileAnnotationIdentifier = @"mileAnnotationIdentifier";
         
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+        [map dequeueReusableAnnotationViewWithIdentifier:mileAnnotationIdentifier];
+        if (pinView == nil)
+        {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                                  initWithAnnotation:annotation reuseIdentifier:mileAnnotationIdentifier];
+            customPinView.pinColor = MKPinAnnotationColorRed;//MKPinAnnotationColorPurple;
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            return customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        return pinView;
+    }
+    
     return nil;
 }
 

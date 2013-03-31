@@ -15,6 +15,7 @@
 #import "CrumbPathView.h"
 #import "Util.h"
 #import "KMAnnotation.h"
+#import "MileAnnotation.h"
 #import "UserPrefs.h"
 
 
@@ -32,7 +33,7 @@
 #define calcPeriod 3 //every 2 seconds
 #define barPeriod 3 //bar represents 10 seconds
 #define autoZoomPeriod 4 //seconds before auto zoom
-#define userDelaysAutoZoom 5 //second delays before autozoom
+#define userDelaysAutoZoom 15 //second delays before autozoom
 #define reloadMapIconPeriod 3 // second reload map icon period
 #define autoPauseDelay 9 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
@@ -129,6 +130,8 @@
     
     
     NSInteger countdown;
+    
+    BOOL currentUnits;
     
 }
 
