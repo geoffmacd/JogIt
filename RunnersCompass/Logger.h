@@ -43,8 +43,9 @@
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
 #define avgPaceUpdatePeriod 3//ss
-#define mapLoadSinceFinishWait 3//s
+#define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//s
+#define mapMinToSeperatePath 200//m
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -114,9 +115,8 @@
     //km markers on map
     NSMutableArray *mapAnnotations;
     //run overlay on map
-    BOOL readyForPathInit;
-    NSMutableArray *crumbPaths;
-    NSMutableArray *crumbPathViews;
+    NSMutableArray *mapOverlays;
+    
     
     //for finishing map loading before screen grab
     BOOL waitingForMapToLoad;
@@ -132,6 +132,7 @@
     
     NSInteger countdown;
     
+    //metric or imperial
     BOOL currentUnits;
     
 }
@@ -149,14 +150,13 @@
 
 
 //UI
-@property (strong, nonatomic)  IBOutlet MKMapView *map;
+@property (strong, nonatomic)  IBOutlet MKMapView *fullMap;
 @property (strong, nonatomic) IBOutlet UILabel *runTitle;
-@property (strong, nonatomic) IBOutlet UIView *mapView;
+@property (strong, nonatomic) IBOutlet UIView *slideView;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) IBOutlet UIButton *statusBut;
 @property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
 @property (strong, nonatomic) IBOutlet UIButton *finishBut;
-@property (strong, nonatomic) IBOutlet UIButton *mapButton;
 @property (strong, nonatomic) IBOutlet UIView *shadeView;
 @property (strong, nonatomic) IBOutlet UIButton *dragButton;
 @property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
@@ -189,10 +189,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *lowSignalImage;
 @property (strong, nonatomic) IBOutlet UILabel *ghostDistanceTitle;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-
+@property (strong, nonatomic) IBOutlet MKMapView *iconMap;
 
 
 //IB
+
 - (IBAction)hamburgerTapped:(id)sender;
 - (IBAction)handlePanGesture:(id)sender;
 - (IBAction)mapIconTapped:(id)sender;
