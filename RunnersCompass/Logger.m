@@ -440,7 +440,7 @@
     kmPaceShowMode = false;
     selectedPaceShowMode = false;
     numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count];
+    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
     selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
     [self setPaceLabels];
@@ -824,7 +824,7 @@
     kmPaceShowMode = false;
     selectedPaceShowMode = false;
     numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count];
+    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
     selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
     [selectedPlot reloadData];
@@ -1932,7 +1932,7 @@
     else if(selectedPaceShowMode){
         
         //selection mode of one bar
-        selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex-1];
+        selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
         //selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
         selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
@@ -2397,7 +2397,7 @@
     //set the  minute
     selectedPaceShowMode = true;
     kmPaceShowMode = false;
-    numMinutesAtKmSelected = 1;
+    numMinutesAtKmSelected = -1;
     selectedMinIndex = idx;
     
     //set all pace labels for this minute
