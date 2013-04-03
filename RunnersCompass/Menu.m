@@ -426,7 +426,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //prepare analyze data
     //fake analysis data
-    Analysis * analysisToSet = [[Analysis alloc] setupFakeWithRuns:runs];
+    Analysis * analysisToSet = [[Analysis alloc] analyzeWithRuns:runs];
     
     PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
     [vc setAnalysis:analysisToSet];

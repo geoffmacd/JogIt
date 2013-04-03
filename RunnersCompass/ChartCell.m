@@ -56,7 +56,7 @@
     weekly = toWeekly;
     
     NSTimeInterval highest= 0;
-    NSTimeInterval lowest= 1000000;
+    NSTimeInterval lowest= [NSDate timeIntervalSinceReferenceDate];
     NSTimeInterval allTime = 0;
     NSInteger recordCount = 0;
     NSNumber* current;
@@ -171,31 +171,26 @@
     {
         loadedGraph = false;
         
+        NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
         
         //set size of view of graph to be equal to that of the split load
         CGRect graphRect = expandedView.frame;
         graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
         //set origin so that view is drawn for split filling up the last possible view
-        if(weekly)
-            graphRect.origin = CGPointMake(([weeklyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
-        else
-            graphRect.origin = CGPointMake(([monthlyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
+        graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
         [expandedView setFrame:graphRect];
         
         [self barPlot:nil barWasSelectedAtRecordIndex:0];
         
         //draw bar graph with new data from run
-        if(weekly)
-            lastCacheMinute = [weeklyValues count] - performanceSplitObjects;
-        else
-            lastCacheMinute = [monthlyValues count] - performanceSplitObjects;
+        lastCacheMinute = numBars - performanceSplitObjects;
         CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
         [self setupGraphForView:expandedView withRange:firstRangeToShow];
         
         
         //set scroll to be at the end of run
-        [scrollView setContentSize:CGSizeMake([weeklyValues count] * performanceBarWidth, scrollView.frame.size.height)];
-        [scrollView setContentOffset:CGPointMake(([weeklyValues count]  * performanceBarWidth) - scrollView.frame.size.width, 0)];
+        [scrollView setContentSize:CGSizeMake(numBars* performanceBarWidth, scrollView.frame.size.height)];
+        [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
         
     }
     
@@ -238,33 +233,28 @@
         
         if(!loadedGraph)
         {
-            
+            NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
             
             //set size of view of graph to be equal to that of the split load
             CGRect graphRect = expandedView.frame;
             graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
             //set origin so that view is drawn for split filling up the last possible view
-            if(weekly)
-                graphRect.origin = CGPointMake(([weeklyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
-            else
-                graphRect.origin = CGPointMake(([monthlyValues count] * performanceBarWidth) - graphRect.size.width, 0.0);
+            graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
             [expandedView setFrame:graphRect];
             
             
             [self barPlot:nil barWasSelectedAtRecordIndex:0];
             
             //draw bar graph with new data from run
-            if(weekly)
-                lastCacheMinute = [weeklyValues count] - performanceSplitObjects;
-            else
-                lastCacheMinute = [monthlyValues count] - performanceSplitObjects;
+            lastCacheMinute = numBars- performanceSplitObjects;
             CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
             [self setupGraphForView:expandedView withRange:firstRangeToShow];
             
             
             //set scroll to be at the end of run
-            [scrollView setContentSize:CGSizeMake([weeklyValues count] * performanceBarWidth, scrollView.frame.size.height)];
-            [scrollView setContentOffset:CGPointMake(([weeklyValues count]  * performanceBarWidth) - scrollView.frame.size.width, 0)];
+            
+            [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
+            [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
             
         }
         
@@ -287,7 +277,6 @@
         [scrollView setHidden:!open];
         [statView setHidden:!open];
     }
-    
     
     
     [delegate cellDidChangeHeight:self];
@@ -360,15 +349,17 @@
     dateLabelTextStyle.color = [CPTColor lightGrayColor];
     dateLabelTextStyle.fontSize = 12;
     x.labelTextStyle = dateLabelTextStyle;
+    //analysis results gauranteed to be as of today
     NSDate * today = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSWeekOfYearCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
+    NSDateComponents *components = [calendar components:NSWeekCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
     if(weekly)
     {
-        NSInteger startWeek = components.weekOfYear;
+        NSInteger startWeek = components.week;
         NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
         int idx = startWeek;
         int dateIndex = 0;
+        //for each week ,if multiple of 13 , add label representing nearest month
         for (NSNumber * valueToLabel  in weeklyValues)
         {
             if(idx ==0)
@@ -398,12 +389,15 @@
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
+                    //indexes are relative to start week, ie 7,6,5,4,3,2,1
                     label.tickLocation = CPTDecimalFromInt([weeklyValues count] - dateIndex);
                     label.offset = 5.0f;
                     [labels addObject:label];
                 }
             }
+            //decrement week 
             idx--;
+            //increase index
             dateIndex++;
         }
         x.axisLabels = [NSSet setWithArray:labels];
@@ -523,7 +517,10 @@
                 
                 //x location of index is opposite side of chart such that weeklyValue[0] is latest run
                 
-                numberValue = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
+                if(weekly)
+                    numberValue = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
+                else
+                    numberValue = [NSNumber numberWithInt:([monthlyValues count] - index - 0.5)];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -588,19 +585,6 @@
     
 }
 
-/*
--(CPTFill *)barFillForBarPlot:(CPTBarPlot *)plot recordIndex:(NSUInteger)index
-{
-    if ([plot.identifier isEqual: kPlot] && index == selectedBarIndex)
-    {
-        CPTFill *fillColor = [CPTFill fillWithColor:[CPTColor clearColor]];
-        return fillColor;
-    }
-    return nil;
-}
-*/
-
-
 #pragma mark - ScrollView Delegate
 
 
@@ -635,6 +619,7 @@
     NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
     NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
     CGFloat endLocation = [self convertToX:endLocationMinute];
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     
     NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
@@ -657,7 +642,7 @@
         [expandedView setFrame:newGraphViewRect];
     }
     else if(curViewMinute > lastCacheMinute + performanceSplitObjects - performanceLoadObjectsOffset &&
-            !(curViewMinute + performanceLoadObjectsOffset >= [weeklyValues count]))
+            !(curViewMinute + performanceLoadObjectsOffset >= numBars))
     {
         //reload to right
         lastCacheMinute += performanceSplitObjects - performanceLoadObjectsOffset;

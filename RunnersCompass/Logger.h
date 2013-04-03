@@ -39,7 +39,7 @@
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
-#define paceChartCutoffOffset 0.1//m/s
+#define paceChartCutoffPercent 0.05//m/s
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
 #define avgPaceUpdatePeriod 3//ss

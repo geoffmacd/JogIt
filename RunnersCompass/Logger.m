@@ -2173,7 +2173,7 @@
         maxYPace = paceChartMaxYMin;
     
     
-    return maxYPace + paceChartCutoffOffset; //add small amount to not cutoff top
+    return maxYPace * (1+paceChartCutoffPercent); //add small amount to not cutoff top
     
 }
 

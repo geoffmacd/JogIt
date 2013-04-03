@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSMutableArray * monthlyRace;
 
 
--(id)setupFakeWithRuns:(NSMutableArray *)runToAnalyze;
+-(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze;
 
 -(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace;
 @end
