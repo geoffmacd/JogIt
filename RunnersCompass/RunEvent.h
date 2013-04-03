@@ -102,7 +102,7 @@ typedef enum
 @property (nonatomic, strong) NSMutableArray * minCheckpoints; //metrics by time unit for graph
 @property (nonatomic, strong) NSMutableArray * minCheckpointsMeta; //metrics by time unit for graph
 
-@property (nonatomic, strong) NSMutableArray * pausePoints; //NSTimerInterval
+@property (nonatomic, strong) NSMutableArray * pausePoints; //CLLocation to compare to just to draw new lines
 @property (nonatomic, strong) RunMap *map;
 
 

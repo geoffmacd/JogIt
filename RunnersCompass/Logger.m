@@ -464,6 +464,8 @@
         [locationManager stopUpdatingLocation];
     }
     
+    [run.pausePoints addObject:[run.pos lastObject]];
+    
     //set map to follow user before starting track
     [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
     
@@ -1460,22 +1462,28 @@
         {
             CLLocation *location = [run.pos  objectAtIndex:i];
             CLLocationCoordinate2D coordinate = location.coordinate;
-            //check if seperated, needs to start after the first position
-            if(i > 1)
+            
+            numberForLine++;
+            coordinates[i-lastConnectedIndex] = coordinate;
+            
+            //dislocate lines if on pause point
+            for(CLLocation * pausePoint in run.pausePoints)
             {
-                CLLocation *priorLocation = [run.pos  objectAtIndex:i-1];
-                if([location distanceFromLocation:priorLocation] > mapMinToSeperatePath && lastConnectedIndex != i)
+                if((pausePoint.coordinate.latitude == coordinate.latitude) &&
+                   (pausePoint.coordinate.longitude == coordinate.longitude))
                 {
+                    
                     //see if distance is greater than minimum for seperation
                     allPosConnected = false;
-                    lastConnectedIndex = i;
-                    //get out of for loop
+                    lastConnectedIndex = i+1;
+                    //break out of for loop
                     break;
                 }
             }
             
-            numberForLine++;
-            coordinates[i-lastConnectedIndex] = coordinate;
+            //break out of for loop
+            if(!allPosConnected)
+                break;
         }
         
         MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
@@ -1486,7 +1494,6 @@
         [iconMap addOverlay:polyLine];
         
     }while(!allPosConnected);
-    
     
 }
 

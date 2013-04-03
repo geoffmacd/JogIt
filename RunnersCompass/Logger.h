@@ -45,7 +45,6 @@
 #define avgPaceUpdatePeriod 3//ss
 #define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//s
-#define mapMinToSeperatePath 100//m
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
