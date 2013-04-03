@@ -19,7 +19,7 @@
 @property(retain) PermHeaderCell * header;
 @property (nonatomic, assign) BOOL weekly;
 @property (nonatomic, assign) BOOL metric;
-@property(retain) Analysis * analysis;
+@property(weak) Analysis * analysis;
 
 
 @property (strong, nonatomic) IBOutlet UITableView *table;

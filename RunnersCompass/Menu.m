@@ -441,7 +441,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
+    [vc setRuns:runs];
     [vc setCurGoal:[self.delegate curGoal]];
+    [vc setMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
     [self presentViewController:vc animated:true completion:nil];
     
 }

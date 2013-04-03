@@ -39,10 +39,8 @@
 }
 
 
-
 #pragma mark -
 #pragma mark Performance Table data source
-
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -63,8 +61,6 @@
     }
     
     return header;
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -82,14 +78,12 @@
     
     //return height of header, does not change
     return header.frame.size.height;
-    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
     return 1;
 }
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -101,7 +95,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
-    
     
     if(row >= [cells count]){
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"owner:self options:nil] objectAtIndex:0];
@@ -119,20 +112,15 @@
         [cell setAssociated:row+1];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         
-        
         return cell;
     }
     else{
-        
         
         ChartCell * curCell = [cells objectAtIndex:row];
         [curCell setTimePeriod:weekly];
         
         return curCell;
     }
-    
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

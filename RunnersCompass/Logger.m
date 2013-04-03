@@ -8,7 +8,6 @@
 
 #import "Logger.h"
 
-
 @interface LoggerViewController ()
 
 @end
@@ -54,7 +53,6 @@
     [finishBut.layer setCornerRadius:8.0f];
     [finishBut.layer setMasksToBounds:true];
     
-    
     [activityIndicator.layer setCornerRadius:5.0];
     [activityIndicator.layer setMasksToBounds:true];
     
@@ -67,7 +65,6 @@
                                            nil];
     lowSignalImage.animationRepeatCount = 0;
     lowSignalImage.animationDuration = 2;
-    
     
     [paceScroll setDelegate:self];
     [paceScroll setScrollsToTop:false];
@@ -107,7 +104,6 @@
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
     //[locationManager startUpdatingLocation];
-
     
     //map annotations
     mapAnnotations = [[NSMutableArray alloc] initWithCapacity:10];
@@ -143,8 +139,8 @@
     mapIconTap.numberOfTouchesRequired = 1;
     [iconMap addGestureRecognizer:mapIconTap];
     
+    //clear arrays, etc
     [self resetMap];
-    
     
     //add shaded view for start animation
     CGRect shadeRect = self.view.frame;
@@ -562,7 +558,6 @@
      -determining if a new km happend
      */
     
-    
     //update time with 1 second
     run.time += 1;
 
@@ -576,7 +571,6 @@
     //only process every 3 seconds to get better information
     if(queueCount > 0)
     {
-        
         CLLocation * newLocation = [posQueue lastObject];
         
         if(((int)run.time) % calcPeriod == 0)
@@ -613,8 +607,6 @@
                 [self zoomMapToEntireRun:iconMap];
             }
         }
-        
-        
     }
     else
     {

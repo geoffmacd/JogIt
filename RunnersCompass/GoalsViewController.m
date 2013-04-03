@@ -18,13 +18,12 @@
 
 @implementation GoalsViewController
 
-@synthesize table,header,curGoal;
+@synthesize table,header,curGoal,metric,runs;
 
 - (void)viewDidAppear:(BOOL)animated
 {
     //reload goal if one was created
     header = nil;//to cause it to reload
-    [table reloadData];
 }
 
 - (void)viewDidLoad
@@ -32,23 +31,36 @@
     [super viewDidLoad];
     
     
-    
-    //fake data
-    runs = [[NSMutableArray alloc] initWithCapacity:3];
-    for(NSInteger i=0;i <13; i++)
-    {
-        
-        RunEvent * run = [[RunEvent alloc] initWithNoTarget];
-        
-        [runs addObject:run];
-        
-    }
-    
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(goalChanged:)
                                                  name:@"goalChangedNotification"
                                                object:nil];
+    [self sortRunsForGoal];
+}
+
+-(void)sortRunsForGoal
+{
+    goalRunCount = [runs count];
+    //sort runs
+    for(int i = 0; i < goalRunCount; i++)
+    {
+        RunEvent * runToConsider = [runs objectAtIndex:i];
+        
+        if([runToConsider.date timeIntervalSince1970] > [curGoal.endDate timeIntervalSince1970])
+        {
+            [runs removeObjectAtIndex:i];
+            goalRunCount--;
+        }
+        else if([runToConsider.date timeIntervalSince1970] < [curGoal.startDate timeIntervalSince1970])
+        {
+            [runs removeObjectAtIndex:i];
+            goalRunCount--;
+        }
+        
+    }
+    
+    if(!curGoal)
+        goalRunCount = 0;
 }
 
 -(void)goalChanged:(NSNotification *)notification
@@ -56,6 +68,8 @@
     
     //set new settings
     curGoal = (Goal *) [notification object];
+    [self sortRunsForGoal];
+    [table reloadData];
 }
 
 
@@ -78,19 +92,20 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //return number of historic runs
-    return [runs count];
+    //return number of relevant runs for goal
+    return goalRunCount;
 }
 
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSUInteger row = [indexPath row];
+    NSInteger row = [indexPath row];
     
     GoalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"GoalCell"
                                                               owner:self
                                                             options:nil]objectAtIndex:0];
-    [cell setup];
+    RunEvent * runForCell = [runs objectAtIndex:row];
+    [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric];
     
     return cell;
     
@@ -100,10 +115,7 @@
 {
     
     return 44.0f;
-    
 }
-
-
 
 #pragma mark -
 #pragma mark  Table delegate

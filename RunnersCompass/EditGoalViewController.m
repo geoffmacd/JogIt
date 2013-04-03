@@ -128,8 +128,6 @@
             }];
         }
         
-                    
-        
         //only if it exists do we use the time parameter
         if(valueText2)
         {

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RunEvent.h"
+#import "Goal.h"
+#import "UserPrefs.h"
 
 @interface GoalCell : UITableViewCell
 
--(void)setup;
+-(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric;
 
 @property (strong, nonatomic) IBOutlet UILabel *label;
 @property (strong, nonatomic) IBOutlet UIProgressView *progress;
