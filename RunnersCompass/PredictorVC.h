@@ -16,13 +16,13 @@
     NSMutableArray * cells;
 }
 
-@property(retain) PredictHeaderCell * header;
-@property (nonatomic, assign) BOOL weekly;
-@property (nonatomic, assign) BOOL metric;
-@property(retain) Analysis * analysis;
+@property PredictHeaderCell * header;
+@property  BOOL weekly;
+@property  BOOL metric;
+@property Analysis * analysis;
 
 
-@property (strong, nonatomic) IBOutlet UITableView *table;
+@property (weak)  IBOutlet UITableView *table;
 
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)weeklyTapped:(id)sender;

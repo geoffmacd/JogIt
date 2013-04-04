@@ -14,8 +14,8 @@
 @interface SettingsViewController : UITableViewController
 
 
-@property (nonatomic, strong) FKFormModel *formModel;
-@property (nonatomic,strong) UserPrefs *prefsToChange;
-@property (nonatomic) BOOL oldMetric;
+@property  FKFormModel *formModel;
+@property  UserPrefs *prefsToChange;
+@property  BOOL oldMetric;
 
 @end

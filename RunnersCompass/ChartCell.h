@@ -40,25 +40,23 @@
 
 //UI connections
 
-@property (strong, nonatomic) IBOutlet CPTGraphHostingView *expandedView;
-@property (weak, nonatomic) IBOutlet UIView *headerView;
-@property (weak, nonatomic) IBOutlet UIImageView *folderImage;
-@property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (strong, nonatomic) IBOutlet UILabel *previousLabel;
-@property (strong, nonatomic) IBOutlet UILabel *currentLabel;
-@property (strong, nonatomic) IBOutlet UILabel *currentValueLabel;
-@property (strong, nonatomic) IBOutlet UILabel *previousValueLabel;
-@property (strong, nonatomic) IBOutlet UILabel *allTimeValueLabel;
-@property (strong, nonatomic) IBOutlet UILabel *selectedValueLabel;
-@property (strong, nonatomic) IBOutlet UIView *statView;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (strong, nonatomic) IBOutlet UILabel *allTimeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *selectedLabel;
-
-
+@property (weak)  IBOutlet CPTGraphHostingView *expandedView;
+@property (weak) IBOutlet UIView *headerView;
+@property (weak)  IBOutlet UIImageView *folderImage;
+@property (weak) IBOutlet UILabel *headerLabel;
+@property (weak) IBOutlet UILabel *previousLabel;
+@property (weak)  IBOutlet UILabel *currentLabel;
+@property (weak)  IBOutlet UILabel *currentValueLabel;
+@property (weak)  IBOutlet UILabel *previousValueLabel;
+@property (weak)  IBOutlet UILabel *allTimeValueLabel;
+@property (weak)  IBOutlet UILabel *selectedValueLabel;
+@property (weak)  IBOutlet UIView *statView;
+@property (weak)  IBOutlet UIScrollView *scrollView;
+@property (weak)  IBOutlet UILabel *allTimeLabel;
+@property (weak)  IBOutlet UILabel *selectedLabel;
 
 //delegate
-@property (weak, nonatomic) id <ChartCellDelegate>delegate;
+@property id <ChartCellDelegate>delegate;
 
 
 //instance variables
@@ -68,8 +66,8 @@
 @property BOOL loadedGraph;
 @property BOOL raceCell;
 @property (nonatomic, assign) BOOL metric;
-@property (strong) NSMutableArray * weeklyValues;
-@property (strong) NSMutableArray * monthlyValues;
+@property NSMutableArray * weeklyValues;
+@property NSMutableArray * monthlyValues;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

@@ -12,17 +12,23 @@
 @interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 {
     
-    
+    NSInteger totalRunCount;
     NSInteger goalRunCount;
+    NSMutableArray * cells;
+    NSMutableArray * sortedRunsForGoal;
+    BOOL drilledDown;
     
 }
 
-@property (strong, nonatomic) IBOutlet UITableView *table;
-@property(retain) GoalHeaderCell * header;
-@property(retain) Goal * curGoal;
-@property(weak) NSMutableArray * runs;
-@property (nonatomic, assign) BOOL metric;
+@property (strong) IBOutlet UITableView *table;
+
+@property (strong) GoalHeaderCell * header;
+@property Goal * curGoal;
+@property (nonatomic, setter = setOriginalRunsSorted:)NSMutableArray * originalRunsSorted;
+@property BOOL metric;
+
 
 - (IBAction)done:(id)sender;
 - (IBAction)goalTapped:(id)sender;
+
 @end

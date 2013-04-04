@@ -12,9 +12,9 @@
 
 @interface CreateGoalViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
-@property(retain) CreateGoalHeaderCell * header;
-@property (retain) Goal *goal;
+@property CreateGoalHeaderCell * header;
+@property Goal *goal;
 
-@property (weak, nonatomic) IBOutlet UITableView *table;
+@property (weak) IBOutlet UITableView *table;
 
 @end

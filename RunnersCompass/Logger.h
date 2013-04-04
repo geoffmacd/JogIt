@@ -128,7 +128,6 @@
     //positions for labels for ghost runs
     CGFloat timeTitlex,timeLabelx;
     
-    
     NSInteger countdown;
     
     //metric or imperial
@@ -140,55 +139,55 @@
 //objects need to accesed by delegate:
 
 //delegate
-@property (weak, nonatomic) id <LoggerViewControllerDelegate>delegate;
+@property id <LoggerViewControllerDelegate>delegate;
 //user preferences
-@property (nonatomic, strong, setter = setRun:) RunEvent * run;
-@property (nonatomic) BOOL paused;
+@property (nonatomic, setter = setRun:) RunEvent * run;
+@property BOOL paused;
 //APP IS IN BACKGROUND
-@property (nonatomic,setter = setInBackground:) BOOL inBackground;
+@property (setter = setInBackground:) BOOL inBackground;
 
 
 //UI
-@property (strong, nonatomic)  IBOutlet MKMapView *fullMap;
-@property (strong, nonatomic) IBOutlet UILabel *runTitle;
-@property (strong, nonatomic) IBOutlet UIView *slideView;
-@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
-@property (strong, nonatomic) IBOutlet UIButton *statusBut;
-@property (strong, nonatomic) IBOutlet CPTGraphHostingView *chart;
-@property (strong, nonatomic) IBOutlet UIButton *finishBut;
-@property (strong, nonatomic) IBOutlet UIView *shadeView;
-@property (strong, nonatomic) IBOutlet UIButton *dragButton;
-@property (strong, nonatomic) IBOutlet UILabel *countdownLabel;
-@property (strong, nonatomic) IBOutlet UIScrollView *paceScroll;
-@property (strong, nonatomic) IBOutlet UILabel *oldpace1;
-@property (strong, nonatomic) IBOutlet UILabel *oldpace2;
-@property (strong, nonatomic) IBOutlet UILabel *oldpace3;
-@property (strong, nonatomic) IBOutlet UILabel *currentPaceLabel;
-@property (strong, nonatomic) IBOutlet UILabel *currentPaceValue;
-@property (strong, nonatomic) IBOutlet UIButton *invisibleLastKmButton;
-@property (strong, nonatomic) IBOutlet UILabel *lastKmLabel;
-@property (strong, nonatomic) IBOutlet UILabel *lastKmPace;
-@property (strong, nonatomic) IBOutlet UIImageView *goalAchievedImage;
-@property (strong, nonatomic) IBOutlet UILabel *distanceUnitLabel;
-@property (strong, nonatomic) IBOutlet UILabel *ghostDistanceUnitLabel;
-@property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel1;
-@property (strong, nonatomic) IBOutlet UILabel *paceUnitLabel2;
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
-@property (strong, nonatomic) IBOutlet UILabel *ghostDistance;
-@property (strong, nonatomic) IBOutlet UILabel *caloriesLabel;
-@property (strong, nonatomic) IBOutlet UILabel *paceLabel;
-@property (strong, nonatomic) IBOutlet UIButton *ghostBut;
-@property (strong, nonatomic) IBOutlet UILabel *caloriesTitle;
-@property (strong, nonatomic) IBOutlet UILabel *avgPaceTitle;
-@property (strong, nonatomic) IBOutlet UILabel *distanceTitle;
-@property (strong, nonatomic) IBOutlet UILabel *timeTitle;
-@property (strong, nonatomic) IBOutlet UILabel *swipeToPauseLabel;
-@property (strong, nonatomic) IBOutlet UIButton *hamburgerBut;
-@property (strong, nonatomic) IBOutlet UIImageView *lowSignalImage;
-@property (strong, nonatomic) IBOutlet UILabel *ghostDistanceTitle;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (strong, nonatomic) IBOutlet MKMapView *iconMap;
+@property (weak)  IBOutlet MKMapView *fullMap;
+@property (weak)  IBOutlet UILabel *runTitle;
+@property (weak)  IBOutlet UIView *slideView;
+@property (weak)  IBOutlet UIPanGestureRecognizer *panGesture;
+@property (weak)  IBOutlet UIButton *statusBut;
+@property (weak)  IBOutlet CPTGraphHostingView *chart;
+@property (weak)  IBOutlet UIButton *finishBut;
+@property (weak)  IBOutlet UIView *shadeView;
+@property (weak)  IBOutlet UIButton *dragButton;
+@property (weak)  IBOutlet UILabel *countdownLabel;
+@property (weak)  IBOutlet UIScrollView *paceScroll;
+@property (weak)  IBOutlet UILabel *oldpace1;
+@property (weak)  IBOutlet UILabel *oldpace2;
+@property (weak)  IBOutlet UILabel *oldpace3;
+@property (weak)  IBOutlet UILabel *currentPaceLabel;
+@property (weak)  IBOutlet UILabel *currentPaceValue;
+@property (weak)  IBOutlet UIButton *invisibleLastKmButton;
+@property (weak)  IBOutlet UILabel *lastKmLabel;
+@property (weak)  IBOutlet UILabel *lastKmPace;
+@property (weak)  IBOutlet UIImageView *goalAchievedImage;
+@property (weak)  IBOutlet UILabel *distanceUnitLabel;
+@property (weak)  IBOutlet UILabel *ghostDistanceUnitLabel;
+@property (weak)  IBOutlet UILabel *paceUnitLabel1;
+@property (weak)  IBOutlet UILabel *paceUnitLabel2;
+@property (weak)  IBOutlet UILabel *timeLabel;
+@property (weak)  IBOutlet UILabel *distanceLabel;
+@property (weak)  IBOutlet UILabel *ghostDistance;
+@property (weak)  IBOutlet UILabel *caloriesLabel;
+@property (weak)  IBOutlet UILabel *paceLabel;
+@property (weak)  IBOutlet UIButton *ghostBut;
+@property (weak)  IBOutlet UILabel *caloriesTitle;
+@property (weak)  IBOutlet UILabel *avgPaceTitle;
+@property (weak)  IBOutlet UILabel *distanceTitle;
+@property (weak)  IBOutlet UILabel *timeTitle;
+@property (weak)  IBOutlet UILabel *swipeToPauseLabel;
+@property (weak)  IBOutlet UIButton *hamburgerBut;
+@property (weak)  IBOutlet UIImageView *lowSignalImage;
+@property (weak)  IBOutlet UILabel *ghostDistanceTitle;
+@property (weak)  IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak)  IBOutlet MKMapView *iconMap;
 
 
 //IB

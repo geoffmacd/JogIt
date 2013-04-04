@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface PermHeaderCell : UIView
-@property (strong, nonatomic) IBOutlet UIButton *doneBut;
-@property (strong, nonatomic) IBOutlet UIButton *predictBut;
-@property (strong, nonatomic) IBOutlet UIButton *weeklyBut;
-@property (strong, nonatomic) IBOutlet UIButton *monthlyBut;
+@property (weak)  IBOutlet UIButton *doneBut;
+@property (weak) IBOutlet UIButton *predictBut;
+@property (weak)  IBOutlet UIButton *weeklyBut;
+@property (weak)  IBOutlet UIButton *monthlyBut;
 
 
 -(void) setup;

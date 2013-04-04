@@ -12,18 +12,27 @@
 #import "RunEvent.h"
 #import "GoalCell.h"
 
-@interface GoalsViewController ()
-
-@end
-
 @implementation GoalsViewController
 
-@synthesize table,header,curGoal,metric,runs;
+@synthesize table,curGoal,header,metric,originalRunsSorted;
+
+static NSString * goalCellID = @"GoalCellPrototype";
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //reload goal if one was created
-    header = nil;//to cause it to reload
+    if(drilledDown)
+    {
+        [cells removeAllObjects];
+        [self sortRunsForGoal];
+        [header setGoal:curGoal];
+        [header setup];
+        [table setUserInteractionEnabled:true];
+        [table setScrollEnabled:true];
+        //stupid hack
+        table.contentSize = CGSizeMake(self.view.frame.size.width, header.frame.size.height + (goalRunCount * 44));
+        [table reloadData];
+    }
+    drilledDown = false;
 }
 
 - (void)viewDidLoad
@@ -35,32 +44,50 @@
                                              selector:@selector(goalChanged:)
                                                  name:@"goalChangedNotification"
                                                object:nil];
-    [self sortRunsForGoal];
+    
+    cells = [[NSMutableArray alloc] initWithCapacity:100];
+    sortedRunsForGoal = [[NSMutableArray alloc] initWithCapacity:100];
+    
+    //load cell
+    [table registerClass:[GoalCell class] forCellReuseIdentifier:goalCellID];
+    UINib * nib = [UINib nibWithNibName:@"GoalCell" bundle:[NSBundle mainBundle]] ;
+    [table registerNib:nib forCellReuseIdentifier:goalCellID];
+    
+    drilledDown = false;
+}
+
+-(void)setOriginalRunsSorted:(NSMutableArray *)tempArray
+{
+    totalRunCount = [tempArray count];
+    
+    NSArray *sortedArray = [tempArray sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSDate *first = [(RunEvent*)a date];
+        NSDate *second = [(RunEvent*)b date];
+        return [second compare:first];
+    }];
+    originalRunsSorted = [sortedArray mutableCopy];
 }
 
 -(void)sortRunsForGoal
 {
-    goalRunCount = [runs count];
-    //sort runs
-    for(int i = 0; i < goalRunCount; i++)
+    NSAssert(originalRunsSorted, @"no original runs to sort");
+    
+    //set initial array to include all
+    NSArray * tempArray = [originalRunsSorted mutableCopy];
+    [sortedRunsForGoal removeAllObjects];
+    
+    //already sorted so that first object is latest date
+    for(RunEvent * runToConsider in tempArray)
     {
-        RunEvent * runToConsider = [runs objectAtIndex:i];
-        
-        if([runToConsider.date timeIntervalSince1970] > [curGoal.endDate timeIntervalSince1970])
+        if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
+            ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
         {
-            [runs removeObjectAtIndex:i];
-            goalRunCount--;
+            [sortedRunsForGoal addObject:runToConsider];
         }
-        else if([runToConsider.date timeIntervalSince1970] < [curGoal.startDate timeIntervalSince1970])
-        {
-            [runs removeObjectAtIndex:i];
-            goalRunCount--;
-        }
-        
     }
     
-    if(!curGoal)
-        goalRunCount = 0;
+    //set correct number of rows to show
+    goalRunCount = [sortedRunsForGoal count];
 }
 
 -(void)goalChanged:(NSNotification *)notification
@@ -68,8 +95,6 @@
     
     //set new settings
     curGoal = (Goal *) [notification object];
-    [self sortRunsForGoal];
-    [table reloadData];
 }
 
 
@@ -85,7 +110,10 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tv
 {
-    return 1;
+    if(tv == table)
+        return 1;
+    else
+        return 0;
 }
 
 
@@ -93,21 +121,41 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of relevant runs for goal
-    return goalRunCount;
+    //NSLog(@"%@", [tableView description]);
+    if(tableView == table)
+        return goalRunCount;
+    else
+        return 0;
 }
 
 // Customize the appearance of table view cells.
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = [indexPath row];
+    NSLog(@"row: %d with array: %d", row, goalRunCount);
     
-    GoalCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"GoalCell"
-                                                              owner:self
-                                                            options:nil]objectAtIndex:0];
-    RunEvent * runForCell = [runs objectAtIndex:row];
-    [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric];
-    
-    return cell;
+    if(row >= [cells count]){
+        
+        //GoalCell * cell = (GoalCell * )[tableView dequeueReusableCellWithIdentifier:goalCellID];
+        
+        GoalCell * cell = (GoalCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalCell"
+                                                                 owner:self
+                                                               options:nil]objectAtIndex:0];
+        
+        [cells addObject:cell];
+        RunEvent * runForCell = [sortedRunsForGoal objectAtIndex:row];
+        [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric];
+        
+        
+        return cell;
+    }
+    else{
+        
+        
+        GoalCell * curCell = [cells objectAtIndex:row];
+        
+        return curCell;
+    }
     
 }
 
@@ -122,9 +170,6 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if(section != 0 || tableView != table)
-        return nil;
-    
     //deliver goalheadercell
     if(!header)
     {
@@ -151,9 +196,10 @@
         [header setup];
     }
     
-    //return height of header, does not change
-    return header.frame.size.height;
+    CGFloat height = header.frame.size.height;
     
+    //return height of header, does not change
+    return height;
 }
 
 #pragma mark - UI actions
@@ -164,6 +210,8 @@
 }
 
 - (IBAction)goalTapped:(id)sender {
+    
+    drilledDown = true;
     
     CreateGoalViewController  * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
     [vc setGoal:curGoal];

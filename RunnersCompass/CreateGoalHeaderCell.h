@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface CreateGoalHeaderCell : UIView
-@property (strong, nonatomic) IBOutlet UIButton *doneBut;
-@property (strong, nonatomic) IBOutlet UILabel *sectionHeaderCreateGoal;
+
+@property (weak) IBOutlet UIButton *doneBut;
+@property (weak) IBOutlet UILabel *sectionHeaderCreateGoal;
 
 @end

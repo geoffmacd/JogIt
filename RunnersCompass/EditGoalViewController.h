@@ -13,8 +13,8 @@
 
 @interface EditGoalViewController : UITableViewController
 
-@property (nonatomic, strong) FKFormModel *formModel;
-@property (nonatomic, strong) Goal  *tempGoal;
+@property FKFormModel *formModel;
+@property Goal  *tempGoal;
 
 
 @end

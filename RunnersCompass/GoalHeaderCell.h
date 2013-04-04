@@ -13,24 +13,24 @@
 
 -(void)setup;
 
-@property (nonatomic) IBOutlet UIButton *doneBut;
-@property (nonatomic, retain) IBOutlet UIButton *goalButton;
+@property (weak) IBOutlet UIButton *doneBut;
+@property (weak) IBOutlet UIButton *goalButton;
 
-@property (strong, nonatomic) IBOutlet UILabel *metricDescriptionSubtitle;
-@property (nonatomic, retain) IBOutlet UILabel *metricDescriptionLabel;
-@property (nonatomic, retain) IBOutlet UILabel *metricValue;
+@property (weak) IBOutlet UILabel *metricDescriptionSubtitle;
+@property (weak) IBOutlet UILabel *metricDescriptionLabel;
+@property (weak) IBOutlet UILabel *metricValue;
 
-@property (nonatomic, retain) IBOutlet UILabel *beganLabel;
-@property (nonatomic, retain) IBOutlet UILabel *beganValue;
+@property (weak) IBOutlet UILabel *beganLabel;
+@property  (weak) IBOutlet UILabel *beganValue;
 
-@property (nonatomic, retain) IBOutlet UILabel *targetLabel;
-@property (nonatomic, retain) IBOutlet UILabel *targetValue;
+@property (weak) IBOutlet UILabel *targetLabel;
+@property  (weak) IBOutlet UILabel *targetValue;
 
-@property (nonatomic, retain) IBOutlet UILabel *countLabel;
-@property (strong, nonatomic) IBOutlet UILabel *countValue;
+@property  (weak) IBOutlet UILabel *countLabel;
+@property (weak) IBOutlet UILabel *countValue;
 
-@property (nonatomic, retain) IBOutlet UIProgressView *progress;
+@property  (weak) IBOutlet UIProgressView *progress;
 
 
-@property (retain) Goal *goal;
+@property Goal *goal;
 @end

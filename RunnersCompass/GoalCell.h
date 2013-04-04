@@ -15,8 +15,8 @@
 
 -(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric;
 
-@property (strong, nonatomic) IBOutlet UILabel *label;
-@property (strong, nonatomic) IBOutlet UIProgressView *progress;
-@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak) IBOutlet UILabel *label;
+@property (weak) IBOutlet UIProgressView *progress;
+@property (weak) IBOutlet UILabel *dateLabel;
 
 @end

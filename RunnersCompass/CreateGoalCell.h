@@ -14,8 +14,8 @@
 
 -(void)setup:(GoalType) goalType withCurrentGoalType:(GoalType) curType;
 
-@property (strong, nonatomic) IBOutlet UIImageView *goalImage;
-@property (strong, nonatomic) IBOutlet UIButton *button;
-@property (strong, nonatomic) IBOutlet UIImageView *curCheckImage;
+@property (weak) IBOutlet UIImageView *goalImage;
+@property (weak)  IBOutlet UIButton *button;
+@property (weak)  IBOutlet UIImageView *curCheckImage;
 
 @end
