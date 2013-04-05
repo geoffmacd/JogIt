@@ -38,10 +38,9 @@
 @synthesize ghostBut;
 @synthesize timeTitle,distanceTitle,caloriesTitle,avgPaceTitle;
 @synthesize swipeToPauseLabel;
-@synthesize lowSignalImage;
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 @synthesize inBackground;
-@synthesize activityIndicator;
+@synthesize activityIndicator,lowSignalLabel,titleView;
 
 #pragma mark - Lifecycle
 
@@ -55,16 +54,6 @@
     
     [activityIndicator.layer setCornerRadius:5.0];
     [activityIndicator.layer setMasksToBounds:true];
-    
-    //setup low signal gif but dont start
-    lowSignalImage.animationImages = [[NSArray alloc] initWithObjects:
-                                           [UIImage imageNamed:@"lowsignal.png"],
-                                           [UIImage imageNamed:@"lowsignal1.png"],
-                                           [UIImage imageNamed:@"lowsignal2.png"],
-                                           [UIImage imageNamed:@"lowsignal3.png"],
-                                           nil];
-    lowSignalImage.animationRepeatCount = 0;
-    lowSignalImage.animationDuration = 2;
     
     [paceScroll setDelegate:self];
     [paceScroll setScrollsToTop:false];
@@ -95,6 +84,7 @@
     [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
     [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
     [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
+    [lowSignalLabel setText:NSLocalizedString(@"LowSignalLabel", "Label for low GPS signal")];
     
     
     //init location manager
@@ -147,6 +137,7 @@
     [shadeView setFrame:shadeRect];
     [self.view addSubview:shadeView];
     
+    orgTitleLabelPosition = runTitle.frame;
     
     timeLabelx = timeLabel.frame.origin.x;
     timeTitlex = timeTitle.frame.origin.x;
@@ -487,15 +478,16 @@
         if(avgAccuracy > maxPermittableAccuracy * evalAccuracyPeriod)
         {
             //display
-            [lowSignalImage startAnimating];
-            [lowSignalImage setHidden:false];
+            if(!lowSignal)
+            {
+                [self performSelector:@selector(lowSignalAnimation) withObject:nil];
+                lowSignal = true;
+            }
         }
         else{
             //hide
-            [lowSignalImage setHidden:true];
-            [lowSignalImage stopAnimating];
+            lowSignal = false;
         }
-        
         //reset
         avgAccuracy = 0;
     }
@@ -676,6 +668,11 @@
                             //stop location updates
                             [self stopRun];
                         }];
+        
+        //cancel low signal animation
+        [lowSignalLabel setHidden:true];
+        [runTitle setFrame:orgTitleLabelPosition];
+        
     }
     else
     {
@@ -1064,6 +1061,59 @@
 }
 
 #pragma mark - HUD Management
+
+-(void)lowSignalAnimation
+{
+    //animation to slide in from the right
+    
+    //return right away if called during pause
+    if(paused || !run.live)
+        return;
+    
+    //set low signal to org position to right of screen
+    CGRect lowSignalOrgRect = orgTitleLabelPosition;
+    lowSignalOrgRect.origin = CGPointMake(orgTitleLabelPosition.origin.x + orgTitleLabelPosition.size.width, orgTitleLabelPosition.origin.y);
+    [lowSignalLabel setFrame:lowSignalOrgRect];
+    [lowSignalLabel setHidden:false];
+    
+    CGRect runTitleDestRect = orgTitleLabelPosition;
+    runTitleDestRect.origin = CGPointMake(orgTitleLabelPosition.origin.x - orgTitleLabelPosition.size.width, orgTitleLabelPosition.origin.y);
+    
+    [UIView animateWithDuration:lowSignalPeriod/2
+                     delay:lowSignalPeriod
+                     options:UIViewAnimationCurveEaseIn
+                     animations:^{
+                         //move title out
+                         [runTitle setFrame:runTitleDestRect];
+                         //move low signal in
+                         [lowSignalLabel setFrame:orgTitleLabelPosition];
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         [runTitle setFrame:lowSignalOrgRect];
+                         [lowSignalLabel setFrame:orgTitleLabelPosition];
+                         
+                         [UIView animateWithDuration:lowSignalPeriod/2
+                                          delay:lowSignalPeriod
+                                          options:UIViewAnimationCurveEaseIn
+                                          animations:^{
+                                              //move title in
+                                              [runTitle setFrame:orgTitleLabelPosition];
+                                              //move low signal out
+                                              [lowSignalLabel setFrame:runTitleDestRect];
+                                          }
+                                          completion:^(BOOL finished) {
+                                              //call this method again if still playing low signal
+                                              if(lowSignal)
+                                                  [self lowSignalAnimation];
+                                              else
+                                                  [lowSignalLabel setHidden:true];
+                                          }];
+                          
+                     }];
+    
+    
+}
 
 -(void)setLabelsForUnits
 {
@@ -1523,7 +1573,7 @@
     polylineView.strokeColor = [UIColor purpleColor];
     
     //should be fixed line
-    polylineView.lineWidth = 15.0;
+    polylineView.lineWidth = mapPathWidth;
     
     return polylineView;
 }

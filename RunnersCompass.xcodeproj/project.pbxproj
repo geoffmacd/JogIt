@@ -57,8 +57,6 @@
 		67902E6416DACA60007D19BC /* GoalHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E6316DACA60007D19BC /* GoalHeaderCell.m */; };
 		67902E6616DAE2AC007D19BC /* CreateGoalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67902E6516DAE2AC007D19BC /* CreateGoalHeaderCell.xib */; };
 		67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67902E6816DAE2CA007D19BC /* CreateGoalHeaderCell.m */; };
-		67A8D59216F143380070E38B /* CrumbPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D58F16F143380070E38B /* CrumbPath.m */; };
-		67A8D59316F143380070E38B /* CrumbPathView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59116F143380070E38B /* CrumbPathView.m */; };
 		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
 		67AF65D316D9A139004A484C /* GoalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65D216D9A138004A484C /* GoalCell.m */; };
@@ -276,10 +274,6 @@
 		67902E6516DAE2AC007D19BC /* CreateGoalHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateGoalHeaderCell.xib; sourceTree = "<group>"; };
 		67902E6716DAE2CA007D19BC /* CreateGoalHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGoalHeaderCell.h; sourceTree = "<group>"; };
 		67902E6816DAE2CA007D19BC /* CreateGoalHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGoalHeaderCell.m; sourceTree = "<group>"; };
-		67A8D58E16F143380070E38B /* CrumbPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrumbPath.h; path = Overlay/CrumbPath.h; sourceTree = SOURCE_ROOT; };
-		67A8D58F16F143380070E38B /* CrumbPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CrumbPath.m; path = Overlay/CrumbPath.m; sourceTree = SOURCE_ROOT; };
-		67A8D59016F143380070E38B /* CrumbPathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CrumbPathView.h; path = Overlay/CrumbPathView.h; sourceTree = SOURCE_ROOT; };
-		67A8D59116F143380070E38B /* CrumbPathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CrumbPathView.m; path = Overlay/CrumbPathView.m; sourceTree = SOURCE_ROOT; };
 		67A8D59416F150EE0070E38B /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		67A8D59516F150EE0070E38B /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
@@ -916,10 +910,6 @@
 				67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */,
 				67B1288216F58445003A15A5 /* KMAnnotation.h */,
 				67B1288316F58445003A15A5 /* KMAnnotation.m */,
-				67A8D58E16F143380070E38B /* CrumbPath.h */,
-				67A8D58F16F143380070E38B /* CrumbPath.m */,
-				67A8D59016F143380070E38B /* CrumbPathView.h */,
-				67A8D59116F143380070E38B /* CrumbPathView.m */,
 				67A8D59416F150EE0070E38B /* Util.h */,
 				67A8D59516F150EE0070E38B /* Util.m */,
 				67B421A21707AE7A006574CF /* MileAnnotation.h */,
@@ -1167,8 +1157,6 @@
 				67902E6916DAE2CB007D19BC /* CreateGoalHeaderCell.m in Sources */,
 				6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */,
 				6779C10416EE83D9002BCAEC /* Analysis.m in Sources */,
-				67A8D59216F143380070E38B /* CrumbPath.m in Sources */,
-				67A8D59316F143380070E38B /* CrumbPathView.m in Sources */,
 				67A8D59616F150EE0070E38B /* Util.m in Sources */,
 				67B1288416F58445003A15A5 /* KMAnnotation.m in Sources */,
 				674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */,

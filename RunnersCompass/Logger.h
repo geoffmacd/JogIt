@@ -40,11 +40,13 @@
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
 #define paceChartCutoffPercent 0.05//m/s
-#define maxPermittableAccuracy 30 //m
+#define maxPermittableAccuracy 5 //m
 #define evalAccuracyPeriod 5 //seconds
 #define avgPaceUpdatePeriod 3//ss
 #define mapLoadSinceFinishWait 2//s
-#define mapMinSpanForRun 0.005//s
+#define mapMinSpanForRun 0.005//degress
+#define lowSignalPeriod 3//s
+#define mapPathWidth 15.0//pixels
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -133,6 +135,9 @@
     //metric or imperial
     BOOL currentUnits;
     
+    //low gps animation
+    BOOL lowSignal;
+    CGRect orgTitleLabelPosition;
 }
 
 
@@ -184,10 +189,11 @@
 @property (weak)  IBOutlet UILabel *timeTitle;
 @property (weak)  IBOutlet UILabel *swipeToPauseLabel;
 @property (weak)  IBOutlet UIButton *hamburgerBut;
-@property (weak)  IBOutlet UIImageView *lowSignalImage;
 @property (weak)  IBOutlet UILabel *ghostDistanceTitle;
 @property (weak)  IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak)  IBOutlet MKMapView *iconMap;
+@property (weak, nonatomic) IBOutlet UILabel *lowSignalLabel;
+@property (weak, nonatomic) IBOutlet UIView *titleView;
 
 
 //IB
