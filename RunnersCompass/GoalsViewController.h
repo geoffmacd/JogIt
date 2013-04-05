@@ -14,6 +14,8 @@
     
     NSInteger totalRunCount;
     NSInteger goalRunCount;
+    CGFloat minValueForGoal;
+    CGFloat maxValueForGoal;
     NSMutableArray * cells;
     NSMutableArray * sortedRunsForGoal;
     BOOL drilledDown;

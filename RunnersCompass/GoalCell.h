@@ -13,7 +13,8 @@
 
 @interface GoalCell : UITableViewCell
 
--(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric;
+
+-(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric withMin:(CGFloat)min withMax:(CGFloat)max;
 
 @property (weak) IBOutlet UILabel *label;
 @property (weak) IBOutlet UIProgressView *progress;

@@ -69,6 +69,10 @@
          postNotificationName:@"goalChangedNotification"
          object:nil];
         
+        //reload table to remove checkmark
+        goal.type = GoalTypeNoGoal;
+        [table reloadData];
+        
         EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
         [vc setTempGoal:tempGoal];
         [self presentViewController:vc animated:true completion:nil];
@@ -125,7 +129,7 @@
     tempGoal = [[Goal alloc] initWithType:[indexPath row]+1];
     Goal * curGoal = goal;
     
-    if(curGoal)
+    if(curGoal && curGoal.type != GoalTypeNoGoal)
     {
         //only discard if the user is not trying to edit the current goal
         if(curGoal.type != [indexPath row]+1)
@@ -137,7 +141,7 @@
             
             
             EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
-            [vc setTempGoal:tempGoal];
+            [vc setTempGoal:curGoal];
             [self presentViewController:vc animated:true completion:nil];
         }
     }

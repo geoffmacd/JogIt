@@ -16,7 +16,7 @@
 @synthesize targetLabel,targetValue,metricDescriptionLabel,metricDescriptionSubtitle,metricValue;
 
 @synthesize doneBut,goalButton;
-@synthesize progress,goal;
+@synthesize progress,goal,metric;
 
 
 -(void) setup
@@ -48,7 +48,7 @@
     if(goal)
     {
         
-        [goalButton setTitle:[goal getName] forState:UIControlStateNormal];
+        [goalButton setTitle:[goal getName:metric] forState:UIControlStateNormal];
         
         //dates
         NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -57,10 +57,22 @@
         [formatter setTimeStyle:NSDateFormatterNoStyle];
         [formatter setCalendar:cal];
         [formatter setLocale:[NSLocale currentLocale]];
-        NSString *beganString = [formatter stringFromDate:goal.startDate];
-        [beganValue setText:beganString];
-        NSString *targetString = [formatter stringFromDate:goal.endDate];
-        [targetValue setText:targetString];
+        if(goal.startDate)
+        {
+            NSString *beganString = [formatter stringFromDate:goal.startDate];
+            [beganValue setText:beganString];
+        }
+        else{
+            [beganValue setText:@""];
+        }
+        if(goal.endDate)
+        {
+            NSString *targetString = [formatter stringFromDate:goal.endDate];
+            [targetValue setText:targetString];
+        }
+        else{
+            [targetValue setText:@""];
+        }
         
         
         [countValue setText:[NSString stringWithFormat:@"%d", [goal.activityCount integerValue]]];
@@ -72,7 +84,7 @@
         [metricDescriptionSubtitle setText:[goal stringForSubtitle]];
         
         //progress bar
-        [progress setProgress:0.5];//data.curGoal.progress];
+        [progress setProgress:goal.progress];
         
     }else{
         [goalButton setTitle:NSLocalizedString(@"GoalButtonWithNone", @"No goal for button") forState:UIControlStateNormal];
@@ -91,7 +103,7 @@
         [metricDescriptionSubtitle setText:@""];
         
         //progress bar
-        [progress setProgress:0.5];//0];
+        [progress setProgress:0];
     }
     
     //localizations    //localized buttons in IB

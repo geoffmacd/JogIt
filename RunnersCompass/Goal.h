@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RunEvent.h" //for metric enum
 
+#define calsInLbFat 3500
+
 @interface Goal : NSObject
 
 typedef enum
@@ -33,16 +35,21 @@ typedef enum
 @property (nonatomic, retain) NSDictionary * raceDictionary;
 @property (nonatomic, retain) NSDictionary * fatDictionary;
 
++(NSNumber*)getRaceDistance:(NSString*)stringForRace;
++(NSNumber*)getWeight:(NSString*)stringForWeight;
++(NSInteger)getCalorieForWeight:(NSInteger)lbs;
++(NSArray*)getWeightNames;
++(NSString*)getWeightNameForCals:(NSInteger)lbs;
++(NSArray*)getRaceNames;
++(NSString*)getRaceNameForRun:(CGFloat)distance;
 -(id)initWithType:(GoalType)type;
--(NSString*)getName;
--(NSArray*)getWeightNames;
--(NSArray*)getRaceNames;
--(void)save;
+-(NSString*)getName:(BOOL)metric;
 -(NSString *)stringForDescription;
 -(NSString *)stringForHeaderDescription;
 -(NSString*)stringForSubtitle;
 -(NSString *)stringForEdit2;
 -(NSString *)stringForEdit1;
 -(BOOL)validateGoalEntry;
+-(BOOL)processGoalForRuns:(NSMutableArray *)runsToAnalyze withMetric:(BOOL)metric;
 
 @end

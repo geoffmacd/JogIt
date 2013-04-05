@@ -33,4 +33,5 @@
 
 
 @property Goal *goal;
+@property BOOL metric;
 @end

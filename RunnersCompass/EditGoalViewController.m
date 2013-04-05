@@ -66,13 +66,6 @@
         {
             [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeInteger];
             
-            //validationn
-            [formMapping validationForAttribute:@"value" validBlock:^BOOL(NSString *value, id object) {
-                return tempGoal.value;
-                
-            } errorMessageBlock:^NSString *(id value, id object) {
-                return NSLocalizedString(@"GoalValidationDistanceError", @"validation for no distance entered"); 
-            }];
         }
         else if(tempGoal.type == GoalTypeCalories)
         {
@@ -80,11 +73,11 @@
                                 title:valueText
                          showInPicker:YES
                     selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
-                        *selectedValueIndex = 0;//1 lb
-                        return [tempGoal getWeightNames];
+                        //5 lb
+                        *selectedValueIndex = 4;
+                        return [Goal getWeightNames];
                         
                     } valueFromSelectBlock:^id(id value, id object, NSInteger selectedValueIndex) {
-                        tempGoal.value = [[tempGoal fatDictionary] objectForKey:value];
                         return value;
                         
                     } labelValueBlock:^id(id value, id object) {
@@ -92,13 +85,6 @@
                         
                     }];
             
-            //validationn
-            [formMapping validationForAttribute:@"weight" validBlock:^BOOL(NSString *value, id object) {
-                return tempGoal.weight;
-                
-            } errorMessageBlock:^NSString *(id value, id object) {
-                return NSLocalizedString(@"GoalValidationWeightError", @"validation for no weight loss entered");
-            }];
         }
         else if(tempGoal.type == GoalTypeOneDistance || tempGoal.type == GoalTypeRace)//need the race selector for races
         {
@@ -106,12 +92,11 @@
                             title:valueText
                      showInPicker:YES
                 selectValuesBlock:^NSArray *(id value, id object, NSInteger *selectedValueIndex){
-
-                    *selectedValueIndex = 0;//1 mile
-                    return [tempGoal getRaceNames];
+                    //1 mile
+                    *selectedValueIndex = 0;
+                    return [Goal getRaceNames];
                     
                 } valueFromSelectBlock:^id(id value, id object, NSInteger selectedValueIndex) {
-                    tempGoal.value = [[tempGoal raceDictionary] objectForKey:value];
                     return value;
                     
                 } labelValueBlock:^id(id value, id object) {
@@ -119,13 +104,6 @@
                     
                 }];
             
-            //validationn
-            [formMapping validationForAttribute:@"race" validBlock:^BOOL(NSString *value, id object) {
-                return tempGoal.race;
-                
-            } errorMessageBlock:^NSString *(id value, id object) {
-                return NSLocalizedString(@"GoalValidationTimeError", @"validation for no time entered"); //@"Must enter a time.";
-            }];
         }
         
         //only if it exists do we use the time parameter
@@ -142,6 +120,8 @@
             }];
         }
         
+        //dates
+        
         [formMapping mappingForAttribute:@"startDate"
                                    title: NSLocalizedString(@"GoalStartLabel", @"label for goal edit form")//@"Start Date"
                                     type:FKFormAttributeMappingTypeDate
@@ -149,9 +129,11 @@
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
+        
         //validationn
         [formMapping validationForAttribute:@"startDate" validBlock:^BOOL(NSString *value, id object) {
-            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
+            //requires enddate to at least be entered
+            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending || !tempGoal.endDate;
             
         } errorMessageBlock:^NSString *(id value, id object) {
             return NSLocalizedString(@"GoalValidationDateError", @"validation for dates being incorrect order");//@"Target date must be after start!";
@@ -184,14 +166,8 @@
                accesoryType:UITableViewCellAccessoryNone];
 
 
-        
         //completion
         [self.formModel registerMapping:formMapping];
-    }];
-    
-    [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
-       // NSLog(@"did change model value");
-      //  NSLog([value description]);
     }];
     
     [self.formModel loadFieldsWithObject:tempGoal];

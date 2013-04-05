@@ -19,84 +19,13 @@
     self.startDate = [NSDate date];
 
     
-    //set up race types
-    //do no care of unit system, since metric people may want 10 mile, etc
-    NSArray * raceKeys =  [NSArray arrayWithObjects:@"1 mile",
-                            @"3 mile",
-                            @"5 mile",
-                            @"10 mile",
-                            @"1 km",
-                            @"3 km",
-                            @"5 km",
-                            @"10 km",
-                            @"Half Marathon",
-                            @"Full Marathon", nil];
-    NSArray * raceValues = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1.61],
-                            [NSNumber numberWithFloat:4.83],
-                            [NSNumber numberWithFloat:8.05],
-                            [NSNumber numberWithFloat:16.1],
-                            [NSNumber numberWithFloat:1],
-                            [NSNumber numberWithFloat:3],
-                            [NSNumber numberWithFloat:5],
-                            [NSNumber numberWithFloat:10],
-                            [NSNumber numberWithFloat:21.1],
-                            [NSNumber numberWithFloat:42.2], nil];
-    raceDictionary = [[NSDictionary alloc] initWithObjects:raceValues forKeys:raceKeys ];
-    
-    
-    
-    //set up weight loss strings
-    NSMutableArray  * fatValues= [[NSMutableArray alloc] initWithCapacity:30];
-    NSMutableArray  * fatKeys= [[NSMutableArray alloc] initWithCapacity:30];
-    for(int i = 0; i< 30; i++)
-    {
-        [fatKeys addObject:[NSString stringWithFormat:@"%d lb", i]];
-        [fatValues addObject:[NSNumber numberWithInt:i]];
-    }
-    fatDictionary = [[NSDictionary alloc] initWithObjects:fatValues forKeys:fatKeys ];
-    
     return self;
     
 }
 
--(NSString*)getName
+-(NSString*)getName:(BOOL)metric
 {
-    
     NSString * goalName;//generate every time
-    
-    //disable dates for now because of long text in button
-    /*
-    NSString *endString = @" by ";
-    
-    
-    if(endDate)
-    {
-        NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
-        [formatter setTimeStyle:NSDateFormatterNoStyle];
-        [formatter setCalendar:cal];
-        [formatter setLocale:[NSLocale currentLocale]];
-        NSString * dateString = [formatter stringFromDate:self.endDate];
-        
-        
-        
-        //remove the year if it is less than 6 months away
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-                                                   fromDate:[NSDate date]
-                                                     toDate:endDate
-                                                    options:0];
-        if(components.month < 6)
-            dateString =  [[dateString componentsSeparatedByString:@","] objectAtIndex:0];
-        
-        endString = [endString stringByAppendingString:dateString];
-    }
-    else{
-        //leave string blank
-        endString = @"";
-    }
-    */
     
     //need time components for race
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -104,23 +33,26 @@
     
     NSString *endString = @"";
     
+    UserPrefs * tempPrefs = [UserPrefs defaultUser];
+    tempPrefs.metric = [NSNumber numberWithBool:metric];
+
     //switch between metric to determine label for metric description
     switch(type)
     {
         case GoalTypeCalories:
-            goalName = [NSString stringWithFormat:@"%@: %@ %d lbs%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LoseWord",@"Word for Lose in title"),[self.value integerValue], endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %@ %@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LoseWord",@"Word for Lose in title"),[Goal getWeightNameForCals:[self.value integerValue]], endString];
             break;
         case GoalTypeOneDistance:
-            goalName = [NSString stringWithFormat:@"%@: %@ %@ race%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %@ race%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], endString];
             break;
         case GoalTypeRace:
             if(components.hour > 0)
-                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, components.hour, components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], components.hour, components.minute];
             else
-                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),self.race, components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], components.minute];
             break;
         case GoalTypeTotalDistance:
-            goalName = [NSString stringWithFormat:@"%@: %@ %d km %@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LogWord",@"Word for log in title"), [self.value integerValue], endString];
+            goalName = [NSString stringWithFormat:@"%@: %@ %.0f %@ %@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LogWord",@"Word for log in title"), [RunEvent getDisplayDistance:[self.value floatValue] withMetric:metric], [tempPrefs getDistanceUnit],  endString];
             break;
         default:
             return NSLocalizedString(@"GoalNameBadGoalType",@"bad goal type");//return @"bad goal name";
@@ -130,9 +62,62 @@
 
 }
 
--(NSArray*)getRaceNames
++(NSInteger)getCalorieForWeight:(NSInteger)lbs
 {
-    //return [raceDictionary allKeys]; returns unsorted, doesnt work
+    NSInteger cals = (lbs + 1) * calsInLbFat;
+    
+    return cals;
+}
+
+
++(NSNumber*)getRaceDistance:(NSString*)stringForRace
+{
+    NSArray * raceValues = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1610],
+                            [NSNumber numberWithFloat:4830],
+                            [NSNumber numberWithFloat:8050],
+                            [NSNumber numberWithFloat:16100],
+                            [NSNumber numberWithFloat:1000],
+                            [NSNumber numberWithFloat:3000],
+                            [NSNumber numberWithFloat:5000],
+                            [NSNumber numberWithFloat:10000],
+                            [NSNumber numberWithFloat:21100],
+                            [NSNumber numberWithFloat:42200], nil];
+    
+    NSArray * raceNames = [Goal getRaceNames];
+    
+    NSInteger arrayIndex = [raceNames indexOfObject:stringForRace];
+    
+    
+    
+    
+    if(arrayIndex != NSNotFound)
+    {
+        NSNumber * raceValue = [raceValues objectAtIndex:arrayIndex];
+        return raceValue;
+    }
+    
+    return [NSNumber numberWithInt:0];
+}
+
++(NSNumber*)getWeight:(NSString*)stringForWeight
+{
+    
+    NSArray * weightNames = [Goal getWeightNames];
+    
+    NSInteger arrayIndex = [weightNames indexOfObject:stringForWeight];
+    
+    if(arrayIndex != NSNotFound)
+    {
+        return [NSNumber numberWithInt:arrayIndex+1];
+    }
+    
+    return [NSNumber numberWithInt:0];
+}
+
+
+
++(NSArray*)getRaceNames
+{
     
     return [NSArray arrayWithObjects:NSLocalizedString(@"1mile",nil),
             NSLocalizedString(@"3mile",nil),
@@ -146,43 +131,56 @@
             NSLocalizedString(@"fullmarathon",nil), nil];
 }
 
--(NSArray*)getWeightNames
++(NSString*)getRaceNameForRun:(CGFloat)distance
 {
-    //return [fatDictionary allKeys] ;  doesnt work since the result is unsort
+    NSArray * raceValues = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1610],
+                            [NSNumber numberWithFloat:4830],
+                            [NSNumber numberWithFloat:8050],
+                            [NSNumber numberWithFloat:16100],
+                            [NSNumber numberWithFloat:1000],
+                            [NSNumber numberWithFloat:3000],
+                            [NSNumber numberWithFloat:5000],
+                            [NSNumber numberWithFloat:10000],
+                            [NSNumber numberWithFloat:21100],
+                            [NSNumber numberWithFloat:42200], nil];
+    
+    NSArray * raceNames =  [Goal getRaceNames];
+    
+    NSInteger arrayIndex = [raceValues indexOfObject:[NSNumber numberWithFloat:distance]];
+    
+    NSString * raceName = @"";
+    
+    if(arrayIndex != NSNotFound)
+    {
+        //should be at same index
+        raceName = [raceNames objectAtIndex:arrayIndex];
+        return raceName;
+    }
+    
+    return raceName;
+}
+
++(NSString*)getWeightNameForCals:(NSInteger)lbs
+{
+    
+    NSString * raceName = [NSString stringWithFormat:@"%d lbs", lbs];
+    
+    
+    return raceName;
+}
+
++(NSArray*)getWeightNames
+{
     
     //set up weight loss strings
     NSMutableArray  * fatKeys= [[NSMutableArray alloc] initWithCapacity:30];
-    for(int i = 0; i< 30; i++)
+    //start at 1 lb, end at 30lb
+    for(int i = 1; i<= 30; i++)
     {
         [fatKeys addObject:[NSString stringWithFormat:@"%d lb", i]];
     }
     
     return fatKeys;
-}
-
-//method is called with variables
--(void)save
-{
-    
-    switch(self.type)
-    {
-        case GoalTypeCalories:
-            break;
-            
-        case GoalTypeOneDistance:
-            break;
-            
-        case GoalTypeRace:
-            break;
-            
-        case GoalTypeTotalDistance:
-            break;
-            
-            
-        default:
-            break;
-    }
-    
 }
 
 
@@ -267,6 +265,8 @@
 }
 
 
+
+
 -(NSString*)stringForSubtitle
 {
     
@@ -296,6 +296,138 @@
     
 }
 
+-(BOOL)processGoalForRuns:(NSMutableArray *)runsToAnalyze withMetric:(BOOL)metric
+{
+    //determine if goal is acheived
+    //set activitycount,metricValueChange,progress
+    
+    CGFloat min = 9999999;
+    CGFloat max = 0;
+    CGFloat avg = 0;
+    CGFloat total = 0;
+    NSInteger runCount = [runsToAnalyze count];
+    
+    for(RunEvent * run in runsToAnalyze)
+    {
+        switch(type)
+        {
+            case GoalTypeCalories:
+                avg += run.calories;
+                if(run.calories < min)
+                    min = run.calories;
+                if(run.calories > max)
+                    max = run.calories;
+                break;
+            case GoalTypeOneDistance:
+                avg += run.distance;
+                if(run.distance < min)
+                    min = run.distance;
+                if(run.distance > max)
+                    max = run.distance;
+                break;
+            case GoalTypeRace:
+                avg += run.avgPace;
+                if(run.avgPace < min)
+                    min = run.avgPace;
+                if(run.avgPace > max)
+                    max = run.avgPace;
+                break;
+            case GoalTypeTotalDistance:
+                avg += run.distance;
+                if(run.distance < min)
+                    min = run.distance;
+                if(run.distance > max)
+                    max = run.distance;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    total = avg;
+    //calc avg
+    avg = (runCount > 0 ? avg / runCount : 0);
+    
+    //alert to negative calcs
+    //NSAssert(avg > 0 && min > 0 && max > 0, @"negative parameter in processGoalForRuns");
+    NSLog(@"min: %.1f avg: %.1f max: %.1f", min,avg,max);
+    
+    //set goal values
+    activityCount = [NSNumber numberWithFloat:runCount];
+    
+    UserPrefs * tempPrefs = [UserPrefs defaultUser];
+    tempPrefs.metric = [NSNumber numberWithBool:metric];
+    
+    //process progress and string for metric change
+    switch(type)
+    {
+        case GoalTypeCalories:
+            progress = total / ([value floatValue]*calsInLbFat);
+            metricValueChange = [NSString stringWithFormat:@"%.1f lb / %.0f cal" , total / calsInLbFat, total];
+            break;
+        case GoalTypeOneDistance:
+            progress = max / [value floatValue];
+            metricValueChange = [NSString stringWithFormat:@"%.1f %@", [RunEvent getDisplayDistance:max withMetric:metric], [tempPrefs getDistanceUnit]];
+            break;
+        case GoalTypeRace:
+            progress = max / [value floatValue];
+            metricValueChange = [NSString stringWithFormat:@"%.1f %@ in %@", [RunEvent getDisplayDistance:[value floatValue] withMetric:metric], [tempPrefs getDistanceUnit], [RunEvent getTimeString:(max * [value floatValue])]];
+            break;
+        case GoalTypeTotalDistance:
+            progress = total / [value floatValue];
+            metricValueChange = [NSString stringWithFormat:@"%.1f %@", [RunEvent getDisplayDistance:total withMetric:metric], [tempPrefs getDistanceUnit]];
+            break;
+        default:
+            break;
+    }
+    
+    
+    if(avg == 0)
+    {
+        switch(type)
+        {
+            case GoalTypeCalories:
+                progress = 0;
+                metricValueChange = @"";
+                break;
+            case GoalTypeOneDistance:
+                break;
+            case GoalTypeRace:
+                break;
+            case GoalTypeTotalDistance:
+                progress = 0;
+                metricValueChange = @"";
+                break;
+            default:
+                break;
+        }
+    }
+    else if(max == 0)
+    {
+        
+        switch(type)
+        {
+            case GoalTypeCalories:
+                break;
+            case GoalTypeOneDistance:
+                progress = 0;
+                metricValueChange = @"";
+                break;
+            case GoalTypeRace:
+                progress = 0;
+                metricValueChange = @"";
+                break;
+            case GoalTypeTotalDistance:
+                break;
+            default:
+                break;
+        }
+    }
+    
+    
+}
+
+
 -(BOOL)validateGoalEntry
 {
     if(!self.endDate)
@@ -308,20 +440,34 @@
     switch(type)
     {
         case GoalTypeCalories:
-            if(self.value && self.weight)
+            
+            if(weight)
+            {
+                value = [Goal getWeight:weight];
                 return true;
+            }
             break;
         case GoalTypeOneDistance:
-            if(self.value && self.race)
+            if(race)
+            {
+                value = [Goal getRaceDistance:race];
                 return true;
+            }
             break;
         case GoalTypeRace:
-            if(self.value && self.race && self.time)
+            if(race && time)
+            {
+                value = [Goal getRaceDistance:race];
                 return true;
+            }
             break;
         case GoalTypeTotalDistance:
-            if(self.value)
+            if(value)
+            {
+                //get to m from km
+                value = [NSNumber numberWithInt:[value integerValue] * 1000];
                 return true;
+            }
             break;
     }
     

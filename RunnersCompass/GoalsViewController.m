@@ -22,17 +22,17 @@ static NSString * goalCellID = @"GoalCellPrototype";
 {
     if(drilledDown)
     {
-        [cells removeAllObjects];
-        [self sortRunsForGoal];
-        [header setGoal:curGoal];
-        [header setup];
+                
         [table setUserInteractionEnabled:true];
         [table setScrollEnabled:true];
+        
         //stupid hack
         table.contentSize = CGSizeMake(self.view.frame.size.width, header.frame.size.height + (goalRunCount * 44));
         [table reloadData];
+        [table setNeedsDisplay];
+        
+        drilledDown = false;
     }
-    drilledDown = false;
 }
 
 - (void)viewDidLoad
@@ -52,6 +52,13 @@ static NSString * goalCellID = @"GoalCellPrototype";
     [table registerClass:[GoalCell class] forCellReuseIdentifier:goalCellID];
     UINib * nib = [UINib nibWithNibName:@"GoalCell" bundle:[NSBundle mainBundle]] ;
     [table registerNib:nib forCellReuseIdentifier:goalCellID];
+    
+    if(curGoal)
+    {
+        [self sortRunsForGoal];
+        //process goal
+        [curGoal processGoalForRuns:sortedRunsForGoal withMetric:metric];
+    }
     
     drilledDown = false;
 }
@@ -76,6 +83,10 @@ static NSString * goalCellID = @"GoalCellPrototype";
     NSArray * tempArray = [originalRunsSorted mutableCopy];
     [sortedRunsForGoal removeAllObjects];
     
+    //min, max value
+    minValueForGoal = 0;
+    maxValueForGoal = 0;
+    
     //already sorted so that first object is latest date
     for(RunEvent * runToConsider in tempArray)
     {
@@ -83,8 +94,39 @@ static NSString * goalCellID = @"GoalCellPrototype";
             ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
         {
             [sortedRunsForGoal addObject:runToConsider];
+            
+            //calc  value for goal
+            switch(curGoal.type)
+            {
+                case GoalTypeCalories:
+                    if(runToConsider.calories < minValueForGoal)
+                        minValueForGoal = runToConsider.calories;
+                    else if(runToConsider.calories > maxValueForGoal)
+                        maxValueForGoal = runToConsider.calories ;
+                    break;
+                case GoalTypeOneDistance:
+                    //not used
+                    break;
+                case GoalTypeRace:
+                    if(runToConsider.avgPace < minValueForGoal)
+                        minValueForGoal = runToConsider.avgPace;
+                    else if(runToConsider.avgPace > maxValueForGoal)
+                        maxValueForGoal = runToConsider.avgPace ;
+                    break;
+                case GoalTypeTotalDistance:
+                    if(runToConsider.distance < minValueForGoal)
+                        minValueForGoal = runToConsider.distance;
+                    else if(runToConsider.distance > maxValueForGoal)
+                        maxValueForGoal = runToConsider.distance ;
+                    break;
+                default:
+                    break;
+            }
         }
     }
+    
+    //needs to have a max
+    //NSAssert(maxValueForGoal > 0, @"no max run value set");
     
     //set correct number of rows to show
     goalRunCount = [sortedRunsForGoal count];
@@ -95,6 +137,17 @@ static NSString * goalCellID = @"GoalCellPrototype";
     
     //set new settings
     curGoal = (Goal *) [notification object];
+    
+    //be ready to redraw cells
+    [cells removeAllObjects];
+    
+    //sort runs for goal
+    [self sortRunsForGoal];
+    //process goal
+    [curGoal processGoalForRuns:sortedRunsForGoal withMetric:metric];
+    [header setGoal:curGoal];
+    [header setup];
+
 }
 
 
@@ -144,7 +197,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         
         [cells addObject:cell];
         RunEvent * runForCell = [sortedRunsForGoal objectAtIndex:row];
-        [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric];
+        [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric withMin:minValueForGoal withMax:maxValueForGoal];
         
         
         return cell;
@@ -176,6 +229,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         header = (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                       owner:self
                                                                options:nil]objectAtIndex:0];
+        [header setMetric:metric];
         [header setGoal:curGoal];
         [header setup];
     }
@@ -191,7 +245,8 @@ static NSString * goalCellID = @"GoalCellPrototype";
     {
         header =  (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                 owner:self
-                                              options:nil]objectAtIndex:0];
+                                                                options:nil]objectAtIndex:0];
+        [header setMetric:metric];
         [header setGoal:curGoal];
         [header setup];
     }
