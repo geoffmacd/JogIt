@@ -38,6 +38,10 @@
     NSString * valueText = [tempGoal stringForEdit1];
     NSString * valueText2 = [tempGoal stringForEdit2];
     
+    //ensure value is km 
+    if(tempGoal.type == GoalTypeTotalDistance)
+        tempGoal.value = [NSNumber numberWithInt:[tempGoal.value integerValue]/1000];
+    
     
     [FKFormMapping mappingForClass:[Goal class] block:^(FKFormMapping *formMapping) {
         
