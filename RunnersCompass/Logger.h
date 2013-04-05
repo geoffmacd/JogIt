@@ -11,8 +11,6 @@
 #import "RunEvent.h"
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
-#import "CrumbPath.h"
-#import "CrumbPathView.h"
 #import "Util.h"
 #import "KMAnnotation.h"
 #import "MileAnnotation.h"
@@ -40,7 +38,7 @@
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
 #define paceChartCutoffPercent 0.05//m/s
-#define maxPermittableAccuracy 5 //m
+#define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
 #define avgPaceUpdatePeriod 3//ss
 #define mapLoadSinceFinishWait 2//s

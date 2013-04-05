@@ -52,4 +52,17 @@
 }
 
 
++(UIColor*) redColour
+{
+    UIColor *redColor = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    return redColor;
+}
+
++(UIColor*) blueColour
+{
+    
+    UIColor *blueColor = [UIColor colorWithRed:37.0f/255 green:24.0f/255 blue:192.0f/255 alpha:1.0f];
+    return blueColor;
+}
+
 @end

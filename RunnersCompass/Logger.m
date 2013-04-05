@@ -44,6 +44,7 @@
 
 #pragma mark - Lifecycle
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -356,8 +357,14 @@
     [caloriesTitle setHidden:true];
     [avgPaceTitle setHidden:true];
     
+    //set color of ghost to be blue and user to be red in distance labels
+    [distanceLabel setTextColor:[Util redColour]];
+    [ghostDistance setTextColor:[Util blueColour]];
+    [ghostDistanceTitle setTextColor:[Util blueColour]];
+    
     //unhide ghost distance
     [ghostDistance setHidden:false];
+    [ghostDistance setText:@"0:00"];
     [ghostDistanceTitle setHidden:false];
     [ghostDistanceUnitLabel setHidden:false];
     
@@ -379,6 +386,12 @@
     [caloriesLabel setHidden:false];
     [caloriesTitle setHidden:false];
     [avgPaceTitle setHidden:false];
+    
+    //set color of ghost to be original
+    [distanceLabel setTextColor:[UIColor blackColor]];
+    [ghostDistance setTextColor:[UIColor blackColor]];
+    [ghostDistanceTitle setTextColor:[Util redColour]];
+    
     
     //hide ghost distance
     [ghostDistance setHidden:true];
@@ -818,6 +831,33 @@
     selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
     selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+    
+    
+    //if ghost enabled, color label based on who was faster
+    if(run.ghost)
+    {
+        //find associated run position for current run time and display in label
+        NSInteger index = [self indexForGhostRunAtTime:run.time];
+        
+        if(index > 0)
+        {
+            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
+            
+            if(ghostPos.pace > [[run.posMeta lastObject] pace])
+            {
+                //set to blue
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
+            }
+            else{
+                //set to red
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+            }
+        }
+        else{
+            
+            selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+        }
+    }
     [selectedPlot reloadData];
     
     //then visually update chart
@@ -1056,7 +1096,7 @@
         indexToReturn++;
     }
     
-    return [run.associatedRun.posMeta lastObject];
+    return 0;
         
 }
 
@@ -1218,7 +1258,7 @@
         //find associated run position for current run time and display in label
         NSInteger index = [self indexForGhostRunAtTime:run.time];
         
-        if(index > -1)
+        if(index > 0)
         {
             CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
             
@@ -1570,7 +1610,7 @@
 {
 
     MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
-    polylineView.strokeColor = [UIColor purpleColor];
+    polylineView.strokeColor = [Util redColour];
     
     //should be fixed line
     polylineView.lineWidth = mapPathWidth;
@@ -2340,7 +2380,7 @@
     
      
     // add bar plot to view, all bar customization done here
-    CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
+    CPTColor * barColour = [CPTColor colorWithCGColor:[[Util redColour] CGColor]];
     barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
     barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
@@ -2360,7 +2400,7 @@
     
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
-    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
+    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
     CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
 	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
     selectedPlot.lineStyle = selectedBorderLineStyle;
@@ -2443,6 +2483,14 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
+    
+    //if ghost enabled, color bar 
+    if(run.ghost)
+    {
+        //some other index
+        selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+    }
+    
     //set the  minute
     selectedPaceShowMode = true;
     kmPaceShowMode = false;
