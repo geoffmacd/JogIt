@@ -45,6 +45,7 @@
 #define mapMinSpanForRun 0.005//degress
 #define lowSignalPeriod 3//s
 #define mapPathWidth 15.0//pixels
+#define mapPathSize 10 //positions
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -116,6 +117,7 @@
     //run overlay on map
     NSMutableArray *mapOverlays;
     NSMutableArray *mapGhostOverlays;
+    MKPolyline *mapSelectionOverlay;
     
     
     //for finishing map loading before screen grab
@@ -142,6 +144,10 @@
     CGRect orgDistanceLabelPosition;
     CGRect orgDistanceTitlePosition;
     CGRect orgDistanceUnitPosition;
+    
+    //index for last drawn path
+    NSInteger lastPathIndex;
+    NSInteger lastGhostPathIndex;
 }
 
 

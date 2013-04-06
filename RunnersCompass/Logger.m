@@ -74,6 +74,8 @@
     inMapView = false;
     paused = true;
     inBackground = false;
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
     
     //localization
     [timeTitle setText:NSLocalizedString(@"TimeTitle", "Logger title for time")];
@@ -160,10 +162,10 @@
     if(!inBackground)
     {
         [self updateChart];
-        [self drawMapPath];
+        [self drawMapPath:true];
         [self drawAllAnnotations];
         if(run.ghost)
-            [self drawMapGhostPath];
+            [self drawMapGhostPath:true];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
         
@@ -268,10 +270,11 @@
         [statusBut setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
         [ghostBut setHidden:false];
         
+        //erase ghost ui
         [self resetGhostRun];
         
         //zoom to entire run
-        [self drawMapPath];
+        [self drawMapPath:true];
         //do not draw any ghost paths
         [self zoomMapToEntireRun:fullMap];
         [self zoomMapToEntireRun:iconMap];
@@ -471,6 +474,8 @@
     //disable km selection mode
     kmPaceShowMode = false;
     selectedPaceShowMode = false;
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
     numMinutesAtKmSelected = -1;
     selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
@@ -510,7 +515,6 @@
         [self autoZoomMap:[run.pos lastObject] animated:inMapView withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
     }
-    
 }
 
 -(void)evalAccuracy:(CLLocationAccuracy)accuracyToAccumulate
@@ -622,10 +626,10 @@
             [self calcMetrics:newLocation];
             
             //3. draw new map overlay
-            [self drawMapPath];
+            [self drawMapPath:false];
             [self removeLegalLabelForMap:iconMap];
             if(run.ghost)
-                [self drawMapGhostPath];
+                [self drawMapGhostPath:false];
             
             //4. determine if we should pause or unpause,with latest pace
             CLLocationMeta * latestMeta = [[run posMeta] lastObject];
@@ -864,6 +868,8 @@
     //disable selection, update selection
     kmPaceShowMode = false;
     selectedPaceShowMode = false;
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
     numMinutesAtKmSelected = -1;
     selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
@@ -1118,6 +1124,25 @@
     return distanceToAdd;
 }
 
+-(NSInteger)indexForRunAtTime:(NSTimeInterval)timeToFind
+{
+    
+    if([run.posMeta count] == 0)
+        return -1;
+    
+    NSInteger indexToReturn = 0;
+    
+    for(CLLocationMeta * position in run.posMeta)
+    {
+        if(position.time == timeToFind)
+            return indexToReturn;
+        
+        indexToReturn++;
+    }
+    
+    return 0;
+}
+
 -(NSInteger)indexForGhostRunAtTime:(NSTimeInterval)timeToFind
 {
     
@@ -1135,7 +1160,6 @@
     }
     
     return 0;
-        
 }
 
 #pragma mark - HUD Management
@@ -1499,6 +1523,9 @@
     [mapOverlays removeAllObjects];
     [mapGhostOverlays removeAllObjects];
     
+    //set index to 0 again
+    lastPathIndex = 0;
+    lastGhostPathIndex = 0;
 }
 
 -(void)drawAllAnnotations
@@ -1561,7 +1588,7 @@
     }
 }
 
--(void)drawMapGhostPath
+-(void)drawMapGhostPath:(BOOL)historical
 {
     if(inBackground)
         return;
@@ -1575,23 +1602,26 @@
         return;
     }
     
-    //only use up to this ammont of the array to draw map
-    BOOL allPosConnected = true;
-    NSInteger lastConnectedIndex = 0;
+    BOOL discontinuousPathBreak = false;
+    BOOL continuousPathBreak = false;
+    NSInteger lastConnectedIndex = lastGhostPathIndex;
     NSInteger numberForLine = 0;
+    
+    //cycle through all paths until all paths drawn
     do
     {
-        CLLocationCoordinate2D coordinates[ghostPosToUse];
-        allPosConnected = true;
+        CLLocationCoordinate2D coordinates[mapPathSize];
+        discontinuousPathBreak = false;
+        continuousPathBreak = false;
         numberForLine = 0;
         
+        //stop drawing if on last position or else the for loop is broken on path breaks
         for (NSInteger i = lastConnectedIndex; i < ghostPosToUse; i++)
         {
             CLLocation *location = [run.associatedRun.pos  objectAtIndex:i];
             CLLocationCoordinate2D coordinate = location.coordinate;
             
-            numberForLine++;
-            coordinates[i-lastConnectedIndex] = coordinate;
+            coordinates[numberForLine] = coordinate;
             
             //dislocate lines if on pause point
             for(CLLocation * pausePoint in run.associatedRun.pausePoints)
@@ -1599,33 +1629,48 @@
                 if((pausePoint.coordinate.latitude == coordinate.latitude) &&
                    (pausePoint.coordinate.longitude == coordinate.longitude))
                 {
-                    
-                    //see if distance is greater than minimum for seperation
-                    allPosConnected = false;
+                    //set next point to start at next index
                     lastConnectedIndex = i+1;
+                    discontinuousPathBreak = true;
                     //break out of for loop
                     break;
                 }
             }
             
-            //break out of for loop
-            if(!allPosConnected)
+            numberForLine++;
+            
+            //split line for line size if it is on last index (4) for size 5
+            if(numberForLine == mapPathSize - 1)
+            {
+                //set last connected to be one less so that lines get connected
+                lastConnectedIndex = i;
+                continuousPathBreak = true;
+            }
+            
+            //break out of for loop if going on to next line
+            if(discontinuousPathBreak || continuousPathBreak)
                 break;
         }
         
         MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
-        
-        //depends on being added to array to check in viewForOverlay
+        //must remove previous line first
+        //historical does not need this
+        if(numberForLine < mapPathSize && numberForLine > 1 && [mapGhostOverlays lastObject] && !historical)
+        {
+            [fullMap removeOverlay:[mapGhostOverlays lastObject]];
+            [mapGhostOverlays removeLastObject];
+        }
         [mapGhostOverlays addObject:polyLine];
         
-        //add only to full size map because icon is too small
+        //add to both maps
         [fullMap addOverlay:polyLine];
         
-    }while(!allPosConnected);
+    }while(discontinuousPathBreak || continuousPathBreak);
     
+    lastGhostPathIndex = lastConnectedIndex;
 }
 
--(void)drawMapPath
+-(void)drawMapPath:(BOOL)historical
 {
     if(inBackground)
         return;
@@ -1634,22 +1679,26 @@
     if(numberOfSteps == 0)
         return;
     
-    BOOL allPosConnected = true;
-    NSInteger lastConnectedIndex = 0;
+    BOOL discontinuousPathBreak = false;
+    BOOL continuousPathBreak = false;
+    NSInteger lastConnectedIndex = lastPathIndex;
     NSInteger numberForLine = 0;
+    
+    //cycle through all paths until all paths drawn
     do 
     {
-        CLLocationCoordinate2D coordinates[numberOfSteps];
-        allPosConnected = true;
+        CLLocationCoordinate2D coordinates[mapPathSize];
+        discontinuousPathBreak = false;
+        continuousPathBreak = false;
         numberForLine = 0;
         
+        //stop drawing if on last position or else the for loop is broken on path breaks
         for (NSInteger i = lastConnectedIndex; i < numberOfSteps; i++)
         {
             CLLocation *location = [run.pos  objectAtIndex:i];
             CLLocationCoordinate2D coordinate = location.coordinate;
             
-            numberForLine++;
-            coordinates[i-lastConnectedIndex] = coordinate;
+            coordinates[numberForLine] = coordinate;
             
             //dislocate lines if on pause point
             for(CLLocation * pausePoint in run.pausePoints)
@@ -1657,30 +1706,54 @@
                 if((pausePoint.coordinate.latitude == coordinate.latitude) &&
                    (pausePoint.coordinate.longitude == coordinate.longitude))
                 {
-                    
-                    //see if distance is greater than minimum for seperation
-                    allPosConnected = false;
+                    //set next point to start at next index
                     lastConnectedIndex = i+1;
+                    discontinuousPathBreak = true;
                     //break out of for loop
                     break;
                 }
             }
             
-            //break out of for loop
-            if(!allPosConnected)
+            numberForLine++;
+            
+            //split line for line size if it is on last index (4) for size 5 
+            if(numberForLine == mapPathSize - 1)
+            {
+                //set last connected to be one less so that lines get connected
+                lastConnectedIndex = i;
+                continuousPathBreak = true;
+            }
+            
+            //break out of for loop if going on to next line
+            if(discontinuousPathBreak || continuousPathBreak)
                 break;
         }
         
-        MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
-        [mapOverlays addObject:polyLine];
+        //only add if there is something
+        if(numberForLine > 0)
+        {
+            MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
+            //must remove previous line first
+            //historical does not need this
+            //cannot do this with discontinuous path
+            if(numberForLine <  mapPathSize && numberForLine > 1 && [mapOverlays lastObject] && !historical && !discontinuousPathBreak)
+            {
+                [iconMap removeOverlay:[mapOverlays lastObject]];
+                [fullMap removeOverlay:[mapOverlays lastObject]];
+                [mapOverlays removeLastObject];
+            }
+            [mapOverlays addObject:polyLine];
+            
+            //add to both maps
+            [fullMap addOverlay:polyLine];
+            [iconMap addOverlay:polyLine];
+        }
         
-        //add to both maps
-        [fullMap addOverlay:polyLine];
-        [iconMap addOverlay:polyLine];
-        
-    }while(!allPosConnected);
+    }while(discontinuousPathBreak || continuousPathBreak);
     
+    lastPathIndex = lastConnectedIndex;
 }
+
 
 -(void)removeLegalLabelForMap:(MKMapView*)mapToRemove
 {
@@ -1733,9 +1806,17 @@
     
     MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
     polylineView.strokeColor = [Util redColour];
-    
     //should be fixed line
     polylineView.lineWidth = mapPathWidth;
+    
+    //check if it is selectedmapoverlay
+    if(mapSelectionOverlay == overlay)
+    {
+        polylineView.strokeColor = [UIColor lightGrayColor];
+        polylineView.lineWidth = mapPathWidth + 3; // to highlight
+        //polylineView.lineCap = kCGLineCapSquare;//square style to differentiate
+    }
+    
     
     return polylineView;
 }
@@ -2158,7 +2239,6 @@
         
         //selection mode of one bar
         selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
-        //selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
         selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
     }
@@ -2634,6 +2714,49 @@
     numMinutesAtKmSelected = -1;
     selectedMinIndex = idx;
     
+    
+    //show overlay in iconMap of full minute
+    CLLocationMeta * selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
+    NSTimeInterval startTime = selectedMinMeta.time - barPeriod;
+    //ensure it is at least full minute
+    if(startTime < 0)
+        startTime = 0;
+    //add overlay with these times
+    NSMutableArray * pointsToSelect = [[NSMutableArray alloc] initWithCapacity:10];
+    for(NSTimeInterval timeToFind = startTime ; timeToFind <= selectedMinMeta.time; timeToFind++)
+    {
+        NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
+        if(indexToFind > 0)
+        {
+            //add meta to array to display
+            CLLocation * posToAdd = [run.pos objectAtIndex:indexToFind];
+            if(posToAdd)
+                [pointsToSelect addObject:posToAdd];
+
+        }
+    }
+    //we have all the positions to show now add to line and display
+    CLLocationCoordinate2D coordinates[[pointsToSelect count]];
+    NSInteger indexToAdd = 0;
+    for(CLLocation * posToAdd in pointsToSelect)
+    {
+        CLLocationCoordinate2D coordinate = posToAdd.coordinate;
+        coordinates[indexToAdd] = coordinate;
+        indexToAdd++;
+        if(indexToAdd == [pointsToSelect count])
+            break;
+    }
+    if(indexToAdd > 0)
+    {
+        //remove if already present from selecting another bar
+        if(mapSelectionOverlay)
+            [iconMap removeOverlay:mapSelectionOverlay];
+        mapSelectionOverlay = [MKPolyline polylineWithCoordinates:coordinates count:indexToAdd];
+        //add to icon map
+        [iconMap addOverlay:mapSelectionOverlay];
+    }
+    
+    
     //set all pace labels for this minute
     [self setPaceLabels];
     [selectedPlot reloadData];
@@ -2850,6 +2973,8 @@
     {
         kmPaceShowMode = true;
         selectedPaceShowMode = false;
+        [iconMap removeOverlay:mapSelectionOverlay];
+        mapSelectionOverlay = nil;
         
         //start at last km
         selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
@@ -2874,11 +2999,141 @@
     }
     [selectedPlot reloadData];
     
+    
     //scroll to selected index
     CGRect rectToScroll = paceScroll.frame;
     rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedMinIndex, 0.0);
     [paceScroll scrollRectToVisible:rectToScroll animated:true];
     
+    
+    //show km on icon  map
+    NSMutableArray * pointsToSelect = [[NSMutableArray alloc] initWithCapacity:10];
+    if(isMetric)
+    {
+        if([[run kmCheckpointsMeta] count] == 0)
+        {
+            //use all run pos so far
+            pointsToSelect = [run.pos mutableCopy];
+        }
+        else if([[run kmCheckpointsMeta] count] == selectedKmIndex)
+        {
+            //not a complete mile
+            CLLocationMeta * previousKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            //add overlay with these times
+            //show all seconds in km
+            NSTimeInterval timeToFind = previousKmMeta.time;
+            NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
+            for(NSInteger i = indexToFind; i < [run.pos count]; i++)
+            {
+                if(i > 0)
+                {
+                    //add meta to array to display
+                    CLLocation * posToAdd = [run.pos objectAtIndex:i];
+                    if(posToAdd)
+                        [pointsToSelect addObject:posToAdd];
+                }
+            }
+        }
+        else
+        {
+            CLLocationMeta * selectedKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex];
+            NSTimeInterval startTime = 0;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                CLLocationMeta * previousKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                startTime = previousKmMeta.time;
+            }
+            //ensure it is at full km
+            if(startTime < 0)
+                startTime = 0;
+            //add overlay with these times
+            //show all seconds in km
+            for(NSTimeInterval timeToFind = startTime ; timeToFind <= selectedKmMeta.time; timeToFind++)
+            {
+                NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
+                if(indexToFind > 0)
+                {
+                    //add meta to array to display
+                    CLLocation * posToAdd = [run.pos objectAtIndex:indexToFind];
+                    if(posToAdd)
+                        [pointsToSelect addObject:posToAdd];
+                }
+            }
+        }
+    }
+    else
+    {
+        if([[run impCheckpointsMeta] count] == 0)
+        {
+            //use all run pos so far
+            pointsToSelect = [run.pos mutableCopy];
+        }
+        else if([[run impCheckpointsMeta] count] == selectedKmIndex)
+        {
+            //not a complete mile
+            CLLocationMeta * previousMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+            //add overlay with these times
+            //show all seconds in km
+            NSTimeInterval timeToFind = previousMileMeta.time;
+            NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
+            for(NSInteger i = indexToFind; i < [run.pos count]; i++)
+            {
+                if(i > 0)
+                {
+                    //add meta to array to display
+                    CLLocation * posToAdd = [run.pos objectAtIndex:i];
+                    if(posToAdd)
+                        [pointsToSelect addObject:posToAdd];
+                }
+            }
+        }
+        else
+        {
+            CLLocationMeta * selectedMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex];
+            NSTimeInterval startTime = 0;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                CLLocationMeta * previousMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                startTime = previousMileMeta.time;
+            }
+            //ensure it is at full km
+            if(startTime < 0)
+                startTime = 0;
+            //add overlay with these times
+            //show all seconds in km
+            for(NSTimeInterval timeToFind = startTime ; timeToFind <= selectedMileMeta.time; timeToFind++)
+            {
+                NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
+                if(indexToFind > 0)
+                {
+                    //add meta to array to display
+                    CLLocation * posToAdd = [run.pos objectAtIndex:indexToFind];
+                    if(posToAdd)
+                        [pointsToSelect addObject:posToAdd];
+                }
+            }
+        }
+    }
+    //we have all the positions to show now add to line and display
+    CLLocationCoordinate2D coordinates[[pointsToSelect count]];
+    NSInteger indexToAdd = 0;
+    for(CLLocation * posToAdd in pointsToSelect)
+    {
+        CLLocationCoordinate2D coordinate = posToAdd.coordinate;
+        coordinates[indexToAdd] = coordinate;
+        indexToAdd++;
+        if(indexToAdd == [pointsToSelect count])
+            break;
+    }
+    if(indexToAdd > 0)
+    {
+        //remove if already present from selecting another bar
+        if(mapSelectionOverlay)
+            [iconMap removeOverlay:mapSelectionOverlay];
+        mapSelectionOverlay = [MKPolyline polylineWithCoordinates:coordinates count:indexToAdd];
+        //add to icon map
+        [iconMap addOverlay:mapSelectionOverlay];
+    }
 }
 
 - (IBAction)statusButTapped:(id)sender {

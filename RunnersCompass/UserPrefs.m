@@ -73,9 +73,9 @@
     else
     {
         if([self.metric boolValue])
-            return NSLocalizedString(@"KmMetricUnitShort", @"shortform for km");
+            return NSLocalizedString(@"MinKmMetricUnitShort", @"shortform for min/km");
         else
-            return NSLocalizedString(@"MiImperialUnitShort", @"shortform for mi");
+            return NSLocalizedString(@"MinMiImperialUnitShort", @"shortform for min/mile");
     }
     
 }
