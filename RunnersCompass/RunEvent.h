@@ -10,7 +10,7 @@
 #import "RunMap.h"
 #import "UserPrefs.h"
 #define convertMSTOminKM 16.6666666666666
-#define convertKMToMile 0.621371
+#define convertKMToMile 0.6214//0.621371
 
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;

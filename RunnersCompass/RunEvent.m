@@ -106,8 +106,8 @@
 {
     //expects paceToFormat as m/s
     
-    //if it is 0 , just return 0:00 right away
-    if(paceToFormat == 0)
+    //if it is 0 or less, just return 0:00 right away
+    if(paceToFormat <= 0)
     {
         if(showSpeed)
             return @"0.0";
@@ -125,12 +125,12 @@
     }
     
     //constrain to 30:00
-    if(paceToFormat > 1800)
+    if(paceToFormat > 3599)
     {
         if(showSpeed)
-            return @"0.0";
+            return @"0.00";
         else
-            return @"30:00";
+            return @"59:59";
     }
     
     NSString *stringToSetTime = @"";

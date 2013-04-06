@@ -12,6 +12,7 @@
 #import "Logger.h"
 #import "UserPrefs.h"
 #import "Goal.h"
+#import "CoreData+MagicalRecord.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
 {

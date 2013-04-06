@@ -69,7 +69,7 @@
 				<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 				<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
 				<float key="IBUIRowHeight">44</float>
-				<float key="IBUISectionHeaderHeight">22</float>
+				<float key="IBUISectionHeaderHeight">1</float>
 				<float key="IBUISectionFooterHeight">1</float>
 			</object>
 		</array>

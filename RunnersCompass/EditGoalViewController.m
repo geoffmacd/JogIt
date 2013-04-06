@@ -40,7 +40,15 @@
     
     //ensure value is km 
     if(tempGoal.type == GoalTypeTotalDistance)
+    {
         tempGoal.value = [NSNumber numberWithInt:[tempGoal.value integerValue]/1000];
+        
+        if(![prefs.metric boolValue])
+        {
+            //convert to miles until validateGoal
+            tempGoal.value = [NSNumber numberWithInt:[tempGoal.value integerValue]*convertKMToMile];
+        }
+    }
     
     
     [FKFormMapping mappingForClass:[Goal class] block:^(FKFormMapping *formMapping) {

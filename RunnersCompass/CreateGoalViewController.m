@@ -138,8 +138,6 @@
         }
         else{
             //leave current goal in to be edited
-            
-            
             EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
             [vc setPrefs:prefs];
             [vc setTempGoal:curGoal];

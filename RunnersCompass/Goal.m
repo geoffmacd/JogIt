@@ -476,7 +476,7 @@
                 //could be a mile figure
                 if(!metric)
                 {
-                    value = [NSNumber numberWithInt:[value integerValue] * convertKMToMile];
+                    value = [NSNumber numberWithInt:[value integerValue] / convertKMToMile];
                 }
                 return true;
             }

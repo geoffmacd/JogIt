@@ -266,18 +266,21 @@
                                                  name:@"goalChangedNotification"
                                                object:nil];
     
+    //logger
     self.backVC = [[LoggerViewController alloc] initWithNibName:@"Logger" bundle:nil];
     self.backVC.delegate = self;
     //to make corners same as those for the app
     [self.backVC.view.layer setCornerRadius:10.0f];
     [self.backVC.view.layer setMasksToBounds:true];
+
+    //core data setup
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];
     
-    
-    
+    //menu
     self.frontVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
     self.frontVC.delegate = self;
     
-    
+    //slider
     self.viewController = [[JSSlidingViewController alloc] initWithFrontViewController:self.frontVC  backViewController:self.backVC];
     //set the delegates to receive the messages
     self.viewController.delegate = self.backVC;
@@ -338,6 +341,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    //clean up database
+    [MagicalRecord cleanUp];
 }
 
 @end

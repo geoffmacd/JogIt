@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="GoalRecord" representedClassName="GoalRecord" syncable="YES"/>
+    <entity name="RunRecord" syncable="YES"/>
+    <entity name="UserPrefsRecord" syncable="YES"/>
+    <elements>
+        <element name="RunRecord" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="UserPrefsRecord" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="GoalRecord" positionX="160" positionY="192" width="128" height="45"/>
+    </elements>
+</model>
