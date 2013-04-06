@@ -119,7 +119,7 @@
 					<object class="IBUIProgressView" id="319145331">
 						<reference key="NSNextResponder" ref="781795524"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{11, 223}, {299, 11}}</string>
+						<string key="NSFrame">{{11, 220}, {299, 11}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>

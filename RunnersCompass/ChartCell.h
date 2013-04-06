@@ -11,8 +11,8 @@
 #import "CorePlot-CocoaTouch.h"
 
 #define performanceBarWidth 22
-#define performanceLoadObjectsOffset 10
-#define performanceSplitObjects 20
+#define performanceLoadObjectsOffset 12
+#define performanceSplitObjects 25
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 

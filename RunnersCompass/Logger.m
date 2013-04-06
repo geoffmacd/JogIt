@@ -2826,6 +2826,10 @@
     
     //no need to remove ghost overlay since not on icon
     
+    
+    //ensure legal is gone
+    [self removeLegalLabelForMap:iconMap];
+    
     //zoom to show entire map
     [self zoomMapToEntireRun:iconMap];
     
