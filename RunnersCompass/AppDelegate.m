@@ -45,6 +45,9 @@
             {
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
+                
+                //set live to be false to prevent badge number
+                [self.backVC.run setLive:false];
             }
             else{
                 //set run to be historical
@@ -91,6 +94,9 @@
     [self.frontVC updateTimeString:updateTimeString];
     
 }
+
+#pragma mark - Delegate Methods for both
+
 
 -(UserPrefs *)curUserPrefs
 {
