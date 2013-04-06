@@ -22,8 +22,8 @@
     //new.facebook = [NSNumber numberWithInt:0];
     //find systems default unit measure
     NSLocale *locale = [NSLocale currentLocale];
-    BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
-    new.metric = [NSNumber numberWithInt:isMetric];
+    //BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
+    new.metric = [NSNumber numberWithInt:false];
     new.weight = [NSNumber numberWithInt:150];
     
     //best to leave these blank so user does not have to backspace them

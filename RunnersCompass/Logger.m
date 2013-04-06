@@ -139,7 +139,9 @@
     [self.view addSubview:shadeView];
     
     orgTitleLabelPosition = runTitle.frame;
-    
+    orgDistanceLabelPosition = distanceLabel.frame;
+    orgDistanceTitlePosition = distanceTitle.frame;
+    orgDistanceUnitPosition = distanceUnitLabel.frame;
     timeLabelx = timeLabel.frame.origin.x;
     timeTitlex = timeTitle.frame.origin.x;
 }
@@ -158,6 +160,10 @@
     if(!inBackground)
     {
         [self updateChart];
+        [self drawMapPath];
+        [self drawAllAnnotations];
+        if(run.ghost)
+            [self drawMapGhostPath];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
         
@@ -368,6 +374,9 @@
     [ghostDistanceTitle setHidden:false];
     [ghostDistanceUnitLabel setHidden:false];
     
+    //custom ghost message for swipe to pause
+    [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseGhostLabel", "Label for swipe to pause with a ghost run")];
+    
     //move time to middle
     CGFloat center = self.view.frame.size.width/2;
     CGRect labelFrame = timeLabel.frame;
@@ -376,6 +385,18 @@
     CGRect titleFrame = timeTitle.frame;
     titleFrame.origin.x = center - (titleFrame.size.width/2);
     [timeTitle setFrame:titleFrame];
+    
+    //move distance -10 left
+    labelFrame = distanceLabel.frame;
+    labelFrame.origin.x = labelFrame.origin.x - 10;
+    [distanceLabel setFrame:labelFrame];
+    labelFrame = distanceTitle.frame;
+    labelFrame.origin.x = labelFrame.origin.x - 10;
+    [distanceTitle setFrame:labelFrame];
+    labelFrame = distanceUnitLabel.frame;
+    labelFrame.origin.x = labelFrame.origin.x - 10;
+    [distanceUnitLabel setFrame:labelFrame];
+    
 }
 
 -(void)resetGhostRun
@@ -392,11 +413,13 @@
     [ghostDistance setTextColor:[UIColor blackColor]];
     [ghostDistanceTitle setTextColor:[Util redColour]];
     
-    
     //hide ghost distance
     [ghostDistance setHidden:true];
     [ghostDistanceTitle setHidden:true];
     [ghostDistanceUnitLabel setHidden:true];
+    
+    //set swipe to pause back
+    [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
     
     //move time back
     CGRect labelFrame = timeLabel.frame;
@@ -405,6 +428,12 @@
     CGRect titleFrame = timeTitle.frame;
     titleFrame.origin.x = timeTitlex;
     [timeTitle setFrame:titleFrame];
+    
+    //move distance back
+    [distanceLabel setFrame:orgDistanceLabelPosition];
+    [distanceTitle setFrame:orgDistanceTitlePosition];
+    [distanceUnitLabel setFrame:orgDistanceUnitPosition];
+    
 }
 
 #pragma mark - Managing Live Run
@@ -592,6 +621,8 @@
             //3. draw new map overlay
             [self drawMapPath];
             [self removeLegalLabelForMap:iconMap];
+            if(run.ghost)
+                [self drawMapGhostPath];
             
             //4. determine if we should pause or unpause,with latest pace
             CLLocationMeta * latestMeta = [[run posMeta] lastObject];
@@ -602,11 +633,13 @@
             //on odd periods only update graphics, so that overlay has processed
             
             //1. Center map
-            //do not zoom if user has recently touched
-            if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)) &&
-               (timeSinceMapTouch < ([NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)))
+            if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)))
             {
-                [self autoZoomMap:newLocation animated:inMapView withMap:fullMap];
+                //do not zoom if user has recently touched
+                if(timeSinceMapTouch < [NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)
+                {
+                    [self autoZoomMap:newLocation animated:inMapView withMap:fullMap];
+                }
                 
                 //center mapIcon over entire run
                 [self zoomMapToEntireRun:iconMap];
@@ -685,6 +718,7 @@
         //cancel low signal animation
         [lowSignalLabel setHidden:true];
         [runTitle setFrame:orgTitleLabelPosition];
+        lowSignal = false;
         
     }
     else
@@ -1358,6 +1392,9 @@
 
 -(void)zoomMapToEntireRun:(MKMapView*)mapToZoom
 {
+    if(inBackground)
+        return;
+    
     //zoom out to show entire course based on all positions for completeness
     CLLocation *lastPos = [[run pos] lastObject];
     CLLocationCoordinate2D lastCoord = [lastPos coordinate];
@@ -1459,18 +1496,25 @@
         mapOverlays = [[NSMutableArray alloc] initWithCapacity:100];
     if([mapAnnotations lastObject] == nil)
         mapAnnotations = [[NSMutableArray alloc] initWithCapacity:100];
+    if([mapGhostOverlays lastObject] == nil)
+        mapGhostOverlays = [[NSMutableArray alloc] initWithCapacity:100];
     
     
     [fullMap removeAnnotations:mapAnnotations];
     [fullMap removeOverlays:mapOverlays];
+    [fullMap removeOverlays:mapGhostOverlays];
     [iconMap removeOverlays:mapOverlays];
     [mapAnnotations removeAllObjects];
     [mapOverlays removeAllObjects];
+    [mapGhostOverlays removeAllObjects];
     
 }
 
 -(void)drawAllAnnotations
 {
+    if(inBackground)
+        return;
+    
     //only for full map
     UserPrefs * curSettings = [delegate curUserPrefs];
     
@@ -1525,8 +1569,75 @@
     }
 }
 
+-(void)drawMapGhostPath
+{
+    if(inBackground)
+        return;
+    
+    //find associated run position for current run time
+    NSInteger ghostPosToUse = [self indexForGhostRunAtTime:run.time];
+    
+    if(!run.ghost || ghostPosToUse < 1)
+    {
+        //don't draw 
+        return;
+    }
+    
+    //only use up to this ammont of the array to draw map
+    BOOL allPosConnected = true;
+    NSInteger lastConnectedIndex = 0;
+    NSInteger numberForLine = 0;
+    do
+    {
+        CLLocationCoordinate2D coordinates[ghostPosToUse];
+        allPosConnected = true;
+        numberForLine = 0;
+        
+        for (NSInteger i = lastConnectedIndex; i < ghostPosToUse; i++)
+        {
+            CLLocation *location = [run.associatedRun.pos  objectAtIndex:i];
+            CLLocationCoordinate2D coordinate = location.coordinate;
+            
+            numberForLine++;
+            coordinates[i-lastConnectedIndex] = coordinate;
+            
+            //dislocate lines if on pause point
+            for(CLLocation * pausePoint in run.associatedRun.pausePoints)
+            {
+                if((pausePoint.coordinate.latitude == coordinate.latitude) &&
+                   (pausePoint.coordinate.longitude == coordinate.longitude))
+                {
+                    
+                    //see if distance is greater than minimum for seperation
+                    allPosConnected = false;
+                    lastConnectedIndex = i+1;
+                    //break out of for loop
+                    break;
+                }
+            }
+            
+            //break out of for loop
+            if(!allPosConnected)
+                break;
+        }
+        
+        MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
+        
+        //depends on being added to array to check in viewForOverlay
+        [mapGhostOverlays addObject:polyLine];
+        
+        //add only to full size map because icon is too small
+        [fullMap addOverlay:polyLine];
+        
+    }while(!allPosConnected);
+    
+}
+
 -(void)drawMapPath
 {
+    if(inBackground)
+        return;
+    
     NSInteger numberOfSteps = [run.pos count];
     if(numberOfSteps == 0)
         return;
@@ -1608,7 +1719,26 @@
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
 {
-
+    //cpu intensive only search if necessary
+    if(run.ghost)
+    {
+        //may be requesting ghost run, search array for id
+        for(MKPolyline * ghostLine in mapGhostOverlays)
+        {
+            if(ghostLine == overlay)
+            {
+                //return blue line
+                MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
+                polylineView.strokeColor = [Util blueColour];
+                
+                //should be fixed line
+                polylineView.lineWidth = mapPathWidth;
+                
+                return polylineView;
+            }
+        }
+    }
+    
     MKPolylineView *polylineView = [[MKPolylineView alloc] initWithPolyline:overlay];
     polylineView.strokeColor = [Util redColour];
     
@@ -1705,6 +1835,19 @@
     if(waitingForMapToLoad)
     {
         loadingMapTiles = 0;
+    }
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated
+{
+    //determine if user touched full screen map or not
+    if(mapView == fullMap)
+    {
+        //if we haven't autozoomed in at least 1 second record map touch as from user
+        if(timeSinceMapCenter < [NSDate timeIntervalSinceReferenceDate] - 1)
+        {
+            timeSinceMapTouch = [NSDate timeIntervalSinceReferenceDate];
+        }
     }
 }
 
@@ -2245,12 +2388,8 @@
     //find max
     for(CLLocationMeta * meta in run.minCheckpointsMeta)
     {
-        if(meta.pace == 0)
-            continue;
-        if(meta.pace > 100)
-            break;
-        
-        if(meta.pace > maxYPace)
+        //do not display ridiculous speeds incase they happen
+        if(meta.pace > maxYPace && meta.pace < 100)
         {
             maxYPace = meta.pace;
         }
@@ -2687,6 +2826,8 @@
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
     
+    //no need to remove ghost overlay since not on icon
+    
     //zoom to show entire map
     [self zoomMapToEntireRun:iconMap];
     
@@ -2723,6 +2864,12 @@
     selectedMinIndex = [self getMinBarIndexForKMSelecton:selectedKmIndex];
     numMinutesAtKmSelected = [self getBarCountForKMSelection:selectedKmIndex];
     [self setPaceLabels];
+    //if ghost enabled, color bar
+    if(run.ghost)
+    {
+        //some other index
+        selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+    }
     [selectedPlot reloadData];
     
     //scroll to selected index

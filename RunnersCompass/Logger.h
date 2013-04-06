@@ -115,6 +115,7 @@
     NSMutableArray *mapAnnotations;
     //run overlay on map
     NSMutableArray *mapOverlays;
+    NSMutableArray *mapGhostOverlays;
     
     
     //for finishing map loading before screen grab
@@ -136,6 +137,11 @@
     //low gps animation
     BOOL lowSignal;
     CGRect orgTitleLabelPosition;
+    
+    //ghost
+    CGRect orgDistanceLabelPosition;
+    CGRect orgDistanceTitlePosition;
+    CGRect orgDistanceUnitPosition;
 }
 
 
