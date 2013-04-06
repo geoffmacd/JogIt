@@ -17,5 +17,6 @@
 @property  FKFormModel *formModel;
 @property  UserPrefs *prefsToChange;
 @property  BOOL oldMetric;
+@property  BOOL oldShowSpeed;
 
 @end

@@ -168,7 +168,6 @@
         [self zoomMapToEntireRun:iconMap];
         
         
-        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
     }
 }
 
@@ -269,9 +268,9 @@
         
         //zoom to entire run
         [self drawMapPath];
+        //do not draw any ghost paths
         [self zoomMapToEntireRun:fullMap];
         [self zoomMapToEntireRun:iconMap];
-        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
     }
     else
     {
@@ -1324,6 +1323,9 @@
     //see if first pos since unpause
     if(needsStartPos)
     {
+        //needs at least one position to calculate distances from
+        //add position and focus in on it
+        
         needsStartPos = false;
         
         //no pace
@@ -1332,9 +1334,6 @@
         //auto zoom and reload map icon
         [self autoZoomMap:newLocation animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
-        
-        [self performSelector:@selector(mapIconFinishedForSetRun) withObject:nil afterDelay:1.5];
-        
     }
     else{
         
@@ -1447,20 +1446,6 @@
         [mapToZoom setRegion:region animated:false];
         
     }
-    
-}
-
--(void)mapIconFinishedForSetRun
-{
-    
-    if(timeSinceLastMapLoadFinish + mapLoadSinceFinishWait > [NSDate timeIntervalSinceReferenceDate])
-    {
-        //come back every 1s to see if time is at least 2 seconds since the last map finish load
-        [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:mapLoadSinceFinishWait];
-        return;
-    }
-    
-    waitingForMapToLoad = false;
     
 }
 
@@ -2452,13 +2437,18 @@
     {
         //set scroll to be at start of empty run
         [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake(0, 0)];
+        //[paceScroll setContentOffset:CGPointMake(0, 0)];
+        CGRect animatedDestination = CGRectMake(0, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+        [paceScroll scrollRectToVisible:animatedDestination animated:true];
     }
     else{
         
         //set scroll to be at the end of run
         [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
-        [paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+        //[paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
+        
+        CGRect animatedDestination = CGRectMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+        [paceScroll scrollRectToVisible:animatedDestination animated:true];
     }
 }
 

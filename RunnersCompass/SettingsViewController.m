@@ -15,7 +15,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefsToChange,oldMetric;
+@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,6 +34,7 @@
                                         navigationController:self.navigationController];
     
     oldMetric = [prefsToChange.metric boolValue];
+    oldShowSpeed = [prefsToChange.showSpeed boolValue];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
@@ -41,7 +42,8 @@
         [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
             NSLog(@"save pressed");
             
-            if(oldMetric != [prefsToChange.metric boolValue])
+            //send out notification if units have changed
+            if(oldMetric != [prefsToChange.metric boolValue] || oldShowSpeed != [prefsToChange.showSpeed boolValue])
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadUnitsNotification"
                                                                 object:nil];
@@ -68,10 +70,11 @@
         [formMapping mapAttribute:@"weight" title:NSLocalizedString(@"SettingsWeight", @"weight in settings")  type:FKFormAttributeMappingTypeInteger];
         
         
-        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsMeasurementHeader", @"measurement header in settings")  identifier:@"bob"];
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsMeasurementHeader", @"measurement header in settings")  identifier:@"Measurement"];
         
         [formMapping mapAttribute:@"autopause" title:NSLocalizedString(@"SettingsAutoPause", @"auto pause switch in settings") type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"metric" title:NSLocalizedString(@"SettingsUnits", @"units switch in settings") type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"showSpeed" title:NSLocalizedString(@"SettingsShowSpeed", @"show speed switch in settings") type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"countdown" title:NSLocalizedString(@"SettingsCountdown", @"countdown  in settings")type:FKFormAttributeMappingTypeInteger];
 
         

@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface UserPrefs : NSObject
-@property (nonatomic, retain) NSString *fullname;
-@property (nonatomic, retain) NSDate *birthdate;
-@property (nonatomic, retain) NSNumber *weight;
-@property (nonatomic, retain) NSNumber *countdown;
-@property (nonatomic, retain) NSNumber *autopause;
-@property (nonatomic, retain) NSNumber *metric;
+@property NSString *fullname;
+@property NSDate *birthdate;
+@property NSNumber *weight;
+@property NSNumber *countdown;
+@property NSNumber *autopause;
+@property NSNumber *metric;
+@property NSNumber *showSpeed;
 //@property (nonatomic, retain) NSNumber *facebook;
 //@property (nonatomic, retain) NSNumber *twitter;
 
