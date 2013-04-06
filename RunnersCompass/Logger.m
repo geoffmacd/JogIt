@@ -496,8 +496,6 @@
         [locationManager stopUpdatingLocation];
     }
     
-    [run.pausePoints addObject:[run.pos lastObject]];
-    
     //set map to follow user before starting track
     [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
     
@@ -507,6 +505,8 @@
     //only zoom if there exists a last point
     if([run.pos lastObject])
     {
+        //add to pausepoints to know where to break overlay lines
+        [run.pausePoints addObject:[run.pos lastObject]];
         [self autoZoomMap:[run.pos lastObject] animated:inMapView withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
     }
