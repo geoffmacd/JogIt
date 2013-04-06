@@ -14,7 +14,7 @@
 
 @implementation GoalsViewController
 
-@synthesize table,curGoal,header,metric,originalRunsSorted;
+@synthesize table,curGoal,header,prefs,originalRunsSorted;
 
 static NSString * goalCellID = @"GoalCellPrototype";
 
@@ -57,7 +57,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
     {
         [self sortRunsForGoal];
         //process goal
-        [curGoal processGoalForRuns:sortedRunsForGoal withMetric:metric];
+        [curGoal processGoalForRuns:sortedRunsForGoal withMetric:[[prefs metric] boolValue]];
     }
     
     drilledDown = false;
@@ -144,7 +144,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
     //sort runs for goal
     [self sortRunsForGoal];
     //process goal
-    [curGoal processGoalForRuns:sortedRunsForGoal withMetric:metric];
+    [curGoal processGoalForRuns:sortedRunsForGoal withMetric:[[prefs metric] boolValue]];
     [header setGoal:curGoal];
     [header setup];
 
@@ -197,7 +197,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         
         [cells addObject:cell];
         RunEvent * runForCell = [sortedRunsForGoal objectAtIndex:row];
-        [cell setupWithRun:runForCell withGoal:curGoal withMetric:metric withMin:minValueForGoal withMax:maxValueForGoal];
+        [cell setupWithRun:runForCell withGoal:curGoal withMetric:[[prefs metric] boolValue] showSpeed:[[prefs showSpeed] boolValue] withMin:minValueForGoal withMax:maxValueForGoal];
         
         
         return cell;
@@ -229,7 +229,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         header = (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                       owner:self
                                                                options:nil]objectAtIndex:0];
-        [header setMetric:metric];
+        [header setMetric:[[prefs metric] boolValue] ];
         [header setGoal:curGoal];
         [header setup];
     }
@@ -246,7 +246,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         header =  (GoalHeaderCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalHeaderCell"
                                                 owner:self
                                                                 options:nil]objectAtIndex:0];
-        [header setMetric:metric];
+        [header setMetric:[[prefs metric] boolValue] ];
         [header setGoal:curGoal];
         [header setup];
     }
@@ -270,6 +270,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
     
     CreateGoalViewController  * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
     [vc setGoal:curGoal];
+    [vc setPrefs:prefs];
     
     [self presentViewController:vc animated:true completion:nil];
     

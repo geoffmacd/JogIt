@@ -111,19 +111,21 @@
     
     UserPrefs * prefs = [delegate getPrefs];
     NSString * distanceUnitText = [prefs getDistanceUnit];
+    NSString * paceUnitText = [prefs getPaceUnit];
     BOOL metricUnit = [prefs.metric integerValue];
+    BOOL showSpeed = [prefs.showSpeed boolValue];
     
     //Set Title
     NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //Set units for localization/units
-    [paceUnit setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    [paceUnit setText:paceUnitText];
     [calUnit setText: NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
     [minUnit setText: NSLocalizedString(@"TimeShort", @"Shortform units for time")];
     
     //Set values
-    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace withMetric:metricUnit]];
+    [paceLabel setText:[RunEvent getPaceString:associatedRun.avgPace withMetric:metricUnit showSpeed:showSpeed]];
     [timeLabel setText:[RunEvent getTimeString:associatedRun.time]];
     [calLabel setText:[NSString stringWithFormat:@"%.0f", associatedRun.calories]];
 }

@@ -15,6 +15,8 @@
 
 @property FKFormModel *formModel;
 @property Goal  *tempGoal;
+@property UserPrefs * prefs;
+
 
 
 @end

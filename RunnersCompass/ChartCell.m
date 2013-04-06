@@ -26,7 +26,7 @@
 @synthesize selectedLabel,allTimeLabel;
 @synthesize weeklyValues,monthlyValues;
 @synthesize raceCell;
-@synthesize metric;
+@synthesize metric,showSpeed;
 
 #pragma mark - Lifecycle
 
@@ -138,9 +138,9 @@
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:allTime withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue] withMetric:metric]];
-                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue] withMetric:metric]];
-                [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:metric]];
+                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue] withMetric:metric showSpeed:showSpeed]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue] withMetric:metric showSpeed:showSpeed]];
+                [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:metric showSpeed:showSpeed]];
                 break;
             case MetricTypeTime:
                 [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
@@ -571,7 +571,7 @@
                 [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:[valueToDisplay floatValue] withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue] withMetric:metric]];
+                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue] withMetric:metric showSpeed:showSpeed]];
                 break;
             case MetricTypeTime:
                 [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];

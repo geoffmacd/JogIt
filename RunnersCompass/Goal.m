@@ -435,7 +435,7 @@
 }
 
 
--(BOOL)validateGoalEntry
+-(BOOL)validateGoalEntry:(BOOL)metric
 {
     if(!self.endDate)
         return false;
@@ -473,6 +473,11 @@
             {
                 //get to m from km
                 value = [NSNumber numberWithInt:[value integerValue] * 1000];
+                //could be a mile figure
+                if(!metric)
+                {
+                    value = [NSNumber numberWithInt:[value integerValue] * convertKMToMile];
+                }
                 return true;
             }
             break;

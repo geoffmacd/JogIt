@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CreateGoalHeaderCell.h"
 #import "Goal.h"
+#import "UserPrefs.h"
 
 @interface CreateGoalViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 
 @property CreateGoalHeaderCell * header;
 @property Goal *goal;
+@property UserPrefs * prefs;
 
 @property (weak) IBOutlet UITableView *table;
 

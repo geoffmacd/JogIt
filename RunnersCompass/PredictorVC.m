@@ -13,7 +13,7 @@
 
 @implementation PredictorVC
 
-@synthesize table,header, weekly, analysis, metric;
+@synthesize table,header, weekly, analysis, prefs;
 
 
 
@@ -38,6 +38,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
+}
 
 
 #pragma mark -
@@ -108,7 +112,8 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
-        [cell setMetric:metric];
+        [cell setMetric:[[prefs metric] boolValue]];
+        [cell setShowSpeed:[[prefs showSpeed] boolValue]];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row];

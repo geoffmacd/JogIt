@@ -171,6 +171,10 @@
     }
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
+}
 
 #pragma mark - Loading runs
 
@@ -935,6 +939,7 @@
         if(distanceToAdd > 0.5)
             grade = climbed / distanceToAdd;
         UserPrefs * curSettings = [delegate curUserPrefs];
+        BOOL showSpeed = [[curSettings showSpeed] boolValue];
         CGFloat weight = [[curSettings weight] floatValue] / 2.2046; //weight in kg
         CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
         //only add calories if it is positive
@@ -978,7 +983,7 @@
                 //illustrate with pace @ KM ##
                 NSString *distanceUnitText = [curSettings getDistanceUnit];
                 newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
-                newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:true];
+                newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:true showSpeed:showSpeed];
                 newAnnotation.kmCoord = [latest coordinate];
                 //add to array
                 [mapAnnotations addObject:newAnnotation];
@@ -1022,7 +1027,7 @@
                 //illustrate with pace @ KM ##
                 NSString *distanceUnitText = [curSettings getDistanceUnit];
                 newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
-                newAnnotation.paceString = [RunEvent getPaceString:[newMile pace] withMetric:false];
+                newAnnotation.paceString = [RunEvent getPaceString:[newMile pace] withMetric:false showSpeed:showSpeed];
                 newAnnotation.mileCoord = [latest coordinate];
                 //add to array
                 [mapAnnotations addObject:newAnnotation];
@@ -1204,9 +1209,10 @@
     }
     currentUnits = [curSettings metric];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
+    NSString * paceUnitText = [curSettings getPaceUnit];
     
-    [paceUnitLabel1 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
-    [paceUnitLabel2 setText:[NSString stringWithFormat:@"%@/%@", NSLocalizedString(@"MinutesShortForm", @"Shortform for min"), distanceUnitText]];
+    [paceUnitLabel1 setText:paceUnitText];
+    [paceUnitLabel2 setText:paceUnitText];
     
     [distanceUnitLabel setText:distanceUnitText];
     [ghostDistanceUnitLabel setText:distanceUnitText];
@@ -1502,6 +1508,7 @@
     
     //only for full map
     UserPrefs * curSettings = [delegate curUserPrefs];
+    BOOL showSpeed = [[curSettings showSpeed] boolValue];
     
     if([curSettings.metric integerValue] == 1)
     {
@@ -1518,7 +1525,7 @@
             NSString *distanceUnitText = [curSettings getDistanceUnit];
             //km is just the index plus 1
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-            newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:true];
+            newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:true showSpeed:showSpeed];
             newAnnotation.kmCoord = [kmPos coordinate];
             
             //add to array
@@ -1542,7 +1549,7 @@
             NSString *distanceUnitText = [curSettings getDistanceUnit];
             //km is just the index plus 1
             newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-            newAnnotation.paceString = [RunEvent getPaceString:[mileMeta pace] withMetric:false];
+            newAnnotation.paceString = [RunEvent getPaceString:[mileMeta pace] withMetric:false showSpeed:showSpeed];
             newAnnotation.mileCoord = [milePos coordinate];
             
             //add to array
@@ -2110,13 +2117,14 @@
     //responible for two bottom sections
     
     UserPrefs * curSettings = [delegate curUserPrefs];
+    BOOL showSpeed = [[curSettings showSpeed] boolValue];
     BOOL isMetric = [[curSettings metric] integerValue];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     
     //update avg pace every 3 seconds
     if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
     {
-        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric];
+        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric showSpeed:showSpeed];
         [paceLabel setText:stringToSetTime];
     }
     
@@ -2136,14 +2144,14 @@
         // current pace
         selectedMinMeta = [[run posMeta] lastObject];
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
     }
     else if(kmPaceShowMode){
         
         // just display current pace
         selectedMinMeta = [[run posMeta] lastObject];
         selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
         
     }
     else if(selectedPaceShowMode){
@@ -2152,7 +2160,7 @@
         selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
         //selectedPaceLabel = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"MinuteWord", "minute word for pace minute selection"), (NSInteger)(selectedMinMeta.time/60)];
         selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
     }
     [currentPaceLabel setText:selectedPaceLabel];
     [currentPaceValue setText:selectedPaceString];
@@ -2195,7 +2203,7 @@
             if(selectedKmIndex - 1  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2203,7 +2211,7 @@
             if(selectedKmIndex - 2  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2211,7 +2219,7 @@
             if(selectedKmIndex - 3  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2228,7 +2236,7 @@
             [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
             
             //load current
-            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace] withMetric:true];
+            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace] withMetric:true showSpeed:showSpeed];
             [lastKmPace setText:paceForCurrentIndex];
             
             //load old values
@@ -2236,7 +2244,7 @@
             if(selectedKmIndex - 1  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2244,7 +2252,7 @@
             if(selectedKmIndex - 2  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2252,7 +2260,7 @@
             if(selectedKmIndex - 3  >= 0)
             {
                 oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2296,7 +2304,7 @@
             if(selectedKmIndex - 1  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2304,7 +2312,7 @@
             if(selectedKmIndex - 2  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2312,7 +2320,7 @@
             if(selectedKmIndex - 3  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2329,7 +2337,7 @@
             [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
             
             //load current
-            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionMileMeta pace] withMetric:false];
+            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionMileMeta pace] withMetric:false showSpeed:showSpeed];
             [lastKmPace setText:paceForCurrentIndex];
             
             //load old values
@@ -2337,7 +2345,7 @@
             if(selectedKmIndex - 1  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2345,7 +2353,7 @@
             if(selectedKmIndex - 2  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";
@@ -2353,7 +2361,7 @@
             if(selectedKmIndex - 3  >= 0)
             {
                 oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
             }
             else
                 paceForOld = @"";

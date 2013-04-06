@@ -21,7 +21,7 @@
 @implementation CreateGoalViewController
 
 @synthesize table,header;
-@synthesize tempGoal,goal;
+@synthesize tempGoal,goal,prefs;
 
 
 
@@ -141,6 +141,7 @@
             
             
             EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+            [vc setPrefs:prefs];
             [vc setTempGoal:curGoal];
             [self presentViewController:vc animated:true completion:nil];
         }
@@ -148,6 +149,7 @@
     else{
         
         EditGoalViewController  * vc = [[EditGoalViewController alloc] initWithNibName:@"EditGoalViewController" bundle:nil];
+        [vc setPrefs:prefs];
         [vc setTempGoal:tempGoal];
         [self presentViewController:vc animated:true completion:nil];
     }

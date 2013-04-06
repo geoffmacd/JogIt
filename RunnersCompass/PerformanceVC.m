@@ -14,9 +14,7 @@
 
 @implementation PerformanceVC
 
-@synthesize table,header, weekly, analysis, metric;
-
-
+@synthesize table,header, weekly, analysis, prefs;
 
 - (void)viewDidLoad
 {
@@ -38,6 +36,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
+}
 
 #pragma mark -
 #pragma mark Performance Table data source
@@ -102,7 +104,8 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
-        [cell setMetric:metric];
+        [cell setMetric:[[prefs metric] boolValue]];
+        [cell setShowSpeed:[[prefs showSpeed] boolValue]];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
@@ -172,7 +175,7 @@
     PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
     
     [vc setAnalysis:analysis];
-    [vc setMetric:metric];
+    [vc setPrefs:prefs];
     
     [self presentViewController:vc animated:true completion:^{
         

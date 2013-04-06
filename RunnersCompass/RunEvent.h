@@ -107,13 +107,13 @@ typedef enum
 
 
 -(id)initWithGhostRun:(RunEvent*)associatedRunToGhost;
--(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metric;
+-(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metric showSpeed:(BOOL)showSpeed;
 -(id)initWithNoTarget;
 
 +(NSString *)stringForMetric:(RunMetric) metric;
 +(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat;
 +(NSString*)getTimeString:(NSTimeInterval)timeToFormat;
-+(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay;
++(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay showSpeed:(BOOL)showSpeed;
 +(NSString * )stringForRace:(RaceType) metric;
 +(CGFloat)getDisplayDistance:(CGFloat)distanceToDisplayInM withMetric:(BOOL)metricForDisplay;
 @end

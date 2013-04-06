@@ -65,9 +65,11 @@
 @property(nonatomic, setter = setTimePeriod:) BOOL weekly;
 @property BOOL loadedGraph;
 @property BOOL raceCell;
-@property (nonatomic, assign) BOOL metric;
 @property NSMutableArray * weeklyValues;
 @property NSMutableArray * monthlyValues;
+//user prefs
+@property BOOL metric;
+@property BOOL showSpeed;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

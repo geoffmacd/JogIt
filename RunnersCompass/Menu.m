@@ -29,6 +29,7 @@
 @synthesize settingsBut,performanceBut,goalsBut;
 @synthesize runningManImage,noRunsLabel;
 @synthesize noRunView;
+@synthesize delegate;
 
 static NSString * cellID = @"HierarchicalCellPrototype";
 
@@ -96,10 +97,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [MenuTable setScrollsToTop:true];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return NO;
 }
 
 #pragma mark -
@@ -430,7 +437,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
     [vc setAnalysis:analysisToSet];
-    [vc setMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    [vc setPrefs:[self.delegate curUserPrefs]];
     
     [self presentViewController:vc animated:true completion:nil];
 }
@@ -441,7 +448,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
-    [vc setMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    [vc setPrefs:[self.delegate curUserPrefs]];
     [vc setCurGoal:[self.delegate curGoal]];
     [vc setOriginalRunsSorted:runs];
     [self presentViewController:vc animated:true completion:nil];
@@ -470,7 +477,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //need m/s
     pace = 1000 / pace;
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    //convert to imperial if neccessary
+    UserPrefs * curPrefs = [delegate curUserPrefs];
+    if(![curPrefs.metric boolValue])
+    {
+        pace = pace / convertKMToMile;
+    }
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -479,7 +493,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000 withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    //convert to mi or km
+    UserPrefs * curPrefs = [delegate curUserPrefs];
+    if(![curPrefs.metric boolValue])
+    {
+        distance = distance / convertKMToMile;
+    }
+    
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000 withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -488,7 +509,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     NSTimeInterval time = ([selectedIndex intValue] * 60);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -497,7 +518,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     CGFloat calories = 25 + ([selectedIndex intValue] * 25);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories withMetric:[[[self.delegate curUserPrefs] metric] integerValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     

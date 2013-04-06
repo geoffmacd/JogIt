@@ -49,7 +49,7 @@ typedef enum
 -(NSString*)stringForSubtitle;
 -(NSString *)stringForEdit2;
 -(NSString *)stringForEdit1;
--(BOOL)validateGoalEntry;
+-(BOOL)validateGoalEntry:(BOOL)metric;
 -(BOOL)processGoalForRuns:(NSMutableArray *)runsToAnalyze withMetric:(BOOL)metric;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserPrefs.h"
 
 @interface Util : NSObject
 
@@ -15,8 +16,4 @@
 +(UIColor*) blueColour;
 
 
-@end
-
-@interface UIImage (ImageBlur)
-- (UIImage *)imageWithGaussianBlur9;
 @end

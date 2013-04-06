@@ -102,15 +102,20 @@
     return distanceToDisplayInM;
 }
 
-+(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay
++(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay showSpeed:(BOOL)showSpeed
 {
     //expects paceToFormat as m/s
-    //need to transform to s/km
     
     //if it is 0 , just return 0:00 right away
     if(paceToFormat == 0)
-        return @"0:00";
+    {
+        if(showSpeed)
+            return @"0.0";
+        else
+            return @"0:00";
+    }
     
+    //need to transform to s/km
     paceToFormat = 1000 / paceToFormat;
     
     //convert to min/mile if necessary
@@ -121,31 +126,50 @@
     
     //constrain to 30:00
     if(paceToFormat > 1800)
-        return @"30:00";
+    {
+        if(showSpeed)
+            return @"0.0";
+        else
+            return @"30:00";
+    }
     
-    NSInteger minutes,seconds;
+    NSString *stringToSetTime = @"";
     
-    minutes = paceToFormat/ 60;
-    seconds = paceToFormat - (minutes * 60);
-    
-    NSString * minuteTime;
-    NSString * secondTime;
-    NSString *stringToSetTime;
-    
-    if(minutes < 10)
-        minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+    if(showSpeed)
+    {
+        //just convert to per hour from s/km or s/mi
+        CGFloat speed = 3600 / paceToFormat;
+        
+        if(speed > 9.99)
+            stringToSetTime = [NSString stringWithFormat:@"%.1f", speed];
+        else //2 decimals for below 10 to keep 3 digits on screen
+            stringToSetTime = [NSString stringWithFormat:@"%.2f", speed];
+    }
     else
-        minuteTime = [NSString stringWithFormat:@"%d",minutes];
-    
-    if(seconds < 10)
-        secondTime = [NSString stringWithFormat:@"0%d",seconds];
-    else
-        secondTime = [NSString stringWithFormat:@"%d",seconds];
-    
-    stringToSetTime = [NSString stringWithFormat:@"%@:%@",minuteTime,secondTime];
-    
+    {
+        //convert to per minute format
+        NSInteger minutes,seconds;
+        
+        minutes = paceToFormat/ 60;
+        seconds = paceToFormat - (minutes * 60);
+        
+        NSString * minuteTime;
+        NSString * secondTime;
+        
+        if(minutes < 10)
+            minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+        else
+            minuteTime = [NSString stringWithFormat:@"%d",minutes];
+        
+        if(seconds < 10)
+            secondTime = [NSString stringWithFormat:@"0%d",seconds];
+        else
+            secondTime = [NSString stringWithFormat:@"%d",seconds];
+        
+        stringToSetTime = [NSString stringWithFormat:@"%@:%@",minuteTime,secondTime];
+
+    }
     return stringToSetTime;
-    
 }
 
 +(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat
@@ -283,7 +307,7 @@
     return nil;
 }
 
--(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metricForDisplay
+-(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metricForDisplay showSpeed:(BOOL)showSpeed
 {
     self = [super init];
     
@@ -291,7 +315,7 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay]];
+                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed]];
                 break;
             case MetricTypeCalories:
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];

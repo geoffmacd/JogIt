@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GoalHeaderCell.h"
+#import "UserPrefs.h"
 
 @interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 {
@@ -27,7 +28,7 @@
 @property (strong) GoalHeaderCell * header;
 @property Goal * curGoal;
 @property (nonatomic, setter = setOriginalRunsSorted:)NSMutableArray * originalRunsSorted;
-@property BOOL metric;
+@property UserPrefs * prefs;
 
 
 - (IBAction)done:(id)sender;

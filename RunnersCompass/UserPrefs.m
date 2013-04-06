@@ -58,6 +58,28 @@
     
 }
 
+-(NSString*)getPaceUnit
+{
+    
+    //should not need to be translated
+    
+    if([self.showSpeed boolValue])
+    {
+        if([self.metric boolValue])
+            return NSLocalizedString(@"KPHUnitShort", @"shortform for kph");
+        else
+            return NSLocalizedString(@"MPHUnitShort", @"shortform for mph");
+    }
+    else
+    {
+        if([self.metric boolValue])
+            return NSLocalizedString(@"KmMetricUnitShort", @"shortform for km");
+        else
+            return NSLocalizedString(@"MiImperialUnitShort", @"shortform for mi");
+    }
+    
+}
+
 
 -(NSString*)getTimeString:(NSTimeInterval) f
 {

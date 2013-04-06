@@ -15,7 +15,7 @@
 
 @implementation EditGoalViewController
 
-@synthesize  formModel,tempGoal;
+@synthesize  formModel,tempGoal,prefs;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,7 +50,7 @@
         [formMapping buttonSave:NSLocalizedString(@"CreateGoalButton", @"Create goal in edit screen") handler:^{
             
             //confirm goal is valid before saving, this will handle error validation as well
-            if([tempGoal validateGoalEntry])
+            if([tempGoal validateGoalEntry:[[prefs metric] boolValue]])
             {
                 //send notification to app delegate
                 [[NSNotificationCenter defaultCenter]

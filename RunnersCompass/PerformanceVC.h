@@ -10,6 +10,7 @@
 #import "ChartCell.h"
 #import "PermHeaderCell.h"
 #import "Analysis.h"
+#import "UserPrefs.h"
 
 @interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {
@@ -17,9 +18,9 @@
 }
 
 @property PermHeaderCell * header;
-@property BOOL weekly;
-@property BOOL metric;
+@property UserPrefs * prefs;
 @property Analysis * analysis;
+@property BOOL weekly;
 
 
 @property (weak)  IBOutlet UITableView *table;

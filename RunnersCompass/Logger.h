@@ -149,7 +149,6 @@
 
 //delegate
 @property id <LoggerViewControllerDelegate>delegate;
-//user preferences
 @property (nonatomic, setter = setRun:) RunEvent * run;
 @property BOOL paused;
 //APP IS IN BACKGROUND

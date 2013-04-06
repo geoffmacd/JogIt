@@ -13,7 +13,7 @@
 
 @synthesize label,progress,dateLabel;
 
--(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric withMin:(CGFloat)min withMax:(CGFloat)max
+-(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric showSpeed:(BOOL)showSpeed withMin:(CGFloat)min withMax:(CGFloat)max
 {
     //always show the date in label
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -40,7 +40,7 @@
             progessValue = runForCell.distance / [goal.value integerValue];
             break;
         case GoalTypeRace:
-            stringForGoal = [NSString stringWithFormat:@"%@", [RunEvent getPaceString:runForCell.avgPace withMetric:metric]];
+            stringForGoal = [NSString stringWithFormat:@"%@", [RunEvent getPaceString:runForCell.avgPace withMetric:metric showSpeed:showSpeed]];
             progessValue = runForCell.avgPace / max;
             break;
         case GoalTypeTotalDistance:
