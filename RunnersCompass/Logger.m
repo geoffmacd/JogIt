@@ -1074,7 +1074,6 @@
     
     if(consecutiveHeadingCount > 0)
     {
-     
         CLLocationDirection cumulativeCourseDifferential = 0;
         
         //ensure array range respected
@@ -2947,8 +2946,9 @@
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
     
-    //no need to remove ghost overlay since not on icon
-    
+    //remove selection overlay
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
     
     //ensure legal is gone
     [self removeLegalLabelForMap:iconMap];
