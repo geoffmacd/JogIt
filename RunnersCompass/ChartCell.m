@@ -32,9 +32,8 @@
 
 -(void)setup
 {
-    
-    
-    loadedGraph = false;//load later
+    loadedGraph = false;
+    [self loadChart];
     
     [self setExpand:false withAnimation:false];
     
@@ -158,40 +157,16 @@
         }
     }
     
-    
-
-    
     //deter chart y range
     minY = 0;
-    maxY = highest + 1.0f;
-    
+    maxY = highest * 1.05;
     
     //reload data if already loaded
     if(loadedGraph)
     {
         loadedGraph = false;
         
-        NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
-        
-        //set size of view of graph to be equal to that of the split load
-        CGRect graphRect = expandedView.frame;
-        graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
-        //set origin so that view is drawn for split filling up the last possible view
-        graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
-        [expandedView setFrame:graphRect];
-        
-        [self barPlot:nil barWasSelectedAtRecordIndex:0];
-        
-        //draw bar graph with new data from run
-        lastCacheMinute = numBars - performanceSplitObjects;
-        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
-        [self setupGraphForView:expandedView withRange:firstRangeToShow];
-        
-        
-        //set scroll to be at the end of run
-        [scrollView setContentSize:CGSizeMake(numBars* performanceBarWidth, scrollView.frame.size.height)];
-        [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
-        
+        [self loadChart];
     }
     
 }
@@ -233,32 +208,8 @@
         
         if(!loadedGraph)
         {
-            NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
-            
-            //set size of view of graph to be equal to that of the split load
-            CGRect graphRect = expandedView.frame;
-            graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
-            //set origin so that view is drawn for split filling up the last possible view
-            graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
-            [expandedView setFrame:graphRect];
-            
-            
-            [self barPlot:nil barWasSelectedAtRecordIndex:0];
-            
-            //draw bar graph with new data from run
-            lastCacheMinute = numBars- performanceSplitObjects;
-            CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
-            [self setupGraphForView:expandedView withRange:firstRangeToShow];
-            
-            
-            //set scroll to be at the end of run
-            
-            [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
-            [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
-            
+            [self loadChart];
         }
-        
-        
         
     }else{
         
@@ -299,6 +250,31 @@
 }
 
 #pragma mark - BarChart
+
+-(void)loadChart
+{
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
+    
+    //set size of view of graph to be equal to that of the split load
+    CGRect graphRect = expandedView.frame;
+    graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
+    //set origin so that view is drawn for split filling up the last possible view
+    graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
+    [expandedView setFrame:graphRect];
+    
+    [self barPlot:nil barWasSelectedAtRecordIndex:0];
+    
+    //draw bar graph with new data from run
+    lastCacheMinute = numBars- performanceSplitObjects;
+    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
+    [self setupGraphForView:expandedView withRange:firstRangeToShow];
+    
+    //set scroll to be at the end
+    [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
+    [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
+    
+    loadedGraph = true;
+}
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {

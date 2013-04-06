@@ -177,9 +177,7 @@
     [vc setAnalysis:analysis];
     [vc setPrefs:prefs];
     
-    [self presentViewController:vc animated:true completion:^{
-        
-    }];
+    [self presentViewController:vc animated:true completion:nil];
 }
 
 - (IBAction)weeklyTapped:(id)sender {
@@ -196,7 +194,6 @@
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
         {
-            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
         }
     }
@@ -217,7 +214,6 @@
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
         {
-            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
         }
     }

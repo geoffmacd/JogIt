@@ -94,7 +94,6 @@
     return 1;
 }
 
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return RaceTypeFullMarathon;
@@ -133,9 +132,6 @@
         
         return curCell;
     }
-    
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -197,7 +193,6 @@
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
         {
-            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
         }
     }
@@ -218,7 +213,6 @@
         //to trigger setWeekly methods
         if(sender)//must of have been manual from viewdidload to prevent unloaded reloadtable
         {
-            //[cells removeAllObjects];//remove everything to cause to reload
             [table reloadData];
         }
     }
