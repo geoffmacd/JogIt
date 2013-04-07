@@ -110,9 +110,9 @@
     if(paceToFormat <= 0)
     {
         if(showSpeed)
-            return @"0.0";
+            return @"-.-";
         else
-            return @"0:00";
+            return @"--:--";
     }
     
     //need to transform to s/km
@@ -128,9 +128,9 @@
     if(paceToFormat > 3599)
     {
         if(showSpeed)
-            return @"0.00";
+            return @"-.-";
         else
-            return @"59:59";
+            return @"--:--";
     }
     
     NSString *stringToSetTime = @"";
@@ -139,11 +139,8 @@
     {
         //just convert to per hour from s/km or s/mi
         CGFloat speed = 3600 / paceToFormat;
-        
-        if(speed > 9.99)
-            stringToSetTime = [NSString stringWithFormat:@"%.1f", speed];
-        else //2 decimals for below 10 to keep 3 digits on screen
-            stringToSetTime = [NSString stringWithFormat:@"%.2f", speed];
+        //set to one decimal place only 
+        stringToSetTime = [NSString stringWithFormat:@"%.1f", speed];
     }
     else
     {
@@ -183,7 +180,7 @@
     
     //constrain to 59:59
     if(paceToFormat > 3599)
-        return @"59:59";
+        return @"--:--";
     
     NSInteger minutes,seconds;
     

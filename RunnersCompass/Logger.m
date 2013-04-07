@@ -161,6 +161,7 @@
     //refresh view if coming out of background
     if(!inBackground)
     {
+        //scroll to newest
         [self updateChart];
         [self drawMapPath:true];
         [self drawAllAnnotations];
@@ -343,6 +344,7 @@
         barPlot = nil;
     }
     
+    //scrolls to end
     [self updateChart];
 }
 
@@ -903,7 +905,7 @@
     }
     [selectedPlot reloadData];
     
-    //then visually update chart
+    //then visually update chart and scroll to new minute
     [self updateChart];
 }
 
@@ -1139,7 +1141,7 @@
         indexToReturn++;
     }
     
-    return 0;
+    return -1;
 }
 
 -(NSInteger)indexForGhostRunAtTime:(NSTimeInterval)timeToFind
@@ -1960,8 +1962,6 @@
     
     if(curViewMinute <= lastCacheMinute  && !(curViewMinute <= 0))
     {
-    
-        
         //reload to the left
         lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
         
@@ -1988,13 +1988,11 @@
         newGraphViewRect.origin.x += [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
         [chart setFrame:newGraphViewRect];
     }
-
-    
-    
 }
 
 -(BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView
 {
+    //to allow menu view to scroll to top
     return false;
 }
 
@@ -2477,6 +2475,61 @@
     
 }
 
+-(void)updateChartForScroll:(NSInteger)targetMinIndex
+{
+
+    //target caching for the start of the intended index
+    lastCacheMinute = targetMinIndex;
+    
+    //lastCacheMinute too high if target on last screen
+    if(targetMinIndex > [[run minCheckpointsMeta] count] - paceGraphSplitObjects)
+    {
+        lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
+    }
+    
+    //set size of view of graph to be equal to that of the split load if not already
+    CGRect paceGraphRect = chart.frame;
+    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
+    if(lastCacheMinute < 0)
+    {
+        paceGraphRect.origin = CGPointMake(0, 0);
+    }
+    else    //set origin so that view is drawn for split filling up the last possible view
+    {
+        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
+    }
+    [chart setFrame:paceGraphRect];
+
+    
+    if(!barPlot)
+    {
+        //if bar graph not yet loaded
+        
+        //draw bar graph with new data from run
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+        [self setupGraphForView:chart withRange:firstRangeToShow];
+    }
+    else{
+        //if loaded, just update ranges
+        
+        //set x range and y range for new graph config
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        
+        [barPlot reloadData];
+    }
+    
+    //scroll to index
+    [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
+    //constrain position to max possible if above, otherwise blank
+    if(targetMinIndex > [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth))
+        targetMinIndex = [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth);
+    CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+    [paceScroll scrollRectToVisible:animatedDestination animated:true];
+    
+}
+
+
 -(void)updateChart
 {
     //crashes sometimes if run in background
@@ -2524,7 +2577,6 @@
     {
         //set scroll to be at start of empty run
         [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
-        //[paceScroll setContentOffset:CGPointMake(0, 0)];
         CGRect animatedDestination = CGRectMake(0, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
         [paceScroll scrollRectToVisible:animatedDestination animated:true];
     }
@@ -2532,8 +2584,6 @@
         
         //set scroll to be at the end of run
         [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
-        //[paceScroll setContentOffset:CGPointMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0)];
-        
         CGRect animatedDestination = CGRectMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
         [paceScroll scrollRectToVisible:animatedDestination animated:true];
     }
@@ -2997,14 +3047,10 @@
         //some other index
         selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
     }
-    [selectedPlot reloadData];
-    
     
     //scroll to selected index
-    CGRect rectToScroll = paceScroll.frame;
-    rectToScroll.origin = CGPointMake(paceGraphBarWidth * selectedMinIndex, 0.0);
-    [paceScroll scrollRectToVisible:rectToScroll animated:true];
-    
+    [selectedPlot reloadData];
+    [self updateChartForScroll:selectedMinIndex];
     
     //show km on icon  map
     NSMutableArray * pointsToSelect = [[NSMutableArray alloc] initWithCapacity:10];
@@ -3025,7 +3071,7 @@
             NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
             for(NSInteger i = indexToFind; i < [run.pos count]; i++)
             {
-                if(i > 0)
+                if(i >= 0)
                 {
                     //add meta to array to display
                     CLLocation * posToAdd = [run.pos objectAtIndex:i];
@@ -3051,7 +3097,7 @@
             for(NSTimeInterval timeToFind = startTime ; timeToFind <= selectedKmMeta.time; timeToFind++)
             {
                 NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
-                if(indexToFind > 0)
+                if(indexToFind >= 0)
                 {
                     //add meta to array to display
                     CLLocation * posToAdd = [run.pos objectAtIndex:indexToFind];
@@ -3078,7 +3124,7 @@
             NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
             for(NSInteger i = indexToFind; i < [run.pos count]; i++)
             {
-                if(i > 0)
+                if(i >= 0)
                 {
                     //add meta to array to display
                     CLLocation * posToAdd = [run.pos objectAtIndex:i];
@@ -3104,7 +3150,7 @@
             for(NSTimeInterval timeToFind = startTime ; timeToFind <= selectedMileMeta.time; timeToFind++)
             {
                 NSInteger indexToFind = [self indexForRunAtTime:timeToFind];
-                if(indexToFind > 0)
+                if(indexToFind >= 0)
                 {
                     //add meta to array to display
                     CLLocation * posToAdd = [run.pos objectAtIndex:indexToFind];
