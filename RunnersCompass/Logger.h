@@ -203,6 +203,7 @@
 @property (weak)  IBOutlet MKMapView *iconMap;
 @property (weak, nonatomic) IBOutlet UILabel *lowSignalLabel;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
+@property (weak, nonatomic) IBOutlet UILabel *autopauseLabel;
 
 
 //IB

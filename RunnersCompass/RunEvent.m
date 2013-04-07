@@ -45,7 +45,7 @@
 @synthesize associatedRun;
 
 
-+(NSString * )stringForMetric:(RunMetric) metricForDisplay
++(NSString * )stringForMetric:(RunMetric) metricForDisplay showSpeed:(BOOL)showSpeed
 {
     switch(metricForDisplay)
     {
@@ -54,7 +54,10 @@
         case MetricTypeDistance:
             return NSLocalizedString(@"DistanceMetric", @"Distance name for title or goal");
         case MetricTypePace:
-            return NSLocalizedString(@"PaceMetric", @"Pace name for title or goal");
+            if(showSpeed)
+                return NSLocalizedString(@"SpeedMetric", @"speed name for title or goal");
+            else
+                return NSLocalizedString(@"PaceMetric", @"Pace name for title or goal");
         case MetricTypeTime:
             return NSLocalizedString(@"TimeMetric", @"Time name for title or goal");
         case MetricTypeClimbed:
@@ -312,16 +315,16 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed]];
+                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed], [UserPrefs getPaceUnitWithSpeedMetric:metric showSpeed:showSpeed]];
                 break;
             case MetricTypeCalories:
-                name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
+                name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay]];
+                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay]];
                 break;
             case MetricTypeTime:
-                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
+                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
                 break;
                 
             default:

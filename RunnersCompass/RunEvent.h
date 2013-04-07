@@ -110,7 +110,7 @@ typedef enum
 -(id)initWithTarget:(RunMetric)type withValue:(CGFloat)value withMetric:(BOOL)metric showSpeed:(BOOL)showSpeed;
 -(id)initWithNoTarget;
 
-+(NSString *)stringForMetric:(RunMetric) metric;
++(NSString * )stringForMetric:(RunMetric) metricForDisplay showSpeed:(BOOL)showSpeed;
 +(NSString*)getCurKMPaceString:(NSTimeInterval)paceToFormat;
 +(NSString*)getTimeString:(NSTimeInterval)timeToFormat;
 +(NSString*)getPaceString:(NSTimeInterval)paceToFormat withMetric:(BOOL)metricForDisplay showSpeed:(BOOL)showSpeed;

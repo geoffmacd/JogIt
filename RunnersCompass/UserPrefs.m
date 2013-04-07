@@ -23,8 +23,8 @@
     //new.facebook = [NSNumber numberWithInt:0];
     //find systems default unit measure
     NSLocale *locale = [NSLocale currentLocale];
-    //BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
-    new.metric = [NSNumber numberWithBool:false];
+    BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
+    new.metric = [NSNumber numberWithBool:isMetric];
     new.showSpeed = [NSNumber numberWithBool:false];
     
     //best to leave these blank so user does not have to backspace them
@@ -45,6 +45,30 @@
         return NSLocalizedString(@"MiImperialUnitShort", @"shortform for mi");
     
 }
+
+
++(NSString*)getPaceUnitWithSpeedMetric:(BOOL)metric showSpeed:(BOOL)showSpeed
+{
+    
+    //should not need to be translated
+    
+    if(showSpeed)
+    {
+        if(metric)
+            return NSLocalizedString(@"KPHUnitShort", @"shortform for kph");
+        else
+            return NSLocalizedString(@"MPHUnitShort", @"shortform for mph");
+    }
+    else
+    {
+        if(metric)
+            return NSLocalizedString(@"MinKmMetricUnitShort", @"shortform for min/km");
+        else
+            return NSLocalizedString(@"MinMiImperialUnitShort", @"shortform for min/mile");
+    }
+    
+}
+
 
 -(NSString*)getDistanceUnit
 {

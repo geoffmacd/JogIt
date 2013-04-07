@@ -21,6 +21,7 @@
 
 + (id)defaultUser;
 +(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric;
++(NSString*)getPaceUnitWithSpeedMetric:(BOOL)metric showSpeed:(BOOL)showSpeed;
 -(NSString*)getDistanceUnit;
 -(NSString*)getPaceUnit;
 -(NSString*)getTimeStringWithSeconds:(NSTimeInterval) f;

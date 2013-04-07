@@ -41,6 +41,7 @@
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 @synthesize inBackground;
 @synthesize activityIndicator,lowSignalLabel,titleView;
+@synthesize autopauseLabel;
 
 #pragma mark - Lifecycle
 
@@ -79,13 +80,11 @@
     
     //localization
     [timeTitle setText:NSLocalizedString(@"TimeTitle", "Logger title for time")];
-    [avgPaceTitle setText:NSLocalizedString(@"PaceTitle", "Logger title for pace")];
     [caloriesTitle setText:NSLocalizedString(@"CaloriesTitle", "Logger title for calories")];
     [distanceTitle setText:NSLocalizedString(@"DistanceTitle", "Logger title for distance")];
     [ghostDistanceTitle setText:NSLocalizedString(@"GhostDistanceTitle", "Logger title for ghost distance")];
     [finishBut setTitle:NSLocalizedString(@"FinishButton", "Logger finish button title") forState:UIControlStateNormal];
     [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
-    [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
     [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
     [lowSignalLabel setText:NSLocalizedString(@"LowSignalLabel", "Label for low GPS signal")];
     
@@ -260,6 +259,8 @@
     [finishBut setHidden:true];
     //hide goal image, until we decide to display it
     [goalAchievedImage setHidden:true];
+    //hide autopause again
+    [autopauseLabel setHidden:true];
     
     [self resetMap];
     
@@ -566,6 +567,7 @@
                 pausedForAuto = true;
                 
                 [delegate pauseAnimation:nil];
+                [autopauseLabel setHidden:false];
             }
         }
     }else{
@@ -582,6 +584,7 @@
                 pausedForAuto = true;
                 
                 [delegate pauseAnimation:nil];
+                [autopauseLabel setHidden:false];
             }
         }
     }
@@ -732,6 +735,8 @@
     }
     else
     {
+        //hide autopause again
+        [autopauseLabel setHidden:true];
         
         [UIView transitionWithView:pauseImage
                           duration:0.3f
@@ -1238,6 +1243,18 @@
     
     [paceUnitLabel1 setText:paceUnitText];
     [paceUnitLabel2 setText:paceUnitText];
+    
+    //change pace to speed if necessary
+    if([[curSettings showSpeed] boolValue])
+    {
+        [avgPaceTitle setText:NSLocalizedString(@"PaceTitleForSpeed", "Logger title for speed")];
+        [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed")];
+    }
+    else
+    {
+        [avgPaceTitle setText:NSLocalizedString(@"PaceTitle", "Logger title for pace")];
+        [currentPaceLabel setText:NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace")];
+    }
     
     [distanceUnitLabel setText:distanceUnitText];
     [ghostDistanceUnitLabel setText:distanceUnitText];
@@ -2214,21 +2231,33 @@
     if([[run posMeta] count] == 0)
     {
         // no positions logged yet
-        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = @"0:00";
     }
     else if(!kmPaceShowMode && !selectedPaceShowMode)
     {
         // current pace
         selectedMinMeta = [[run posMeta] lastObject];
-        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
     }
     else if(kmPaceShowMode){
         
         // just display current pace
         selectedMinMeta = [[run posMeta] lastObject];
-        selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
         
     }
@@ -2477,56 +2506,16 @@
 
 -(void)updateChartForScroll:(NSInteger)targetMinIndex
 {
-
-    //target caching for the start of the intended index
-    lastCacheMinute = targetMinIndex;
+    //scroll to the destination rect for this minute index
+    //scrollviewDidScroll will take care of reloading the chart except for selectPlot
     
-    //lastCacheMinute too high if target on last screen
-    if(targetMinIndex > [[run minCheckpointsMeta] count] - paceGraphSplitObjects)
-    {
-        lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
-    }
-    
-    //set size of view of graph to be equal to that of the split load if not already
-    CGRect paceGraphRect = chart.frame;
-    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
-    if(lastCacheMinute < 0)
-    {
-        paceGraphRect.origin = CGPointMake(0, 0);
-    }
-    else    //set origin so that view is drawn for split filling up the last possible view
-    {
-        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
-    }
-    [chart setFrame:paceGraphRect];
-
-    
-    if(!barPlot)
-    {
-        //if bar graph not yet loaded
-        
-        //draw bar graph with new data from run
-        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
-        [self setupGraphForView:chart withRange:firstRangeToShow];
-    }
-    else{
-        //if loaded, just update ranges
-        
-        //set x range and y range for new graph config
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
-        
-        [barPlot reloadData];
-    }
-    
-    //scroll to index
-    [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
     //constrain position to max possible if above, otherwise blank
     if(targetMinIndex > [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth))
         targetMinIndex = [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth);
     CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
     [paceScroll scrollRectToVisible:animatedDestination animated:true];
     
+    [selectedPlot reloadData];
 }
 
 
@@ -3049,7 +3038,6 @@
     }
     
     //scroll to selected index
-    [selectedPlot reloadData];
     [self updateChartForScroll:selectedMinIndex];
     
     //show km on icon  map

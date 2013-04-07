@@ -62,14 +62,14 @@
 
 - (void)pauseAnimation:(void(^)(void))completion {
     
-    //if in logger view and not in background, do animation other wise pause
-    if(!self.viewController.isOpen || !self.backVC.inBackground)
+    //if in logger view and not in background, do animation
+    if(!self.viewController.isOpen && !self.backVC.inBackground)
     {
         [self.viewController pauseWithBounceAnimation:completion];
     }
     else
     {
-        //if in menu view or in background,pause silently
+        //pause silently to not screw with slider
         //just send notification to logger without animating
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"pauseToggleNotification"

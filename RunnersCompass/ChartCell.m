@@ -39,7 +39,7 @@
     
     //set title to match the metric
     if(!raceCell)
-        [headerLabel setText:[RunEvent stringForMetric:associated]];
+        [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:showSpeed]];
     else
         [headerLabel setText:[RunEvent stringForRace:associated]];
     

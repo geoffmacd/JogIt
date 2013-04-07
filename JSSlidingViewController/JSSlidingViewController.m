@@ -116,7 +116,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     [self.backViewController didMoveToParentViewController:self];
     
     
-    
     //menu gets added on top 
     self.frontViewController.view.frame = frame;
     [self addChildViewController:self.frontViewController];
