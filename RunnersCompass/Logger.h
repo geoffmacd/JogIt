@@ -44,6 +44,7 @@
 #define avgPaceUpdatePeriod 3//ss
 #define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//degress
+#define mapSpanMultipler 1.03//3 percent
 #define lowSignalPeriod 3//s
 #define mapPathWidth 15.0//pixels
 #define mapIconPathWidth 10.0//pixels
@@ -133,10 +134,8 @@
     //positions for labels for ghost runs
     CGFloat timeTitlex,timeLabelx;
     
-    NSInteger countdown;
-    
-    //metric or imperial
-    BOOL currentUnits;
+    //timer tracker
+    NSInteger countdown; //s
     
     //low gps animation
     BOOL lowSignal;

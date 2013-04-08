@@ -158,14 +158,14 @@
     inBackground = toBackground;
     
     //refresh view if coming out of background
-    if(!inBackground)
+    if(!inBackground && run.live)
     {
         //scroll to newest
         [self updateChart];
         [self drawMapPath:true];
-        [self drawAllAnnotations];
         if(run.ghost)
             [self drawMapGhostPath:true];
+        [self drawAllAnnotations];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
         
@@ -527,8 +527,10 @@
     {
         //add to pausepoints to know where to break overlay lines
         [run.pausePoints addObject:[run.pos lastObject]];
-        [self autoZoomMap:[run.pos lastObject] animated:inMapView withMap:fullMap];
-        [self zoomMapToEntireRun:iconMap];
+        if(inMapView)
+            [self autoZoomMap:[run.pos lastObject] animated:inMapView withMap:fullMap];
+        else
+            [self zoomMapToEntireRun:iconMap];
     }
 }
 
@@ -608,11 +610,12 @@
 {
     /*process 1 second gone by in timer
      Responsible for:
-     -updating Meta data for only one run object of highest accuracy and deleting other
+     -updating Meta data for only one run object of highest accuracy and deleting others
+     -calcing new run info cals etc
      -updating UI information
-     -determining if a new minute is to be added to chart
+     -determining if a new minute is to be added to chart and then scrolling
      -determing if run should be autopaused or unpaused
-     -deter if accuray is awful
+     -determing if accuray is awful
      -determining if a new km happend
      */
     
@@ -645,8 +648,6 @@
             //3. draw new map overlay
             [self drawMapPath:false];
             [self removeLegalLabelForMap:iconMap];
-            if(run.ghost)
-                [self drawMapGhostPath:false];
             
             //4. determine if we should pause or unpause,with latest pace
             CLLocationMeta * latestMeta = [[run posMeta] lastObject];
@@ -656,7 +657,7 @@
             
             //on odd periods only update graphics, so that overlay has processed
             
-            //1. Center map
+            //zoom map
             if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)))
             {
                 //do not zoom if user has recently touched
@@ -664,8 +665,10 @@
                 {
                     [self autoZoomMap:newLocation animated:inMapView withMap:fullMap];
                 }
-                
-                //center mapIcon over entire run
+            }
+            //center mapIcon over entire run
+            if((timeSinceMapIconRefresh < ([NSDate timeIntervalSinceReferenceDate] - reloadMapIconPeriod)))
+            {
                 [self zoomMapToEntireRun:iconMap];
             }
         }
@@ -675,29 +678,31 @@
         //core location did not update once, we can only update graphical times, no distance
         //potentially autopause
         
-        //1. eval wheter we should pause
+        //eval wheter we should pause if not recieving signal
         [self evalAutopause:-1];
         
-        //cannot center map or reload icon or draw map because nothing happend
-        //ignoring accuracy for now
     }
 
     //position independant information processed from here on:
     
-    //5. update avgPace, m / s
-    run.avgPace =  run.distance / run.time;
+    //update ghost run map
+    if(run.ghost)
+        [self drawMapGhostPath:false];
     
-    //6. Update Chart every minute
+    //update avgPace, needs to be here in case no pos recorded
+    run.avgPace =  run.distance / run.time; //m/s
+    
+    //Update Chart every minute
     if(!((int)run.time % barPeriod))
     {
         //add one checkpoint representing past 60 seconds
         [self addMinute];
     }
     
-    //7. Check if goal has been achieved
+    //Check if goal has been achieved
     [self determineGoalAchieved];
     
-    //8. Update labels, disable selection mode
+    //Update labels, disable selection mode
     [self updateHUD];
 }
 
@@ -965,6 +970,7 @@
             grade = climbed / distanceToAdd;
         UserPrefs * curSettings = [delegate curUserPrefs];
         BOOL showSpeed = [[curSettings showSpeed] boolValue];
+        BOOL isMetric = [[curSettings metric] boolValue];
         CGFloat weight = [[curSettings weight] floatValue] / 2.2046; //weight in kg
         CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
         //only add calories if it is positive
@@ -1002,7 +1008,7 @@
             
             
             //add annotation if metric
-            if([curSettings.metric integerValue] == 1)
+            if(isMetric)
             {
                 KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
                 //illustrate with pace @ KM ##
@@ -1046,7 +1052,7 @@
             
             
             //add annotation if imperial
-            if([curSettings.metric integerValue] == 0)
+            if(!isMetric)
             {
                 MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
                 //illustrate with pace @ KM ##
@@ -1240,22 +1246,17 @@
     UserPrefs * curSettings = [delegate curUserPrefs];
     BOOL isMetric = [[curSettings metric] boolValue];
     BOOL showSpeed = [[curSettings showSpeed] boolValue];
-    if(isMetric != currentUnits)
+        
+    //need to reset kmselection in order to gaurantee not above array count
+    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+    
+    //need to reload annotations regardless since showspeed or metric could have changed
+    if([mapAnnotations count] > 0)
     {
-        //update map annotations if metric was changed
-        if([mapAnnotations count] > 0)
-        {
-            [fullMap removeAnnotations:mapAnnotations];
-            [mapAnnotations removeAllObjects];
-        }
-        [self drawAllAnnotations];
-        
-        //need to reset kmselection in order to gaurantee not above array count
-        selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
-        
-        //set current metric
-        currentUnits = isMetric;
+        [fullMap removeAnnotations:mapAnnotations];
+        [mapAnnotations removeAllObjects];
     }
+    [self drawAllAnnotations];
     
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     NSString * paceUnitText = [curSettings getPaceUnit];
@@ -1652,6 +1653,9 @@
         //no pace
         [self addPosToRun:newLocation withPace:0 withCumulativeDistance:run.distance];
         
+        //deter accuracy for low signal
+        [self evalAccuracy:newLocation.horizontalAccuracy];
+        
         //auto zoom and reload map icon
         [self autoZoomMap:newLocation animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
@@ -1699,6 +1703,7 @@
 
 -(void) autoZoomMap:(CLLocation*)newLocation animated:(BOOL)animate withMap:(MKMapView*)mapToZoom
 {
+    //return if in background or not necessary
     if(inBackground)
         return;
     
@@ -1706,7 +1711,8 @@
     //animated to prevent jumpy
     [mapToZoom setRegion:region animated:animate];
     
-    timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
+    if(mapToZoom == fullMap)
+        timeSinceMapCenter = [NSDate timeIntervalSinceReferenceDate];
     
 }
 
@@ -1746,9 +1752,9 @@
     
     CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake((minLat+maxLat)/2, (minLong+maxLong)/2);
     
-    //add 0.001 lat and long to ensure it fits in the screen
-    maxLong += 0.001;
-    maxLat += 0.001;
+    //add root 2 to the span to ensure full map is shown
+    //maxLong += 0.001;
+    //maxLat += 0.001;
     
     
     if(CLLocationCoordinate2DIsValid(centerCoord))
@@ -1757,8 +1763,12 @@
         
         if(span.latitudeDelta < mapMinSpanForRun)
             span.latitudeDelta = mapMinSpanForRun;
+        else
+            span.latitudeDelta = span.latitudeDelta * mapSpanMultipler;
         if(span.longitudeDelta < mapMinSpanForRun)
             span.longitudeDelta = mapMinSpanForRun;
+        else
+            span.longitudeDelta = span.longitudeDelta * mapSpanMultipler;
         
         //make region at center coord with a span determined by the bottom left and top right points
         MKCoordinateRegion region = MKCoordinateRegionMake(centerCoord, span);
@@ -1767,6 +1777,9 @@
         [mapToZoom setRegion:region animated:false];
         
     }
+    
+    if(mapToZoom == iconMap)
+        timeSinceMapIconRefresh = [NSDate timeIntervalSinceReferenceDate];
     
 }
 
@@ -1827,8 +1840,10 @@
     //only for full map
     UserPrefs * curSettings = [delegate curUserPrefs];
     BOOL showSpeed = [[curSettings showSpeed] boolValue];
+    BOOL isMetric = [[curSettings metric] boolValue];
+    NSString *distanceUnitText = [curSettings getDistanceUnit];
     
-    if([curSettings.metric integerValue] == 1)
+    if(isMetric)
     {
         //need both pos and meta for KM to get pace for annotation display
         for(int i = 0; i < [[run kmCheckpoints] count]; i++)
@@ -1839,8 +1854,6 @@
             //add annotation
             KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
             
-            UserPrefs * curSettings = [delegate curUserPrefs];
-            NSString *distanceUnitText = [curSettings getDistanceUnit];
             //km is just the index plus 1
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
             newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:true showSpeed:showSpeed];
@@ -1864,7 +1877,6 @@
             //add annotation
             MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
             
-            NSString *distanceUnitText = [curSettings getDistanceUnit];
             //km is just the index plus 1
             newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
             newAnnotation.paceString = [RunEvent getPaceString:[mileMeta pace] withMetric:false showSpeed:showSpeed];
