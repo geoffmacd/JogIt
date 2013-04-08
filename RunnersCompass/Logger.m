@@ -1238,7 +1238,9 @@
 -(void)setLabelsForUnits
 {
     UserPrefs * curSettings = [delegate curUserPrefs];
-    if([[curSettings metric] integerValue] != currentUnits)
+    BOOL isMetric = [[curSettings metric] boolValue];
+    BOOL showSpeed = [[curSettings showSpeed] boolValue];
+    if(isMetric != currentUnits)
     {
         //update map annotations if metric was changed
         if([mapAnnotations count] > 0)
@@ -1248,8 +1250,13 @@
         }
         [self drawAllAnnotations];
         
+        //need to reset kmselection in order to gaurantee not above array count
+        selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+        
+        //set current metric
+        currentUnits = isMetric;
     }
-    currentUnits = [curSettings metric];
+    
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     NSString * paceUnitText = [curSettings getPaceUnit];
     
@@ -1292,42 +1299,221 @@
     [runTitle setHidden:false];
     runTitle.alpha = 1.0f;
     
+    //need to ensure last km label is correct and values are changes
+    [self updateHUD];
     
+    //avg pace value will not change since only updating every 3 seconds in setPaceLabels so
+    NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric showSpeed:showSpeed];
+    [paceLabel setText:stringToSetTime];
 }
 
--(void)updateHUD
+
+-(void)setPaceLabels
 {
-    //Update Pace
-    [self setPaceLabels];
+    //responible for two bottom sections
     
-    //Update last KM Pace if no km selected
-    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
+    UserPrefs * curSettings = [delegate curUserPrefs];
+    BOOL showSpeed = [[curSettings showSpeed] boolValue];
+    BOOL isMetric = [[curSettings metric] integerValue];
+    NSString *distanceUnitText = [curSettings getDistanceUnit];
+    
+    //update avg pace every 3 seconds
+    if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
+    {
+        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric showSpeed:showSpeed];
+        [paceLabel setText:stringToSetTime];
+    }
+    
+    
+    //current pace/selected pace
+    CLLocationMeta * selectedMinMeta;
+    NSString * selectedPaceLabel;
+    NSString * selectedPaceString;
+    if([[run posMeta] count] == 0)
+    {
+        // no positions logged yet
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = @"0:00";
+    }
+    else if(!kmPaceShowMode && !selectedPaceShowMode)
+    {
+        // current pace
+        selectedMinMeta = [[run posMeta] lastObject];
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+    }
+    else if(kmPaceShowMode){
+        
+        // just display current pace
+        selectedMinMeta = [[run posMeta] lastObject];
+        //change pace to speed if necessary
+        if([[curSettings showSpeed] boolValue])
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
+        else
+            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        
+    }
+    else if(selectedPaceShowMode){
+        
+        //selection mode of one bar
+        selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
+        selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
+        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+    }
+    [currentPaceLabel setText:selectedPaceLabel];
+    [currentPaceValue setText:selectedPaceString];
+    
+    
+    //set mile or km in list
     if(isMetric)
     {
-        if(selectedKmIndex == [[run kmCheckpointsMeta] count])
+        //set last 3 kms
+        if([[run kmCheckpointsMeta] count] == 0)
         {
-            //need current time update to lastKMLabel
+            //no km's so far, just set lastKm to be time
             
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
+            
+            //load current
+            [lastKmPace setText:[RunEvent getCurKMPaceString:run.time]];
+            
+            //set old to be empty
+            NSString * paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            [oldpace2 setText:paceForOld];
+            [oldpace3 setText:paceForOld];
+        }
+        else if(selectedKmIndex == [[run kmCheckpointsMeta] count])
+        {
+            //show current km in lastKmLabel
+            
+            CLLocationMeta * oldKMMeta;
+            //get distance from km just by looking at index
+            
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
+            
+            //need current time for km to lastKMLabel
             NSTimeInterval timeToAdjust = 0;
-            
             if([[run kmCheckpointsMeta] count] > selectedKmIndex - 1)
             {
                 CLLocationMeta * priorKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex - 1];
                 //get distance from km just by looking at index
                 timeToAdjust = priorKmMeta.time;
             }
-            
-            //show current time in the current km
             NSString * paceForCurrentIndex = [RunEvent getCurKMPaceString:(run.time - timeToAdjust)];
             [lastKmPace setText:paceForCurrentIndex];
+            
+            //load old values
+            NSString * paceForOld;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            if(selectedKmIndex - 2  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace2 setText:paceForOld];
+            if(selectedKmIndex - 3  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace3 setText:paceForOld];
+        }
+        else{
+            //showing only prior kms, since selection is not the last one
+            
+            CLLocationMeta * selectionKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex];
+            CLLocationMeta * oldKMMeta;
+            //get distance from km just by looking at index
+            
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
+            
+            //load current
+            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace] withMetric:true showSpeed:false];
+            [lastKmPace setText:paceForCurrentIndex];
+            
+            //load old values
+            NSString * paceForOld;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            if(selectedKmIndex - 2  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace2 setText:paceForOld];
+            if(selectedKmIndex - 3  >= 0)
+            {
+                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace3 setText:paceForOld];
         }
     }
-    else{
+    else
+    {
         
-        if(selectedKmIndex == [[run impCheckpointsMeta] count])
+        //set last 3 mile
+        if([[run impCheckpointsMeta] count] == 0)
         {
-            //need current time update to lastKMLabel
+            //no km's so far, just set lastKm to be time
             
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
+            
+            //load current
+            [lastKmPace setText:[RunEvent getCurKMPaceString:run.time]];
+            
+            //set old to be empty
+            NSString * paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            [oldpace2 setText:paceForOld];
+            [oldpace3 setText:paceForOld];
+        }
+        else if(selectedKmIndex == [[run impCheckpointsMeta] count])
+        {
+            //show current km in lastKmLabel
+            
+            CLLocationMeta * oldMileMeta;
+            //get distance from km just by looking at index
+            
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
+            
+            //need current time mile to lastKMLabel
             NSTimeInterval timeToAdjust = 0;
             
             if([[run impCheckpointsMeta] count] > selectedKmIndex - 1)
@@ -1336,16 +1522,97 @@
                 //get distance from km just by looking at index
                 timeToAdjust = priorMileMeta.time;
             }
-            
-            //show current time in the current km
+            //show current time in the current mile
             NSString * paceForCurrentIndex = [RunEvent getCurKMPaceString:(run.time - timeToAdjust)];
             [lastKmPace setText:paceForCurrentIndex];
+            
+            //load old values
+            NSString * paceForOld;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            if(selectedKmIndex - 2  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace2 setText:paceForOld];
+            if(selectedKmIndex - 3  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace3 setText:paceForOld];
+        }
+        else{
+            //showing only prior kms, since selection is not the last one
+            
+            CLLocationMeta * selectionMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex];
+            CLLocationMeta * oldMileMeta;
+            //get distance from km just by looking at index
+            
+            //set the label to say 'KM 4' or 'Km 17'
+            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
+            
+            //load current
+            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionMileMeta pace] withMetric:false showSpeed:false];
+            [lastKmPace setText:paceForCurrentIndex];
+            
+            //load old values
+            NSString * paceForOld;
+            if(selectedKmIndex - 1  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace1 setText:paceForOld];
+            if(selectedKmIndex - 2  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace2 setText:paceForOld];
+            if(selectedKmIndex - 3  >= 0)
+            {
+                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
+                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:false];
+            }
+            else
+                paceForOld = @"";
+            [oldpace3 setText:paceForOld];
         }
     }
+}
 
-    //set distance in km
-    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:run.distance withMetric:isMetric]]];
+
+-(void)updateHUD
+{
+    //Update Pace
+    [self setPaceLabels];
+
+    //set time dependant vars except pace
+    BOOL isMetric = [[[delegate curUserPrefs] metric] integerValue];
     
+    //set all 3 labels
+    [distanceLabel setText:[NSString stringWithFormat:@"%.2f", [RunEvent getDisplayDistance:run.distance withMetric:isMetric]]];
+    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
+    [timeLabel setText:stringToSetTime];
+    [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
+    
+    //update ghosts distance if necessary
     if(run.ghost)
     {
         //find associated run position for current run time and display in label
@@ -1361,14 +1628,8 @@
         
     }
     
-    //update time displayed
-    NSString * stringToSetTime = [RunEvent getTimeString:run.time];
-    [timeLabel setText:stringToSetTime];
-    
     //update start header cell in menu
     [delegate updateRunTimeForMenu:stringToSetTime];
-    
-    [caloriesLabel setText:[NSString stringWithFormat:@"%.0f", run.calories]];
 }
 
 #pragma mark - Location Manager Delegate
@@ -1839,14 +2100,19 @@
     //should be fixed line
     polylineView.lineWidth = mapPathWidth;
     
-    //check if it is selectedmapoverlay
+    //for icon map only
+    if(mapView == iconMap)
+    {
+        //should be fixed line
+        polylineView.lineWidth = mapIconPathWidth;
+    }
+    
+    //check if it is selectedmapoverlay to modify
     if(mapSelectionOverlay == overlay)
     {
         polylineView.strokeColor = [UIColor lightGrayColor];
-        polylineView.lineWidth = mapPathWidth + 3; // to highlight
-        //polylineView.lineCap = kCGLineCapSquare;//square style to differentiate
+        polylineView.lineWidth = mapIconPathWidth + 3; // to highlight
     }
-    
     
     return polylineView;
 }
@@ -1974,7 +2240,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
-    
     CGFloat curViewOffset = paceScroll.contentOffset.x;
     NSInteger curViewMinute = [self convertToCheckpointMinute:curViewOffset];
     
@@ -1989,7 +2254,7 @@
     NSLog(@"Scroll @ %.f with cache @ %d, %d min with plot start = %f , end = %f , %d min", curViewOffset, lastCacheMinute, curViewMinute, startLocation, endLocation, endLocationMinute);
     
 
-    if(curViewMinute < lastCacheMinute  && !(curViewMinute <= 0))
+    if(curViewMinute < lastCacheMinute)
     {
         //reload to the left
         //lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
@@ -2235,279 +2500,6 @@
     
     return [[run minCheckpointsMeta] count];
 }
-
-
-
--(void)setPaceLabels
-{
-    //responible for two bottom sections
-    
-    UserPrefs * curSettings = [delegate curUserPrefs];
-    BOOL showSpeed = [[curSettings showSpeed] boolValue];
-    BOOL isMetric = [[curSettings metric] integerValue];
-    NSString *distanceUnitText = [curSettings getDistanceUnit];
-    
-    //update avg pace every 3 seconds
-    if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
-    {
-        NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric showSpeed:showSpeed];
-        [paceLabel setText:stringToSetTime];
-    }
-    
-    
-    //current pace/selected pace
-    CLLocationMeta * selectedMinMeta;
-    NSString * selectedPaceLabel;
-    NSString * selectedPaceString;
-    if([[run posMeta] count] == 0)
-    {
-        // no positions logged yet
-        //change pace to speed if necessary
-        if([[curSettings showSpeed] boolValue])
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
-        else
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = @"0:00";
-    }
-    else if(!kmPaceShowMode && !selectedPaceShowMode)
-    {
-        // current pace
-        selectedMinMeta = [[run posMeta] lastObject];
-        //change pace to speed if necessary
-        if([[curSettings showSpeed] boolValue])
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
-        else
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
-    }
-    else if(kmPaceShowMode){
-        
-        // just display current pace
-        selectedMinMeta = [[run posMeta] lastObject];
-        //change pace to speed if necessary
-        if([[curSettings showSpeed] boolValue])
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
-        else
-            selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
-        
-    }
-    else if(selectedPaceShowMode){
-        
-        //selection mode of one bar
-        selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
-        selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
-    }
-    [currentPaceLabel setText:selectedPaceLabel];
-    [currentPaceValue setText:selectedPaceString];
-    
-    
-    //set mile or km in list
-    if(isMetric)
-    {
-        //set last 3 kms
-        if([[run kmCheckpointsMeta] count] == 0)
-        {
-            //no km's so far, just set lastKm to be time
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
-            
-            //load current
-            [lastKmPace setText:[RunEvent getCurKMPaceString:run.time]];
-            
-            //set old to be empty
-            NSString * paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            [oldpace2 setText:paceForOld];
-            [oldpace3 setText:paceForOld];
-        }
-        else if(selectedKmIndex == [[run kmCheckpointsMeta] count])
-        {
-            //show current km in lastKmLabel
-            
-            CLLocationMeta * oldKMMeta;
-            //get distance from km just by looking at index
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
-            
-            //lastKmPace value  not set here, because it is being updated every second in tick
-            
-            //load old values
-            NSString * paceForOld;
-            if(selectedKmIndex - 1  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            if(selectedKmIndex - 2  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace2 setText:paceForOld];
-            if(selectedKmIndex - 3  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace3 setText:paceForOld];
-        }
-        else{
-            //showing only prior kms, since selection is not the last one
-            
-            CLLocationMeta * selectionKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex];
-            CLLocationMeta * oldKMMeta;
-            //get distance from km just by looking at index
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
-            
-            //load current
-            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionKmMeta pace] withMetric:true showSpeed:showSpeed];
-            [lastKmPace setText:paceForCurrentIndex];
-            
-            //load old values
-            NSString * paceForOld;
-            if(selectedKmIndex - 1  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            if(selectedKmIndex - 2  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace2 setText:paceForOld];
-            if(selectedKmIndex - 3  >= 0)
-            {
-                oldKMMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldKMMeta pace] withMetric:true showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace3 setText:paceForOld];
-        }
-    }
-    else
-    {
-        
-        //set last 3 mile
-        if([[run impCheckpointsMeta] count] == 0)
-        {
-            //no km's so far, just set lastKm to be time
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, 1]];
-            
-            //load current
-            [lastKmPace setText:[RunEvent getCurKMPaceString:run.time]];
-            
-            //set old to be empty
-            NSString * paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            [oldpace2 setText:paceForOld];
-            [oldpace3 setText:paceForOld];
-        }
-        else if(selectedKmIndex == [[run impCheckpointsMeta] count])
-        {
-            //show current km in lastKmLabel
-            
-            CLLocationMeta * oldMileMeta;
-            //get distance from km just by looking at index
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d", distanceUnitText, selectedKmIndex + 1]];
-            
-            //lastKmPace value  not set here, because it is being updated every second in tick
-            
-            //load old values
-            NSString * paceForOld;
-            if(selectedKmIndex - 1  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            if(selectedKmIndex - 2  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace2 setText:paceForOld];
-            if(selectedKmIndex - 3  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace3 setText:paceForOld];
-        }
-        else{
-            //showing only prior kms, since selection is not the last one
-            
-            CLLocationMeta * selectionMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex];
-            CLLocationMeta * oldMileMeta;
-            //get distance from km just by looking at index
-            
-            //set the label to say 'KM 4' or 'Km 17'
-            [lastKmLabel setText:[NSString stringWithFormat:@"%@ %d ", distanceUnitText, selectedKmIndex + 1]];
-            
-            //load current
-            NSString * paceForCurrentIndex = [RunEvent getPaceString:[selectionMileMeta pace] withMetric:false showSpeed:showSpeed];
-            [lastKmPace setText:paceForCurrentIndex];
-            
-            //load old values
-            NSString * paceForOld;
-            if(selectedKmIndex - 1  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace1 setText:paceForOld];
-            if(selectedKmIndex - 2  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-2];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace2 setText:paceForOld];
-            if(selectedKmIndex - 3  >= 0)
-            {
-                oldMileMeta = [[run impCheckpointsMeta] objectAtIndex:selectedKmIndex-3];
-                paceForOld = [RunEvent getPaceString:[oldMileMeta pace] withMetric:false showSpeed:showSpeed];
-            }
-            else
-                paceForOld = @"";
-            [oldpace3 setText:paceForOld];
-        }
-    }
-    
-}
-
 
 #pragma mark - Manage Pace Chart
 
@@ -3065,8 +3057,11 @@
         //already in this mode, cycle to next km
         selectedKmIndex --;
         if(selectedKmIndex < 0)    //cycle to beginning if necessary
+        {
             selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
-        
+            
+            //need to show actual current km time as if kmselection was just started as above
+        }
     }
     
     //reload labels/selection
@@ -3094,7 +3089,7 @@
         }
         else if([[run kmCheckpointsMeta] count] == selectedKmIndex)
         {
-            //not a complete mile
+            //not a complete km
             CLLocationMeta * previousKmMeta = [[run kmCheckpointsMeta] objectAtIndex:selectedKmIndex-1];
             //add overlay with these times
             //show all seconds in km

@@ -46,6 +46,7 @@
 #define mapMinSpanForRun 0.005//degress
 #define lowSignalPeriod 3//s
 #define mapPathWidth 15.0//pixels
+#define mapIconPathWidth 10.0//pixels
 #define mapPathSize 10 //positions
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
