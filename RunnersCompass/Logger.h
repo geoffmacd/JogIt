@@ -25,6 +25,7 @@
 #define paceGraphBarWidth 25
 #define paceGraphSplitLoadOffset 20
 #define paceGraphSplitObjects 30
+#define paceGraphAnimated true
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //m maximum

@@ -331,10 +331,6 @@
 
     }
     
-    [self setLabelsForUnits];
-    [self setPaceLabels];
-    
-    [self updateHUD];
     
     if(barPlot)
     {
@@ -345,8 +341,24 @@
         barPlot = nil;
     }
     
+    //disable selection modes
+    kmPaceShowMode = false;
+    selectedPaceShowMode = false;
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
+    numMinutesAtKmSelected = -1;
+    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
+    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+    
+    //needs to be before update chart which is expensive
+    [self setLabelsForUnits];
+    [self updateHUD];
+    
     //scrolls to end
     [self updateChart];
+    
+    [selectedPlot reloadData];
 }
 
 
@@ -908,10 +920,10 @@
             selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
         }
     }
-    [selectedPlot reloadData];
     
     //then visually update chart and scroll to new minute
     [self updateChart];
+    [selectedPlot reloadData];
 }
 
 
@@ -1974,35 +1986,54 @@
     CGFloat endLocation = [self convertToX:endLocationMinute];
     
     
-    NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
+    NSLog(@"Scroll @ %.f with cache @ %d, %d min with plot start = %f , end = %f , %d min", curViewOffset, lastCacheMinute, curViewMinute, startLocation, endLocation, endLocationMinute);
     
-    
-    if(curViewMinute <= lastCacheMinute  && !(curViewMinute <= 0))
+
+    if(curViewMinute < lastCacheMinute  && !(curViewMinute <= 0))
     {
         //reload to the left
-        lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        //lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        lastCacheMinute = curViewMinute - (paceGraphSplitObjects - paceGraphSplitLoadOffset);
+        //constrain to zero
+        if(lastCacheMinute < 0)
+            lastCacheMinute = 0;
+        
+        NSLog(@"Reload to left @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
         
         plotSpace.xRange = newRange;
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        [barPlot reloadData];
         
         //move the view with the scroll view
         CGRect newGraphViewRect = [chart frame];
-        newGraphViewRect.origin.x -= [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        //newGraphViewRect.origin.x -= [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        newGraphViewRect.origin.x = [self convertToX:lastCacheMinute];
         [chart setFrame:newGraphViewRect];
     }
     else if(curViewMinute > lastCacheMinute + paceGraphSplitObjects - paceGraphSplitLoadOffset &&
-            !(curViewMinute + paceGraphSplitLoadOffset >= [[run minCheckpoints] count]))
+            !(curViewMinute + paceGraphSplitObjects - paceGraphSplitLoadOffset >= [[run minCheckpoints] count]))
     {
         //reload to right
-        lastCacheMinute += paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        //lastCacheMinute += paceGraphSplitObjects - paceGraphSplitLoadOffset;
+        lastCacheMinute = curViewMinute;
+        //constrain to length of chart
+        if(lastCacheMinute >= [[run minCheckpoints] count] - (paceGraphSplitObjects - paceGraphSplitLoadOffset))
+            lastCacheMinute = [[run minCheckpoints] count] - (paceGraphSplitObjects - paceGraphSplitLoadOffset);
+        
+        NSLog(@"Reload to right @ %d", lastCacheMinute);
+        
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
         
         plotSpace.xRange = newRange;
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        [barPlot reloadData];
         
         //move the view with the scroll view
         CGRect newGraphViewRect = [chart frame];
-        newGraphViewRect.origin.x += [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        //newGraphViewRect.origin.x += [self convertToX:paceGraphSplitObjects - paceGraphSplitLoadOffset];
+        newGraphViewRect.origin.x = [self convertToX:lastCacheMinute];
         [chart setFrame:newGraphViewRect];
     }
 }
@@ -2504,18 +2535,37 @@
     
 }
 
--(void)updateChartForScroll:(NSInteger)targetMinIndex
+-(void)updateChartForIndex:(NSInteger)targetMinIndex
 {
     //scroll to the destination rect for this minute index
     //scrollviewDidScroll will take care of reloading the chart except for selectPlot
     
-    //constrain position to max possible if above, otherwise blank
-    if(targetMinIndex > [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth))
-        targetMinIndex = [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth);
-    CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
-    [paceScroll scrollRectToVisible:animatedDestination animated:true];
+    if(!barPlot)
+    {
+        //if bar graph not yet loaded
+        
+        //draw bar graph with new data from run
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+        [self setupGraphForView:chart withRange:firstRangeToShow];
+    }
+    else{
+        //no adjustments necessary
+        [barPlot reloadData];
+        [selectedPlot reloadData];
+    }
     
-    [selectedPlot reloadData];
+    //scroll to latest value
+    if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
+    {
+        //no need to scroll since must be on page already
+    }
+    else
+    {
+        if(targetMinIndex > [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth))
+            targetMinIndex = [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth);
+        CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+        [paceScroll scrollRectToVisible:animatedDestination animated:paceGraphAnimated];
+    }
 }
 
 
@@ -2525,37 +2575,23 @@
     if(inBackground)
         return;
     
-    lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects;
-    
-    //set size of view of graph to be equal to that of the split load if not already
-    CGRect paceGraphRect = chart.frame;
-    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
-    if(lastCacheMinute < 0)
-    {
-        paceGraphRect.origin = CGPointMake(0, 0);
-    }
-    else    //set origin so that view is drawn for split filling up the last possible view
-    {
-        paceGraphRect.origin = CGPointMake((lastCacheMinute * paceGraphBarWidth), 0.0);
-    }
-    [chart setFrame:paceGraphRect];
-    
+    BOOL denyAnimatedScroll = !barPlot;
     
     if(!barPlot)
     {
         //if bar graph not yet loaded
         
         //draw bar graph with new data from run
-        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromInt(paceGraphSplitObjects)];
+        lastCacheMinute = [[run minCheckpointsMeta] count] - paceGraphSplitObjects ;
+        if(lastCacheMinute < 0)
+            lastCacheMinute = 0;
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(paceGraphSplitObjects)];
         [self setupGraphForView:chart withRange:firstRangeToShow];
-        
-        
     }
     else{
         //if loaded, just update ranges
         
-        //set x range and y range for new graph config
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat((lastCacheMinute < 0 ? 0 : lastCacheMinute)) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
+        //only set y in case a new value needs to adjust range, x set already for the whole cache
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
         
         [barPlot reloadData];
@@ -2564,17 +2600,16 @@
     //scroll to latest value
     if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
     {
-        //set scroll to be at start of empty run
-        [paceScroll setContentSize:CGSizeMake(paceScroll.frame.size.width, paceScroll.frame.size.height)];
+        [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
         CGRect animatedDestination = CGRectMake(0, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
-        [paceScroll scrollRectToVisible:animatedDestination animated:true];
+        [paceScroll scrollRectToVisible:animatedDestination animated:(denyAnimatedScroll ? false : paceGraphAnimated)];
     }
     else{
         
         //set scroll to be at the end of run
         [paceScroll setContentSize:CGSizeMake([[run minCheckpointsMeta] count] * paceGraphBarWidth, paceScroll.frame.size.height)];
         CGRect animatedDestination = CGRectMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
-        [paceScroll scrollRectToVisible:animatedDestination animated:true];
+        [paceScroll scrollRectToVisible:animatedDestination animated:(denyAnimatedScroll ? false : paceGraphAnimated)];
     }
 }
 
@@ -2582,6 +2617,7 @@
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {
 
+    //builds, configures and adds bar and selectedplot to chart view
     
     // Create barChart from theme
     barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
@@ -2669,6 +2705,13 @@
     selectedPlot.delegate = self;
     
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
+    
+    //set position of chart view within scrollview to be at start
+    CGRect paceGraphRect = chart.frame;
+    paceGraphRect.size = CGSizeMake(paceGraphSplitObjects * paceGraphBarWidth, paceScroll.frame.size.height);
+    paceGraphRect.origin = CGPointMake(0, 0);
+    [chart setFrame:paceGraphRect];
+
 }
 
 #pragma mark -
@@ -3038,7 +3081,7 @@
     }
     
     //scroll to selected index
-    [self updateChartForScroll:selectedMinIndex];
+    [self updateChartForIndex:selectedMinIndex];
     
     //show km on icon  map
     NSMutableArray * pointsToSelect = [[NSMutableArray alloc] initWithCapacity:10];
