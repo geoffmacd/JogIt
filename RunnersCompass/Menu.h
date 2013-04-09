@@ -13,6 +13,19 @@
 #import "Logger.h"
 #import "Goal.h"
 #import "Analysis.h"
+#import "Constants.h"
+#import "RunEvent.h"
+#import "Logger.h"
+#import "PerformanceVC.h"
+#import "SettingsViewController.h"
+#import "GoalsViewController.h"
+#import "CreateGoalViewController.h"
+#import "RunFormPicker.h"
+
+#import "LocationRecord.h"
+#import "ThumbnailRecord.h"
+#import "RunRecord.h"
+
 
 @protocol MenuViewControllerDelegate <NSObject>
 

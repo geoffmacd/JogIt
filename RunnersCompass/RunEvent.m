@@ -33,16 +33,16 @@
 @synthesize distance;
 @synthesize avgPace;
 @synthesize time;
-@synthesize live,metric,ghost;
+@synthesize live,targetMetric,ghost;
 @synthesize minCheckpointsMeta, minCheckpoints;
 @synthesize kmCheckpoints,kmCheckpointsMeta;
 @synthesize impCheckpoints,impCheckpointsMeta;
 @synthesize metricGoal;
 @synthesize eventType;
-@synthesize map;
+@synthesize mapPath;
 @synthesize pos,posMeta;
 @synthesize pausePoints;
-@synthesize associatedRun;
+@synthesize associatedRun,thumbnail;
 
 
 +(NSString * )stringForMetric:(RunMetric) metricForDisplay showSpeed:(BOOL)showSpeed
@@ -157,7 +157,7 @@
         NSString * secondTime;
         
         if(minutes < 10)
-            minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+            minuteTime = [NSString stringWithFormat:@"%d", minutes];//minuteTime = [NSString stringWithFormat:@"0%d", minutes];
         else
             minuteTime = [NSString stringWithFormat:@"%d",minutes];
         
@@ -195,7 +195,7 @@
     NSString *stringToSetTime;
     
     if(minutes < 10)
-        minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+        minuteTime = [NSString stringWithFormat:@"%d", minutes];
     else
         minuteTime = [NSString stringWithFormat:@"%d",minutes];
     
@@ -246,12 +246,128 @@
     return stringToSetTime;
 }
 
+
+-(void)processRunForRecord
+{
+
+    RunRecord * newRunRecord = [RunRecord MR_createEntity];
+    
+    //process values
+    newRunRecord.name = name;
+    newRunRecord.date = date;
+    newRunRecord.distance = [NSNumber numberWithFloat:distance];
+    newRunRecord.calories = [NSNumber numberWithFloat:calories];
+    newRunRecord.avgPace = [NSNumber numberWithDouble:avgPace];
+    newRunRecord.time = [NSNumber numberWithDouble:time];
+    newRunRecord.eventType = [NSNumber numberWithInt:eventType];
+    newRunRecord.targetMetric = [NSNumber numberWithInt:targetMetric];
+    newRunRecord.metricGoal = [NSNumber numberWithFloat:metricGoal];
+    
+    //add thumbnail
+    ThumbnailRecord * thumbNailRecord = [ThumbnailRecord MR_createEntity];
+    thumbNailRecord.image = thumbnail;
+    thumbNailRecord.run = newRunRecord;
+    newRunRecord.thumbnail = thumbnail;
+    newRunRecord.thumbnailRecord = thumbNailRecord;
+    
+    
+    NSMutableArray * allLocationsToAdd = [NSMutableArray new];
+    
+    //pos
+    for(int i = 0; i < [pos count]; i++)
+    {
+        CLLocation  * positionToAdd = [pos objectAtIndex:i];
+        CLLocationMeta * metaToAdd = [posMeta objectAtIndex:i];
+        
+        //construct location record
+        LocationRecord * recToAdd = [LocationRecord MR_createEntity];
+        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
+        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
+        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
+        recToAdd.type = [NSNumber numberWithInt:RecordPosType];
+        recToAdd.date = date;
+
+        recToAdd.location = positionToAdd;
+        [allLocationsToAdd addObject:recToAdd];
+    }
+    //min
+    for(int i = 0; i < [minCheckpoints count]; i++)
+    {
+        CLLocation  * positionToAdd = [minCheckpoints objectAtIndex:i];
+        CLLocationMeta * metaToAdd = [minCheckpointsMeta objectAtIndex:i];
+        
+        //construct location record
+        LocationRecord * recToAdd = [LocationRecord MR_createEntity];
+        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
+        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
+        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
+        recToAdd.type = [NSNumber numberWithInt:RecordMinType];
+        recToAdd.date = date;
+        
+        recToAdd.location = positionToAdd;
+        [allLocationsToAdd addObject:recToAdd];
+    }
+    //km
+    for(int i = 0; i < [kmCheckpoints count]; i++)
+    {
+        CLLocation  * positionToAdd = [kmCheckpoints objectAtIndex:i];
+        CLLocationMeta * metaToAdd = [kmCheckpointsMeta objectAtIndex:i];
+        
+        //construct location record
+        LocationRecord * recToAdd = [LocationRecord MR_createEntity];
+        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
+        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
+        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
+        recToAdd.type = [NSNumber numberWithInt:RecordKmType];
+        recToAdd.date = date;
+        
+        recToAdd.location = positionToAdd;
+        [allLocationsToAdd addObject:recToAdd];
+    }
+    //miles
+    for(int i = 0; i < [impCheckpoints count]; i++)
+    {
+        CLLocation  * positionToAdd = [impCheckpoints objectAtIndex:i];
+        CLLocationMeta * metaToAdd = [impCheckpointsMeta objectAtIndex:i];
+        
+        //construct location record
+        LocationRecord * recToAdd = [LocationRecord MR_createEntity];
+        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
+        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
+        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
+        recToAdd.type = [NSNumber numberWithInt:RecordMileType];
+        recToAdd.date = date;
+        
+        recToAdd.location = positionToAdd;
+        [allLocationsToAdd addObject:recToAdd];
+    }
+    //pausepoints
+    for(int i = 0; i < [pausePoints count]; i++)
+    {
+        CLLocation  * positionToAdd = [pausePoints objectAtIndex:i];
+        
+        //construct location record
+        LocationRecord * recToAdd = [LocationRecord MR_createEntity];
+        //no meta to add
+        recToAdd.type = [NSNumber numberWithInt:RecordPauseType];
+        recToAdd.date = date;
+        
+        recToAdd.location = positionToAdd;
+        [allLocationsToAdd addObject:recToAdd];
+    }
+    
+    //add locations to run record
+    newRunRecord.locations = [NSSet setWithArray:allLocationsToAdd];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
 -(id)initWithGhostRun:(RunEvent*)associatedRunToGhost
 {
     self = [super init];
     if (self) {
         name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
-        metric = NoMetricType;
+        targetMetric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
@@ -271,7 +387,6 @@
         impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-        map = [[RunMap alloc] init];
         return self;
     }
     return nil;
@@ -282,7 +397,7 @@
     self = [super init];
     if (self) {
         name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
-        metric = NoMetricType;
+        targetMetric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
@@ -301,7 +416,6 @@
         impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-        map = [[RunMap alloc] init];
         return self;
     }
     return nil;
@@ -315,7 +429,7 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed], [UserPrefs getPaceUnitWithSpeedMetric:metric showSpeed:showSpeed]];
+                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed], [UserPrefs getPaceUnitWithSpeedMetric:targetMetric showSpeed:showSpeed]];
                 break;
             case MetricTypeCalories:
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value];
@@ -332,7 +446,7 @@
                 break;
                 
         }
-        metric = type;
+        targetMetric = type;
         metricGoal = value;
         eventType = EventTypeRun;    //for now this is only possible
         date = [NSDate date];
@@ -351,13 +465,209 @@
         impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-        map = [[RunMap alloc] init];
         return self;
     }
     return nil;
 }
 
+-(id)initWithRecord:(RunRecord*)record
+{
+    self = [super init];
+    
+    if (self) {
 
+        targetMetric = [record.targetMetric integerValue];
+        metricGoal = [record.metricGoal integerValue];
+        eventType = [record.eventType integerValue];    //for now this is only possible
+        date = record.date;
+        distance = [record.distance floatValue];
+        calories = [record.calories floatValue];
+        avgPace = [record.avgPace doubleValue];
+        time = [record.time doubleValue];
+        live = false;
+        ghost = false;
+        
+        thumbnail = record.thumbnailRecord.image;
+        
+        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
+        return self;
+    }
+    return nil;
+}
+
+-(id)initWithRecordToLogger:(RunRecord*)record
+{
+    self = [super init];
+    
+    if (self) {
+        
+        targetMetric = [record.targetMetric integerValue];
+        metricGoal = [record.metricGoal integerValue];
+        eventType = [record.eventType integerValue];    //for now this is only possible
+        date = record.date;
+        distance = [record.distance floatValue];
+        calories = [record.calories floatValue];
+        avgPace = [record.avgPace doubleValue];
+        time = [record.time doubleValue];
+        live = false;
+        ghost = false;
+        
+        thumbnail = record.thumbnailRecord.image;
+        
+        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
+    
+        NSArray * allLocationRecords = [record.locations allObjects];
+        
+        for(LocationRecord * location in allLocationRecords)
+        {
+            CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
+            //meta should be same for all types me thinks
+            metaToAdd.time = [location.time doubleValue];
+            metaToAdd.pace = [location.pace doubleValue];
+            metaToAdd.distance = [location.distance floatValue];
+            
+            CLLocation * locationToAdd = location.location;
+             
+            
+            switch ([location.type integerValue]) {
+                case RecordPosType:
+                    [pos addObject:locationToAdd];
+                    [posMeta addObject:metaToAdd];
+                    break;
+                    
+                case RecordMinType:
+                    [minCheckpoints addObject:locationToAdd];
+                    [minCheckpointsMeta addObject:metaToAdd];
+                    break;
+                    
+                case RecordKmType:
+                    [kmCheckpoints addObject:locationToAdd];
+                    [kmCheckpointsMeta addObject:metaToAdd];
+                    break;
+                    
+                case RecordMileType:
+                    [impCheckpoints addObject:locationToAdd];
+                    [impCheckpointsMeta addObject:metaToAdd];
+                    break;
+                    
+                case RecordPauseType:
+                    [pausePoints addObject:locationToAdd];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        
+        //need to sort all arrays to get proper index positioning necesssary
+
+        //pos
+        NSMutableArray * tempPos = [NSMutableArray new];
+        NSMutableArray * tempPosMeta = [NSMutableArray new];
+        //go through each second and add if it finds for that second
+        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
+        {
+            for(NSInteger i = 0; i < [pos count]; i++)
+            {
+                CLLocationMeta * meta = [posMeta objectAtIndex:i];
+                CLLocation * location = [pos objectAtIndex:i];
+                
+                if(meta.time == timeToFind && location && meta)
+                {
+                    [tempPosMeta addObject:meta];
+                    [tempPos addObject:location];
+                }
+            }
+        }
+        pos = tempPos;
+        posMeta = tempPosMeta;
+        
+        //minutes
+        NSMutableArray * tempMin = [NSMutableArray new];
+        NSMutableArray * tempMinMeta = [NSMutableArray new];
+        //go through each second and add if it finds for that second
+        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
+        {
+            for(NSInteger i = 0; i < [minCheckpoints count]; i++)
+            {
+                CLLocationMeta * meta = [minCheckpointsMeta objectAtIndex:i];
+                CLLocation * location = [minCheckpoints objectAtIndex:i];
+                
+                if(meta.time == timeToFind && location && meta)
+                {
+                    [tempMinMeta addObject:meta];
+                    [tempMin addObject:location];
+                }
+            }
+        }
+        minCheckpoints = tempMin;
+        minCheckpointsMeta = tempMinMeta;
+        
+        //km
+        NSMutableArray * tempKm = [NSMutableArray new];
+        NSMutableArray * tempKmMeta = [NSMutableArray new];
+        //go through each second and add if it finds for that second
+        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
+        {
+            for(NSInteger i = 0; i < [kmCheckpointsMeta count]; i++)
+            {
+                CLLocationMeta * meta = [kmCheckpointsMeta objectAtIndex:i];
+                CLLocation * location = [kmCheckpoints objectAtIndex:i];
+                
+                if(meta.time == timeToFind && location && meta)
+                {
+                    [tempKmMeta addObject:meta];
+                    [tempKm addObject:location];
+                }
+            }
+        }
+        kmCheckpoints = tempKm;
+        kmCheckpointsMeta = tempKmMeta;
+        
+        //miles
+        NSMutableArray * tempMile= [NSMutableArray new];
+        NSMutableArray * tempMileMeta = [NSMutableArray new];
+        //go through each second and add if it finds for that second
+        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
+        {
+            for(NSInteger i = 0; i < [impCheckpointsMeta count]; i++)
+            {
+                CLLocationMeta * meta = [impCheckpointsMeta objectAtIndex:i];
+                CLLocation * location = [impCheckpoints objectAtIndex:i];
+                
+                if(meta.time == timeToFind && location && meta)
+                {
+                    [tempMileMeta addObject:meta];
+                    [tempMile addObject:location];
+                }
+            }
+        }
+        impCheckpoints = tempMile;
+        impCheckpointsMeta = tempMileMeta;
+        
+        //pause points do not need to be sorted
+        
+        //process
+        return self;
+    }
+    return nil;
+}
 
 
 @end

@@ -29,11 +29,11 @@
     
     //need time components for race
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:self.time];
-    
+    NSDateComponents *components;
+
     NSString *endString = @"";
     
-    UserPrefs * tempPrefs = [UserPrefs defaultUser];
+    UserPrefs * tempPrefs = [UserPrefs MR_findFirst];
     tempPrefs.metric = [NSNumber numberWithBool:metric];
 
     //switch between metric to determine label for metric description
@@ -46,6 +46,7 @@
             goalName = [NSString stringWithFormat:@"%@: %@ %@ race%@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], endString];
             break;
         case GoalTypeRace:
+            components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:time];
             if(components.hour > 0)
                 goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], components.hour, components.minute];
             else
@@ -355,13 +356,13 @@
     //set goal values
     activityCount = [NSNumber numberWithFloat:runCount];
     
-    UserPrefs * tempPrefs = [UserPrefs defaultUser];
+    UserPrefs * tempPrefs = [UserPrefs MR_findFirst];
     tempPrefs.metric = [NSNumber numberWithBool:metric];
     
     CGFloat avgPace;
     //need time components for race
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:self.time];
+    NSDateComponents *components; 
     
     //process progress and string for metric change
     switch(type)
@@ -375,6 +376,7 @@
             metricValueChange = [NSString stringWithFormat:@"%.1f %@", [RunEvent getDisplayDistance:max withMetric:metric], [tempPrefs getDistanceUnit]];
             break;
         case GoalTypeRace:
+            components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:time];
             //calc avg pace
             avgPace = [value floatValue] / ((components.hour * 3600) + (components.minute * 60))  ; //to m/s
             progress = max / avgPace;

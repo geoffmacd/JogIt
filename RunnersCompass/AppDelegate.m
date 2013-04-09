@@ -58,6 +58,13 @@
         }];
     }
     
+    
+    //save to db
+    if(runToSave)
+    {
+        //creates all locations, run record and thumbnail
+        [runToSave processRunForRecord];
+    }
 }
 
 - (void)pauseAnimation:(void(^)(void))completion {
@@ -110,6 +117,14 @@
 
 
 #pragma mark - Menu Delegate Methods
+
+-(NSMutableArray *)fetchAll
+{
+    //fetch all runs from db
+    
+    
+    return nil;
+}
 
 - (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close
 {
@@ -241,13 +256,18 @@
     //set new settings
     userPrefs = (UserPrefs *) [notification object];
     
+    //save to database
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    
 }
 
 -(void)goalChanged:(NSNotification *)notification
 {
-    
     //set new settings
     goal = (Goal *) [notification object];
+    
+    //save to database
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -255,8 +275,49 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    //user preferences
-    userPrefs = [UserPrefs defaultUser];
+    //core data setup
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];
+    
+    //find prefs, if not there create it
+    userPrefs = [UserPrefs MR_findFirst];
+    if(!userPrefs)
+    {
+        //create entity
+        userPrefs = [UserPrefs MR_createEntity];
+        
+        //default user 
+        userPrefs.countdown = [NSNumber numberWithInt:3];
+        userPrefs.autopause = [NSNumber numberWithInt:0];
+        userPrefs.weight = [NSNumber numberWithInt:150];
+        //new.twitter = [NSNumber numberWithInt:0];
+        //new.facebook = [NSNumber numberWithInt:0];
+        //find systems default unit measure
+        NSLocale *locale = [NSLocale currentLocale];
+        BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
+        userPrefs.metric = [NSNumber numberWithBool:isMetric];
+        userPrefs.showSpeed = [NSNumber numberWithBool:false];
+        
+        //best to leave these blank so user does not have to backspace them
+        userPrefs.fullname = nil;
+        userPrefs.birthdate = nil;
+        
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    }
+    
+    //find goal, if not there create goal with no goal
+    goal = [Goal MR_findFirst];
+    if(!goal)
+    {
+        //create entity
+        goal = [Goal MR_createEntity];
+        
+        //no goal
+        goal.type = GoalTypeNoGoal;
+        
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(settingsChanged:)
                                                  name:@"settingsChangedNotification"
@@ -272,9 +333,6 @@
     //to make corners same as those for the app
     [self.backVC.view.layer setCornerRadius:10.0f];
     [self.backVC.view.layer setMasksToBounds:true];
-
-    //core data setup
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];
     
     //menu
     self.frontVC = [[MenuViewController alloc] initWithNibName:@"Menu" bundle:nil];
@@ -341,6 +399,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    //set badge to nothing
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //clean up database
     [MagicalRecord cleanUp];

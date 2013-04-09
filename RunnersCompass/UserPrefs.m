@@ -10,29 +10,13 @@
 
 @implementation UserPrefs
 
-@synthesize autopause,weight,fullname,birthdate,metric,countdown,showSpeed;
-//@synthesize facebook,twitter;
-
-+ (id)defaultUser{
-    UserPrefs * new = [[UserPrefs alloc] init];
-    
-    new.countdown = [NSNumber numberWithInt:3];
-    new.autopause = [NSNumber numberWithInt:0];
-    new.weight = [NSNumber numberWithInt:150];
-    //new.twitter = [NSNumber numberWithInt:0];
-    //new.facebook = [NSNumber numberWithInt:0];
-    //find systems default unit measure
-    NSLocale *locale = [NSLocale currentLocale];
-    BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
-    new.metric = [NSNumber numberWithBool:isMetric];
-    new.showSpeed = [NSNumber numberWithBool:false];
-    
-    //best to leave these blank so user does not have to backspace them
-    new.fullname = nil;
-    new.birthdate = nil;
-    
-    return new;
-}
+@dynamic autopause;
+@dynamic metric;
+@dynamic showSpeed;
+@dynamic countdown;
+@dynamic weight;
+@dynamic fullname;
+@dynamic birthdate;
 
 +(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric
 {

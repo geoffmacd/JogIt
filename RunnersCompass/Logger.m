@@ -284,13 +284,13 @@
     else
     {
         //hide red x if it is not a targeted run
-        if(run.metric != NoMetricType)
+        if(run.targetMetric != NoMetricType)
         {
             //if it is, set the image to be besides the label
             CGRect metricRect;
             CGRect imageRect = goalAchievedImage.frame;
             
-            switch (run.metric) {
+            switch (run.targetMetric) {
                 case MetricTypePace:
                     metricRect = paceLabel.frame;
                     break;
@@ -792,7 +792,7 @@
 
 -(void)determineGoalAchieved
 {
-    switch (run.metric) {
+    switch (run.targetMetric) {
         case NoMetricType:
             //do nothing
             return;
@@ -909,8 +909,9 @@
         if(index > 0)
         {
             CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
+            CLLocationMeta * lastPos = [run.posMeta lastObject];
             
-            if(ghostPos.pace > [[run.posMeta lastObject] pace])
+            if(ghostPos.pace > [lastPos pace])
             {
                 //set to blue
                 selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
@@ -958,16 +959,15 @@
         NSLog(@"%f distance added", distanceToAdd);
         
         //2.climbed
-        //constrain to reasonable value?
-        CLLocationDistance climbed = latest.altitude - prior.altitude;
-        run.climbed += climbed;
+        //CLLocationDistance climbed = latest.altitude - prior.altitude;
+        //run.climbed += climbed;
         
         //3.avg pace calced in position independant
         
         //4.calories
         CGFloat grade = 0;
         if(distanceToAdd > 0.5)
-            grade = climbed / distanceToAdd;
+            grade = 0;//climbed / distanceToAdd;
         UserPrefs * curSettings = [delegate curUserPrefs];
         BOOL showSpeed = [[curSettings showSpeed] boolValue];
         BOOL isMetric = [[curSettings metric] boolValue];
@@ -1282,6 +1282,7 @@
     if(!run.live)
     {
         //set title
+        /*
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -1290,6 +1291,8 @@
         [dateFormatter setLocale:usLocale];
         
         [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+         */
+        [runTitle setText:run.name];
     }
     else{
         
@@ -1799,7 +1802,7 @@
     //ensure to remove user location for image
     [iconMap setShowsUserLocation:false];
     //set the run to have the correct picture in table cell
-    run.map.thumbnail = [Util imageWithView:iconMap withSize:iconMap.frame.size];
+    run.thumbnail = [Util imageWithView:iconMap withSize:iconMap.frame.size];
     [iconMap setShowsUserLocation:true];
     
     //stop loading indicator

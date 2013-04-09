@@ -7,19 +7,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface UserPrefs : NSObject
-@property NSString *fullname;
-@property NSDate *birthdate;
-@property NSNumber *weight;
-@property NSNumber *countdown;
-@property NSNumber *autopause;
-@property NSNumber *metric;
-@property NSNumber *showSpeed;
+@interface UserPrefs : NSManagedObject
+
+
+@property (nonatomic, retain) NSNumber * autopause;
+@property (nonatomic, retain) NSNumber * metric;
+@property (nonatomic, retain) NSNumber * showSpeed;
+@property (nonatomic, retain) NSNumber * countdown;
+@property (nonatomic, retain) NSNumber * weight;
+@property (nonatomic, retain) NSString * fullname;
+@property (nonatomic, retain) NSDate * birthdate;
 //@property (nonatomic, retain) NSNumber *facebook;
 //@property (nonatomic, retain) NSNumber *twitter;
 
-+ (id)defaultUser;
 +(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric;
 +(NSString*)getPaceUnitWithSpeedMetric:(BOOL)metric showSpeed:(BOOL)showSpeed;
 -(NSString*)getDistanceUnit;

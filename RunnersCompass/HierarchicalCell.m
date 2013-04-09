@@ -35,7 +35,7 @@
     [self reloadUnitLabels];
     
     //set UI style
-    [thumbnailImage setImage:associatedRun.map.thumbnail];
+    [thumbnailImage setImage:associatedRun.thumbnail];
     [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [thumbnailImage.layer setBorderWidth: 1.0];
     //corners to make map not look so square

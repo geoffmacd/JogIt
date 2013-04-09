@@ -7,19 +7,6 @@
 //
 
 #import "Menu.h"
-#import "Constants.h"
-#import "RunEvent.h"
-#import "Logger.h"
-#import "JSSlidingViewController.h"
-#import "PerformanceVC.h"
-#import "SettingsViewController.h"
-#import "GoalsViewController.h"
-#import "CreateGoalViewController.h"
-#import "RunFormPicker.h"
-#import "Analysis.h"
-
-#import "SJCell.h"
-
 
 
 @implementation MenuViewController
@@ -54,12 +41,19 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     runs = [[NSMutableArray alloc] initWithCapacity:3];
     cells = [[NSMutableArray alloc] initWithCapacity:3];
-    
-    
-    RunMap * map = [RunMap alloc];
 
-    [map setThumbnail:[UIImage imageNamed:@"map.JPG"]];
+    //p
+    NSArray * runRecords = [RunRecord MR_findAll];
     
+    for(RunRecord * runRecord in runRecords)
+    {
+        //init RunEvent with data
+        RunEvent * eventToAdd = [[RunEvent alloc] initWithRecord:runRecord];
+        
+        [runs addObject:eventToAdd];
+    }
+    
+    /* random runs
     for(NSInteger i=0;i <80; i++)
     {
     
@@ -76,11 +70,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         loadRun.time = arc4random() % 4000;
         loadRun.avgPace = arc4random() % 7;
         loadRun.distance = arc4random() % 10000;
-        [loadRun setMap:map];
         
         [runs addObject:loadRun];
         
     }
+     */
     
     runInProgressAsFarAsICanTell = false;
     
@@ -346,8 +340,13 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     {
         HierarchicalCell * cell = (HierarchicalCell * )sender;
         
+        //need to fetch real record and fill with data points
+        RunRecord * recordToLoad = [RunRecord MR_findFirstByAttribute:@"date" withValue:cell.associatedRun.date];
+        
+        RunEvent * runToLoad = [[RunEvent alloc] initWithRecordToLogger:recordToLoad];
+        
         //set logger with this run
-        [self.delegate loadRun:cell.associatedRun close:true];
+        [self.delegate loadRun:runToLoad close:true];
         
         //refresh start cell
         runInProgressAsFarAsICanTell = false;
@@ -601,8 +600,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //if run is currently loaded in the logger replace with something else
         [self.delegate preventUserFromSlidingRunInvalid:runDeleting];
         
+        //delete from db
+        RunRecord * recordToDelete = [RunRecord MR_findFirstByAttribute:@"date" withValue:runDeleting.date];
         //remove both run and cell, run is most necessary
         [runs removeObject:runDeleting];
+        if(recordToDelete)
+        {
+            [recordToDelete MR_deleteEntity];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
         [cells removeObjectAtIndex:indexOfCell];
         
         //commit and reload table here

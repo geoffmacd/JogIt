@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="GoalRecord" representedClassName="GoalRecord" syncable="YES"/>
-    <entity name="RunRecord" syncable="YES"/>
-    <entity name="UserPrefsRecord" syncable="YES"/>
+    <entity name="Goal" representedClassName="Goal" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="LocationRecord" representedClassName="LocationRecord" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
+        <attribute name="pace" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="RunRecord" representedClassName="RunRecord" syncable="YES">
+        <attribute name="avgPace" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="calories" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="eventType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="metricGoal" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="targetMetric" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LocationRecord" syncable="YES"/>
+        <relationship name="thumbnailRecord" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="ThumbnailRecord" inverseName="run" inverseEntity="ThumbnailRecord" syncable="YES"/>
+    </entity>
+    <entity name="ThumbnailRecord" representedClassName="ThumbnailRecord" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
+        <relationship name="run" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="RunRecord" inverseName="thumbnailRecord" inverseEntity="RunRecord" syncable="YES"/>
+    </entity>
+    <entity name="UserPrefs" representedClassName="UserPrefs" syncable="YES">
+        <attribute name="autopause" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="birthdate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="countdown" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="metric" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="showSpeed" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="weight" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="RunRecord" positionX="160" positionY="192" width="128" height="45"/>
-        <element name="UserPrefsRecord" positionX="160" positionY="192" width="128" height="45"/>
-        <element name="GoalRecord" positionX="160" positionY="192" width="128" height="45"/>
+        <element name="RunRecord" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="LocationRecord" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="ThumbnailRecord" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="UserPrefs" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Goal" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

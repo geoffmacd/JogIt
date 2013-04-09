@@ -11,7 +11,7 @@
 
 #define calsInLbFat 3500
 
-@interface Goal : NSObject
+@interface Goal : NSManagedObject
 
 typedef enum
 {
@@ -26,12 +26,15 @@ typedef enum
 @property (nonatomic, retain) NSDate *endDate;
 @property (nonatomic, retain) NSNumber * value;
 @property (nonatomic, retain) NSDate * time;
+@property (nonatomic) GoalType type;//defines metric to use
+
+
 @property (nonatomic, retain) NSNumber * activityCount;
 @property (nonatomic, retain) NSString * race;
 @property (nonatomic, retain) NSString * weight;
 @property (nonatomic, retain) NSString * metricValueChange;
-@property (nonatomic) GoalType type;//also defines the metric to use
-@property (nonatomic) CGFloat progress;//also defines the metric to use
+@property (nonatomic) CGFloat progress;
+//sorta static
 @property (nonatomic, retain) NSDictionary * raceDictionary;
 @property (nonatomic, retain) NSDictionary * fatDictionary;
 
