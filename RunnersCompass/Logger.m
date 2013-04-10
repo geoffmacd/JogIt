@@ -153,6 +153,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(BOOL)inBackground
+{
+    return inBackground;
+}
+
 -(void)setInBackground:(BOOL)toBackground
 {
     inBackground = toBackground;
@@ -853,31 +858,31 @@
         //aggregrate last minute, starting at most recent
         NSInteger index = [run.posMeta count] - 1;
         NSInteger sumCount = 0;
-        NSInteger currentTime = run.time;
         CLLocationMeta * lastMeta ;
         NSTimeInterval paceSum = 0;
         
         if(index >= 0 && [run.posMeta count] > index)
         {
+            lastMeta = [run.posMeta objectAtIndex:index];
             
-            do {
-                
-                lastMeta = [run.posMeta objectAtIndex:index];
+            //while pos is later than last bar period
+            while ((run.time - barPeriod) < [lastMeta time] && index > 0)
+            {
                 //aggregate pace
                 paceSum += [lastMeta pace];
                 sumCount++;
                 
                 index--;
-                
-                //until we have reached 60 seconds ago
-            } while ((currentTime - barPeriod) < [lastMeta time] && index > 0);
+                lastMeta = [run.posMeta objectAtIndex:index];
+            }
             
-            
-            NSTimeInterval avgPaceInMin = paceSum / sumCount;
+            NSTimeInterval avgPaceInMin = 0;
+            if(sumCount > 0)
+                avgPaceInMin = paceSum / sumCount;
             
             CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
             newMinMeta.pace = avgPaceInMin; //m/s
-            newMinMeta.time = currentTime;
+            newMinMeta.time = run.time;
             
             //add meta and loc to array
             [run.minCheckpointsMeta addObject:newMinMeta];
@@ -941,7 +946,7 @@
     
     
     //only calculate if beyond min accuracy and their is at least one object to compare to 
-    if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc >= 1)
+    if(latest.horizontalAccuracy <= logRequiredAccuracy  && countOfLoc > 0)
     {
         //latest already added, get one behind
         CLLocation *prior = [run.pos lastObject];
@@ -1341,7 +1346,7 @@
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
         else
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = @"0:00";
+        selectedPaceString = [RunEvent getPaceString:0 withMetric:isMetric showSpeed:showSpeed];
     }
     else if(!kmPaceShowMode && !selectedPaceShowMode)
     {
@@ -1353,6 +1358,11 @@
         else
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        //if not update to date, leave default string
+        if([selectedMinMeta time] < run.time - barPeriod)
+            selectedPaceString = [RunEvent getPaceString:0 withMetric:isMetric showSpeed:showSpeed];
+
+            
     }
     else if(kmPaceShowMode){
         
@@ -1364,6 +1374,9 @@
         else
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
         selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        //if not update to date, leave default string
+        if([selectedMinMeta time] < run.time - barPeriod)
+            selectedPaceString = [RunEvent getPaceString:0 withMetric:isMetric showSpeed:showSpeed];
         
     }
     else if(selectedPaceShowMode){
