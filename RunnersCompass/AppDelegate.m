@@ -134,8 +134,7 @@
     
     //lock slider bounce to  prevent pause
     [self.viewController setLiveRun:false];
-    
-    
+
     //ensure run is not live
     runToLoad.live = false;
     

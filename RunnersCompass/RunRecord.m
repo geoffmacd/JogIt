@@ -2,27 +2,30 @@
 //  RunRecord.m
 //  RunnersCompass
 //
-//  Created by Geoff MacDonald on 2013-04-08.
+//  Created by Geoff MacDonald on 2013-04-09.
 //  Copyright (c) 2013 Geoff MacDonald. All rights reserved.
 //
 
 #import "RunRecord.h"
 #import "LocationRecord.h"
+#import "ThumbnailRecord.h"
 #import "UIImageToDataTransformer.h"
+
 
 @implementation RunRecord
 
-@dynamic name;
+@dynamic avgPace;
+@dynamic calories;
 @dynamic date;
-@dynamic targetMetric;
+@dynamic distance;
 @dynamic eventType;
 @dynamic metricGoal;
-@dynamic calories;
-@dynamic time;
-@dynamic avgPace;
-@dynamic distance;
-@dynamic locations;
+@dynamic name;
+@dynamic targetMetric;
 @dynamic thumbnail;
+@dynamic time;
+@dynamic locations;
+@dynamic thumbnailRecord;
 
 + (void)initialize {
 	if (self == [RunRecord class]) {

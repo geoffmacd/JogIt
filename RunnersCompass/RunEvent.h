@@ -11,6 +11,7 @@
 #import "UserPrefs.h"
 #import "RunRecord.h"
 #import "LocationRecord.h"
+#import "ThumbnailRecord.h"
 
 #define convertMSTOminKM 16.6666666666666
 #define convertKMToMile 0.6214//0.621371

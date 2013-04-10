@@ -357,7 +357,7 @@
     }
     
     //add locations to run record
-    newRunRecord.locations = [NSSet setWithArray:allLocationsToAdd];
+    newRunRecord.locations = [NSOrderedSet orderedSetWithArray:allLocationsToAdd];
     
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
@@ -531,21 +531,32 @@
         impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
         impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
         pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-    
-        NSArray * allLocationRecords = [record.locations allObjects];
         
-        for(LocationRecord * location in allLocationRecords)
+        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
+        
+        NSOrderedSet * allLocs = record.locations;
+        
+        NSArray * timeOrderLocs = [allLocs sortedArrayUsingComparator:^(id obj1, id obj2) {
+            NSNumber * time1 = [obj1 valueForKeyPath:@"time"];
+            NSNumber * time2 = [obj2 valueForKeyPath:@"time"];
+            return (NSComparisonResult)[time1 compare:time2];
+        }];
+        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
+        
+        //add to correct array
+        for(LocationRecord * rec in timeOrderLocs)
         {
+            //stuff to add
             CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
             //meta should be same for all types me thinks
-            metaToAdd.time = [location.time doubleValue];
-            metaToAdd.pace = [location.pace doubleValue];
-            metaToAdd.distance = [location.distance floatValue];
+            metaToAdd.time = [rec.time doubleValue];
+            metaToAdd.pace = [rec.pace doubleValue];
+            metaToAdd.distance = [rec.distance floatValue];
+            CLLocation * locationToAdd = rec.location;
             
-            CLLocation * locationToAdd = location.location;
-             
-            
-            switch ([location.type integerValue]) {
+            //already ordered so timing is gauraunteed
+            switch([rec.type integerValue])
+            {
                 case RecordPosType:
                     [pos addObject:locationToAdd];
                     [posMeta addObject:metaToAdd];
@@ -571,99 +582,12 @@
                     break;
                     
                 default:
+                    NSLog(@"bad location record type");
                     break;
             }
         }
         
-        //need to sort all arrays to get proper index positioning necesssary
-
-        //pos
-        NSMutableArray * tempPos = [NSMutableArray new];
-        NSMutableArray * tempPosMeta = [NSMutableArray new];
-        //go through each second and add if it finds for that second
-        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
-        {
-            for(NSInteger i = 0; i < [pos count]; i++)
-            {
-                CLLocationMeta * meta = [posMeta objectAtIndex:i];
-                CLLocation * location = [pos objectAtIndex:i];
-                
-                if(meta.time == timeToFind && location && meta)
-                {
-                    [tempPosMeta addObject:meta];
-                    [tempPos addObject:location];
-                }
-            }
-        }
-        pos = tempPos;
-        posMeta = tempPosMeta;
-        
-        //minutes
-        NSMutableArray * tempMin = [NSMutableArray new];
-        NSMutableArray * tempMinMeta = [NSMutableArray new];
-        //go through each second and add if it finds for that second
-        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
-        {
-            for(NSInteger i = 0; i < [minCheckpoints count]; i++)
-            {
-                CLLocationMeta * meta = [minCheckpointsMeta objectAtIndex:i];
-                CLLocation * location = [minCheckpoints objectAtIndex:i];
-                
-                if(meta.time == timeToFind && location && meta)
-                {
-                    [tempMinMeta addObject:meta];
-                    [tempMin addObject:location];
-                }
-            }
-        }
-        minCheckpoints = tempMin;
-        minCheckpointsMeta = tempMinMeta;
-        
-        //km
-        NSMutableArray * tempKm = [NSMutableArray new];
-        NSMutableArray * tempKmMeta = [NSMutableArray new];
-        //go through each second and add if it finds for that second
-        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
-        {
-            for(NSInteger i = 0; i < [kmCheckpointsMeta count]; i++)
-            {
-                CLLocationMeta * meta = [kmCheckpointsMeta objectAtIndex:i];
-                CLLocation * location = [kmCheckpoints objectAtIndex:i];
-                
-                if(meta.time == timeToFind && location && meta)
-                {
-                    [tempKmMeta addObject:meta];
-                    [tempKm addObject:location];
-                }
-            }
-        }
-        kmCheckpoints = tempKm;
-        kmCheckpointsMeta = tempKmMeta;
-        
-        //miles
-        NSMutableArray * tempMile= [NSMutableArray new];
-        NSMutableArray * tempMileMeta = [NSMutableArray new];
-        //go through each second and add if it finds for that second
-        for(NSTimeInterval timeToFind = 0; timeToFind < [pos count] * calcPeriod; timeToFind += calcPeriod)
-        {
-            for(NSInteger i = 0; i < [impCheckpointsMeta count]; i++)
-            {
-                CLLocationMeta * meta = [impCheckpointsMeta objectAtIndex:i];
-                CLLocation * location = [impCheckpoints objectAtIndex:i];
-                
-                if(meta.time == timeToFind && location && meta)
-                {
-                    [tempMileMeta addObject:meta];
-                    [tempMile addObject:location];
-                }
-            }
-        }
-        impCheckpoints = tempMile;
-        impCheckpointsMeta = tempMileMeta;
-        
-        //pause points do not need to be sorted
-        
-        //process
+        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
         return self;
     }
     return nil;

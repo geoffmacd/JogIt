@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RunEvent.h" //for metric enum
+#import "RunRecord.h"
 #import "GoalRecord.h"
 
 #define calsInLbFat 3500

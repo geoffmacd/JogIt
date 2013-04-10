@@ -18,7 +18,7 @@
     <entity name="RunRecord" representedClassName="RunRecord" syncable="YES">
         <attribute name="avgPace" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="calories" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="eventType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="metricGoal" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -26,7 +26,7 @@
         <attribute name="targetMetric" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LocationRecord" syncable="YES"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="LocationRecord" syncable="YES"/>
         <relationship name="thumbnailRecord" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="ThumbnailRecord" inverseName="run" inverseEntity="ThumbnailRecord" syncable="YES"/>
     </entity>
     <entity name="ThumbnailRecord" representedClassName="ThumbnailRecord" syncable="YES">
