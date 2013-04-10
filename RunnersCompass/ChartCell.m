@@ -54,9 +54,9 @@
 {
     weekly = toWeekly;
     
-    NSTimeInterval highest= 0;
+    NSTimeInterval highest= 0.0;
     NSTimeInterval lowest= [NSDate timeIntervalSinceReferenceDate];
-    NSTimeInterval allTime = 0;
+    NSTimeInterval allTime = 0.0;
     NSInteger recordCount = 0;
     NSNumber* current;
     NSNumber* previous;
@@ -71,28 +71,28 @@
         for(NSNumber * num in weeklyValues)
         {
             //mostly for pace
-            if([num floatValue] > 0)
+            if([num doubleValue] > 0)
             {
-                allTime += [num floatValue];
+                allTime += [num doubleValue];
                 recordCount++;
             }
             
-            if([num floatValue] > highest)
-                highest = [num floatValue];
+            if([num doubleValue] > highest)
+                highest = [num doubleValue];
             
-            if([num floatValue] < lowest)
-                lowest = [num floatValue];
+            if([num doubleValue] < lowest)
+                lowest = [num doubleValue];
         }
         
         //set value for previous,current
         if([weeklyValues count] > 0)
             current = [weeklyValues objectAtIndex:0];
         else
-            previous = [NSNumber numberWithInt:0];
+            previous = [NSNumber numberWithDouble:0.0];
         if([weeklyValues count] > 1)
             previous = [weeklyValues objectAtIndex:1];
         else
-            previous = [NSNumber numberWithInt:0];
+            previous = [NSNumber numberWithDouble:0.0];
     }
     else
     {
@@ -103,27 +103,27 @@
         for(NSNumber * num in monthlyValues)
         {
             //mostly for pace
-            if([num floatValue] > 0)
+            if([num doubleValue] > 0)
             {
-                allTime += [num floatValue];
+                allTime += [num doubleValue];
                 recordCount++;
             }
             
-            if([num floatValue] > highest)
-                highest = [num floatValue];
-            if([num floatValue] < lowest)
-                lowest = [num floatValue];
+            if([num doubleValue] > highest)
+                highest = [num doubleValue];
+            if([num doubleValue] < lowest)
+                lowest = [num doubleValue];
         }
         
         //set value for previous,current
         if([monthlyValues count] > 0)
             current = [monthlyValues objectAtIndex:0];
         else
-            previous = [NSNumber numberWithInt:0];
+            previous = [NSNumber numberWithDouble:0.0];
         if([monthlyValues count] > 1)
             previous = [monthlyValues objectAtIndex:1];
         else
-            previous = [NSNumber numberWithInt:0];
+            previous = [NSNumber numberWithDouble:0.0];
     }
     
     //always average paces for races
@@ -149,8 +149,8 @@
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:allTime withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [currentValueLabel setText:[RunEvent getPaceString:[current floatValue] withMetric:metric showSpeed:showSpeed]];
-                [previousValueLabel setText:[RunEvent getPaceString:[previous floatValue] withMetric:metric showSpeed:showSpeed]];
+                [currentValueLabel setText:[RunEvent getPaceString:[current doubleValue] withMetric:metric showSpeed:showSpeed]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous doubleValue] withMetric:metric showSpeed:showSpeed]];
                 [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:metric showSpeed:showSpeed]];
                 break;
             case MetricTypeTime:
@@ -180,7 +180,6 @@
         
         [self loadChart];
     }
-    
 }
 
 - (IBAction)expandTapped:(id)sender {
@@ -201,13 +200,11 @@
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
-    
     expanded = open;
     
     NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
     
     if(expanded){
-        
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];
         
@@ -216,7 +213,6 @@
             [AnimationUtil cellLayerAnimate:scrollView toOpen:true];
             [AnimationUtil cellLayerAnimate:statView toOpen:true];
         }
-        
         
         if(!loadedGraph)
         {
@@ -229,7 +225,6 @@
         {
             [AnimationUtil cellLayerAnimate:scrollView toOpen:false];
             [AnimationUtil cellLayerAnimate:statView toOpen:false];
-            
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
@@ -241,13 +236,8 @@
         [statView setHidden:!open];
     }
     
-    
     [delegate cellDidChangeHeight:self];
-    
-    
 }
-
-
 
 -(CGFloat)getHeightRequired
 {
@@ -269,28 +259,42 @@
     
     //set size of view of graph to be equal to that of the split load
     CGRect graphRect = expandedView.frame;
+    graphRect.origin = CGPointMake(0, 0);
     graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
-    //set origin so that view is drawn for split filling up the last possible view
-    graphRect.origin = CGPointMake((numBars * performanceBarWidth) - graphRect.size.width, 0.0);
     [expandedView setFrame:graphRect];
     
     [self barPlot:nil barWasSelectedAtRecordIndex:0];
     
-    //draw bar graph with new data from run
-    lastCacheMinute = numBars- performanceSplitObjects;
+    //draw bar for current cache
+    lastCacheMinute = numBars - performanceSplitObjects ;
+    if(lastCacheMinute < 0)
+        lastCacheMinute = 0;
     CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
     [self setupGraphForView:expandedView withRange:firstRangeToShow];
     
-    //set scroll to be at the end
-    [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
-    [scrollView setContentOffset:CGPointMake((numBars  * performanceBarWidth) - scrollView.frame.size.width, 0)];
+    
+    //scroll to latest value
+    if(numBars * performanceBarWidth < scrollView.frame.size.width)
+    {
+        [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)];
+        CGRect animatedDestination = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+        [scrollView scrollRectToVisible:animatedDestination animated:true];
+    }
+    else{
+        
+        //set scroll to be at the end of run
+        [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
+        CGRect animatedDestination = CGRectMake((numBars * performanceBarWidth) - scrollView.frame.size.width, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+        [scrollView scrollRectToVisible:animatedDestination animated:true];
+    }
     
     loadedGraph = true;
+    
 }
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {
-    
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     // Create barChart from theme
     barChart = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
@@ -347,8 +351,9 @@
         NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
         int idx = startWeek;
         int dateIndex = 0;
+        NSInteger weeksToLabel = (numBars * performanceBarWidth < scrollView.frame.size.width ? [self convertToCheckpointMinute:scrollView.frame.size.width] : numBars);
         //for each week ,if multiple of 13 , add label representing nearest month
-        for (NSNumber * valueToLabel  in weeklyValues)
+        for (int i=0; i < weeksToLabel; i++)//NSNumber * valueToLabel  in weeklyValues)
         {
             if(idx ==0)
                 idx = 52;
@@ -377,14 +382,19 @@
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
-                    //indexes are relative to start week, ie 7,6,5,4,3,2,1
-                    label.tickLocation = CPTDecimalFromInt([weeklyValues count] - dateIndex);
+                    if(numBars * performanceBarWidth < scrollView.frame.size.width)
+                        label.tickLocation = CPTDecimalFromInt(dateIndex + 0.5);
+                    else
+                        label.tickLocation = CPTDecimalFromInt([weeklyValues count] - dateIndex);
                     label.offset = 5.0f;
                     [labels addObject:label];
                 }
             }
-            //decrement week 
-            idx--;
+            //decrement week
+            if(numBars * performanceBarWidth < scrollView.frame.size.width)
+                idx++;
+            else
+                idx--;
             //increase index
             dateIndex++;
         }
@@ -399,10 +409,14 @@
         NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[monthlyValues count]/12];
         int idx = startMonth;
         int dateIndex = 0;
-        for (NSNumber * valueToLabel  in monthlyValues)
+        NSInteger monthsToLabel = (numBars * performanceBarWidth < scrollView.frame.size.width ? [self convertToCheckpointMinute:scrollView.frame.size.width] : numBars);
+        for (int i=0; i < monthsToLabel; i++)//NSNumber * valueToLabel  in monthlyValues)
         {
-            if(idx ==0)
+            if(idx ==0 && !(numBars * performanceBarWidth < scrollView.frame.size.width))
                 idx = 12;
+            
+            if(idx ==12 && (numBars * performanceBarWidth < scrollView.frame.size.width))
+                idx = 0;
             
             if(idx / 12 == 1)
             {
@@ -413,14 +427,21 @@
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
-                    label.tickLocation = CPTDecimalFromInt([monthlyValues count] - dateIndex);
+                    if(numBars * performanceBarWidth < scrollView.frame.size.width)
+                        label.tickLocation = CPTDecimalFromInt(dateIndex + 0.5);
+                    else
+                        label.tickLocation = CPTDecimalFromInt([monthlyValues count] - dateIndex);
                     label.offset = 5.0f;
                     [labels addObject:label];
                 }
                 
                 startYear -= 1;
             }
-            idx--;
+            //decrement week
+            if(numBars * performanceBarWidth < scrollView.frame.size.width)
+                idx++;
+            else
+                idx--;
             dateIndex++;
         }
         x.axisLabels = [NSSet setWithArray:labels];
@@ -457,8 +478,6 @@
     
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
     
-    
-    
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
     selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
@@ -478,8 +497,6 @@
     
     
     loadedGraph = true;
-    
-    
 }
 
 #pragma mark -
@@ -489,26 +506,37 @@
 -(NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot
 {
     //return number of checkpoints for run to determine # of bars
-    if(weekly)
-        return [weeklyValues count];
-    else
-        return [monthlyValues count];
+    
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
+    
+    if(numBars * performanceBarWidth < scrollView.frame.size.width)
+        numBars = [self convertToCheckpointMinute:scrollView.frame.size.width];
+    
+    return numBars;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSNumber * numberValue;
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
             case CPTBarPlotFieldBarLocation:
                 
-                //x location of index is opposite side of chart such that weeklyValue[0] is latest run
-                
-                if(weekly)
-                    numberValue = [NSNumber numberWithInt:([weeklyValues count] - index - 0.5)];
+                if(numBars * performanceBarWidth < scrollView.frame.size.width)
+                {
+                    //return from width of view
+                    numberValue = [NSNumber numberWithFloat:(index + 0.5)];
+                }
                 else
-                    numberValue = [NSNumber numberWithInt:([monthlyValues count] - index - 0.5)];
+                {
+                    //x location of index is opposite side of chart such that weeklyValue[0] is latest run
+                    if(weekly)
+                        numberValue = [NSNumber numberWithFloat:([weeklyValues count] - index - 0.5)];
+                    else
+                        numberValue = [NSNumber numberWithFloat:([monthlyValues count] - index - 0.5)];
+                }
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -520,7 +548,7 @@
                         else if([monthlyValues count] > index)
                             numberValue = [monthlyValues objectAtIndex:index];
                         else
-                            numberValue = [NSNumber numberWithInt:0];
+                            numberValue = [NSNumber numberWithDouble:0.0];
                     }
                 break;
         }
@@ -536,13 +564,10 @@
     //set the select pace
     selectedBarIndex = idx;
     
-    
     [selectedPlot reloadData];
-    //[barPlot reloadData];//need to correct cleared fill
-    
     
     //change selected values
-    NSNumber* valueToDisplay = [NSNumber numberWithInt:0];
+    NSNumber* valueToDisplay = [NSNumber numberWithDouble:0.0];
     
     if(weekly && [weeklyValues count] > idx)
         valueToDisplay = [weeklyValues objectAtIndex:idx];
@@ -551,7 +576,7 @@
     
     if(raceCell)
     {
-        [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
+        [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay doubleValue]]];
     }
     else{
         switch(associated)
@@ -560,18 +585,19 @@
                 [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:[valueToDisplay floatValue] withMetric:metric]]];
                 break;
             case MetricTypePace:
-                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay integerValue] withMetric:metric showSpeed:showSpeed]];
+                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay doubleValue] withMetric:metric showSpeed:showSpeed]];
                 break;
             case MetricTypeTime:
-                [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay integerValue]]];
+                [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay doubleValue]]];
                 break;
             case MetricTypeCalories:
                 [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
                 break;
+                
+            default:
+                break;
         }
     }
-    
-    
 }
 
 #pragma mark - ScrollView Delegate
@@ -583,13 +609,11 @@
     CGFloat x =  performanceBarWidth * minute;
     
     return x;
-    
 }
 
 
 -(NSInteger)convertToCheckpointMinute:(CGFloat)x
 {
-    
     NSInteger min =  x / performanceBarWidth;
     
     return min;
@@ -597,7 +621,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)tempScrollView
 {
-    
+    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     CGFloat curViewOffset = tempScrollView.contentOffset.x;
     NSInteger curViewMinute = [self convertToCheckpointMinute:curViewOffset];
@@ -608,44 +632,52 @@
     NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
     NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
     CGFloat endLocation = [self convertToX:endLocationMinute];
-    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     
     NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
+
     
-    
-    if(curViewMinute <= lastCacheMinute  && !(curViewMinute <= 0))
+    if(curViewMinute < lastCacheMinute)
     {
-        
-        
         //reload to the left
-        lastCacheMinute -= performanceSplitObjects - performanceLoadObjectsOffset;
+        lastCacheMinute = curViewMinute - (performanceSplitObjects - performanceLoadObjectsOffset);
+        //constrain to zero
+        if(lastCacheMinute < 0)
+            lastCacheMinute = 0;
+        
+        NSLog(@"Reload to left @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(performanceSplitObjects)];
         
         plotSpace.xRange = newRange;
+        [barPlot reloadData];
         
         //move the view with the scroll view
         CGRect newGraphViewRect = [expandedView frame];
-        newGraphViewRect.origin.x -= [self convertToX:performanceSplitObjects - performanceLoadObjectsOffset];
+        newGraphViewRect.origin.x = [self convertToX:lastCacheMinute];
         [expandedView setFrame:newGraphViewRect];
     }
     else if(curViewMinute > lastCacheMinute + performanceSplitObjects - performanceLoadObjectsOffset &&
-            !(curViewMinute + performanceLoadObjectsOffset >= numBars))
+            !(curViewMinute + performanceSplitObjects - performanceLoadObjectsOffset >= numBars))
     {
         //reload to right
-        lastCacheMinute += performanceSplitObjects - performanceLoadObjectsOffset;
+        lastCacheMinute = curViewMinute;
+        //constrain to length of chart
+        if(lastCacheMinute >= numBars - (performanceSplitObjects - performanceLoadObjectsOffset))
+            lastCacheMinute = numBars - (performanceSplitObjects - performanceLoadObjectsOffset);
+        
+        NSLog(@"Reload to right @ %d", lastCacheMinute);
+        
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(performanceSplitObjects)];
         
         plotSpace.xRange = newRange;
+        [barPlot reloadData];
         
         //move the view with the scroll view
         CGRect newGraphViewRect = [expandedView frame];
-        newGraphViewRect.origin.x += [self convertToX:performanceSplitObjects - performanceLoadObjectsOffset];
+        newGraphViewRect.origin.x = [self convertToX:lastCacheMinute];
         [expandedView setFrame:newGraphViewRect];
     }
-    
-    
     
 }
 

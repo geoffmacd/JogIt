@@ -2285,7 +2285,6 @@
     if(curViewMinute < lastCacheMinute)
     {
         //reload to the left
-        //lastCacheMinute -= paceGraphSplitObjects - paceGraphSplitLoadOffset;
         lastCacheMinute = curViewMinute - (paceGraphSplitObjects - paceGraphSplitLoadOffset);
         //constrain to zero
         if(lastCacheMinute < 0)
@@ -2309,7 +2308,6 @@
             !(curViewMinute + paceGraphSplitObjects - paceGraphSplitLoadOffset >= [[run minCheckpoints] count]))
     {
         //reload to right
-        //lastCacheMinute += paceGraphSplitObjects - paceGraphSplitLoadOffset;
         lastCacheMinute = curViewMinute;
         //constrain to length of chart
         if(lastCacheMinute >= [[run minCheckpoints] count] - (paceGraphSplitObjects - paceGraphSplitLoadOffset))
