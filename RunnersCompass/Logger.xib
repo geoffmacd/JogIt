@@ -896,10 +896,10 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIView" id="671740003">
 								<reference key="NSNextResponder" ref="495935722"/>
-								<int key="NSvFlags">1325</int>
+								<int key="NSvFlags">1304</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 15}, {316, 200}}</string>
+								<string key="NSFrameSize">{316, 255}</string>
 								<reference key="NSSuperview" ref="495935722"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="375561017"/>
@@ -907,7 +907,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrame">{{2, 193}, {316, 230}}</string>
+						<string key="NSFrame">{{2, 170}, {316, 255}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="671740003"/>
