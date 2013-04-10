@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Goal" representedClassName="Goal" syncable="YES">
+    <entity name="GoalRecord" representedClassName="GoalRecord" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
@@ -43,10 +43,10 @@
         <attribute name="weight" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="RunRecord" positionX="160" positionY="192" width="128" height="225"/>
+        <element name="GoalRecord" positionX="160" positionY="192" width="128" height="120"/>
         <element name="LocationRecord" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="RunRecord" positionX="160" positionY="192" width="128" height="225"/>
         <element name="ThumbnailRecord" positionX="160" positionY="192" width="128" height="75"/>
         <element name="UserPrefs" positionX="160" positionY="192" width="128" height="150"/>
-        <element name="Goal" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>

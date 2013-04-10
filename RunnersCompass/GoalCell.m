@@ -27,7 +27,7 @@
     //set value for goal
     NSString * stringForGoal;
     CGFloat progessValue = 0.0;
-    UserPrefs * tempPrefs = [UserPrefs defaultUser];
+    UserPrefs * tempPrefs = [UserPrefs MR_findFirst];
     tempPrefs.metric = [NSNumber numberWithBool:metric];
     switch(goal.type)
     {

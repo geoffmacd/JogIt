@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "RunEvent.h" //for metric enum
+#import "GoalRecord.h"
 
 #define calsInLbFat 3500
 
-@interface Goal : NSManagedObject
+@interface Goal : NSObject
 
 typedef enum
 {
@@ -45,7 +46,8 @@ typedef enum
 +(NSString*)getWeightNameForCals:(NSInteger)lbs;
 +(NSArray*)getRaceNames;
 +(NSString*)getRaceNameForRun:(CGFloat)distance;
--(id)initWithType:(GoalType)type;
+-(id)initWithType:(GoalType)typeToCreate;
+-(id)initWithRecord:(GoalRecord*)record;
 -(NSString*)getName:(BOOL)metric;
 -(NSString *)stringForDescription;
 -(NSString *)stringForHeaderDescription;

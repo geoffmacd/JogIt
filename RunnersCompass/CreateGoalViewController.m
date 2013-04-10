@@ -12,16 +12,12 @@
 #import "CreateGoalHeaderCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface CreateGoalViewController ()
-
-@property (nonatomic, retain) Goal * tempGoal;
-
-@end
 
 @implementation CreateGoalViewController
 
 @synthesize table,header;
-@synthesize tempGoal,goal,prefs;
+@synthesize goal,prefs;
+@synthesize tempGoal;
 
 
 

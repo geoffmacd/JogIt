@@ -107,12 +107,12 @@
 
 -(UserPrefs *)curUserPrefs
 {
-    return userPrefs;
+    return userPrefsRecord;
 }
 
 -(Goal *)curGoal
 {
-    return goal;
+    return [[Goal alloc] initWithRecord:goalRecord];
 }
 
 
@@ -254,7 +254,7 @@
 -(void)settingsChanged:(NSNotification *)notification
 {
     //set new settings
-    userPrefs = (UserPrefs *) [notification object];
+    userPrefsRecord = (UserPrefs *) [notification object];
     
     //save to database
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -264,7 +264,16 @@
 -(void)goalChanged:(NSNotification *)notification
 {
     //set new settings
-    goal = (Goal *) [notification object];
+    
+    //returned object not the record
+    Goal * tempGoal = (Goal *) [notification object];
+    
+    //must reassign to correct record
+    goalRecord.type = [NSNumber numberWithInt:tempGoal.type];
+    goalRecord.time = tempGoal.time;
+    goalRecord.startDate = tempGoal.startDate;
+    goalRecord.endDate = tempGoal.endDate;
+    goalRecord.value = tempGoal.value;
     
     //save to database
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
@@ -279,41 +288,41 @@
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];
     
     //find prefs, if not there create it
-    userPrefs = [UserPrefs MR_findFirst];
-    if(!userPrefs)
+    userPrefsRecord = [UserPrefs MR_findFirst];
+    if(!userPrefsRecord)
     {
         //create entity
-        userPrefs = [UserPrefs MR_createEntity];
+        userPrefsRecord = [UserPrefs MR_createEntity];
         
         //default user 
-        userPrefs.countdown = [NSNumber numberWithInt:3];
-        userPrefs.autopause = [NSNumber numberWithInt:0];
-        userPrefs.weight = [NSNumber numberWithInt:150];
+        userPrefsRecord.countdown = [NSNumber numberWithInt:3];
+        userPrefsRecord.autopause = [NSNumber numberWithInt:0];
+        userPrefsRecord.weight = [NSNumber numberWithInt:150];
         //new.twitter = [NSNumber numberWithInt:0];
         //new.facebook = [NSNumber numberWithInt:0];
         //find systems default unit measure
         NSLocale *locale = [NSLocale currentLocale];
         BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
-        userPrefs.metric = [NSNumber numberWithBool:isMetric];
-        userPrefs.showSpeed = [NSNumber numberWithBool:false];
+        userPrefsRecord.metric = [NSNumber numberWithBool:isMetric];
+        userPrefsRecord.showSpeed = [NSNumber numberWithBool:false];
         
         //best to leave these blank so user does not have to backspace them
-        userPrefs.fullname = nil;
-        userPrefs.birthdate = nil;
+        userPrefsRecord.fullname = nil;
+        userPrefsRecord.birthdate = nil;
         
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
     
     //find goal, if not there create goal with no goal
-    goal = [Goal MR_findFirst];
-    if(!goal)
+    goalRecord = [GoalRecord MR_findFirst];
+    if(!goalRecord)
     {
         //create entity
-        goal = [Goal MR_createEntity];
+        goalRecord = [GoalRecord MR_createEntity];
         
         //no goal
-        goal.type = GoalTypeNoGoal;
+        goalRecord.type = GoalTypeNoGoal;
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }

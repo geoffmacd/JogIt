@@ -62,6 +62,7 @@
 		6792EC6B17137F1A00EBAF2F /* ThumbnailRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC6A17137F1A00EBAF2F /* ThumbnailRecord.m */; };
 		6792EC6E17137F1B00EBAF2F /* LocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC6D17137F1B00EBAF2F /* LocationRecord.m */; };
 		6792EC7117137F8600EBAF2F /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC7017137F8500EBAF2F /* UIImageToDataTransformer.m */; };
+		6795A8381714DFAB00C0CE52 /* GoalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795A8371714DFAB00C0CE52 /* GoalRecord.m */; };
 		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
 		67AA3E8B170FD653004181AC /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E53170FD653004181AC /* MagicalImportFunctions.m */; };
 		67AA3E8C170FD653004181AC /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E55170FD653004181AC /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -315,6 +316,8 @@
 		6792EC6D17137F1B00EBAF2F /* LocationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationRecord.m; path = ../LocationRecord.m; sourceTree = "<group>"; };
 		6792EC6F17137F8500EBAF2F /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		6792EC7017137F8500EBAF2F /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
+		6795A8361714DFAB00C0CE52 /* GoalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalRecord.h; sourceTree = "<group>"; };
+		6795A8371714DFAB00C0CE52 /* GoalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalRecord.m; sourceTree = "<group>"; };
 		67A8D59416F150EE0070E38B /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		67A8D59516F150EE0070E38B /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		67AA3E52170FD653004181AC /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
@@ -1080,6 +1083,8 @@
 				6779C10216EE83D8002BCAEC /* Analysis.h */,
 				6779C10316EE83D8002BCAEC /* Analysis.m */,
 				6792EC58170FDD5700EBAF2F /* Model.xcdatamodeld */,
+				6795A8361714DFAB00C0CE52 /* GoalRecord.h */,
+				6795A8371714DFAB00C0CE52 /* GoalRecord.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -1404,6 +1409,7 @@
 				6792EC6B17137F1A00EBAF2F /* ThumbnailRecord.m in Sources */,
 				6792EC6E17137F1B00EBAF2F /* LocationRecord.m in Sources */,
 				6792EC7117137F8600EBAF2F /* UIImageToDataTransformer.m in Sources */,
+				6795A8381714DFAB00C0CE52 /* GoalRecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

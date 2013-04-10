@@ -12,15 +12,31 @@
 
 @synthesize endDate,startDate,type,value,time,race,activityCount,weight,metricValueChange,progress,raceDictionary,fatDictionary;
 
--(id)initWithType:(GoalType)goaltype
+-(id)initWithType:(GoalType)typeToCreate
 {
-    self.type = goaltype;
+    self.type = typeToCreate;
     
     self.startDate = [NSDate date];
 
     
     return self;
     
+}
+
+-(id)initWithRecord:(GoalRecord*)record
+{
+    self = [super init];
+    
+    if (self) {
+        
+        type = [record.type integerValue];
+        startDate = record.startDate;
+        endDate = record.endDate;   //for now this is only possible
+        value = record.value;
+        time = record.time;
+        return self;
+    }
+    return nil;
 }
 
 -(NSString*)getName:(BOOL)metric

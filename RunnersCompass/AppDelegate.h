@@ -13,12 +13,13 @@
 #import "UserPrefs.h"
 #import "Goal.h"
 #import "CoreData+MagicalRecord.h"
+#import "GoalRecord.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
 {
     UIActionSheet *  sheet;
-    UserPrefs * userPrefs;//shared among entire app
-    Goal * goal;//shared among app
+    UserPrefs * userPrefsRecord;//shared among entire app
+    GoalRecord * goalRecord;//shared among app
 }
 
 @property (strong, nonatomic) UIWindow *window;

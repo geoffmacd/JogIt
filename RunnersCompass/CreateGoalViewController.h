@@ -16,6 +16,7 @@
 @property CreateGoalHeaderCell * header;
 @property Goal *goal;
 @property UserPrefs * prefs;
+@property Goal * tempGoal;
 
 @property (weak) IBOutlet UITableView *table;
 

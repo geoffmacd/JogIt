@@ -74,10 +74,8 @@
             [targetValue setText:@""];
         }
         
-        
         [countValue setText:[NSString stringWithFormat:@"%d", [goal.activityCount integerValue]]];
         [metricValue setText:goal.metricValueChange];
-        
         
         //both description labels to be updated
         [metricDescriptionLabel setText:[goal stringForDescription]];
@@ -93,10 +91,8 @@
         [beganValue setText:@""];
         [targetValue setText:@""];
         
-        
         [countValue setText:@""];
         [metricValue setText:@""];
-        
         
         //both description labels to be updated
         [metricDescriptionLabel setText:@""];

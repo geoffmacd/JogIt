@@ -42,7 +42,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     runs = [[NSMutableArray alloc] initWithCapacity:3];
     cells = [[NSMutableArray alloc] initWithCapacity:3];
 
-    //p
+    //find all runs
     NSArray * runRecords = [RunRecord MR_findAll];
     
     for(RunRecord * runRecord in runRecords)
@@ -445,10 +445,18 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //nav bar cleanup
     [self cleanupForNav];
     
-    
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
-    [vc setPrefs:[self.delegate curUserPrefs]];
-    [vc setCurGoal:[self.delegate curGoal]];
+    [vc setPrefs:[delegate curUserPrefs]];
+    
+    //must assign different memory address to current goal for edit
+    Goal * curGoal = [delegate curGoal];
+    Goal * tempGoal = [[Goal alloc] initWithType:curGoal.type];
+    tempGoal.startDate = curGoal.startDate;
+    tempGoal.endDate = curGoal.endDate;
+    tempGoal.value = curGoal.value;
+    tempGoal.time = curGoal.time;
+    
+    [vc setCurGoal:[delegate curGoal]];
     [vc setOriginalRunsSorted:runs];
     [self presentViewController:vc animated:true completion:nil];
     
