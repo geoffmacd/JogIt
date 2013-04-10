@@ -77,14 +77,14 @@
         NSMutableArray * tempMonthlyRace= [monthlyRace objectAtIndex:i];
         
         //add 0's for all weeks to be analyzed
-        for(int j = 0; j <= numWeeksToAnalyze; j++)
+        for(int j = 0; j < numWeeksToAnalyze; j++)
         {
             NSNumber * value = [NSNumber numberWithInt:0];
             [tempWeeklyMeta addObject:value];
             [tempWeeklyRace addObject:value];
         }
         //add 0's for all months to be analyzed
-        for(int j = 0; j <= numMonthsToAnalyze; j++)
+        for(int j = 0; j < numMonthsToAnalyze; j++)
         {
             NSNumber * value = [NSNumber numberWithInt:0];
             [tempMonthlyMeta addObject:value];
@@ -179,7 +179,7 @@
     }
     
     //process avg paces per week
-    for(NSInteger i = 0; i < [weeklyMeta count]; i++)
+    for(NSInteger i = 0; i < [[weeklyMeta objectAtIndex:MetricTypePace-1] count]; i++)
     {
         NSMutableArray * paceArray = [weeklyMeta objectAtIndex:MetricTypePace-1];
         NSNumber * curWeekPaceSum = [paceArray objectAtIndex:i];
@@ -193,7 +193,7 @@
         [paceArray replaceObjectAtIndex:i withObject:weeklyAvgPace];
     }
     //process avg paces per month
-    for(NSInteger i = 0; i < [monthlyMeta count]; i++)
+    for(NSInteger i = 0; i < [[monthlyMeta objectAtIndex:MetricTypePace-1] count]; i++)
     {
         NSMutableArray * paceArray = [monthlyMeta objectAtIndex:MetricTypePace-1];
         NSNumber * curMonthPaceSum = [paceArray objectAtIndex:i];
@@ -207,7 +207,7 @@
         [paceArray replaceObjectAtIndex:i withObject:monthlyAvgPace];
     }
     
-    //predict race imes
+    //predict race times
     [self analyzeWeeklyRaces];
     [self analyzeMonthlyRaces];
     

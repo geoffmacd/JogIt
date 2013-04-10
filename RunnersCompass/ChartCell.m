@@ -85,8 +85,14 @@
         }
         
         //set value for previous,current
-        current = [weeklyValues objectAtIndex:0];
-        previous = [weeklyValues objectAtIndex:1];
+        if([weeklyValues count] > 0)
+            current = [weeklyValues objectAtIndex:0];
+        else
+            previous = [NSNumber numberWithInt:0];
+        if([weeklyValues count] > 1)
+            previous = [weeklyValues objectAtIndex:1];
+        else
+            previous = [NSNumber numberWithInt:0];
     }
     else
     {
@@ -110,8 +116,14 @@
         }
         
         //set value for previous,current
-        current = [monthlyValues objectAtIndex:0];
-        previous = [monthlyValues objectAtIndex:1];
+        if([monthlyValues count] > 0)
+            current = [monthlyValues objectAtIndex:0];
+        else
+            previous = [NSNumber numberWithInt:0];
+        if([monthlyValues count] > 1)
+            previous = [monthlyValues objectAtIndex:1];
+        else
+            previous = [NSNumber numberWithInt:0];
     }
     
     //always average paces for races
@@ -126,7 +138,7 @@
     }
     else{
         //calc alltime avg pace if associated is pace
-        if(associated == MetricTypePace)
+        if(associated == MetricTypePace && recordCount > 0)
             allTime = allTime / recordCount;
         
         switch(associated)
@@ -503,11 +515,12 @@
                 //y location of bar
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
                     {
-                        if(weekly)
+                        if(weekly && [weeklyValues count] > index)
                             numberValue = [weeklyValues objectAtIndex:index];
-                        else
+                        else if([monthlyValues count] > index)
                             numberValue = [monthlyValues objectAtIndex:index];
-                        
+                        else
+                            numberValue = [NSNumber numberWithInt:0];
                     }
                 break;
         }
@@ -529,11 +542,11 @@
     
     
     //change selected values
-    NSNumber* valueToDisplay;
+    NSNumber* valueToDisplay = [NSNumber numberWithInt:0];
     
-    if(weekly)
+    if(weekly && [weeklyValues count] > idx)
         valueToDisplay = [weeklyValues objectAtIndex:idx];
-    else
+    else if([monthlyValues count] > idx)
         valueToDisplay = [monthlyValues objectAtIndex:idx];
     
     if(raceCell)
