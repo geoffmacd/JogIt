@@ -2532,6 +2532,7 @@
 -(CGFloat)maxYForChart
 {
     CGFloat maxYPace = 0.0f;
+    CGFloat avgPace = 0.0f;
     
     //find max
     for(CLLocationMeta * meta in run.minCheckpointsMeta)
@@ -2542,7 +2543,15 @@
             maxYPace = meta.pace;
         }
         
+        avgPace += meta.pace;
     }
+    
+    if([run.minCheckpointsMeta count])
+        avgPace = avgPace / [run.minCheckpointsMeta count];
+    
+    //constrain to limit of 3x avg pace
+    if(maxYPace > avgPace * 3)
+        maxYPace = avgPace * 3;
     
     //constraint pace to at least 0.5 m/s
     if(maxYPace < paceChartMaxYMin)

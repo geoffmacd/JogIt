@@ -32,8 +32,10 @@
 
 -(void)setup
 {
+    [scrollView setDelegate:self];
+    
     loadedGraph = false;
-    [self loadChart];
+    //[self loadChart];
     
     [self setExpand:false withAnimation:false];
     
@@ -42,8 +44,6 @@
         [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:showSpeed]];
     else
         [headerLabel setText:[RunEvent stringForRace:associated]];
-    
-    [scrollView setDelegate:self];
     
     //localized buttons in IB
     [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
@@ -173,12 +173,16 @@
     minY = 0;
     maxY = highest * 1.05;
     
-    //reload data if already loaded
+    //reload data if already loaded and shown
     if(loadedGraph)
     {
         loadedGraph = false;
         
-        [self loadChart];
+        //reset scroll to prevent wrong position initially shown for modified weekly
+        [scrollView setContentSize:CGSizeMake(0, 0)];
+        
+        if(expanded)
+            [self loadChart];
     }
 }
 
@@ -279,7 +283,7 @@
     //set size of view of graph to be equal to that of the split load
     CGRect graphRect = expandedView.frame;
     graphRect.origin = CGPointMake(0, 0);
-    graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, scrollView.frame.size.height);
+    graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, expandedView.frame.size.height);
     [expandedView setFrame:graphRect];
     
     [self barPlot:nil barWasSelectedAtRecordIndex:0];
@@ -296,8 +300,8 @@
     if(addedWeeksAfterReal > 0)
     {
         //there is some 0 values here so scroll to 0
-        [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)];
-        CGRect animatedDestination = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+        [scrollView setContentSize:CGSizeMake(self.frame.size.width, scrollView.frame.size.height)];
+        CGRect animatedDestination = CGRectMake(0, 0, self.frame.size.width, scrollView.frame.size.height);
         [scrollView scrollRectToVisible:animatedDestination animated:true];
     }
     else{
@@ -461,24 +465,21 @@
     //axis line style
     CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
     majorLineStyle.lineCap   = kCGLineCapRound;
-    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.15)];
+    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.6)];
     majorLineStyle.lineWidth = CPTFloat(1.0);
     x.axisLineStyle                  = majorLineStyle;
     
     
     // add bar plot to view, all bar customization done here
-    CPTColor * barColour = [CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f];
+    CPTColor * barColour = [CPTColor darkGrayColor];
     barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
+    barPlot.lineStyle = nil;
     barPlot.baseValue  = CPTDecimalFromString(@"0");
     barPlot.dataSource = self;
     barPlot.identifier = kPlot;
-    barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
-    barPlot.barWidthsAreInViewCoordinates = NO;
-    barPlot.barCornerRadius               = CPTFloat(5.0);
-    barPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor darkGrayColor] endingColor:[CPTColor darkGrayColor]];
-    fillGradient.angle = 0.0f;
-    barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
+    barPlot.barWidth   = CPTDecimalFromDouble(0.7);
+    barPlot.barCornerRadius  = CPTFloat(5.0);
+    barPlot.barBaseCornerRadius = CPTFloat(5.0);
     barPlot.delegate = self;
     
     
@@ -487,13 +488,11 @@
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
     selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
-    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
-	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
-    selectedPlot.lineStyle = selectedBorderLineStyle;
-    selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
-    selectedPlot.barCornerRadius               = CPTFloat(5.0);
-    selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    selectedPlot.lineStyle = nil;
     selectedPlot.baseValue  = CPTDecimalFromString(@"0");
+    selectedPlot.barWidth   = CPTDecimalFromDouble(0.7);
+    selectedPlot.barCornerRadius = CPTFloat(5.0);
+    selectedPlot.barBaseCornerRadius = CPTFloat(5.0);
     
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
@@ -529,9 +528,9 @@
                 
                 //x location of index is opposite side of chart such that weeklyValue[0] is latest run located at right
                 if(weekly)
-                    numberValue = [NSNumber numberWithFloat:([weeklyValues count] - index - 0.5)];
+                    numberValue = [NSNumber numberWithFloat:([weeklyValues count] + addedWeeksAfterReal - index - 0.5)];
                 else
-                    numberValue = [NSNumber numberWithFloat:([monthlyValues count] - index - 0.5)];
+                    numberValue = [NSNumber numberWithFloat:([monthlyValues count]+ addedWeeksAfterReal - index - 0.5)];
                 
                 break;
                 
