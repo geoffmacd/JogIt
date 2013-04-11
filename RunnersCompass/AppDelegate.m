@@ -309,7 +309,6 @@
         userPrefsRecord.fullname = nil;
         userPrefsRecord.birthdate = nil;
         
-        
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
     

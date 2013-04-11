@@ -43,7 +43,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     cells = [[NSMutableArray alloc] initWithCapacity:3];
 
     //find all runs
-    NSArray * runRecords = [RunRecord MR_findAll];
+    NSArray * runRecords = [RunRecord MR_findAllSortedBy:@"date" ascending:false];
     
     for(RunRecord * runRecord in runRecords)
     {
@@ -52,29 +52,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [runs addObject:eventToAdd];
     }
-    
-    /* random runs
-    for(NSInteger i=0;i <80; i++)
-    {
-    
-        
-        //load most recent run on startup, but not intended any other time
-        RunEvent * loadRun = [[RunEvent alloc] initWithNoTarget];
-        
-        //for every 10 days before today 
-        [loadRun setDate:[loadRun.date dateByAddingTimeInterval:-(86400 * i * 10)]];
-                          
-        [loadRun setLive:false];
-        
-        loadRun.calories = arc4random() % 300;
-        loadRun.time = arc4random() % 4000;
-        loadRun.avgPace = arc4random() % 7;
-        loadRun.distance = arc4random() % 10000;
-        
-        [runs addObject:loadRun];
-        
-    }
-     */
     
     runInProgressAsFarAsICanTell = false;
     
