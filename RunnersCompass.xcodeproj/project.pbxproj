@@ -91,6 +91,8 @@
 		67AA3EA3170FD653004181AC /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E86170FD653004181AC /* MagicalRecord+ShorthandSupport.m */; };
 		67AA3EA4170FD653004181AC /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E88170FD653004181AC /* MagicalRecord.m */; };
 		67AA3EA7170FDBB7004181AC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67AA3EA6170FDBB7004181AC /* CoreData.framework */; };
+		67AD28EC171664F500B60FB0 /* nogoal.png in Resources */ = {isa = PBXBuildFile; fileRef = 67AD28EA171664F500B60FB0 /* nogoal.png */; };
+		67AD28ED171664F500B60FB0 /* nogoal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67AD28EB171664F500B60FB0 /* nogoal@2x.png */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
 		67AF65D316D9A139004A484C /* GoalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65D216D9A138004A484C /* GoalCell.m */; };
 		67AF65D516D9A151004A484C /* GoalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65D416D9A151004A484C /* GoalCell.xib */; };
@@ -375,6 +377,8 @@
 		67AA3E89170FD653004181AC /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		67AA3E8A170FD653004181AC /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		67AA3EA6170FDBB7004181AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		67AD28EA171664F500B60FB0 /* nogoal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nogoal.png; sourceTree = "<group>"; };
+		67AD28EB171664F500B60FB0 /* nogoal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nogoal@2x.png"; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
 		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
 		67AF65D116D9A138004A484C /* GoalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalCell.h; sourceTree = "<group>"; };
@@ -858,11 +862,6 @@
 			children = (
 				67B421BF1707DE06006574CF /* 3dshoe.png */,
 				67B421C01707DE06006574CF /* 3dshoe@2x.png */,
-				67B421B31707D9C2006574CF /* splash ip4.png */,
-				67B421B41707D9C2006574CF /* splash lowres.png */,
-				67B421B51707D9C2006574CF /* splash-ip5.png */,
-				67B421A91707D4FC006574CF /* shoeprint@2x.png */,
-				67B421A71707D4FA006574CF /* shoeprint.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -901,6 +900,8 @@
 				674C90C116F9716C0078DD8E /* lowsignal@2x.png */,
 				67F6D52016FA8CE100790A22 /* medal.png */,
 				67F6D52116FA8CE100790A22 /* medal@2x.png */,
+				67AD28EA171664F500B60FB0 /* nogoal.png */,
+				67AD28EB171664F500B60FB0 /* nogoal@2x.png */,
 				67B2582316F00B2E00CF337E /* odometer.png */,
 				67B2582416F00B2E00CF337E /* odometer@2x.png */,
 				67B257E116EFF13A00CF337E /* pause.png */,
@@ -919,8 +920,13 @@
 				67B257EA16EFF13A00CF337E /* share@2x.png */,
 				67CFCCB4170280B10028CF70 /* shoe.png */,
 				67CFCCB5170280B10028CF70 /* shoe@2x.png */,
+				67B421A71707D4FA006574CF /* shoeprint.png */,
+				67B421A91707D4FC006574CF /* shoeprint@2x.png */,
 				67CFCCB6170280B10028CF70 /* speed.png */,
 				67CFCCB7170280B10028CF70 /* speed@2x.png */,
+				67B421B31707D9C2006574CF /* splash ip4.png */,
+				67B421B41707D9C2006574CF /* splash lowres.png */,
+				67B421B51707D9C2006574CF /* splash-ip5.png */,
 				67B257EB16EFF13A00CF337E /* stopwatch.png */,
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,
@@ -1297,6 +1303,8 @@
 				67B421C21707DE06006574CF /* 3dshoe@2x.png in Resources */,
 				67B421C41707DE1D006574CF /* 3dshoe@2x.png in Resources */,
 				67B421C61707DE20006574CF /* 3dshoe.png in Resources */,
+				67AD28EC171664F500B60FB0 /* nogoal.png in Resources */,
+				67AD28ED171664F500B60FB0 /* nogoal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

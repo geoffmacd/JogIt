@@ -30,6 +30,7 @@
 @property (weak) IBOutlet UILabel *countValue;
 
 @property  (weak) IBOutlet UIProgressView *progress;
+@property (weak, nonatomic) IBOutlet UIImageView *noGoalImage;
 
 
 @property Goal *goal;

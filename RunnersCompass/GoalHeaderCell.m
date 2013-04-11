@@ -16,8 +16,7 @@
 @synthesize targetLabel,targetValue,metricDescriptionLabel,metricDescriptionSubtitle,metricValue;
 
 @synthesize doneBut,goalButton;
-@synthesize progress,goal,metric;
-
+@synthesize progress,goal,metric,noGoalImage;
 
 -(void) setup
 {
@@ -45,9 +44,8 @@
 
 -(void)setGoalLabels
 {
-    if(goal)
+    if(goal && goal.type != GoalTypeNoGoal)
     {
-        
         [goalButton setTitle:[goal getName:metric] forState:UIControlStateNormal];
         
         //dates
@@ -83,6 +81,8 @@
         
         //progress bar
         [progress setProgress:goal.progress];
+        //hide image
+        [noGoalImage setHidden:true];
         
     }else{
         [goalButton setTitle:NSLocalizedString(@"GoalButtonWithNone", @"No goal for button") forState:UIControlStateNormal];
@@ -100,6 +100,11 @@
         
         //progress bar
         [progress setProgress:0];
+        //view image
+        [noGoalImage setHidden:false];
+        CGRect curBounds = self.bounds;
+        curBounds.size.height += 200;
+        [self setBounds:curBounds];
     }
     
     //localizations    //localized buttons in IB
