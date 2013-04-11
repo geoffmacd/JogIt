@@ -1012,7 +1012,7 @@
             NSAssert([run.kmCheckpointsMeta count] == [run.kmCheckpoints count], @"KM position and meta data arrays not same size!!");
             
             
-            //add annotation if metric
+            //add annotation if metric and update pace labels
             if(isMetric)
             {
                 KMAnnotation * newAnnotation = [[KMAnnotation alloc] init];
@@ -1025,6 +1025,16 @@
                 [mapAnnotations addObject:newAnnotation];
                 //actually add to map
                 [fullMap addAnnotation:newAnnotation];
+                
+                
+                //update pace labels
+                kmPaceShowMode = false;
+                selectedPaceShowMode = false;
+                [iconMap removeOverlay:mapSelectionOverlay];
+                mapSelectionOverlay = nil;
+                numMinutesAtKmSelected = -1;
+                selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+                selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
             }
         }
         
@@ -1056,7 +1066,7 @@
             NSAssert([run.impCheckpointsMeta count] == [run.impCheckpoints count], @"Mile position and meta data arrays not same size!!");
             
             
-            //add annotation if imperial
+            //add annotation if imperial and update pace labels
             if(!isMetric)
             {
                 MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
@@ -1069,6 +1079,16 @@
                 [mapAnnotations addObject:newAnnotation];
                 //actually add to map
                 [fullMap addAnnotation:newAnnotation];
+                
+                
+                //update pace labels
+                kmPaceShowMode = false;
+                selectedPaceShowMode = false;
+                [iconMap removeOverlay:mapSelectionOverlay];
+                mapSelectionOverlay = nil;
+                numMinutesAtKmSelected = -1;
+                selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+                selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
             }
         }
 
@@ -2402,7 +2422,7 @@
     if(isMetric)
     {
         //km 
-        if([[run kmCheckpointsMeta] count] > kmIndex && kmIndex > 0)
+        if([[run kmCheckpointsMeta] count] > kmIndex && kmIndex >= 0)
         {
             CLLocationMeta * selectedKM = [[run kmCheckpointsMeta] objectAtIndex:kmIndex];
             NSTimeInterval kmEndTime = [selectedKM time];
@@ -2464,7 +2484,7 @@
     else
     {
         //miles instead
-        if([[run impCheckpointsMeta] count] > kmIndex && kmIndex > 0)
+        if([[run impCheckpointsMeta] count] > kmIndex && kmIndex >= 0)
         {
             CLLocationMeta * selectedMile = [[run impCheckpointsMeta] objectAtIndex:kmIndex];
             NSTimeInterval mileEndTime = [selectedMile time];

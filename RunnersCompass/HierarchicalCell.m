@@ -59,8 +59,6 @@
     //prevent uiscrollview from overriding right swipe gesture
     [delegate updateGestureFailForCell:swipeGesture];
     
-    
-    
     //setup gestures
     UITapGestureRecognizer * headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTap:)];
     [headerTap setNumberOfTapsRequired:1];
@@ -93,7 +91,6 @@
 {
     if(event)
     {
-        
         associatedRun = event;
         
         [self setup];

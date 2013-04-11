@@ -29,8 +29,8 @@
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //m maximum
-#define calcPeriod 3 //every 2 seconds
-#define barPeriod 3 //bar represents 10 seconds
+#define calcPeriod 3 //every 3 seconds
+#define barPeriod 60 //bar represents 10 seconds
 #define autoZoomPeriod 4 //seconds before auto zoom
 #define userDelaysAutoZoom 15 //second delays before autozoom
 #define reloadMapIconPeriod 3 // second reload map icon period
