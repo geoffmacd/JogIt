@@ -44,7 +44,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{11, 7}, {299, 44}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="483249362"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="662901689">
 							<int key="NSColorSpace">3</int>
@@ -95,7 +94,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{11, 59}, {299, 44}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="825778452"/>
 						<reference key="IBUIBackgroundColor" ref="662901689"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -122,7 +120,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 220}, {299, 11}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -140,7 +137,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{20, 107}, {117, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="76897555"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -170,7 +166,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{139, 107}, {161, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="478526763"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -192,7 +187,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{20, 130}, {153, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="104494290"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -213,7 +207,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{164, 130}, {136, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="12148782"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -235,7 +228,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{164, 152}, {136, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="784853336"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -257,7 +249,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{20, 152}, {178, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="521126527"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -278,7 +269,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{20, 175}, {135, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="989348264"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -299,7 +289,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{20, 191}, {135, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="247087209"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -329,7 +318,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{158, 175}, {142, 21}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="319145331"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -350,7 +338,6 @@
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{0, 107}, {320, 138}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="396332094"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor" id="72310170">
@@ -368,7 +355,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 245}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="843381420"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="72310170"/>

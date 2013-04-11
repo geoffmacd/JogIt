@@ -278,10 +278,25 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
+-(void)setupTestSQL
+{
+    NSURL * docURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL * storeURL = [docURL URLByAppendingPathComponent:@"RunCompass.sqlite"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"RunCompass" ofType:@"sqlite"];
+    if (defaultStorePath) {
+        [fileManager copyItemAtPath:defaultStorePath toPath:[storeURL path] error:NULL];
+    }
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    //[self setupTestSQL];
     
     //core data setup
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];

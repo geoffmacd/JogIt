@@ -313,6 +313,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     [self cleanupForNav];
     
+    NSLog(@"Selected Run from Menu %f",[NSDate timeIntervalSinceReferenceDate]);
+    
     if(!runInProgressAsFarAsICanTell)
     {
         HierarchicalCell * cell = (HierarchicalCell * )sender;

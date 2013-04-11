@@ -269,6 +269,7 @@
     
     [self resetMap];
     
+    
     //set title
     if(!run.live)
     {
@@ -279,6 +280,8 @@
         
         //erase ghost ui
         [self resetGhostRun];
+        
+        NSLog(@"Reset Logger %f",[NSDate timeIntervalSinceReferenceDate]);
         
         //zoom to entire run
         [self drawMapPath:true];
@@ -364,6 +367,10 @@
     [self updateChart];
     
     [selectedPlot reloadData];
+    
+    
+    
+    NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
 }
 
 

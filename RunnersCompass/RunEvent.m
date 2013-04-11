@@ -281,11 +281,11 @@
         
         //construct location record
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
-        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
-        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
-        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
-        recToAdd.type = [NSNumber numberWithInt:RecordPosType];
-        recToAdd.date = date;
+        recToAdd.pace = [metaToAdd pace];
+        recToAdd.time = [metaToAdd time];
+        recToAdd.distance = [metaToAdd distance];
+        recToAdd.type = RecordPosType;
+        recToAdd.date = [date timeIntervalSinceReferenceDate];
 
         recToAdd.location = positionToAdd;
         [allLocationsToAdd addObject:recToAdd];
@@ -298,11 +298,11 @@
         
         //construct location record
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
-        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
-        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
-        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
-        recToAdd.type = [NSNumber numberWithInt:RecordMinType];
-        recToAdd.date = date;
+        recToAdd.pace = [metaToAdd pace];
+        recToAdd.time = [metaToAdd time];
+        recToAdd.distance = [metaToAdd distance];
+        recToAdd.type = RecordMinType;
+        recToAdd.date = [date timeIntervalSinceReferenceDate];
         
         recToAdd.location = positionToAdd;
         [allLocationsToAdd addObject:recToAdd];
@@ -315,11 +315,11 @@
         
         //construct location record
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
-        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
-        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
-        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
-        recToAdd.type = [NSNumber numberWithInt:RecordKmType];
-        recToAdd.date = date;
+        recToAdd.pace = [metaToAdd pace];
+        recToAdd.time = [metaToAdd time];
+        recToAdd.distance = [metaToAdd distance];
+        recToAdd.type = RecordKmType;
+        recToAdd.date = [date timeIntervalSinceReferenceDate];
         
         recToAdd.location = positionToAdd;
         [allLocationsToAdd addObject:recToAdd];
@@ -332,11 +332,11 @@
         
         //construct location record
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
-        recToAdd.pace = [NSNumber numberWithDouble:[metaToAdd pace]];
-        recToAdd.time = [NSNumber numberWithDouble:[metaToAdd time]];
-        recToAdd.distance = [NSNumber numberWithFloat:[metaToAdd distance]];
-        recToAdd.type = [NSNumber numberWithInt:RecordMileType];
-        recToAdd.date = date;
+        recToAdd.pace = [metaToAdd pace];
+        recToAdd.time = [metaToAdd time];
+        recToAdd.distance = [metaToAdd distance];
+        recToAdd.type = RecordMileType;
+        recToAdd.date = [date timeIntervalSinceReferenceDate];
         
         recToAdd.location = positionToAdd;
         [allLocationsToAdd addObject:recToAdd];
@@ -350,7 +350,7 @@
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
         //no meta to add
         recToAdd.type = [NSNumber numberWithInt:RecordPauseType];
-        recToAdd.date = date;
+        recToAdd.date = [date timeIntervalSinceReferenceDate];
         
         recToAdd.location = positionToAdd;
         [allLocationsToAdd addObject:recToAdd];
@@ -522,40 +522,45 @@
         
         thumbnail = record.thumbnailRecord.image;
         
-        pos  = [[NSMutableArray alloc] initWithCapacity:1000];
-        posMeta  = [[NSMutableArray alloc] initWithCapacity:1000];
-        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
-        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
-        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
-        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
-        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:100];
-        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:100];
-        pausePoints = [[NSMutableArray alloc] initWithCapacity:10];
-        
-        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
+        pos  = [[NSMutableArray alloc] initWithCapacity:time /3];
+        posMeta  = [[NSMutableArray alloc] initWithCapacity:time /3];
+        minCheckpoints  = [[NSMutableArray alloc] initWithCapacity:time/60];
+        minCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:time/60];
+        kmCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:distance/1000];
+        kmCheckpoints  = [[NSMutableArray alloc] initWithCapacity:distance/1000];
+        impCheckpoints  = [[NSMutableArray alloc] initWithCapacity:distance/1600];
+        impCheckpointsMeta  = [[NSMutableArray alloc] initWithCapacity:distance/1600];
+        pausePoints = [[NSMutableArray alloc] initWithCapacity:10]; //expect 10 pauses at best
         
         NSOrderedSet * allLocs = record.locations;
         
+        NSLog(@"Retrieved location records %f",[NSDate timeIntervalSinceReferenceDate]);
+        
+        //no need to sort, since stored as nsorderedset
+        /*
         NSArray * timeOrderLocs = [allLocs sortedArrayUsingComparator:^(id obj1, id obj2) {
             NSNumber * time1 = [obj1 valueForKeyPath:@"time"];
             NSNumber * time2 = [obj2 valueForKeyPath:@"time"];
             return (NSComparisonResult)[time1 compare:time2];
         }];
-        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
+         
+         NSLog(@"Sorted location records %f",[NSDate timeIntervalSinceReferenceDate]);
+        */
+        
         
         //add to correct array
-        for(LocationRecord * rec in timeOrderLocs)
+        for(LocationRecord * rec in [allLocs array])//timeOrderLocs)
         {
             //stuff to add
             CLLocationMeta * metaToAdd = [[CLLocationMeta alloc] init];
             //meta should be same for all types me thinks
-            metaToAdd.time = [rec.time doubleValue];
-            metaToAdd.pace = [rec.pace doubleValue];
-            metaToAdd.distance = [rec.distance floatValue];
+            metaToAdd.time = rec.time;
+            metaToAdd.pace = rec.pace;
+            metaToAdd.distance = rec.distance;
             CLLocation * locationToAdd = rec.location;
             
             //already ordered so timing is gauraunteed
-            switch([rec.type integerValue])
+            switch(rec.type)
             {
                 case RecordPosType:
                     [pos addObject:locationToAdd];
@@ -587,7 +592,7 @@
             }
         }
         
-        NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]);
+        NSLog(@"Loading Run from Record %f",[NSDate timeIntervalSinceReferenceDate]);
         return self;
     }
     return nil;
