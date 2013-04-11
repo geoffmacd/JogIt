@@ -257,6 +257,25 @@
 {
     NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
+    //determine how many bars is deficient to make full screen
+    if(weekly)
+    {
+        //adjust by adding 0 numbers until full screen
+        while(performanceBarWidth * ([weeklyValues count]+addedWeeksAfterReal+1) < scrollView.frame.size.width)
+        {
+            addedWeeksAfterReal++;
+        }
+    }
+    else
+    {
+        //adjust by adding 0 numbers until full screen
+        while(performanceBarWidth * ([monthlyValues count]+addedWeeksAfterReal+1) < scrollView.frame.size.width)
+        {
+            addedWeeksAfterReal++;
+        }
+    }
+    
+    
     //set size of view of graph to be equal to that of the split load
     CGRect graphRect = expandedView.frame;
     graphRect.origin = CGPointMake(0, 0);
@@ -274,15 +293,16 @@
     
     
     //scroll to latest value
-    if(numBars * performanceBarWidth < scrollView.frame.size.width)
+    if(addedWeeksAfterReal > 0)
     {
+        //there is some 0 values here so scroll to 0
         [scrollView setContentSize:CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height)];
         CGRect animatedDestination = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
         [scrollView scrollRectToVisible:animatedDestination animated:true];
     }
     else{
         
-        //set scroll to be at the end of run
+        //rightmost value is non-zero and real
         [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
         CGRect animatedDestination = CGRectMake((numBars * performanceBarWidth) - scrollView.frame.size.width, 0, scrollView.frame.size.width, scrollView.frame.size.height);
         [scrollView scrollRectToVisible:animatedDestination animated:true];
@@ -291,6 +311,7 @@
     loadedGraph = true;
     
 }
+
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {
@@ -336,6 +357,7 @@
     x.majorIntervalLength = CPTDecimalFromString(@"1");
     x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
+    
     //labels for x-axis
     CPTMutableTextStyle * dateLabelTextStyle = [CPTMutableTextStyle textStyle];
     dateLabelTextStyle.color = [CPTColor lightGrayColor];
@@ -345,15 +367,16 @@
     NSDate * today = [NSDate date];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *components = [calendar components:NSWeekCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit fromDate:today];
+    
+    //code to generate labels for months
     if(weekly)
     {
         NSInteger startWeek = components.week;
-        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[weeklyValues count]/12];
-        int idx = startWeek;
+        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:15];
         int dateIndex = 0;
-        NSInteger weeksToLabel = (numBars * performanceBarWidth < scrollView.frame.size.width ? [self convertToCheckpointMinute:scrollView.frame.size.width] : numBars);
+        int idx = startWeek;
         //for each week ,if multiple of 13 , add label representing nearest month
-        for (int i=0; i < weeksToLabel; i++)//NSNumber * valueToLabel  in weeklyValues)
+        for (int i = 0; i < numBars + addedWeeksAfterReal; i++)
         {
             if(idx ==0)
                 idx = 52;
@@ -376,25 +399,17 @@
                     case 4:
                         tempLabel = NSLocalizedString(@"JanuaryMonth", "month string");// @"January";
                         break;
-                        
                 }
-                
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
-                    if(numBars * performanceBarWidth < scrollView.frame.size.width)
-                        label.tickLocation = CPTDecimalFromInt(dateIndex + 0.5);
-                    else
-                        label.tickLocation = CPTDecimalFromInt([weeklyValues count] - dateIndex);
+                    label.tickLocation = CPTDecimalFromInt( numBars + addedWeeksAfterReal -dateIndex);
                     label.offset = 5.0f;
                     [labels addObject:label];
                 }
             }
             //decrement week
-            if(numBars * performanceBarWidth < scrollView.frame.size.width)
-                idx++;
-            else
-                idx--;
+            idx--;
             //increase index
             dateIndex++;
         }
@@ -402,23 +417,23 @@
     }
     else
     {
-        //set years instead for months
+        //code to generate labels for years
         
         NSInteger startMonth = components.month;
         NSInteger startYear = components.year;
-        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:[monthlyValues count]/12];
-        int idx = startMonth;
+        NSMutableArray *labels = [[NSMutableArray alloc] initWithCapacity:15];
         int dateIndex = 0;
-        NSInteger monthsToLabel = (numBars * performanceBarWidth < scrollView.frame.size.width ? [self convertToCheckpointMinute:scrollView.frame.size.width] : numBars);
-        for (int i=0; i < monthsToLabel; i++)//NSNumber * valueToLabel  in monthlyValues)
+        int idx = startMonth;
+        for (int i = 0; i < numBars + addedWeeksAfterReal; i++)
         {
-            if(idx ==0 && !(numBars * performanceBarWidth < scrollView.frame.size.width))
-                idx = 12;
+            if(idx ==0)
+            {
+                //decrement year even if startmonth is 4 so 2013 is missed
+                idx = 11;
+                startYear -= 1;
+            }
             
-            if(idx ==12 && (numBars * performanceBarWidth < scrollView.frame.size.width))
-                idx = 0;
-            
-            if(idx / 12 == 1)
+            if(idx % 6 == 0)
             {
                 NSString * tempLabel;
                 
@@ -427,21 +442,12 @@
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
-                    if(numBars * performanceBarWidth < scrollView.frame.size.width)
-                        label.tickLocation = CPTDecimalFromInt(dateIndex + 0.5);
-                    else
-                        label.tickLocation = CPTDecimalFromInt([monthlyValues count] - dateIndex);
+                    label.tickLocation = CPTDecimalFromInt(numBars + addedWeeksAfterReal -dateIndex);
                     label.offset = 5.0f;
                     [labels addObject:label];
                 }
-                
-                startYear -= 1;
             }
-            //decrement week
-            if(numBars * performanceBarWidth < scrollView.frame.size.width)
-                idx++;
-            else
-                idx--;
+            idx--;
             dateIndex++;
         }
         x.axisLabels = [NSSet setWithArray:labels];
@@ -509,47 +515,37 @@
     
     NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
-    if(numBars * performanceBarWidth < scrollView.frame.size.width)
-        numBars = [self convertToCheckpointMinute:scrollView.frame.size.width];
-    
     return numBars;
 }
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSNumber * numberValue;
-    NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
+    //NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
             case CPTBarPlotFieldBarLocation:
                 
-                if(numBars * performanceBarWidth < scrollView.frame.size.width)
-                {
-                    //return from width of view
-                    numberValue = [NSNumber numberWithFloat:(index + 0.5)];
-                }
+                //x location of index is opposite side of chart such that weeklyValue[0] is latest run located at right
+                if(weekly)
+                    numberValue = [NSNumber numberWithFloat:([weeklyValues count] - index - 0.5)];
                 else
-                {
-                    //x location of index is opposite side of chart such that weeklyValue[0] is latest run
-                    if(weekly)
-                        numberValue = [NSNumber numberWithFloat:([weeklyValues count] - index - 0.5)];
-                    else
-                        numberValue = [NSNumber numberWithFloat:([monthlyValues count] - index - 0.5)];
-                }
+                    numberValue = [NSNumber numberWithFloat:([monthlyValues count] - index - 0.5)];
+                
                 break;
                 
             case CPTBarPlotFieldBarTip:
                 //y location of bar
-                    if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
-                    {
-                        if(weekly && [weeklyValues count] > index)
-                            numberValue = [weeklyValues objectAtIndex:index];
-                        else if([monthlyValues count] > index)
-                            numberValue = [monthlyValues objectAtIndex:index];
-                        else
-                            numberValue = [NSNumber numberWithDouble:0.0];
-                    }
+                if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedBarIndex))
+                {
+                    if(weekly && [weeklyValues count] > index)
+                        numberValue = [weeklyValues objectAtIndex:index];
+                    else if([monthlyValues count] > index)
+                        numberValue = [monthlyValues objectAtIndex:index];
+                    else
+                        numberValue = [NSNumber numberWithDouble:0.0];
+                }
                 break;
         }
     }
@@ -567,12 +563,15 @@
     [selectedPlot reloadData];
     
     //change selected values
-    NSNumber* valueToDisplay = [NSNumber numberWithDouble:0.0];
+    NSNumber* valueToDisplay;
     
     if(weekly && [weeklyValues count] > idx)
         valueToDisplay = [weeklyValues objectAtIndex:idx];
     else if([monthlyValues count] > idx)
         valueToDisplay = [monthlyValues objectAtIndex:idx];
+    else
+        valueToDisplay = [NSNumber numberWithDouble:0.0];
+        
     
     if(raceCell)
     {

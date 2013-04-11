@@ -30,6 +30,7 @@
     
     NSInteger selectedBarIndex;
     NSInteger lastCacheMinute;
+    NSInteger addedWeeksAfterReal;
     CPTBarPlot * selectedPlot;
     CPTBarPlot * barPlot;
     CPTXYPlotSpace *plotSpace;

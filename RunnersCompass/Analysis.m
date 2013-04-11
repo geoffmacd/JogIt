@@ -62,13 +62,15 @@
     NSInteger endYear = endComponents.year;
     NSInteger endMonth = endComponents.month;
     //calculate num with fixed #weeks/year, may not be correct
-    NSInteger numWeeksToAnalyze = (startWeek - endWeek) + 52 * (startYear - endYear);
-    NSInteger numMonthsToAnalyze = (startMonth - endMonth) + 12 * (startYear - endYear);
+    NSInteger numWeeksToAnalyze = (startWeek - endWeek) + 52 * (startYear - endYear) + 1;
+    NSInteger numMonthsToAnalyze = (startMonth - endMonth) + 12 * (startYear - endYear) + 1;
     
+    /*
     if(numMonthsToAnalyze == 0)
         numMonthsToAnalyze = 1;
     if(numWeeksToAnalyze == 0)
         numWeeksToAnalyze = 1;
+     */
     
     NSLog(@"weeks: %d months: %d", numWeeksToAnalyze, numMonthsToAnalyze);
     
@@ -110,7 +112,7 @@
         NSInteger monthlyIndexToModify = monthsFromStart + (12 * yearsFromStart);
         
         //weeks
-        if(weeklyIndexToModify >=0)
+        if(weeklyIndexToModify >=0 && weeklyIndexToModify < numWeeksToAnalyze)
         {
             
             //modify the value for this in each metric
@@ -146,7 +148,7 @@
             
         }
         //months
-        if(monthlyIndexToModify >=0)
+        if(monthlyIndexToModify >=0 && monthlyIndexToModify < numMonthsToAnalyze)
         {
             
             //modify the value for this in each metric
