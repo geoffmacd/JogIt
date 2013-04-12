@@ -218,6 +218,8 @@
 - (IBAction)mapIconTapped:(id)sender;
 - (IBAction)finishTapped:(id)sender;
 - (IBAction)invisibleButtonTapped:(id)sender;
+- (IBAction)invisibleTouched:(id)sender;
+- (IBAction)invisibleUntouched:(id)sender;
 - (IBAction)statusButTapped:(id)sender;
 - (IBAction)ghostButTapped:(id)sender;
 - (IBAction)hamburgerTouched:(id)sender;

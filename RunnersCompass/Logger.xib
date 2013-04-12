@@ -649,7 +649,7 @@
 					<object class="IBUIButton" id="90493331">
 						<reference key="NSNextResponder" ref="572499848"/>
 						<int key="NSvFlags">1292</int>
-						<string key="NSFrame">{{6, 431}, {73, 132}}</string>
+						<string key="NSFrame">{{6, 431}, {73, 105}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="267287431"/>
@@ -659,7 +659,6 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<bool key="IBUIShowsTouchWhenHighlighted">YES</bool>
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<reference key="IBUIHighlightedTitleColor" ref="128024892"/>
@@ -1575,6 +1574,42 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">invisibleUntouched:</string>
+						<reference key="source" ref="90493331"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">9</int>
+					</object>
+					<int key="connectionID">1001</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">invisibleTouched:</string>
+						<reference key="source" ref="90493331"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">1</int>
+					</object>
+					<int key="connectionID">1002</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">invisibleUntouched:</string>
+						<reference key="source" ref="90493331"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">4</int>
+					</object>
+					<int key="connectionID">1003</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">invisibleUntouched:</string>
+						<reference key="source" ref="90493331"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">6</int>
+					</object>
+					<int key="connectionID">1004</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">mapIconTapped:</string>
 						<reference key="source" ref="1019704253"/>
 						<reference key="destination" ref="975951072"/>
@@ -1718,7 +1753,6 @@
 							<reference ref="108610204"/>
 							<reference ref="204915733"/>
 							<reference ref="457987160"/>
-							<reference ref="90493331"/>
 							<reference ref="640665310"/>
 							<reference ref="924007125"/>
 							<reference ref="267287431"/>
@@ -1729,6 +1763,7 @@
 							<reference ref="289254834"/>
 							<reference ref="48350372"/>
 							<reference ref="580192883"/>
+							<reference ref="90493331"/>
 							<reference ref="781931920"/>
 						</array>
 						<reference key="parent" ref="0"/>
@@ -2122,7 +2157,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1000</int>
+			<int key="maxID">1004</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2147,6 +2182,8 @@
 						<string key="hamburgerUnTouched:">id</string>
 						<string key="handlePanGesture:">id</string>
 						<string key="invisibleButtonTapped:">id</string>
+						<string key="invisibleTouched:">id</string>
+						<string key="invisibleUntouched:">id</string>
 						<string key="mapIconTapped:">id</string>
 						<string key="statusButTapped:">id</string>
 						<string key="statusTouched:">id</string>
@@ -2187,6 +2224,14 @@
 						</object>
 						<object class="IBActionInfo" key="invisibleButtonTapped:">
 							<string key="name">invisibleButtonTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="invisibleTouched:">
+							<string key="name">invisibleTouched:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="invisibleUntouched:">
+							<string key="name">invisibleUntouched:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="mapIconTapped:">

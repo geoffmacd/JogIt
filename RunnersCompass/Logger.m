@@ -42,6 +42,7 @@
 @synthesize inBackground;
 @synthesize activityIndicator,lowSignalLabel,titleView;
 @synthesize autopauseLabel;
+@synthesize invisibleLastKmButton;
 
 #pragma mark - Lifecycle
 
@@ -3184,6 +3185,8 @@
 
 - (IBAction)invisibleButtonTapped:(id)sender {
     
+    [invisibleLastKmButton.layer setBorderWidth:0.0f];
+    
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
     
     timeSinceKmSelection = [NSDate timeIntervalSinceReferenceDate];
@@ -3352,6 +3355,24 @@
         //add to icon map
         [iconMap addOverlay:mapSelectionOverlay];
     }
+}
+
+
+- (IBAction)invisibleTouched:(id)sender {
+    [invisibleLastKmButton.layer setCornerRadius:5.0f];
+    [invisibleLastKmButton.layer setMasksToBounds:true];
+    
+    [invisibleLastKmButton.layer setBorderWidth:0.5f];
+    [invisibleLastKmButton.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    
+    //[invisibleLastKmButton setAlpha:0.2];
+}
+
+- (IBAction)invisibleUntouched:(id)sender {
+    
+    [invisibleLastKmButton.layer setBorderWidth:0.0f];
+    
+    //[invisibleLastKmButton setAlpha:0.0];
 }
 
 - (IBAction)statusButTapped:(id)sender {

@@ -17,8 +17,8 @@
 
 #define cellDropAnimationTime 0.3f
 #define folderRotationAnimationTime 0.2f
-#define distanceToShake 2.5f
-#define shakeDuration 0.07f
+#define distanceToShake 3.0f
+#define shakeDuration 0.1f
 
 @interface AnimationUtil : NSObject
 +(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open;
