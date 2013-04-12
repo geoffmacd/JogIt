@@ -142,6 +142,7 @@
     
     //low gps animation
     BOOL lowSignal;
+    BOOL animatingLowSignal;
     CGRect orgTitleLabelPosition;
     
     //ghost

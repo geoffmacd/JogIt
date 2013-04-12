@@ -343,9 +343,12 @@
         newMin.pace = 0;
         newMin.time = barPeriod;
         [run.minCheckpointsMeta addObject:newMin];
+        
+        //ensure no signal animation
+        lowSignal = false;
     }
     
-    
+    //reset chart
     if(barPlot)
     {
         [barChart removePlot:barPlot];
@@ -366,8 +369,6 @@
     [self updateChart];
     
     [selectedPlot reloadData];
-    
-    
     
     NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
 }
@@ -547,7 +548,7 @@
         if(avgAccuracy > maxPermittableAccuracy * evalAccuracyPeriod)
         {
             //display
-            if(!lowSignal)
+            if(!lowSignal && !animatingLowSignal)
             {
                 [self performSelector:@selector(lowSignalAnimation) withObject:nil];
                 lowSignal = true;
@@ -1129,6 +1130,8 @@
     CGRect runTitleDestRect = orgTitleLabelPosition;
     runTitleDestRect.origin = CGPointMake(orgTitleLabelPosition.origin.x - orgTitleLabelPosition.size.width, orgTitleLabelPosition.origin.y);
     
+    animatingLowSignal = true;
+    
     [UIView animateWithDuration:lowSignalPeriod/2
                      delay:lowSignalPeriod
                      options:UIViewAnimationCurveEaseIn
@@ -1157,7 +1160,10 @@
                                               if(lowSignal)
                                                   [self lowSignalAnimation];
                                               else
+                                              {
+                                                  animatingLowSignal = false;
                                                   [lowSignalLabel setHidden:true];
+                                              }
                                           }];
                           
                      }];
@@ -1172,7 +1178,7 @@
     BOOL showSpeed = [[curSettings showSpeed] boolValue];
         
     //need to reset kmselection in order to gaurantee not above array count
-    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+    [self resetPaceSelection];
     
     //need to reload annotations regardless since showspeed or metric could have changed
     if([mapAnnotations count] > 0)
@@ -2592,14 +2598,11 @@
         //need to adjust plot range for potentially offscreen bars
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
         
-        //reload data just for this bar
-        [barPlot reloadData];
-        //must reload both in case the size changes
-        [selectedPlot reloadData];
-        
         if(!kmPaceShowMode && !selectedPaceShowMode)
         {
             selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+            
+            [self determineBarColors];
         }
         else
         {
@@ -2608,7 +2611,46 @@
                timeSinceBarSelection < [NSDate timeIntervalSinceReferenceDate]  - paceSelectionOverrideTime)
             {
                 [self resetPaceSelection];
+                
+                [self determineBarColors];
             }
+        }
+        
+        //reload data just for this bar
+        [barPlot reloadData];
+        //must reload both in case the size changes
+        [selectedPlot reloadData];
+    }
+}
+
+-(void)determineBarColors
+{
+    //if ghost enabled, color label based on who was faster
+    if(run.ghost)
+    {
+        //find associated run position for current run time and display in label
+        NSInteger index = [self indexForGhostRunAtTime:run.time];
+        
+        //ensure ghost has a position
+        if(index > 0)
+        {
+            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
+            CLLocationMeta * lastPos = [run.posMeta lastObject];
+            
+            if(ghostPos.pace > [lastPos pace])
+            {
+                //set to blue
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
+            }
+            else{
+                //set to red
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+            }
+        }
+        else if(((int)run.time) % calcPeriod == 0)
+        {
+            //ensure it is not just an odd time
+            selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
         }
     }
 }
@@ -2625,7 +2667,7 @@
         CLLocationMeta * lastMeta ;
         NSTimeInterval paceSum = 0;
         
-        if(index >= 0 && [run.posMeta count] > index)
+        if(index >= 0)
         {
             lastMeta = [run.posMeta objectAtIndex:index];
             
@@ -2644,18 +2686,12 @@
             if(sumCount > 0)
                 avgPaceInMin = paceSum / sumCount;
             
-            //CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
             CLLocationMeta * newMinMeta = [run.minCheckpointsMeta lastObject];
             //adjust current bar and make it official
             newMinMeta.pace = avgPaceInMin; //m/s
             //save real position
             [run.minCheckpoints addObject:[run.pos lastObject]];
-            
-            /*
-             //add meta and loc to array
-             [run.minCheckpointsMeta addObject:newMinMeta];
-             [run.minCheckpoints addObject:[run.pos lastObject]];
-             */
+
             
             //add new currentminute object
             CLLocationMeta * curMin = [[CLLocationMeta alloc] init];
@@ -2663,43 +2699,13 @@
             curMin.pace = avgPaceInMin;
             curMin.time = run.time + barPeriod;
             [run.minCheckpointsMeta addObject:curMin];
-            
-            //should be one more
-            //NSAssert([run.minCheckpoints count] == [run.minCheckpointsMeta count] + 1, @"KM position and meta data arrays not same size!!");
-            
         }
     }
     
     //disable selection, update pace labels
     [self resetPaceSelection];
     
-    
-    //if ghost enabled, color label based on who was faster
-    if(run.ghost)
-    {
-        //find associated run position for current run time and display in label
-        NSInteger index = [self indexForGhostRunAtTime:run.time];
-        
-        if(index > 0)
-        {
-            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
-            CLLocationMeta * lastPos = [run.posMeta lastObject];
-            
-            if(ghostPos.pace > [lastPos pace])
-            {
-                //set to blue
-                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
-            }
-            else{
-                //set to red
-                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
-            }
-        }
-        else{
-            
-            selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
-        }
-    }
+    [self determineBarColors];
     
     //then visually update chart and scroll to new minute
     [self updateChart];
@@ -3116,6 +3122,37 @@
 - (IBAction)finishTapped:(id)sender {
     
     //run object must be cleanup to save in appdelegate where it is stored
+    
+    //aggregrate last minute, starting at most recent
+    NSInteger index = [run.posMeta count] - 1;
+    NSInteger sumCount = 0;
+    NSTimeInterval paceSum = 0;
+    //save last postion and process pace
+    if(index >= 0)
+    {
+        CLLocationMeta * lastMeta = [run.posMeta objectAtIndex:index];
+        
+        //while pos is later than last bar period
+        while ((run.time - barPeriod) < [lastMeta time] && index > 0)
+        {
+            //aggregate pace
+            paceSum += [lastMeta pace];
+            sumCount++;
+            
+            index--;
+            lastMeta = [run.posMeta objectAtIndex:index];
+        }
+        
+        NSTimeInterval avgPaceInMin = 0;
+        if(sumCount > 0)
+            avgPaceInMin = paceSum / sumCount;
+        
+        CLLocationMeta * newMinMeta = [run.minCheckpointsMeta lastObject];
+        //adjust current bar and make it official
+        newMinMeta.pace = avgPaceInMin; //m/s
+        //save real position
+        [run.minCheckpoints addObject:[run.pos lastObject]];
+    }
     
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
