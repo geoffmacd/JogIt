@@ -359,6 +359,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [cells removeAllObjects];
         [MenuTable reloadData];
+        
+        //scroll to top
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:true];
     }
     
     //refresh start cell

@@ -38,7 +38,7 @@
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 0.5//m/s
-#define paceChartCutoffPercent 0.05//m/s
+#define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
 #define avgPaceUpdatePeriod 3//ss
@@ -49,6 +49,7 @@
 #define mapPathWidth 15.0//pixels
 #define mapIconPathWidth 10.0//pixels
 #define mapPathSize 10 //positions
+#define paceSelectionOverrideTime 7 //s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -105,6 +106,8 @@
     NSTimeInterval timeSinceMapIconRefresh;
     NSTimeInterval timeSinceUnpause;
     NSTimeInterval timeSinceMapTouch;
+    NSTimeInterval timeSinceKmSelection;
+    NSTimeInterval timeSinceBarSelection;
 
     //quetostore positions not processed
     NSMutableArray *posQueue;

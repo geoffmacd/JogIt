@@ -113,7 +113,7 @@
     if(paceToFormat <= 0)
     {
         if(showSpeed)
-            return @"-.-";
+            return @"---";
         else
             return @"--:--";
     }
@@ -131,7 +131,7 @@
     if(paceToFormat > 3599)
     {
         if(showSpeed)
-            return @"-.-";
+            return @"---";
         else
             return @"--:--";
     }

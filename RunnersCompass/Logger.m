@@ -336,7 +336,13 @@
         {
             [self resetGhostRun];
         }
-
+        
+        //add current minute bar if new live run
+        CLLocationMeta * newMin = [[CLLocationMeta alloc] init];
+        //leave pace to what it was
+        newMin.pace = 0;
+        newMin.time = barPeriod;
+        [run.minCheckpointsMeta addObject:newMin];
     }
     
     
@@ -349,15 +355,8 @@
         barPlot = nil;
     }
     
-    //disable selection modes
-    kmPaceShowMode = false;
-    selectedPaceShowMode = false;
-    [iconMap removeOverlay:mapSelectionOverlay];
-    mapSelectionOverlay = nil;
-    numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
-    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
-    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+    //reset pace selection
+    [self resetPaceSelection];
     
     //needs to be before update chart which is expensive
     [self setLabelsForUnits];
@@ -498,16 +497,8 @@
     }
     
     
-    //disable km selection mode
-    kmPaceShowMode = false;
-    selectedPaceShowMode = false;
-    [iconMap removeOverlay:mapSelectionOverlay];
-    mapSelectionOverlay = nil;
-    numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
-    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
-    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
-    [self setPaceLabels];
+    [self resetPaceSelection];
+    [self updateHUD];
     
     //reset autopause variables
     pausedForAuto = false;
@@ -710,6 +701,10 @@
         //add one checkpoint representing past 60 seconds
         [self addMinute];
     }
+    else{
+        //otherwise update size of current minute bar
+        [self adjustCurrentBar];
+    }
     
     //Check if goal has been achieved
     [self determineGoalAchieved];
@@ -856,95 +851,6 @@
     
 }
 
--(void)addMinute
-{
-    
-    //add meta data for recent minute, or create chart
-    if(barPlot)
-    {
-        //aggregrate last minute, starting at most recent
-        NSInteger index = [run.posMeta count] - 1;
-        NSInteger sumCount = 0;
-        CLLocationMeta * lastMeta ;
-        NSTimeInterval paceSum = 0;
-        
-        if(index >= 0 && [run.posMeta count] > index)
-        {
-            lastMeta = [run.posMeta objectAtIndex:index];
-            
-            //while pos is later than last bar period
-            while ((run.time - barPeriod) < [lastMeta time] && index > 0)
-            {
-                //aggregate pace
-                paceSum += [lastMeta pace];
-                sumCount++;
-                
-                index--;
-                lastMeta = [run.posMeta objectAtIndex:index];
-            }
-            
-            NSTimeInterval avgPaceInMin = 0;
-            if(sumCount > 0)
-                avgPaceInMin = paceSum / sumCount;
-            
-            CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
-            newMinMeta.pace = avgPaceInMin; //m/s
-            newMinMeta.time = run.time;
-            
-            //add meta and loc to array
-            [run.minCheckpointsMeta addObject:newMinMeta];
-            [run.minCheckpoints addObject:[run.pos lastObject]];
-            
-            //should be same size at this point
-            NSAssert([run.minCheckpoints count] == [run.minCheckpointsMeta count], @"KM position and meta data arrays not same size!!");
-            
-        }
-    }
-    
-    //disable selection, update selection
-    kmPaceShowMode = false;
-    selectedPaceShowMode = false;
-    [iconMap removeOverlay:mapSelectionOverlay];
-    mapSelectionOverlay = nil;
-    numMinutesAtKmSelected = -1;
-    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
-    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
-    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
-    
-    
-    //if ghost enabled, color label based on who was faster
-    if(run.ghost)
-    {
-        //find associated run position for current run time and display in label
-        NSInteger index = [self indexForGhostRunAtTime:run.time];
-        
-        if(index > 0)
-        {
-            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
-            CLLocationMeta * lastPos = [run.posMeta lastObject];
-            
-            if(ghostPos.pace > [lastPos pace])
-            {
-                //set to blue
-                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
-            }
-            else{
-                //set to red
-                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
-            }
-        }
-        else{
-            
-            selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
-        }
-    }
-    
-    //then visually update chart and scroll to new minute
-    [self updateChart];
-    [selectedPlot reloadData];
-}
-
-
 -(void)calcMetrics:(CLLocation*)latest
 {
     //process last 4 locations to determine all metrics: distance, avgpace, climbed, calories, stride, cadence
@@ -1033,15 +939,8 @@
                 //actually add to map
                 [fullMap addAnnotation:newAnnotation];
                 
-                
                 //update pace labels
-                kmPaceShowMode = false;
-                selectedPaceShowMode = false;
-                [iconMap removeOverlay:mapSelectionOverlay];
-                mapSelectionOverlay = nil;
-                numMinutesAtKmSelected = -1;
-                selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
-                selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+                [self resetPaceSelection];
             }
         }
         
@@ -1087,15 +986,8 @@
                 //actually add to map
                 [fullMap addAnnotation:newAnnotation];
                 
-                
                 //update pace labels
-                kmPaceShowMode = false;
-                selectedPaceShowMode = false;
-                [iconMap removeOverlay:mapSelectionOverlay];
-                mapSelectionOverlay = nil;
-                numMinutesAtKmSelected = -1;
-                selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
-                selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+                [self resetPaceSelection];
             }
         }
 
@@ -1353,7 +1245,7 @@
     BOOL isMetric = [[curSettings metric] integerValue];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     
-    //update avg pace every 3 seconds
+    //update avg pace every 3 seconds only
     if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
     {
         NSString * stringToSetTime = [RunEvent getPaceString:run.avgPace withMetric:isMetric showSpeed:showSpeed];
@@ -1362,7 +1254,7 @@
     
     
     //current pace/selected pace
-    CLLocationMeta * selectedMinMeta;
+    CLLocationMeta * selectedMeta;
     NSString * selectedPaceLabel;
     NSString * selectedPaceString;
     if([[run posMeta] count] == 0)
@@ -1378,40 +1270,39 @@
     else if(!kmPaceShowMode && !selectedPaceShowMode)
     {
         // current pace
-        selectedMinMeta = [[run posMeta] lastObject];
+        selectedMeta = [[run posMeta] lastObject];
         //change pace to speed if necessary
         if([[curSettings showSpeed] boolValue])
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
         else
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        selectedPaceString = [RunEvent getPaceString:selectedMeta.pace withMetric:isMetric showSpeed:showSpeed];
         //if not update to date, leave default string
-        if([selectedMinMeta time] < run.time - barPeriod)
+        if([selectedMeta time] < run.time - barPeriod)
             selectedPaceString = [RunEvent getPaceString:0 withMetric:isMetric showSpeed:showSpeed];
-
             
     }
     else if(kmPaceShowMode){
         
         // just display current pace
-        selectedMinMeta = [[run posMeta] lastObject];
+        selectedMeta = [[run posMeta] lastObject];
         //change pace to speed if necessary
         if([[curSettings showSpeed] boolValue])
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitleForSpeed", "Logger title for current speed");
         else
             selectedPaceLabel = NSLocalizedString(@"CurrentPaceTitle", "Logger title for current pace");
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        selectedPaceString = [RunEvent getPaceString:selectedMeta.pace withMetric:isMetric showSpeed:showSpeed];
         //if not update to date, leave default string
-        if([selectedMinMeta time] < run.time - barPeriod)
+        if([selectedMeta time] < run.time - barPeriod)
             selectedPaceString = [RunEvent getPaceString:0 withMetric:isMetric showSpeed:showSpeed];
         
     }
     else if(selectedPaceShowMode){
         
         //selection mode of one bar
-        selectedMinMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
-        selectedPaceLabel = [RunEvent getTimeString:selectedMinMeta.time];
-        selectedPaceString = [RunEvent getPaceString:selectedMinMeta.pace withMetric:isMetric showSpeed:showSpeed];
+        selectedMeta = [[run minCheckpointsMeta] objectAtIndex:selectedMinIndex];
+        selectedPaceLabel = [RunEvent getTimeString:selectedMeta.time];
+        selectedPaceString = [RunEvent getPaceString:selectedMeta.pace withMetric:isMetric showSpeed:showSpeed];
     }
     [currentPaceLabel setText:selectedPaceLabel];
     [currentPaceValue setText:selectedPaceString];
@@ -2382,6 +2273,7 @@
             
             for (CLLocationMeta * min in [run minCheckpointsMeta])
             {
+                
                 time = [min time];
                 
                 if(time > kmStartTime)
@@ -2554,12 +2446,27 @@
     return [[run minCheckpointsMeta] count];
 }
 
+-(void)resetPaceSelection
+{
+    //disable selection mode
+    kmPaceShowMode = false;
+    selectedPaceShowMode = false;
+    //remove overlay if it is there
+    [iconMap removeOverlay:mapSelectionOverlay];
+    mapSelectionOverlay = nil;
+    numMinutesAtKmSelected = -1;
+    selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+    BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
+    selectedKmIndex = (isMetric ? [[run kmCheckpointsMeta] count] :[[run impCheckpointsMeta] count]);
+}
+
 #pragma mark - Manage Pace Chart
 
 -(CGFloat)maxYForChart
 {
     CGFloat maxYPace = 0.0f;
     CGFloat avgPace = 0.0f;
+    NSInteger zeroPaces = 0;
     
     //find max
     for(CLLocationMeta * meta in run.minCheckpointsMeta)
@@ -2569,16 +2476,18 @@
         {
             maxYPace = meta.pace;
         }
+        if(meta.pace <= 0)
+            zeroPaces++;
         
         avgPace += meta.pace;
     }
     
-    if([run.minCheckpointsMeta count])
-        avgPace = avgPace / [run.minCheckpointsMeta count];
+    if([run.minCheckpointsMeta count] - zeroPaces > 0)
+        avgPace = avgPace / ([run.minCheckpointsMeta count] - zeroPaces);
     
-    //constrain to limit of 3x avg pace
-    if(maxYPace > avgPace * 3)
-        maxYPace = avgPace * 3;
+    //constrain to limit of 4x avg pace
+    if(maxYPace > avgPace * 4)
+        maxYPace = avgPace * 4;
     
     //constraint pace to at least 0.5 m/s
     if(maxYPace < paceChartMaxYMin)
@@ -2668,6 +2577,135 @@
 }
 
 
+
+-(void)adjustCurrentBar
+{
+    if([run.minCheckpointsMeta count] > 0 && [run.posMeta count] > 0)
+    {
+        CLLocationMeta * currentMin = [run.minCheckpointsMeta lastObject];
+        //adjust pace to reflect minute
+        CLLocationMeta * currentPos = [run.posMeta lastObject];
+        
+        //adjust pace
+        currentMin.pace = currentPos.pace;
+        
+        //need to adjust plot range for potentially offscreen bars
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        
+        //reload data just for this bar
+        [barPlot reloadData];
+        //must reload both in case the size changes
+        [selectedPlot reloadData];
+        
+        if(!kmPaceShowMode && !selectedPaceShowMode)
+        {
+            selectedMinIndex = [[run minCheckpointsMeta] count] - 1;
+        }
+        else
+        {
+            //decide to switch off selection
+            if(timeSinceKmSelection < [NSDate timeIntervalSinceReferenceDate]  - paceSelectionOverrideTime &&
+               timeSinceBarSelection < [NSDate timeIntervalSinceReferenceDate]  - paceSelectionOverrideTime)
+            {
+                [self resetPaceSelection];
+            }
+        }
+    }
+}
+
+-(void)addMinute
+{
+    
+    //add meta data for recent minute, or create chart
+    if(barPlot)
+    {
+        //aggregrate last minute, starting at most recent
+        NSInteger index = [run.posMeta count] - 1;
+        NSInteger sumCount = 0;
+        CLLocationMeta * lastMeta ;
+        NSTimeInterval paceSum = 0;
+        
+        if(index >= 0 && [run.posMeta count] > index)
+        {
+            lastMeta = [run.posMeta objectAtIndex:index];
+            
+            //while pos is later than last bar period
+            while ((run.time - barPeriod) < [lastMeta time] && index > 0)
+            {
+                //aggregate pace
+                paceSum += [lastMeta pace];
+                sumCount++;
+                
+                index--;
+                lastMeta = [run.posMeta objectAtIndex:index];
+            }
+            
+            NSTimeInterval avgPaceInMin = 0;
+            if(sumCount > 0)
+                avgPaceInMin = paceSum / sumCount;
+            
+            //CLLocationMeta * newMinMeta = [[CLLocationMeta alloc] init];
+            CLLocationMeta * newMinMeta = [run.minCheckpointsMeta lastObject];
+            //adjust current bar and make it official
+            newMinMeta.pace = avgPaceInMin; //m/s
+            //save real position
+            [run.minCheckpoints addObject:[run.pos lastObject]];
+            
+            /*
+             //add meta and loc to array
+             [run.minCheckpointsMeta addObject:newMinMeta];
+             [run.minCheckpoints addObject:[run.pos lastObject]];
+             */
+            
+            //add new currentminute object
+            CLLocationMeta * curMin = [[CLLocationMeta alloc] init];
+            //leave pace to what it was
+            curMin.pace = avgPaceInMin;
+            curMin.time = run.time + barPeriod;
+            [run.minCheckpointsMeta addObject:curMin];
+            
+            //should be one more
+            //NSAssert([run.minCheckpoints count] == [run.minCheckpointsMeta count] + 1, @"KM position and meta data arrays not same size!!");
+            
+        }
+    }
+    
+    //disable selection, update pace labels
+    [self resetPaceSelection];
+    
+    
+    //if ghost enabled, color label based on who was faster
+    if(run.ghost)
+    {
+        //find associated run position for current run time and display in label
+        NSInteger index = [self indexForGhostRunAtTime:run.time];
+        
+        if(index > 0)
+        {
+            CLLocationMeta * ghostPos = [run.associatedRun.posMeta objectAtIndex:index];
+            CLLocationMeta * lastPos = [run.posMeta lastObject];
+            
+            if(ghostPos.pace > [lastPos pace])
+            {
+                //set to blue
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util blueColour] CGColor]]];
+            }
+            else{
+                //set to red
+                selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+            }
+        }
+        else{
+            
+            selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+        }
+    }
+    
+    //then visually update chart and scroll to new minute
+    [self updateChart];
+    [selectedPlot reloadData];
+}
+
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
 {
 
@@ -2714,7 +2752,6 @@
     
     //axis line style
     CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
-    majorLineStyle.lineCap   = kCGLineCapRound;
     majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.3)];
     majorLineStyle.lineWidth = CPTFloat(0.0);
     x.axisLineStyle                  = majorLineStyle;
@@ -2725,35 +2762,32 @@
     
      
     // add bar plot to view, all bar customization done here
-    CPTColor * barColour = [CPTColor colorWithCGColor:[[Util redColour] CGColor]];
-    barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
-    barPlot.baseValue  = CPTDecimalFromString(@"0");
-    barPlot.dataSource = self;
-    barPlot.identifier = kPlot;
+    barPlot = [[CPTBarPlot alloc] init];
+    barPlot.fill       = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[UIColor lightGrayColor] CGColor]]];
+    CPTMutableLineStyle *barLineStyle = [CPTMutableLineStyle lineStyle];
+	barLineStyle.lineWidth = CPTFloat(0.5);
+    barPlot.lineStyle = barLineStyle;
     barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
     barPlot.barWidthsAreInViewCoordinates = NO;
     barPlot.barCornerRadius               = CPTFloat(5.0);
-    barPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    CPTGradient *fillGradient = [CPTGradient gradientWithBeginningColor:[CPTColor lightGrayColor] endingColor:[CPTColor lightGrayColor]];
-    fillGradient.angle = 0.0f;
-    barPlot.fill       = [CPTFill fillWithGradient:fillGradient];
+    //barPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    barPlot.cachePrecision = CPTPlotCachePrecisionDouble;
+    barPlot.dataSource = self;
+    barPlot.identifier = kPlot;
     barPlot.delegate = self;
     
-    
     [barChart addPlot:barPlot toPlotSpace:plotSpace];
-    
     
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
     selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
-    CPTMutableLineStyle *selectedBorderLineStyle = [CPTMutableLineStyle lineStyle];
-	selectedBorderLineStyle.lineWidth = CPTFloat(0.5);
-    selectedPlot.lineStyle = selectedBorderLineStyle;
-    selectedPlot.barWidth = CPTDecimalFromString(@"0.7");
+    CPTMutableLineStyle *selectedLineStyle = [CPTMutableLineStyle lineStyle];
+	selectedLineStyle.lineWidth = CPTFloat(0.5);
+    selectedPlot.lineStyle = selectedLineStyle;
+    selectedPlot.barWidth                      = CPTDecimalFromDouble(0.7);
     selectedPlot.barCornerRadius               = CPTFloat(5.0);
-    selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
-    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
-    
+    //selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
+    selectedPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
     selectedPlot.delegate = self;
@@ -2780,7 +2814,7 @@
 
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
-    NSNumber *num = nil;
+    NSNumber *num;
     CLLocationMeta * metaForPos;
     
     if([[run minCheckpointsMeta] count] <= index)
@@ -2789,9 +2823,9 @@
             switch ( fieldEnum ) {
                 case CPTBarPlotFieldBarLocation:
                     //x location of index
-                    return [NSNumber numberWithFloat:index-0.5];
+                    return [NSNumber numberWithDouble:index-0.5];
                 case CPTBarPlotFieldBarTip:
-                    return [NSNumber numberWithInt:0];
+                    return [NSNumber numberWithDouble:0];
             }
         }
     }
@@ -2804,7 +2838,10 @@
                 metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
                 
                 //divide time by 60 seconds to get minute index, then minus half a minute to center bar plots
-                num = [NSNumber  numberWithFloat:((metaForPos.time)/barPeriod)-0.5];
+                if(index == [[run minCheckpointsMeta] count] - 1)//load current bar
+                    num = [NSNumber  numberWithDouble:[[run minCheckpointsMeta] count]-0.5];
+                else
+                    num = [NSNumber  numberWithDouble:((metaForPos.time)/barPeriod)-0.5];
                 break;
                 
             case CPTBarPlotFieldBarTip:
@@ -2814,14 +2851,14 @@
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedMinIndex))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        num = [NSNumber numberWithFloat:metaForPos.pace];
+                        num = [NSNumber numberWithDouble:metaForPos.pace];
                     }
                 }
                 else{
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedMinIndex && index <= (selectedMinIndex + numMinutesAtKmSelected))))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        num = [NSNumber numberWithFloat:metaForPos.pace];
+                        num = [NSNumber numberWithDouble:metaForPos.pace];
                     }
                 }
                 break;
@@ -2835,6 +2872,7 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
+    timeSinceBarSelection = [NSDate timeIntervalSinceReferenceDate];
     
     //if ghost enabled, color bar 
     if(run.ghost)
@@ -3103,6 +3141,8 @@
 - (IBAction)invisibleButtonTapped:(id)sender {
     
     BOOL isMetric = [[[ delegate curUserPrefs] metric] integerValue];
+    
+    timeSinceKmSelection = [NSDate timeIntervalSinceReferenceDate];
     
     //if not already in the mode, just select current km/partial km and remove the label
     if(!kmPaceShowMode)
