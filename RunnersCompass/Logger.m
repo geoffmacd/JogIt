@@ -3166,6 +3166,17 @@
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
     
+    //stop map if finished from autopause state
+    if(pausedForAuto)
+    {
+        //stop tick() incase although it is stopped in stoprun
+        [timer invalidate];
+        
+        //stop updates otherwise for battery life etc
+        NSLog(@"finished on autopause");
+        [locationManager stopUpdatingLocation];
+    }
+    
     //remove selection overlay
     [iconMap removeOverlay:mapSelectionOverlay];
     mapSelectionOverlay = nil;
