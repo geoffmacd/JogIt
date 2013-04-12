@@ -498,6 +498,10 @@
     }
     
     
+    //need to scroll to current position in fight
+    [self updateChart];
+    
+    //reset selection
     [self resetPaceSelection];
     [self updateHUD];
     
@@ -2592,8 +2596,11 @@
         //adjust pace to reflect minute
         CLLocationMeta * currentPos = [run.posMeta lastObject];
         
-        //adjust pace
-        currentMin.pace = currentPos.pace;
+        //adjust pace, only if element is not stale
+        if([currentPos time] + calcPeriod > run.time)
+            currentMin.pace = currentPos.pace;
+        else
+            currentMin.pace = 0;
         
         //need to adjust plot range for potentially offscreen bars
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
