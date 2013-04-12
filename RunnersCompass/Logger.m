@@ -707,8 +707,9 @@
         //add one checkpoint representing past 60 seconds
         [self addMinute];
     }
-    else{
-        //otherwise update size of current minute bar
+    else if((int)run.time % calcPeriod == 0)
+    {
+        //otherwise update size of current minute bar after a calculation
         [self adjustCurrentBar];
     }
     
