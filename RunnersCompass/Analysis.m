@@ -17,11 +17,11 @@
 {
     runMeta = runToAnalyze;
     
-    //consider 4 metricss
-    weeklyRace = [[NSMutableArray alloc] initWithCapacity:4];
-    monthlyRace = [[NSMutableArray alloc] initWithCapacity:4];
-    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:4];
-    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:4];
+    //consider 5 metricss
+    weeklyRace = [[NSMutableArray alloc] initWithCapacity:5];
+    monthlyRace = [[NSMutableArray alloc] initWithCapacity:5];
+    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:5];
+    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:5];
     
     //init arrays within arrays representing week/month units
     for(int i = MetricTypeDistance; i <= MetricTypeActivityCount; i++)
@@ -144,8 +144,10 @@
                 }
                 //replace value
                 [array replaceObjectAtIndex:weeklyIndexToModify withObject:newValue];
+                
+                //determine if race variable can be changed for this week
+                [self runPrediction:weeklyIndexToModify withWeekly:true withRun:oldRun forRace:i];
             }
-            
         }
         //months
         if(monthlyIndexToModify >=0 && monthlyIndexToModify < numMonthsToAnalyze)
@@ -180,6 +182,9 @@
                 }
                 //replace value
                 [array replaceObjectAtIndex:monthlyIndexToModify withObject:newValue];
+                
+                //determine if race variable can be changed for this week
+                [self runPrediction:monthlyIndexToModify withWeekly:false withRun:oldRun forRace:i];
             }
             
         }
@@ -215,8 +220,8 @@
     }
     
     //predict race times
-    [self analyzeWeeklyRaces];
-    [self analyzeMonthlyRaces];
+    //[self analyzeWeeklyRaces];
+    //[self analyzeMonthlyRaces];
     
     return self;
 }
@@ -277,34 +282,96 @@
 
 -(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace
 {
-    NSTimeInterval time = 0;
     //need seconds from a m/s value with a certain distance
+    NSTimeInterval racetime = 0;
     
     if(paceForRace == 0)
         return 0;
     
     switch (raceType) {
         case RaceType10Km:
-            time = 10000 / paceForRace;
+            racetime = 10000 / paceForRace;
             break;
         case RaceType10Mile:
-            time = 16093.4 / paceForRace;
+            racetime = 16093.4 / paceForRace;
             break;
         case RaceType5Km:
-            time = 5000 / paceForRace;
+            racetime = 5000 / paceForRace;
             break;
         case RaceTypeFullMarathon:
-            time = 42194.988 / paceForRace;
+            racetime = 42194.988 / paceForRace;
             break;
         case RaceTypeHalfMarathon:
-            time = 21097.494 / paceForRace;
+            racetime = 21097.494 / paceForRace;
             break;
             
         default:
             break;
     }
     
-    return time;
+    return racetime;
+}
+
+-(void)runPrediction:(NSInteger)index withWeekly:(BOOL)weekly withRun:(RunEvent*)run forRace:(RaceType)racetype
+{
+    //decide if to replace predicted run time in the array for that week or month
+    //use the Riegel formula of time = oldtime * (prediction distance / old distance) ^ 1.06
+    
+    NSTimeInterval racetime = 0;
+    
+    switch (racetype) {
+        case RaceType10Km:
+            racetime = 10000;
+            racetime = run.time * pow((racetime / run.distance), 1.06);
+            break;
+        case RaceType10Mile:
+            racetime = 16093.4;
+            racetime = run.time * pow((racetime / run.distance), 1.06);
+            break;
+        case RaceType5Km:
+            racetime = 5000;
+            racetime = run.time * pow((racetime / run.distance), 1.06);
+            break;
+        case RaceTypeFullMarathon:
+            racetime = 42194.988;
+            racetime = run.time * pow((racetime / run.distance), 1.06);
+            break;
+        case RaceTypeHalfMarathon:
+            racetime = 21097.494;
+            racetime = run.time * pow((racetime / run.distance), 1.06);
+            break;
+            
+        default:
+            break;
+    }
+    
+    //ditch right away if doesn't satisfy criteria
+    /*
+     1.min distance
+     2. max speed
+     3. elevation?
+     4. pausepoints??
+     */
+
+    
+    //must be at least 1km
+    if(run.distance < 1000)
+        return;
+    
+    //check against currently stored time for each
+    NSMutableArray * arrayForRace;
+    if(weekly)
+        arrayForRace = [weeklyRace objectAtIndex:racetype-1];
+    else
+        arrayForRace = [monthlyRace objectAtIndex:racetype-1];
+    NSNumber * oldPrediction = [arrayForRace objectAtIndex:index];
+    NSNumber * curPrediction = [NSNumber numberWithDouble:racetime];
+    
+    if(racetime > [oldPrediction doubleValue])
+    {
+        //replace
+        [arrayForRace replaceObjectAtIndex:index withObject:curPrediction];
+    }
 }
 
 @end

@@ -10,11 +10,9 @@
 #import "ChartCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-
 @implementation PredictorVC
 
 @synthesize table,header, weekly, analysis, prefs;
-
 
 
 - (void)viewDidLoad
@@ -27,7 +25,7 @@
     weekly = false;
     
     //add ChartViewControllers to views
-    cells = [[NSMutableArray alloc] initWithCapacity:10];
+    cells = [[NSMutableArray alloc] initWithCapacity:4];
     
     
 }
@@ -43,10 +41,8 @@
     return NO;
 }
 
-
 #pragma mark -
 #pragma mark predict Table data source
-
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -96,7 +92,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return RaceTypeFullMarathon;
+    return (RaceTypeFullMarathon + 1); //+1 for rule cell
 }
 
 // Customize the appearance of table view cells.
@@ -104,8 +100,20 @@
 {
     NSUInteger row = [indexPath row];
     
+    //rules cell
+    if(row == 0)
+    {
+        if(!ruleCell)
+        {
+            ruleCell  =  [[[NSBundle mainBundle]loadNibNamed:@"RuleCell"owner:self options:nil] objectAtIndex:0];
+            
+            [ruleCell setDelegate:self];
+            [ruleCell setup];
+        }
+        return ruleCell;
+    }
     
-    if(row >= [cells count]){
+    if(row > [cells count]){
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"owner:self options:nil] objectAtIndex:0];
         
         [cells addObject:cell];
@@ -113,12 +121,12 @@
         [cell setDelegate:self];
         [cell setPrefs:prefs];
         //set data for cells with array at index of the metric
-        NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row];
-        NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row];
+        NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row-1];
+        NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row-1];
         [cell setWeeklyValues:weeklyValuesToSet];
         [cell setMonthlyValues:monthlyValuesToSet];
         [cell setRaceCell:true];
-        [cell setAssociated:row+1];//convert row to runmetric assuming
+        [cell setAssociated:row];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         
         return cell;
@@ -126,7 +134,7 @@
     else{
         
         
-        ChartCell * curCell = [cells objectAtIndex:row];
+        ChartCell * curCell = [cells objectAtIndex:row-1];
         [curCell setTimePeriod:weekly];
         
         return curCell;
@@ -137,8 +145,17 @@
 {
     CGFloat height;
     NSUInteger row = [indexPath row];
-    if(row< [cells count]){
-        ChartCell * cell = [cells objectAtIndex:row];
+    
+    if(row == 0)
+    {
+        if(ruleCell)
+            height = [ruleCell getHeightRequired];
+        else
+            height = 60;
+    }
+    else if(row <= [cells count])
+    {
+        ChartCell * cell = [cells objectAtIndex:row-1];
         
         height = [cell getHeightRequired];
     }
@@ -168,6 +185,14 @@
     {
         NSIndexPath *path = [table indexPathForCell:sender];
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+    }
+    if([cells count] >= 2)
+    {
+        if([cells objectAtIndex:[cells count]-2])
+        {
+            NSIndexPath *path = [table indexPathForCell:sender];
+            [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+        }
     }
 }
 

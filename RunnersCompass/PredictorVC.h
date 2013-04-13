@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "ChartCell.h"
+#import "RuleCell.h"
 #import "PredictHeaderCell.h"
 #import "Analysis.h"
 #import "UserPrefs.h"
 
-@interface PredictorVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
+@interface PredictorVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate,RuleCellDelegate>
 {
+    RuleCell * ruleCell;
     NSMutableArray * cells;
 }
 

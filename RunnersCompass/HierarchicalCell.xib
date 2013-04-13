@@ -137,7 +137,6 @@
 										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{248, 89}, {59, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -512,9 +511,9 @@
 						<int key="objectID">349</int>
 						<reference key="object" ref="245450979"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="18694754"/>
 							<reference ref="174088637"/>
 							<reference ref="230533418"/>
+							<reference ref="18694754"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">HeaderView</string>
