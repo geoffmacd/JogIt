@@ -207,7 +207,7 @@
     if(!weekly)
     {
         UIColor *col1 = [UIColor darkGrayColor];
-        UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+        UIColor *col2 = [Util redColour];
         
         [header.monthlyBut setBackgroundColor:col1];
         [header.weeklyBut setBackgroundColor:col2];
@@ -227,7 +227,7 @@
     {
         
         UIColor *col1 = [UIColor darkGrayColor];
-        UIColor *col2 = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+        UIColor *col2 = [Util redColour];
         
         [header.monthlyBut  setBackgroundColor:col2];
         [header.weeklyBut setBackgroundColor:col1];

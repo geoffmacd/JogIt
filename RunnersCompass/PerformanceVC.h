@@ -11,6 +11,7 @@
 #import "PermHeaderCell.h"
 #import "Analysis.h"
 #import "UserPrefs.h"
+#import "Util.h"
 
 @interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
 {

@@ -3392,6 +3392,10 @@
     //action depends on if the run is live
     if(run.live)
     {
+        //show label again but only in right condition otherwise it will appear in historical,etc
+        if(pausedForAuto)
+            [autopauseLabel setHidden:false];
+        
         //animate the logger to opposite of paused/record state
         //asks the jsslider to animate the pause, includes the automatic pausing/record logic
         //meant to illustrate to user that you can swipe to pause
@@ -3425,6 +3429,11 @@
 }
 
 - (IBAction)statusTouched:(id)sender {
+    
+    //hide the auto label if autopaused
+    if(pausedForAuto && run.live)
+        [autopauseLabel setHidden:true];
+    
     [statusBut.layer setCornerRadius:5.0f];
     [statusBut.layer setMasksToBounds:true];
     
@@ -3433,6 +3442,10 @@
 }
 
 - (IBAction)statusUntouched:(id)sender {
+    
+    //show label again but only in right condition otherwise it will appear in historical,etc
+    if(pausedForAuto && run.live)
+        [autopauseLabel setHidden:false];
     
     [statusBut.layer setBorderWidth:0.0f];
 }

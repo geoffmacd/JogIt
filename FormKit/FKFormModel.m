@@ -98,7 +98,7 @@
     if (self) {
         self.selectControllerClass = [BWSelectViewController class];
         self.longTextControllerClass = [BWLongTextViewController class];
-        self.validationErrorColor = [UIColor colorWithRed:192/255.0f green:24/255.0f blue:37/255.0f alpha:1];
+        self.validationErrorColor = [Util redColour];
         self.validationErrorCellBackgroundColor = [UIColor darkGrayColor];
         self.validationNormalCellBackgroundColor = [UIColor darkGrayColor];//[UIColor colorWithRed:250/255.0f green:250/255.0f blue:250/255.0f alpha:1];
 

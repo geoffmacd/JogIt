@@ -26,7 +26,7 @@
     [statView setHidden:true];
     [AnimationUtil rotateImage:folderImage duration:0 curve:UIViewAnimationCurveEaseIn degrees:90];
     
-    //localized buttons in IB
+    //localized labels in IB
     /*
     [titleLabel setText:@""];
     [subtitleLabel setText:@""];
