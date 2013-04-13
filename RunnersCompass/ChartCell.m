@@ -26,7 +26,7 @@
 @synthesize selectedLabel,allTimeLabel;
 @synthesize weeklyValues,monthlyValues;
 @synthesize raceCell;
-@synthesize metric,showSpeed;
+@synthesize prefs;
 
 #pragma mark - Lifecycle
 
@@ -41,9 +41,35 @@
     
     //set title to match the metric
     if(!raceCell)
-        [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:showSpeed]];
+    {
+        switch (associated) {
+                /*
+            case MetricTypePace:
+                [headerLabel setText:[NSString stringWithFormat:@"%@ (%@)", [RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]], [prefs getPaceUnit]]];
+                break;
+            case MetricTypeDistance:
+                [headerLabel setText:[NSString stringWithFormat:@"%@ (%@)", [RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]], [prefs getDistanceUnit]]];
+                break;
+                 */
+                
+            case MetricTypeDistance:
+            case MetricTypePace:
+            case MetricTypeActivityCount:
+            case MetricTypeCadence:
+            case MetricTypeCalories:
+            case MetricTypeClimbed:
+            case MetricTypeStride:
+            case MetricTypeTime:
+                [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
+                break;
+            default:
+                break;
+        }
+    }
     else
+    {
         [headerLabel setText:[RunEvent stringForRace:associated]];
+    }
     
     //localized buttons in IB
     [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
@@ -52,6 +78,10 @@
 
 -(void)setTimePeriod:(BOOL) toWeekly
 {
+    //do nothing if the same
+    if(toWeekly == weekly)
+        return;
+    
     weekly = toWeekly;
     
     NSTimeInterval highest= 0.0;
@@ -144,14 +174,14 @@
         switch(associated)
         {
             case MetricTypeDistance:
-                [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[current floatValue] withMetric:metric]]];
-                [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[previous floatValue] withMetric:metric]]];
-                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:allTime withMetric:metric]]];
+                [currentValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[current floatValue] withMetric:[[prefs metric] boolValue]]]];
+                [previousValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:[previous floatValue] withMetric:[[prefs metric] boolValue]]]];
+                [allTimeValueLabel setText:[NSString stringWithFormat:@"%.1f", [RunEvent getDisplayDistance:allTime withMetric:[[prefs metric] boolValue]]]];
                 break;
             case MetricTypePace:
-                [currentValueLabel setText:[RunEvent getPaceString:[current doubleValue] withMetric:metric showSpeed:showSpeed]];
-                [previousValueLabel setText:[RunEvent getPaceString:[previous doubleValue] withMetric:metric showSpeed:showSpeed]];
-                [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:metric showSpeed:showSpeed]];
+                [currentValueLabel setText:[RunEvent getPaceString:[current doubleValue] withMetric:[[prefs metric] boolValue] showSpeed:[[prefs showSpeed] boolValue]]];
+                [previousValueLabel setText:[RunEvent getPaceString:[previous doubleValue] withMetric:[[prefs metric] boolValue] showSpeed:[[prefs showSpeed] boolValue]]];
+                [allTimeValueLabel setText:[RunEvent getPaceString:allTime withMetric:[[prefs metric] boolValue] showSpeed:[[prefs showSpeed] boolValue]]];
                 break;
             case MetricTypeTime:
                 [currentValueLabel setText:[RunEvent getTimeString:[current integerValue]]];
@@ -171,18 +201,28 @@
     
     //deter chart y range
     minY = 0;
-    maxY = highest * 1.05;
+    maxY = highest;
     
     //reload data if already loaded and shown
     if(loadedGraph)
     {
         loadedGraph = false;
         
+        [barChart removePlot:barPlot];
+        [barChart removePlot:selectedPlot];
+        
+        selectedPlot = nil;
+        barPlot = nil;
+        
         //reset scroll to prevent wrong position initially shown for modified weekly
         [scrollView setContentSize:CGSizeMake(0, 0)];
         
         if(expanded)
+        {
             [self loadChart];
+            //select nearest date which is on far right
+            [self barPlot:nil barWasSelectedAtRecordIndex:0];
+        }
     }
 }
 
@@ -221,6 +261,12 @@
         if(!loadedGraph)
         {
             [self loadChart];
+            //select nearest date which is on far right
+            [self barPlot:nil barWasSelectedAtRecordIndex:0];
+        }
+        else
+        {
+            //scroll to end location?
         }
         
     }else{
@@ -279,35 +325,30 @@
         }
     }
     
-    
-    //set size of view of graph to be equal to that of the split load
-    CGRect graphRect = expandedView.frame;
-    graphRect.origin = CGPointMake(0, 0);
-    graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, expandedView.frame.size.height);
-    [expandedView setFrame:graphRect];
-    
-    [self barPlot:nil barWasSelectedAtRecordIndex:0];
-    
-    //draw bar for current cache
-    lastCacheMinute = numBars - performanceSplitObjects ;
-    if(lastCacheMinute < 0)
-        lastCacheMinute = 0;
-    CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
-    [self setupGraphForView:expandedView withRange:firstRangeToShow];
+    if(!barPlot)
+    {
+        //draw bar for current cache
+        lastCacheMinute = numBars - performanceSplitObjects ;
+        if(lastCacheMinute < 0)
+            lastCacheMinute = 0;
+        CPTPlotRange * firstRangeToShow = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromInt(lastCacheMinute) length:CPTDecimalFromInt(performanceSplitObjects)];
+        [self setupGraphForView:expandedView withRange:firstRangeToShow];
+    }
     
     
     //scroll to latest value
     if(addedWeeksAfterReal > 0)
     {
         //there is some 0 values here so scroll to 0
-        [scrollView setContentSize:CGSizeMake(self.frame.size.width, scrollView.frame.size.height)];
+        [scrollView setContentSize:CGSizeMake((numBars + addedWeeksAfterReal) * performanceBarWidth, scrollView.frame.size.height)];
         CGRect animatedDestination = CGRectMake(0, 0, self.frame.size.width, scrollView.frame.size.height);
         [scrollView scrollRectToVisible:animatedDestination animated:true];
     }
     else{
         
         //rightmost value is non-zero and real
-        [scrollView setContentSize:CGSizeMake(numBars * performanceBarWidth, scrollView.frame.size.height)];
+        [scrollView setContentSize:CGSizeMake((numBars * performanceBarWidth), scrollView.frame.size.height)];\
+        //scroll to numbars which is at far right and back off one screen length
         CGRect animatedDestination = CGRectMake((numBars * performanceBarWidth) - scrollView.frame.size.width, 0, scrollView.frame.size.width, scrollView.frame.size.height);
         [scrollView scrollRectToVisible:animatedDestination animated:true];
     }
@@ -348,7 +389,6 @@
     barChart.plotAreaFrame.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
     barChart.fill = [CPTFill fillWithColor:[CPTColor clearColor]];
     
-    
     // Add plot space for horizontal bar charts
     plotSpace = (CPTXYPlotSpace *)barChart.defaultPlotSpace;
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(minY) length:CPTDecimalFromFloat(maxY)];
@@ -360,6 +400,17 @@
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
     x.majorIntervalLength = CPTDecimalFromString(@"1");
     x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+    
+    //axis line style
+    CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
+    majorLineStyle.lineCap   = kCGLineCapRound;
+    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.6)];
+    majorLineStyle.lineWidth = CPTFloat(1.0);
+    x.axisLineStyle                  = majorLineStyle;
+    
+    //y-axis
+    CPTXYAxis *y = axisSet.yAxis;
+    y.labelingPolicy = CPTAxisLabelingPolicyNone;
     
     
     //labels for x-axis
@@ -456,30 +507,22 @@
         }
         x.axisLabels = [NSSet setWithArray:labels];
     }
-
-    
-    //y-axis
-    CPTXYAxis *y = axisSet.yAxis;
-    y.labelingPolicy = CPTAxisLabelingPolicyNone;
-    
-    //axis line style
-    CPTMutableLineStyle *majorLineStyle = [CPTMutableLineStyle lineStyle];
-    majorLineStyle.lineCap   = kCGLineCapRound;
-    majorLineStyle.lineColor = [CPTColor colorWithGenericGray:CPTFloat(0.6)];
-    majorLineStyle.lineWidth = CPTFloat(1.0);
-    x.axisLineStyle                  = majorLineStyle;
     
     
     // add bar plot to view, all bar customization done here
     CPTColor * barColour = [CPTColor darkGrayColor];
-    barPlot = [CPTBarPlot tubularBarPlotWithColor:barColour horizontalBars:NO];
-    barPlot.lineStyle = nil;
-    barPlot.baseValue  = CPTDecimalFromString(@"0");
+    barPlot = [[CPTBarPlot alloc] init];
+    barPlot.fill = [CPTFill fillWithColor:barColour];
+    CPTMutableLineStyle *barLineStyle = [CPTMutableLineStyle lineStyle];
+	barLineStyle.lineWidth = CPTFloat(0.5);
+    barPlot.lineStyle = barLineStyle;
+    barPlot.barWidth   = CPTDecimalFromDouble(0.7);
+    barPlot.barWidthsAreInViewCoordinates = NO;
+    barPlot.barCornerRadius  = CPTFloat(5.0);
+    //barPlot.barBaseCornerRadius = CPTFloat(5.0);
+    barPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     barPlot.dataSource = self;
     barPlot.identifier = kPlot;
-    barPlot.barWidth   = CPTDecimalFromDouble(0.7);
-    barPlot.barCornerRadius  = CPTFloat(5.0);
-    barPlot.barBaseCornerRadius = CPTFloat(5.0);
     barPlot.delegate = self;
     
     
@@ -487,18 +530,24 @@
     
     //selected Plot
     selectedPlot = [[CPTBarPlot alloc] init];
-    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithComponentRed:0.8f green:0.1f blue:0.15f alpha:1.0f]];
-    selectedPlot.lineStyle = nil;
-    selectedPlot.baseValue  = CPTDecimalFromString(@"0");
+    selectedPlot.fill = [CPTFill fillWithColor:[CPTColor colorWithCGColor:[[Util redColour] CGColor]]];
+    selectedPlot.lineStyle = barLineStyle;
     selectedPlot.barWidth   = CPTDecimalFromDouble(0.7);
+    selectedPlot.barWidthsAreInViewCoordinates = NO;
     selectedPlot.barCornerRadius = CPTFloat(5.0);
-    selectedPlot.barBaseCornerRadius = CPTFloat(5.0);
-    
+    //selectedPlot.barBaseCornerRadius = CPTFloat(5.0);
+    selectedPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     selectedPlot.dataSource = self;
     selectedPlot.identifier = kSelectedPlot;
     selectedPlot.delegate = self;
     
     [barChart addPlot:selectedPlot toPlotSpace:plotSpace];
+    
+    //set size of view of graph to be equal to that of the split load
+    CGRect graphRect = expandedView.frame;
+    graphRect.origin = CGPointMake(0, 0);
+    graphRect.size = CGSizeMake(performanceSplitObjects * performanceBarWidth, expandedView.frame.size.height);
+    [expandedView setFrame:graphRect];
     
     
     loadedGraph = true;
@@ -520,7 +569,6 @@
 -(NSNumber *)numberForPlot:(CPTPlot *)plot field:(NSUInteger)fieldEnum recordIndex:(NSUInteger)index
 {
     NSNumber * numberValue;
-    //NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
     
     if ( [plot isKindOfClass:[CPTBarPlot class]] ) {
         switch ( fieldEnum ) {
@@ -528,9 +576,9 @@
                 
                 //x location of index is opposite side of chart such that weeklyValue[0] is latest run located at right
                 if(weekly)
-                    numberValue = [NSNumber numberWithFloat:([weeklyValues count] + addedWeeksAfterReal - index - 0.5)];
+                    numberValue = [NSNumber numberWithDouble:([weeklyValues count] + addedWeeksAfterReal - index - 0.5)];
                 else
-                    numberValue = [NSNumber numberWithFloat:([monthlyValues count]+ addedWeeksAfterReal - index - 0.5)];
+                    numberValue = [NSNumber numberWithDouble:([monthlyValues count] + addedWeeksAfterReal - index - 0.5)];
                 
                 break;
                 
@@ -580,10 +628,10 @@
         switch(associated)
         {
             case MetricTypeDistance:
-                [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:[valueToDisplay floatValue] withMetric:metric]]];
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:[valueToDisplay floatValue] withMetric:[[prefs metric] boolValue]]]];
                 break;
             case MetricTypePace:
-                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay doubleValue] withMetric:metric showSpeed:showSpeed]];
+                [selectedValueLabel setText:[RunEvent getPaceString:[valueToDisplay doubleValue] withMetric:[[prefs metric] boolValue] showSpeed:[[prefs showSpeed] boolValue]]];
                 break;
             case MetricTypeTime:
                 [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay doubleValue]]];

@@ -104,8 +104,7 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
-        [cell setMetric:[[prefs metric] boolValue]];
-        [cell setShowSpeed:[[prefs showSpeed] boolValue]];
+        [cell setPrefs:prefs];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
@@ -161,6 +160,14 @@
     {
         NSIndexPath *path = [table indexPathForCell:sender];
         [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+    }
+    if([cells count] >= 2)
+    {
+        if([cells objectAtIndex:[cells count]-2])
+        {
+            NSIndexPath *path = [table indexPathForCell:sender];
+            [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
+        }
     }
 }
 

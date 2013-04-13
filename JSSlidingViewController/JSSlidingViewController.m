@@ -485,8 +485,6 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 
 -(void)enableScrollToPause{
     
-    
-    
     //remove from view first
     [self.backViewController.view removeFromSuperview];
     

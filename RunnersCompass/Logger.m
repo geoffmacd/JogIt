@@ -2758,8 +2758,6 @@
     plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
     plotSpace.xRange = range;
     
-    //[plotSpace setAllowsUserInteraction:true];
-    
     //x-axis
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)barChart.axisSet;
     CPTXYAxis *x          = axisSet.xAxis;

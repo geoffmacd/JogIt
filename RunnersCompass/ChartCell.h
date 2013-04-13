@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
 #import "CorePlot-CocoaTouch.h"
+#import "Util.h"
 
-#define performanceBarWidth 22
+#define performanceBarWidth 25
 #define performanceLoadObjectsOffset 12
-#define performanceSplitObjects 25
+#define performanceSplitObjects 24
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 
@@ -69,8 +70,7 @@
 @property NSMutableArray * weeklyValues;
 @property NSMutableArray * monthlyValues;
 //user prefs
-@property BOOL metric;
-@property BOOL showSpeed;
+@property UserPrefs * prefs;
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;

@@ -111,8 +111,7 @@
         [cells addObject:cell];
         
         [cell setDelegate:self];
-        [cell setMetric:[[prefs metric] boolValue]];
-        [cell setShowSpeed:[[prefs showSpeed] boolValue]];
+        [cell setPrefs:prefs];
         //set data for cells with array at index of the metric
         NSMutableArray * weeklyValuesToSet = [analysis.weeklyRace objectAtIndex:row];
         NSMutableArray * monthlyValuesToSet = [analysis.monthlyRace objectAtIndex:row];
