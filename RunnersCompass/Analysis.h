@@ -24,6 +24,13 @@
 @property (nonatomic, strong) NSMutableArray * weeklyRace;
 @property (nonatomic, strong) NSMutableArray * monthlyRace;
 
+//PRs
+@property (weak) RunEvent * furthestRun;
+@property (weak) RunEvent * fastestRun;
+@property (weak) RunEvent * caloriesRun;
+@property (weak) RunEvent * longestRun;
+
+
 
 -(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze;
 

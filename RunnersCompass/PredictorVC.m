@@ -25,7 +25,7 @@
     weekly = false;
     
     //add ChartViewControllers to views
-    cells = [[NSMutableArray alloc] initWithCapacity:4];
+    cells = [[NSMutableArray alloc] initWithCapacity:5];
     
     
 }

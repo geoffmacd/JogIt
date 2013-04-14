@@ -204,6 +204,8 @@
 		67EA66E8171A3D0500BA21FE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B421BD1707D9DB006574CF /* Default-568h@2x.png */; };
 		67EA66EA171A4B5A00BA21FE /* ladder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66E9171A4B5A00BA21FE /* ladder@2x.png */; };
 		67EA66EC171A51BD00BA21FE /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66EB171A51BD00BA21FE /* check@2x.png */; };
+		67EA66F0171A5F8100BA21FE /* PRCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66EE171A5F7E00BA21FE /* PRCell.m */; };
+		67EA66F1171A5F8100BA21FE /* PRCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66EF171A5F8000BA21FE /* PRCell.xib */; };
 		67F6D51C16FA871D00790A22 /* runningman.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D51A16FA871D00790A22 /* runningman.png */; };
 		67F6D51D16FA871D00790A22 /* runningman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D51B16FA871D00790A22 /* runningman@2x.png */; };
 		67F6D52216FA8CE100790A22 /* medal.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52016FA8CE100790A22 /* medal.png */; };
@@ -543,6 +545,9 @@
 		67EA66E4171A3CBC00BA21FE /* cloudyred@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cloudyred@2x.png"; sourceTree = "<group>"; };
 		67EA66E9171A4B5A00BA21FE /* ladder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ladder@2x.png"; sourceTree = "<group>"; };
 		67EA66EB171A51BD00BA21FE /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
+		67EA66ED171A5F7D00BA21FE /* PRCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCell.h; sourceTree = "<group>"; };
+		67EA66EE171A5F7E00BA21FE /* PRCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRCell.m; sourceTree = "<group>"; };
+		67EA66EF171A5F8000BA21FE /* PRCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PRCell.xib; sourceTree = "<group>"; };
 		67F6D51A16FA871D00790A22 /* runningman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runningman.png; sourceTree = "<group>"; };
 		67F6D51B16FA871D00790A22 /* runningman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "runningman@2x.png"; sourceTree = "<group>"; };
 		67F6D52016FA8CE100790A22 /* medal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = medal.png; sourceTree = "<group>"; };
@@ -666,6 +671,9 @@
 		672AA3C416B5A6B800B7DEE6 /* Performance */ = {
 			isa = PBXGroup;
 			children = (
+				67EA66ED171A5F7D00BA21FE /* PRCell.h */,
+				67EA66EE171A5F7E00BA21FE /* PRCell.m */,
+				67EA66EF171A5F8000BA21FE /* PRCell.xib */,
 				67EA66D11718F29800BA21FE /* RuleCell.h */,
 				67EA66D21718F29800BA21FE /* RuleCell.m */,
 				67EA66D31718F29900BA21FE /* RuleCell.xib */,
@@ -1062,7 +1070,6 @@
 		67FC068116A10EE000491C97 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				672061791717828D00BDF810 /* RunRecord.m */,
 				6779C10216EE83D8002BCAEC /* Analysis.h */,
 				6779C10316EE83D8002BCAEC /* Analysis.m */,
 				67FC06BF16A1D14000491C97 /* DataController.h */,
@@ -1080,6 +1087,7 @@
 				6721F87F16AE39AB00FE84C5 /* RunMap.h */,
 				6721F88016AE39AB00FE84C5 /* RunMap.m */,
 				6795A83B1714EE1600C0CE52 /* RunRecord.h */,
+				672061791717828D00BDF810 /* RunRecord.m */,
 				6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */,
 				6792EC6A17137F1A00EBAF2F /* ThumbnailRecord.m */,
 				6792EC6F17137F8500EBAF2F /* UIImageToDataTransformer.h */,
@@ -1299,6 +1307,7 @@
 				67EA66E8171A3D0500BA21FE /* Default-568h@2x.png in Resources */,
 				67EA66EA171A4B5A00BA21FE /* ladder@2x.png in Resources */,
 				67EA66EC171A51BD00BA21FE /* check@2x.png in Resources */,
+				67EA66F1171A5F8100BA21FE /* PRCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1423,7 @@
 				6720617817177FFD00BDF810 /* LocationRecord.m in Sources */,
 				6720617A1717828D00BDF810 /* RunRecord.m in Sources */,
 				67EA66D41718F29900BA21FE /* RuleCell.m in Sources */,
+				67EA66F0171A5F8100BA21FE /* PRCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

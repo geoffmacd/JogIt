@@ -90,7 +90,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of charts
-    return MetricTypeCalories;
+    return MetricTypeCalories + 1; //for pr cell
 }
 
 // Customize the appearance of table view cells.
@@ -98,7 +98,41 @@
 {
     NSUInteger row = [indexPath row];
     
-    if(row >= [cells count]){
+    //PR cell
+    if(row == 0)
+    {
+        if(!prCell)
+        {
+            prCell  =  [[[NSBundle mainBundle]loadNibNamed:@"PRCell"owner:self options:nil] objectAtIndex:0];
+            
+            [prCell setDelegate:self];
+            
+            NSString * fastestString = @"";
+            RunEvent * fastestRun = [analysis fastestRun];
+            if(fastestRun)
+                fastestString = [RunEvent getPaceString:fastestRun.avgPace withMetric:[prefs.metric boolValue] showSpeed:[prefs.showSpeed boolValue]];
+            
+            NSString * furthestString = @"";
+            RunEvent * furthestRun = [analysis furthestRun];
+            if(furthestRun)
+                furthestString = [NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:furthestRun.distance  withMetric:[prefs.metric boolValue]] ];
+            
+            NSString * caloriesString = @"";
+            RunEvent * caloriesRun = [analysis caloriesRun];
+            if(caloriesRun)
+                caloriesString = [NSString stringWithFormat:@"%.0f",caloriesRun.calories];
+            
+            NSString * longestString = @"";
+            RunEvent * longestRun = [analysis longestRun];
+            if(longestRun)
+                longestString = [RunEvent getTimeString:fastestRun.time];
+            
+            [prCell setupWithFastest:fastestString furthest:furthestString calories:caloriesString longest:longestString];
+        }
+        return prCell;
+    }
+    
+    if(row > [cells count]){
         ChartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"ChartCell"owner:self options:nil] objectAtIndex:0];
         
         [cells addObject:cell];
@@ -106,19 +140,19 @@
         [cell setDelegate:self];
         [cell setPrefs:prefs];
         //set data for cells with array at index of the metric
-        NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row];
-        NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row];
+        NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row-1];
+        NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row-1];
         [cell setWeeklyValues:weeklyValuesToSet];
         [cell setMonthlyValues:monthlyValuesToSet];
         [cell setRaceCell:false];
-        [cell setAssociated:row+1];//convert row to runmetric assuming
+        [cell setAssociated:row];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         
         return cell;
     }
     else{
         
-        ChartCell * curCell = [cells objectAtIndex:row];
+        ChartCell * curCell = [cells objectAtIndex:row-1];
         [curCell setTimePeriod:weekly];
         
         return curCell;
@@ -129,8 +163,16 @@
 {
     CGFloat height;
     NSUInteger row = [indexPath row];
-    if(row< [cells count]){
-        ChartCell * cell = [cells objectAtIndex:row];
+    
+    if(row == 0)
+    {
+        if(prCell)
+            height = [prCell getHeightRequired];
+        else
+            height = 60;
+    }
+    else if(row<= [cells count]){
+        ChartCell * cell = [cells objectAtIndex:row-1];
         
         height = [cell getHeightRequired];
     }

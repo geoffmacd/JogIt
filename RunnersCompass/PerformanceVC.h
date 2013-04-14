@@ -12,10 +12,12 @@
 #import "Analysis.h"
 #import "UserPrefs.h"
 #import "Util.h"
+#import "PRCell.h"
 
-@interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate>
+@interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate,PRCellDelegate>
 {
     NSMutableArray * cells;
+    PRCell * prCell;
 }
 
 @property PermHeaderCell * header;
