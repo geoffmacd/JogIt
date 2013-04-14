@@ -18,7 +18,7 @@
 @synthesize delegate;
 @synthesize addRunButton;
 @synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
-@synthesize expanded,locked,garbageBut,timeLabel;
+@synthesize expanded,locked,garbageBut,timeLabel,manualBut;
 
 -(void)setup
 {
@@ -36,6 +36,7 @@
     [caloriesBut setTitle:NSLocalizedString(@"CaloriesRunTargetButton", @"CaloriesRunTargetButton") forState:UIControlStateNormal];
     [paceBut setTitle:NSLocalizedString(@"PaceRunTargetButton", @"PaceRunTargetButton") forState:UIControlStateNormal];
     [distanceBut setTitle:NSLocalizedString(@"DistanceRunTargetButton", @"DistanceRunTargetButton") forState:UIControlStateNormal];
+    [manualBut setTitle:NSLocalizedString(@"ManualRunButton", @"ManualRunButton") forState:UIControlStateNormal];
     
     //time label
     [timeLabel setText:@""];
@@ -149,6 +150,15 @@
     [caloriesBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
 }
 
+- (IBAction)manualTouched:(id)sender
+{
+    [manualBut.layer setCornerRadius:5.0f];
+    [manualBut.layer setMasksToBounds:true];
+    
+    [manualBut.layer setBorderWidth:0.5f];
+    [manualBut.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+}
+
 - (IBAction)addRunTapped:(id)sender {
     
     //custom lock property for start cell
@@ -199,7 +209,14 @@
     [distanceBut.layer setBorderWidth:0.0f];
 }
 
+- (IBAction)manualTapped:(id)sender
+{
+    [manualBut.layer setBorderWidth:0.0f];
+}
 
-
+- (IBAction)manualUntapped:(id)sender
+{
+    [manualBut.layer setBorderWidth:0.0f];
+}
 
 @end

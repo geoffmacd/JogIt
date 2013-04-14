@@ -193,6 +193,9 @@
 		67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC3170281BB0028CF70 /* bigclock@2x.png */; };
 		67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059316D7150800A20B6F /* CaloriePicker.m */; };
 		67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059B16D71B5000A20B6F /* DistancePicker.m */; };
+		67E544A3171B335A00D5C9DF /* Manual.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A0171B335A00D5C9DF /* Manual.xib */; };
+		67E544A4171B335A00D5C9DF /* ManualVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544A2171B335A00D5C9DF /* ManualVC.m */; };
+		67E544A6171B44FD00D5C9DF /* manualrunthumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */; };
 		67EA66D41718F29900BA21FE /* RuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66D21718F29800BA21FE /* RuleCell.m */; };
 		67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D31718F29900BA21FE /* RuleCell.xib */; };
 		67EA66DA1718F72D00BA21FE /* formula.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D81718F72D00BA21FE /* formula.png */; };
@@ -536,6 +539,10 @@
 		67D7059316D7150800A20B6F /* CaloriePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaloriePicker.m; sourceTree = "<group>"; };
 		67D7059A16D71B5000A20B6F /* DistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePicker.h; sourceTree = "<group>"; };
 		67D7059B16D71B5000A20B6F /* DistancePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistancePicker.m; sourceTree = "<group>"; };
+		67E544A0171B335A00D5C9DF /* Manual.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Manual.xib; sourceTree = "<group>"; };
+		67E544A1171B335A00D5C9DF /* ManualVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualVC.h; sourceTree = "<group>"; };
+		67E544A2171B335A00D5C9DF /* ManualVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualVC.m; sourceTree = "<group>"; };
+		67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manualrunthumbnail@2x.png"; sourceTree = "<group>"; };
 		67EA66D11718F29800BA21FE /* RuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleCell.h; sourceTree = "<group>"; };
 		67EA66D21718F29800BA21FE /* RuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleCell.m; sourceTree = "<group>"; };
 		67EA66D31718F29900BA21FE /* RuleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RuleCell.xib; sourceTree = "<group>"; };
@@ -635,6 +642,7 @@
 				67FC068C16A117B800491C97 /* Constants.m */,
 				67FC068316A10F0600491C97 /* Menu */,
 				67FC068216A10EE800491C97 /* Logger */,
+				67E5449F171B330100D5C9DF /* Manual */,
 				672AA3B116B598EA00B7DEE6 /* Settings */,
 				672AA3C416B5A6B800B7DEE6 /* Performance */,
 				672AA4F616B614F300B7DEE6 /* Goals */,
@@ -867,6 +875,7 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */,
 				67EA66EB171A51BD00BA21FE /* check@2x.png */,
 				67EA66E9171A4B5A00BA21FE /* ladder@2x.png */,
 				67EA66D81718F72D00BA21FE /* formula.png */,
@@ -1065,6 +1074,16 @@
 				67C8E34B16D1D4D100E4DE11 /* libCorePlot-CocoaTouch.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		67E5449F171B330100D5C9DF /* Manual */ = {
+			isa = PBXGroup;
+			children = (
+				67E544A0171B335A00D5C9DF /* Manual.xib */,
+				67E544A1171B335A00D5C9DF /* ManualVC.h */,
+				67E544A2171B335A00D5C9DF /* ManualVC.m */,
+			);
+			name = Manual;
 			sourceTree = "<group>";
 		};
 		67FC068116A10EE000491C97 /* Data */ = {
@@ -1308,6 +1327,8 @@
 				67EA66EA171A4B5A00BA21FE /* ladder@2x.png in Resources */,
 				67EA66EC171A51BD00BA21FE /* check@2x.png in Resources */,
 				67EA66F1171A5F8100BA21FE /* PRCell.xib in Resources */,
+				67E544A3171B335A00D5C9DF /* Manual.xib in Resources */,
+				67E544A6171B44FD00D5C9DF /* manualrunthumbnail@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,6 +1445,7 @@
 				6720617A1717828D00BDF810 /* RunRecord.m in Sources */,
 				67EA66D41718F29900BA21FE /* RuleCell.m in Sources */,
 				67EA66F0171A5F8100BA21FE /* PRCell.m in Sources */,
+				67E544A4171B335A00D5C9DF /* ManualVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

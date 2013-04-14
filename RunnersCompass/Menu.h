@@ -21,6 +21,7 @@
 #import "GoalsViewController.h"
 #import "CreateGoalViewController.h"
 #import "RunFormPicker.h"
+#import "ManualVC.h"
 
 #import "LocationRecord.h"
 #import "ThumbnailRecord.h"
@@ -41,7 +42,7 @@
 @end
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HierarchicalCellDelegate,StartCellDelegate, JSSlidingViewControllerDelegate,UIActionSheetDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,HierarchicalCellDelegate,StartCellDelegate,JSSlidingViewControllerDelegate,ManualVCDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * cells;

@@ -369,7 +369,7 @@
         name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
         targetMetric = NoMetricType;
         metricGoal = 0.0f;
-        eventType = EventTypeRun;    //for now this is only possible
+        eventType = EventTypeRun;
         date = [NSDate date];
         distance = 0;
         calories = 0;
@@ -399,7 +399,7 @@
         name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
         targetMetric = NoMetricType;
         metricGoal = 0.0f;
-        eventType = EventTypeRun;    //for now this is only possible
+        eventType = EventTypeRun;    
         date = [NSDate date];
         distance = 0;
         calories = 0;
@@ -448,7 +448,7 @@
         }
         targetMetric = type;
         metricGoal = value;
-        eventType = EventTypeRun;    //for now this is only possible
+        eventType = EventTypeRun;
         date = [NSDate date];
         distance = 0;
         calories = 0;
@@ -478,7 +478,7 @@
 
         targetMetric = [record.targetMetric integerValue];
         metricGoal = [record.metricGoal integerValue];
-        eventType = [record.eventType integerValue];    //for now this is only possible
+        eventType = [record.eventType integerValue];
         date = record.date;
         distance = [record.distance floatValue];
         calories = [record.calories floatValue];
@@ -511,7 +511,7 @@
         
         targetMetric = [record.targetMetric integerValue];
         metricGoal = [record.metricGoal integerValue];
-        eventType = [record.eventType integerValue];    //for now this is only possible
+        eventType = [record.eventType integerValue];
         date = record.date;
         distance = [record.distance floatValue];
         calories = [record.calories floatValue];

@@ -29,14 +29,15 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
-@property (strong, nonatomic) IBOutlet UIButton *addRunButton;
-@property (strong, nonatomic) IBOutlet UIButton *justGoBut;
-@property (strong, nonatomic) IBOutlet UIButton *distanceBut;
-@property (strong, nonatomic) IBOutlet UIButton *paceBut;
-@property (strong, nonatomic) IBOutlet UIButton *timeBut;
-@property (strong, nonatomic) IBOutlet UIButton *caloriesBut;
-@property (strong, nonatomic) IBOutlet UIButton *garbageBut;
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *addRunButton;
+@property (weak, nonatomic) IBOutlet UIButton *justGoBut;
+@property (weak, nonatomic) IBOutlet UIButton *distanceBut;
+@property (weak, nonatomic) IBOutlet UIButton *paceBut;
+@property (weak, nonatomic) IBOutlet UIButton *timeBut;
+@property (weak, nonatomic) IBOutlet UIButton *caloriesBut;
+@property (weak, nonatomic) IBOutlet UIButton *garbageBut;
+@property (weak, nonatomic) IBOutlet UIButton *manualBut;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;
@@ -46,23 +47,26 @@
 @property BOOL locked;//for whether currently expanded
 
 //UI actions
+- (IBAction)headerTapped:(id)sender;
+- (IBAction)addRunTapped:(id)sender;
 - (IBAction)justGoUntapped:(id)sender;
 - (IBAction)justGoTapped:(id)sender;
+- (IBAction)justGoTouched:(id)sender;
 - (IBAction)distanceTapped:(id)sender;
 - (IBAction)distanceUntapped:(id)sender;
+- (IBAction)distanceTouched:(id)sender;
 - (IBAction)paceTapped:(id)sender;
 - (IBAction)paceUntapped:(id)sender;
-- (IBAction)timeUntapped:(id)sender;
-- (IBAction)calorieUntapped:(id)sender;
-- (IBAction)timeTapped:(id)sender;
-- (IBAction)calorieTapped:(id)sender;
-- (IBAction)addRunTapped:(id)sender;
-- (IBAction)headerTapped:(id)sender;
-- (IBAction)justGoTouched:(id)sender;
-- (IBAction)distanceTouched:(id)sender;
 - (IBAction)paceTouched:(id)sender;
+- (IBAction)timeUntapped:(id)sender;
+- (IBAction)timeTapped:(id)sender;
 - (IBAction)timeTouched:(id)sender;
 - (IBAction)calorieTouched:(id)sender;
+- (IBAction)calorieTapped:(id)sender;
+- (IBAction)calorieUntapped:(id)sender;
+- (IBAction)manualTapped:(id)sender;
+- (IBAction)manualUntapped:(id)sender;
+- (IBAction)manualTouched:(id)sender;
 
 
 -(CGFloat)getHeightRequired;

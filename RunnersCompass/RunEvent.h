@@ -38,6 +38,7 @@
 
 typedef enum {
     EventTypeRun,
+    EventTypeManual,
     EventTypeBike,
     EventTypeWalk,
     EventTypeHike

@@ -51,6 +51,7 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UILabel *minUnit;
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 @property (strong, nonatomic) IBOutlet UIButton *garbageBut;
+@property (weak, nonatomic) IBOutlet UILabel *manualEntryLabel;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;

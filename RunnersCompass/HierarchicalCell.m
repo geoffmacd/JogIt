@@ -17,6 +17,7 @@
 @synthesize headerView;
 @synthesize garbageBut;
 @synthesize paceLabel,calLabel,calUnit,timeLabel,minUnit,paceUnit;
+@synthesize manualEntryLabel;
 
 
 @synthesize delegate;
@@ -34,13 +35,30 @@
 {
     [self reloadUnitLabels];
     
+    //thumbnail or manual entry label
+    if(associatedRun.eventType == EventTypeRun)
+    {
+        [manualEntryLabel setHidden:true];
+        [thumbnailImage setHidden:false];
+        
+        [thumbnailImage setImage:associatedRun.thumbnail];
+        [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
+        [thumbnailImage.layer setBorderWidth: 1.0];
+        //corners to make map not look so square
+        [thumbnailImage.layer setCornerRadius:5.0f];
+        [thumbnailImage.layer setMasksToBounds:YES];
+    }
+    else if(associatedRun.eventType == EventTypeManual)
+    {
+        [manualEntryLabel setText: NSLocalizedString(@"ManualRunButton", @"ManualRunButton")];
+        [manualEntryLabel setHidden:false];
+        [thumbnailImage setHidden:true];
+        
+        //default manual run thumbnail
+        //[thumbnailImage setImage:[UIImage imageNamed:@"manualrunthumbnail"]];
+    }
+    
     //set UI style
-    [thumbnailImage setImage:associatedRun.thumbnail];
-    [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
-    [thumbnailImage.layer setBorderWidth: 1.0];
-    //corners to make map not look so square
-    [thumbnailImage.layer setCornerRadius:5.0f];
-    [thumbnailImage.layer setMasksToBounds:YES];
     //set red colour
     [headerView setBackgroundColor:[Util cellRedColour]];
     

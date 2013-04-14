@@ -304,6 +304,27 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
 }
 
+#pragma mark -
+#pragma mark Manual VC Delegate
+
+-(void)manualRunToSave:(RunEvent*)runToSave
+{
+    if(runToSave)
+    {
+        //run saved to DB in manual VC
+        
+        //save usual way , same as with logger
+        [self finishedRun:runToSave];
+        
+        //hide start cell
+        [start setExpand:false withAnimation:true];
+    }
+}
+
+-(void)manualRunCancelled
+{
+    //do nothing
+}
 
 #pragma mark -
 #pragma mark Logger Interface
@@ -343,25 +364,38 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
 }
 
--(void) finishedRun:(RunEvent*)run
+-(void) finishedRun:(RunEvent*)finishedRun
 {
     
     //save run and add it to the menu if it exists
-    if(run)
+    if(finishedRun)
     {
         //need to close all cells before, otherwise rotated folder images happen for some reason
         for(HierarchicalCell * cell in cells)
         {
             [cell setExpand:false withAnimation:false];
         }
-        //must be at 0th index to be at top and reload correctly
-        [runs insertObject:run atIndex:0];
-        [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        //determine index to insert run into since date can be different due to manual entry
+        NSInteger indexToInsert = 0;
+        //should be currently sorted such that highest (latest) date is at index 0
+        for(int i = 0; i <  [runs count]; i++)
+        {
+            RunEvent * oldRun = [runs objectAtIndex:i];
+            //until run to save is greater than old run
+            if([oldRun.date timeIntervalSinceReferenceDate] > [finishedRun.date timeIntervalSinceReferenceDate])
+                indexToInsert = i;
+        }
+        indexToInsert++;
+        
+        //insert at correct index
+        [runs insertObject:finishedRun atIndex:indexToInsert];
+        [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [cells removeAllObjects];
         [MenuTable reloadData];
         
         //scroll to top
-        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:true];
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
     }
     
     //refresh start cell
@@ -532,6 +566,24 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [cal addCustomButtonWithTitle:@"PR" value:nil];
     
     [cal showRunFormPicker];
+}
+
+- (IBAction)manualTapped:(id)sender {
+    
+    //goto manual VC
+    
+    //nav bar cleanup
+    [self cleanupForNav];
+    
+    ManualVC * vc = [[ManualVC alloc] initWithNibName:@"Manual" bundle:nil];
+    
+    //set current settings
+    [vc setPrefs:[self.delegate curUserPrefs]];
+    [vc setDelegate:self]; 
+    [self presentViewController:vc animated:true completion:nil];
+    
+    //do not dismiss start cell
+    
 }
 
 - (IBAction)justGoTapped:(id)sender {
