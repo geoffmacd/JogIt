@@ -496,7 +496,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         pace = pace / convertKMToMile;
     }
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypePace withValue:pace withMetric:[curPrefs.metric boolValue] showSpeed:[curPrefs.showSpeed boolValue]];
     
     [self selectedNewRun:new];
     
