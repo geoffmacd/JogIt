@@ -268,10 +268,10 @@
     //hide autopause again
     [autopauseLabel setHidden:true];
     
+    //clear map and reset overlays,etc
     [self resetMap];
     
-    
-    //set title
+    //either live or historical run
     if(!run.live)
     {
         
@@ -2501,7 +2501,7 @@
     if(maxYPace > avgPace * 4)
         maxYPace = avgPace * 4;
     
-    //constraint pace to at least 0.5 m/s
+    //constraint pace to at least 1 m/s
     if(maxYPace < paceChartMaxYMin)
         maxYPace = paceChartMaxYMin;
     
@@ -2524,32 +2524,41 @@
         [self setupGraphForView:chart withRange:firstRangeToShow];
     }
     else{
-        //no adjustments necessary
-        [barPlot reloadData];
+        //no adjustments necessary,just display new selected bar
         [selectedPlot reloadData];
     }
     
     //scroll to latest value
     if([[run minCheckpointsMeta] count] * paceGraphBarWidth < paceScroll.frame.size.width)
     {
-        //no need to scroll since must be on page already
+        //no need to scroll since on first page
     }
     else
     {
+        //if index is on last page, scroll to just the whole page
         if(targetMinIndex > [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth))
-            targetMinIndex = [[run minCheckpointsMeta] count] - (paceScroll.frame.size.width / paceGraphBarWidth);
-        CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
-        [paceScroll scrollRectToVisible:animatedDestination animated:paceGraphAnimated];
+        {
+            CGRect animatedDestination = CGRectMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+            [paceScroll scrollRectToVisible:animatedDestination animated:paceGraphAnimated];
+        }
+        else
+        {
+            CGRect animatedDestination = CGRectMake((targetMinIndex * paceGraphBarWidth), 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+            [paceScroll scrollRectToVisible:animatedDestination animated:paceGraphAnimated];
+        }
     }
 }
 
 
 -(void)updateChart
 {
+    //called to add data or when loading run
+    
     //crashes sometimes if run in background
     if(inBackground)
         return;
     
+    //do not animate if the barplot doesn't exist or when the runs are set
     BOOL denyAnimatedScroll = !barPlot;
     
     if(!barPlot)

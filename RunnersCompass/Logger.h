@@ -22,10 +22,10 @@
 #define mapDragCutoff 300
 #define mapDragPreventOpposite 5
 #define mapDragPullYOffset 30
-#define paceGraphBarWidth 25
+#define paceGraphBarWidth 25.0
 #define paceGraphSplitLoadOffset 20
 #define paceGraphSplitObjects 30
-#define paceGraphAnimated true
+#define paceGraphAnimated true //for km selection to animate pace chart
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //m maximum
@@ -37,7 +37,7 @@
 #define autoPauseDelay 9 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
-#define paceChartMaxYMin 0.5//m/s
+#define paceChartMaxYMin 1//m/s
 #define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 5 //seconds
