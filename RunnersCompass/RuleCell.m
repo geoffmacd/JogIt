@@ -27,13 +27,12 @@
     [AnimationUtil rotateImage:folderImage duration:0 curve:UIViewAnimationCurveEaseIn degrees:90];
     
     //localized labels in IB
-    /*
-    [titleLabel setText:@""];
-    [subtitleLabel setText:@""];
-    [rule1Label setText:@""];
-    [rule2Label setText:@""];
-    [rule3Label setText:@""];
-     */
+
+    [titleLabel setText:NSLocalizedString(@"ruletitle", @"rule title in prediction")];
+    [subtitleLabel setText:NSLocalizedString(@"rulesubtitle", @"subtitle in prediction")];
+    [rule1Label setText:NSLocalizedString(@"rule1", @"rule1")];
+    [rule2Label setText:NSLocalizedString(@"rule2", @"rule2")];
+    [rule3Label setText:NSLocalizedString(@"rule3", @"rule3")];
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly

@@ -34,6 +34,13 @@
     [longestValue setText:longest];
     
     //localized labels in IB
+    [furthestTitle setText:NSLocalizedString(@"prcellfurthest", @"prcell furthest")];
+    [fastestTitle setText:NSLocalizedString(@"prcellfastest", @"prcell fast")];
+    [longestTitle setText:NSLocalizedString(@"prcelllongest", @"prcell long")];
+    [caloriesTitle setText:NSLocalizedString(@"prcellcalories", @"prcell cals")];
+    
+    [titleLabel setText:NSLocalizedString(@"prcelltitle", @"prcell title")];
+    [subtitleLabel setText:NSLocalizedString(@"prcellsubtitle", @"prcell subtitle")];
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly
