@@ -141,7 +141,7 @@
 
     // NOTE: Sometimes see crashes when relying on just the copy property. Using Block_copy ensures correct behavior
 /*
-- (void)setOnRunFormDone:(ActionStringDoneBlock)onRunFormDone {
+- (void)setOnRunFormDone:(CalorieActionStringDoneBlock)onRunFormDone {
     if (_onRunFormDone) {
         Block_release(_onRunFormDone);
         _onRunFormDone = nil;
@@ -149,7 +149,7 @@
     _onRunFormDone = Block_copy(onRunFormDone);
 }
 
-- (void)setOnRunFormCancel:(ActionStringCancelBlock)onRunFormCancel {
+- (void)setOnRunFormCancel:(CalorieActionStringCancelBlock)onRunFormCancel {
     if (_onRunFormCancel) {
         Block_release(_onRunFormCancel);
         _onRunFormCancel = nil;

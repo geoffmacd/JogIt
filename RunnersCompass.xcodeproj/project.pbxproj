@@ -49,8 +49,6 @@
 		674C90CE16F9716C0078DD8E /* lowsignal3.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C616F9716C0078DD8E /* lowsignal3.png */; };
 		674C90CF16F9716C0078DD8E /* lowsignal3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C716F9716C0078DD8E /* lowsignal3@2x.png */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
-		676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */; };
-		676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */; };
 		6779C0F716EE3C81002BCAEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6779C0F916EE3C81002BCAEC /* Localizable.strings */; };
 		6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779C10016EE3F1D002BCAEC /* RunEvent.m */; };
 		6779C10416EE83D9002BCAEC /* Analysis.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779C10316EE83D8002BCAEC /* Analysis.m */; };
@@ -302,10 +300,6 @@
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
-		676CA82216D70A5B00E4B121 /* RunFormStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormStringPicker.h; sourceTree = "<group>"; };
-		676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormStringPicker.m; sourceTree = "<group>"; };
-		676CA82D16D70D2E00E4B121 /* RunFormDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormDatePicker.h; sourceTree = "<group>"; };
-		676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunFormDatePicker.m; sourceTree = "<group>"; };
 		6779C0F816EE3C81002BCAEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6779C10016EE3F1D002BCAEC /* RunEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunEvent.m; sourceTree = "<group>"; };
 		6779C10216EE83D8002BCAEC /* Analysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analysis.h; sourceTree = "<group>"; };
@@ -744,21 +738,17 @@
 		676CA81A16D70A5B00E4B121 /* Pickers */ = {
 			isa = PBXGroup;
 			children = (
-				67AED68816D72069007F6943 /* PacePicker.h */,
-				67AED68916D72069007F6943 /* PacePicker.m */,
-				6735780B16D71CE1004A92D1 /* TimePicker.h */,
-				6735780C16D71CE1004A92D1 /* TimePicker.m */,
-				67D7059A16D71B5000A20B6F /* DistancePicker.h */,
-				67D7059B16D71B5000A20B6F /* DistancePicker.m */,
-				67D7059216D7150800A20B6F /* CaloriePicker.h */,
-				67D7059316D7150800A20B6F /* CaloriePicker.m */,
-				676CA82D16D70D2E00E4B121 /* RunFormDatePicker.h */,
-				676CA82E16D70D2E00E4B121 /* RunFormDatePicker.m */,
 				676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */,
 				676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */,
+				67D7059216D7150800A20B6F /* CaloriePicker.h */,
+				67D7059316D7150800A20B6F /* CaloriePicker.m */,
+				67D7059A16D71B5000A20B6F /* DistancePicker.h */,
+				67D7059B16D71B5000A20B6F /* DistancePicker.m */,
+				67AED68816D72069007F6943 /* PacePicker.h */,
+				67AED68916D72069007F6943 /* PacePicker.m */,
 				676CA82116D70A5B00E4B121 /* RunFormPicker.h */,
-				676CA82216D70A5B00E4B121 /* RunFormStringPicker.h */,
-				676CA82316D70A5B00E4B121 /* RunFormStringPicker.m */,
+				6735780B16D71CE1004A92D1 /* TimePicker.h */,
+				6735780C16D71CE1004A92D1 /* TimePicker.m */,
 			);
 			path = Pickers;
 			sourceTree = "<group>";
@@ -1389,8 +1379,6 @@
 				67C8E31216D19C4E00E4DE11 /* CreateGoalViewController.m in Sources */,
 				67C8E31C16D1A1E500E4DE11 /* EditGoalViewController.m in Sources */,
 				676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */,
-				676CA82916D70A5B00E4B121 /* RunFormStringPicker.m in Sources */,
-				676CA82F16D70D2E00E4B121 /* RunFormDatePicker.m in Sources */,
 				67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */,
 				67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */,
 				6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */,
