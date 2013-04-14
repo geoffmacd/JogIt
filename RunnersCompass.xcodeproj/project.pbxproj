@@ -194,6 +194,10 @@
 		67E544A3171B335A00D5C9DF /* Manual.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A0171B335A00D5C9DF /* Manual.xib */; };
 		67E544A4171B335A00D5C9DF /* ManualVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544A2171B335A00D5C9DF /* ManualVC.m */; };
 		67E544A6171B44FD00D5C9DF /* manualrunthumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */; };
+		67E544A9171B65C600D5C9DF /* compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A7171B65C600D5C9DF /* compose@2x.png */; };
+		67E544AA171B65C600D5C9DF /* hourglass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A8171B65C600D5C9DF /* hourglass@2x.png */; };
+		67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AB171B66AC00D5C9DF /* startrunner@2x.png */; };
+		67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AD171B69A900D5C9DF /* blackodometer@2x.png */; };
 		67EA66D41718F29900BA21FE /* RuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66D21718F29800BA21FE /* RuleCell.m */; };
 		67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D31718F29900BA21FE /* RuleCell.xib */; };
 		67EA66DA1718F72D00BA21FE /* formula.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D81718F72D00BA21FE /* formula.png */; };
@@ -537,6 +541,10 @@
 		67E544A1171B335A00D5C9DF /* ManualVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualVC.h; sourceTree = "<group>"; };
 		67E544A2171B335A00D5C9DF /* ManualVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualVC.m; sourceTree = "<group>"; };
 		67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manualrunthumbnail@2x.png"; sourceTree = "<group>"; };
+		67E544A7171B65C600D5C9DF /* compose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose@2x.png"; sourceTree = "<group>"; };
+		67E544A8171B65C600D5C9DF /* hourglass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hourglass@2x.png"; sourceTree = "<group>"; };
+		67E544AB171B66AC00D5C9DF /* startrunner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startrunner@2x.png"; sourceTree = "<group>"; };
+		67E544AD171B69A900D5C9DF /* blackodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackodometer@2x.png"; sourceTree = "<group>"; };
 		67EA66D11718F29800BA21FE /* RuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleCell.h; sourceTree = "<group>"; };
 		67EA66D21718F29800BA21FE /* RuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleCell.m; sourceTree = "<group>"; };
 		67EA66D31718F29900BA21FE /* RuleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RuleCell.xib; sourceTree = "<group>"; };
@@ -865,26 +873,26 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */,
-				67EA66EB171A51BD00BA21FE /* check@2x.png */,
-				67EA66E9171A4B5A00BA21FE /* ladder@2x.png */,
-				67EA66D81718F72D00BA21FE /* formula.png */,
-				67EA66D91718F72D00BA21FE /* formula@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
 				67B257D616EFF13A00CF337E /* background@2x.png */,
 				67CFCCC2170281BB0028CF70 /* bigclock.png */,
 				67CFCCC3170281BB0028CF70 /* bigclock@2x.png */,
+				67E544AD171B69A900D5C9DF /* blackodometer@2x.png */,
 				67CFCCB0170280B10028CF70 /* calories.png */,
 				67CFCCB1170280B10028CF70 /* calories@2x.png */,
 				67B2580B16EFF8D900CF337E /* celldivision.png */,
+				67EA66EB171A51BD00BA21FE /* check@2x.png */,
+				67E544A7171B65C600D5C9DF /* compose@2x.png */,
 				67CFCCB2170280B10028CF70 /* distance.png */,
 				67CFCCB3170280B10028CF70 /* distance@2x.png */,
 				67B2581F16F00B2D00CF337E /* fatperson.png */,
 				67B2582016F00B2D00CF337E /* fatperson@2x.png */,
 				67B2582116F00B2D00CF337E /* flag.png */,
 				67B2582216F00B2E00CF337E /* flag@2x.png */,
+				67EA66D81718F72D00BA21FE /* formula.png */,
+				67EA66D91718F72D00BA21FE /* formula@2x.png */,
 				67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */,
 				67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */,
 				67B257D716EFF13A00CF337E /* garbage.png */,
@@ -895,6 +903,8 @@
 				67B257DC16EFF13A00CF337E /* goals@2x.png */,
 				67B257DF16EFF13A00CF337E /* hamburger.png */,
 				67B257E016EFF13A00CF337E /* hamburger@2x.png */,
+				67E544A8171B65C600D5C9DF /* hourglass@2x.png */,
+				67EA66E9171A4B5A00BA21FE /* ladder@2x.png */,
 				674C90BE16F9697F0078DD8E /* lightgraybutton.png */,
 				674C90C016F9716C0078DD8E /* lowsignal.png */,
 				674C90C216F9716C0078DD8E /* lowsignal1.png */,
@@ -904,6 +914,7 @@
 				674C90C616F9716C0078DD8E /* lowsignal3.png */,
 				674C90C716F9716C0078DD8E /* lowsignal3@2x.png */,
 				674C90C116F9716C0078DD8E /* lowsignal@2x.png */,
+				67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */,
 				67F6D52016FA8CE100790A22 /* medal.png */,
 				67F6D52116FA8CE100790A22 /* medal@2x.png */,
 				67AD28EA171664F500B60FB0 /* nogoal.png */,
@@ -928,6 +939,7 @@
 				67CFCCB5170280B10028CF70 /* shoe@2x.png */,
 				67CFCCB6170280B10028CF70 /* speed.png */,
 				67CFCCB7170280B10028CF70 /* speed@2x.png */,
+				67E544AB171B66AC00D5C9DF /* startrunner@2x.png */,
 				67B257EB16EFF13A00CF337E /* stopwatch.png */,
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,
@@ -1319,6 +1331,10 @@
 				67EA66F1171A5F8100BA21FE /* PRCell.xib in Resources */,
 				67E544A3171B335A00D5C9DF /* Manual.xib in Resources */,
 				67E544A6171B44FD00D5C9DF /* manualrunthumbnail@2x.png in Resources */,
+				67E544A9171B65C600D5C9DF /* compose@2x.png in Resources */,
+				67E544AA171B65C600D5C9DF /* hourglass@2x.png in Resources */,
+				67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */,
+				67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
