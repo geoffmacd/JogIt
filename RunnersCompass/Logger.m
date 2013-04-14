@@ -515,10 +515,10 @@
 }
 
 
--(void) stopRun
+-(void) stopRun:(BOOL)finished
 {
     //if autopause caused this, do not stop location updates
-    if(!pausedForAuto)
+    if(!pausedForAuto || finished)
     {
         //stop updates otherwise for battery life etc
         NSLog(@"stopped tracking.....");
@@ -755,7 +755,7 @@
                         } completion:^(BOOL finish){
                             [runTitle setHidden:true];
                             //stop location updates
-                            [self stopRun];
+                            [self stopRun:false];
                         }];
         
         //cancel low signal animation
@@ -3129,6 +3129,7 @@
 - (IBAction)finishTapped:(id)sender {
     
     //run object must be cleanup to save in appdelegate where it is stored
+    //stopRun is called in appdelegate
     
     //aggregrate last minute, starting at most recent
     NSInteger index = [run.posMeta count] - 1;
@@ -3163,17 +3164,6 @@
     
     waitingForMapToLoad = true;
     loadingMapTiles = 0;
-    
-    //stop map if finished from autopause state
-    if(pausedForAuto)
-    {
-        //stop tick() incase although it is stopped in stoprun
-        [timer invalidate];
-        
-        //stop updates otherwise for battery life etc
-        NSLog(@"finished on autopause");
-        [locationManager stopUpdatingLocation];
-    }
     
     //remove selection overlay
     [iconMap removeOverlay:mapSelectionOverlay];

@@ -231,9 +231,10 @@
 
 
 //exposed methods
--(void) stopRun;
+-(void) stopRun:(BOOL)finished;
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 -(void)updateHUD;
+-(void)cancelAutopausingRun;
 
 
 

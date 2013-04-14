@@ -29,8 +29,8 @@
 //both menu and logger delegate method
 - (void)finishedRun:(RunEvent *)runToSave
 {
-    //finish and clean run in logger if it exists
-    [self.backVC stopRun];
+    //prevent state collision with historical runs becoming live
+    [self.backVC stopRun:true];
     
     //send run to menu to add it to list
     [self.frontVC finishedRun:runToSave];
@@ -43,6 +43,7 @@
             //handle case where run is being deleted and logger view is not valid
             if(!runToSave)
             {
+                
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
                 
@@ -57,7 +58,6 @@
              
         }];
     }
-    
     
     //save to db
     if(runToSave)
