@@ -14,9 +14,12 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>3dshoe@2x.png</string>
+				<string>cloudyred.png</string>
 				<string>3dshoe.png</string>
+				<string>cloudyred@2x.png</string>
 			</array>
+			<key>UIPrerenderedIcon</key>
+			<true/>
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
@@ -39,12 +42,16 @@
 	<array>
 		<string>location</string>
 	</array>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 		<string>location-services</string>
 		<string>gps</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackTranslucent</string>
 	<key>UIStatusBarTintParameters</key>

@@ -20,6 +20,13 @@
 
 -(void) setup
 {
+    orgFrame = self.frame;
+    
+    withGoalFrame = self.frame;
+    CGRect progressRect = progress.frame;
+    withGoalFrame.size.height = progressRect.origin.y + progressRect.size.height + 4;
+    
+    
     //set labels
     [self setGoalLabels];
     
@@ -83,6 +90,8 @@
         [progress setProgress:goal.progress];
         //hide image
         [noGoalImage setHidden:true];
+        //decrease height to nearly that of progress bar
+        [self setFrame:withGoalFrame];
         
     }else{
         [goalButton setTitle:NSLocalizedString(@"GoalButtonWithNone", @"No goal for button") forState:UIControlStateNormal];
@@ -102,9 +111,8 @@
         [progress setProgress:0];
         //view image
         [noGoalImage setHidden:false];
-        CGRect curBounds = self.bounds;
-        curBounds.size.height += 200;
-        [self setBounds:curBounds];
+        //back to full screen
+        [self setFrame:orgFrame];
     }
     
     //localizations    //localized buttons in IB

@@ -26,6 +26,12 @@
 }
 
 
++(UIColor*) cellRedColour
+{
+    UIColor *redColor = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    return redColor;
+}
+
 +(UIColor*) redColour
 {
     UIColor *redColor = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];

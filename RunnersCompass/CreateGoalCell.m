@@ -11,7 +11,7 @@
 
 @implementation CreateGoalCell
 
-@synthesize goalImage,button,curCheckImage;
+@synthesize goalImage,titleLabel, subtitleLabel,curCheckImage;
 
 
 -(void)setup:(GoalType) goalType withCurrentGoalType:(GoalType) curType
@@ -27,32 +27,28 @@
     
     //get object for getting button titles only
     Goal * emptyGoal ;
+    emptyGoal = [[Goal alloc] initWithType:goalType];
+    [titleLabel setText:[emptyGoal stringForDescription]];
+    [subtitleLabel setText:[emptyGoal stringSubtitleDescription]];
+    
     //set image and text
     switch(goalType)
     {
         case GoalTypeCalories:
-            emptyGoal = [[Goal alloc] initWithType:goalType];
-            [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"fatperson.png"]];
             break;
         case GoalTypeOneDistance:
-            emptyGoal = [[Goal alloc] initWithType:goalType];
-            [button setTitle:[emptyGoal stringForDescription] forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"medal.png"]];
             break;
         case GoalTypeRace:
-            emptyGoal = [[Goal alloc] initWithType:goalType];
-            [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"whiteclock.png"]];
             break;
         case GoalTypeTotalDistance:
-            emptyGoal = [[Goal alloc] initWithType:goalType];
-            [button setTitle:[emptyGoal stringForDescription]  forState:UIControlStateNormal];
             [goalImage setImage:[UIImage imageNamed:@"odometer.png"]];
             break;
+        default:
+            break;
     }
-    
-    
     
 }
 

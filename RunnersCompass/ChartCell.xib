@@ -190,6 +190,7 @@
 										<string key="NSFrameSize">{320, 198}</string>
 										<reference key="NSSuperview" ref="715024392"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="730340083"/>
 										<bool key="IBUIOpaque">NO</bool>
@@ -217,6 +218,7 @@
 										<string key="NSFrame">{{26, 11}, {103, 21}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="56337422"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -246,7 +248,7 @@
 									<object class="IBUILabel" id="411892738">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{135, 22}, {111, 21}}</string>
+										<string key="NSFrame">{{176, 22}, {70, 21}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="1002009235"/>
@@ -256,7 +258,7 @@
 										<int key="IBUIContentMode">7</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<string key="IBUIText">Last Month:</string>
+										<string key="IBUIText">Last:</string>
 										<object class="NSColor" key="IBUITextColor" id="499108192">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MC41AA</bytes>
@@ -271,7 +273,7 @@
 									<object class="IBUILabel" id="56337422">
 										<reference key="NSNextResponder" ref="525973153"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{135, 0}, {111, 23}}</string>
+										<string key="NSFrame">{{176, 0}, {70, 23}}</string>
 										<reference key="NSSuperview" ref="525973153"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="411892738"/>
@@ -281,7 +283,7 @@
 										<int key="IBUIContentMode">7</int>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<string key="IBUIText">Current Month:</string>
+										<string key="IBUIText">Current:</string>
 										<reference key="IBUITextColor" ref="499108192"/>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>

@@ -145,8 +145,8 @@ static NSString * goalCellID = @"GoalCellPrototype";
     [self sortRunsForGoal];
     //process goal
     [curGoal processGoalForRuns:sortedRunsForGoal withMetric:[[prefs metric] boolValue]];
-    [header setGoal:curGoal];
-    [header setup];
+    
+    header = nil;
 
 }
 

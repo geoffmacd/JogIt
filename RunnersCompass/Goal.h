@@ -52,6 +52,7 @@ typedef enum
 -(NSString*)getName:(BOOL)metric;
 -(NSString *)stringForDescription;
 -(NSString *)stringForHeaderDescription;
+-(NSString *)stringSubtitleDescription;
 -(NSString*)stringForSubtitle;
 -(NSString *)stringForEdit2;
 -(NSString *)stringForEdit1;

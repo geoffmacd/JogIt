@@ -229,6 +229,33 @@
 
 
 
+-(NSString *)stringSubtitleDescription
+{
+    NSString * description;
+    
+    //switch between metric to determine label for metric description
+    switch(type)
+    {
+        case GoalTypeCalories:
+            description = NSLocalizedString(@"GoalSubtitleDescriptCalories",@"goal subtitle descriptions for edit");//@"Enter Target Weight Loss";
+            break;
+        case GoalTypeOneDistance:
+            description = NSLocalizedString(@"GoalSubtitleDescriptOneDistance",@"goal subtitle descriptions for edit");//@"Enter Distance Target";
+            break;
+        case GoalTypeRace:
+            description = NSLocalizedString(@"GoalSubtitleDescriptRace",@"goal header descriptions for edit");//@"Enter Fastest Time for Distance";
+            break;
+        case GoalTypeTotalDistance:
+            description = NSLocalizedString(@"GoalSubtitleDescriptTotalDistance",@"goal header descriptions for edit");//@"Enter Total Distance To Log";
+            break;
+        default:
+            return NSLocalizedString(@"GoalSubtitleBadMetric",@"bad metric for goal subtitle in edit");//@"bad subtitle";//return @"bad description";
+    }
+    
+    return description;
+}
+
+
 -(NSString *)stringForHeaderDescription
 {
     NSString * description;

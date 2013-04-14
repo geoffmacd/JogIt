@@ -10,6 +10,10 @@
 #import "Goal.h"
 
 @interface GoalHeaderCell : UIView
+{
+    CGRect orgFrame;
+    CGRect withGoalFrame;
+}
 
 -(void)setup;
 

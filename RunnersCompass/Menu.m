@@ -428,19 +428,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
     [vc setPrefs:[delegate curUserPrefs]];
-    
-    //must assign different memory address to current goal for edit
-    Goal * curGoal = [delegate curGoal];
-    Goal * tempGoal = [[Goal alloc] initWithType:curGoal.type];
-    tempGoal.startDate = curGoal.startDate;
-    tempGoal.endDate = curGoal.endDate;
-    tempGoal.value = curGoal.value;
-    tempGoal.time = curGoal.time;
-    
     [vc setCurGoal:[delegate curGoal]];
     [vc setOriginalRunsSorted:runs];
     [self presentViewController:vc animated:true completion:nil];
-    
 }
 
 - (IBAction)settingsNavPressed:(id)sender {

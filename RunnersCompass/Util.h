@@ -14,6 +14,7 @@
 + (UIImage *) imageWithView:(UIView *)view withSize:(CGSize)size;
 +(UIColor*) redColour;
 +(UIColor*) blueColour;
++(UIColor*) cellRedColour;
 
 
 @end

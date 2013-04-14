@@ -42,8 +42,7 @@
     [thumbnailImage.layer setCornerRadius:5.0f];
     [thumbnailImage.layer setMasksToBounds:YES];
     //set red colour
-    UIColor *col = [UIColor colorWithRed:142.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
-    [headerView setBackgroundColor:col];
+    [headerView setBackgroundColor:[Util cellRedColour]];
     
     //set unexpanded
     expanded = false;
