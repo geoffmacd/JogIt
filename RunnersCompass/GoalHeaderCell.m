@@ -16,7 +16,7 @@
 @synthesize targetLabel,targetValue,metricDescriptionLabel,metricDescriptionSubtitle,metricValue;
 
 @synthesize doneBut,goalButton;
-@synthesize progress,goal,metric,noGoalImage;
+@synthesize progress,goal,metric,noGoalImage,completeLabel;
 
 -(void) setup
 {
@@ -51,6 +51,8 @@
 
 -(void)setGoalLabels
 {
+    [progress setHidden:false];
+    
     if(goal && goal.type != GoalTypeNoGoal)
     {
         [goalButton setTitle:[goal getName:metric] forState:UIControlStateNormal];
@@ -85,6 +87,15 @@
         //both description labels to be updated
         [metricDescriptionLabel setText:[goal stringForDescription]];
         [metricDescriptionSubtitle setText:[goal stringForSubtitle]];
+        
+        //check if goal completed
+        if(goal.progress >= 1)
+        {
+            [completeLabel setText:NSLocalizedString(@"GoalCompleteLabel", @"GoalCompleteLabel")];
+            //hide progress, show label
+            [completeLabel setHidden:false];
+            [progress setHidden:true];
+        }
         
         //progress bar
         [progress setProgress:goal.progress];

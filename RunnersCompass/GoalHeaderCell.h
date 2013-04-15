@@ -35,6 +35,7 @@
 
 @property  (weak) IBOutlet UIProgressView *progress;
 @property (weak, nonatomic) IBOutlet UIImageView *noGoalImage;
+@property (weak, nonatomic) IBOutlet UILabel *completeLabel;
 
 
 @property Goal *goal;

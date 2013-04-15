@@ -120,6 +120,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{11, 220}, {299, 11}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
+						<reference key="NSNextKeyView" ref="102080869"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -335,7 +336,7 @@
 					</object>
 					<object class="IBUIImageView" id="825778452">
 						<reference key="NSNextResponder" ref="781795524"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">-2147483380</int>
 						<string key="NSFrame">{{0, 107}, {320, 461}}</string>
 						<reference key="NSSuperview" ref="781795524"/>
 						<reference key="NSNextKeyView" ref="396332094"/>
@@ -351,6 +352,41 @@
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">ladder@2x.png</string>
 						</object>
+					</object>
+					<object class="IBUILabel" id="102080869">
+						<reference key="NSNextResponder" ref="781795524"/>
+						<int key="NSvFlags">-2147483356</int>
+						<string key="NSFrame">{{11, 210}, {299, 25}}</string>
+						<reference key="NSSuperview" ref="781795524"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<bool key="IBUIClipsSubviews">YES</bool>
+						<int key="IBUIContentMode">7</int>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<string key="IBUIText">Goal Achieved!</string>
+						<object class="NSColor" key="IBUITextColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MSAxIDEAA</bytes>
+							<object class="NSColorSpace" key="NSCustomColorSpace">
+								<int key="NSID">1</int>
+							</object>
+						</object>
+						<nil key="IBUIHighlightedColor"/>
+						<int key="IBUIBaselineAdjustment">0</int>
+						<int key="IBUITextAlignment">1</int>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<string key="name">Georgia</string>
+							<string key="family">Georgia</string>
+							<int key="traits">0</int>
+							<double key="pointSize">18</double>
+						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Georgia</string>
+							<double key="NSSize">18</double>
+							<int key="NSfFlags">16</int>
+						</object>
+						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 568}</string>
@@ -486,6 +522,14 @@
 					<int key="connectionID">739</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">completeLabel</string>
+						<reference key="source" ref="781795524"/>
+						<reference key="destination" ref="102080869"/>
+					</object>
+					<int key="connectionID">741</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">goalTapped:</string>
 						<reference key="source" ref="483249362"/>
@@ -540,6 +584,7 @@
 							<reference ref="989348264"/>
 							<reference ref="483249362"/>
 							<reference ref="825778452"/>
+							<reference ref="102080869"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -620,6 +665,11 @@
 						<reference key="object" ref="825778452"/>
 						<reference key="parent" ref="781795524"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">740</int>
+						<reference key="object" ref="102080869"/>
+						<reference key="parent" ref="781795524"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -667,12 +717,13 @@
 				<reference key="35.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="35.showNotes"/>
 				<string key="738.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="740.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">739</int>
+			<int key="maxID">741</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
@@ -680,7 +731,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="ladder@2x.png">{640, 853}</string>
+			<string key="ladder@2x.png">{640, 772}</string>
 			<string key="lightgraybutton.png">{300, 44}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>

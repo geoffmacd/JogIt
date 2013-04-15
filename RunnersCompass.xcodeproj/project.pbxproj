@@ -198,6 +198,8 @@
 		67E544AA171B65C600D5C9DF /* hourglass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A8171B65C600D5C9DF /* hourglass@2x.png */; };
 		67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AB171B66AC00D5C9DF /* startrunner@2x.png */; };
 		67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AD171B69A900D5C9DF /* blackodometer@2x.png */; };
+		67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AF171B951400D5C9DF /* norunwoman@2x.png */; };
+		67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544B1171B958400D5C9DF /* stroke@2x.png */; };
 		67EA66D41718F29900BA21FE /* RuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66D21718F29800BA21FE /* RuleCell.m */; };
 		67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D31718F29900BA21FE /* RuleCell.xib */; };
 		67EA66DA1718F72D00BA21FE /* formula.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D81718F72D00BA21FE /* formula.png */; };
@@ -545,6 +547,8 @@
 		67E544A8171B65C600D5C9DF /* hourglass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hourglass@2x.png"; sourceTree = "<group>"; };
 		67E544AB171B66AC00D5C9DF /* startrunner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startrunner@2x.png"; sourceTree = "<group>"; };
 		67E544AD171B69A900D5C9DF /* blackodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackodometer@2x.png"; sourceTree = "<group>"; };
+		67E544AF171B951400D5C9DF /* norunwoman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "norunwoman@2x.png"; sourceTree = "<group>"; };
+		67E544B1171B958400D5C9DF /* stroke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stroke@2x.png"; sourceTree = "<group>"; };
 		67EA66D11718F29800BA21FE /* RuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleCell.h; sourceTree = "<group>"; };
 		67EA66D21718F29800BA21FE /* RuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleCell.m; sourceTree = "<group>"; };
 		67EA66D31718F29900BA21FE /* RuleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RuleCell.xib; sourceTree = "<group>"; };
@@ -873,6 +877,8 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				67E544B1171B958400D5C9DF /* stroke@2x.png */,
+				67E544AF171B951400D5C9DF /* norunwoman@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -1335,6 +1341,8 @@
 				67E544AA171B65C600D5C9DF /* hourglass@2x.png in Resources */,
 				67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */,
 				67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */,
+				67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */,
+				67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
