@@ -451,22 +451,29 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             RunEvent * oldRun = [runs objectAtIndex:i];
             //until run to save is greater than old run
             if([oldRun.date timeIntervalSinceReferenceDate] > [finishedRun.date timeIntervalSinceReferenceDate])
+            {
                 indexToInsert = i;
+            }
         }
-        if(indexToInsert > -1)
-            indexToInsert++;
-        else
-            indexToInsert = 1;
-        
-        //insert at correct index
-        if(indexToInsert >= [runs count])
+        if(indexToInsert == -1)
         {
+            //add to very top
+            [runs insertObject:finishedRun atIndex:0];
+            //to zoom on table path correctly
+            indexToInsert = 0;
+        }
+        else if(indexToInsert == [runs count]-1)
+        {
+            //very end of list
             [runs addObject:finishedRun];
-            //still need to decremente to avoid inserting into wrong table index
-            indexToInsert--;
         }
         else
+        {
+            indexToInsert++;
+            //insert at correct index
             [runs insertObject:finishedRun atIndex:indexToInsert];
+        }
+        
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [cells removeAllObjects];
         [MenuTable reloadData];
