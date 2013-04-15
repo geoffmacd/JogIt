@@ -45,6 +45,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //find all runs
     NSArray * runRecords = [RunRecord MR_findAllSortedBy:@"date" ascending:false];
     
+    //determine PRs here first
     for(RunRecord * runRecord in runRecords)
     {
         //init RunEvent with data
@@ -52,6 +53,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [runs addObject:eventToAdd];
     }
+    //determine PRs
+    [self analyzePRs:nil];
     
     runInProgressAsFarAsICanTell = false;
     
@@ -79,6 +82,79 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     return NO;
 }
+
+#pragma mark -
+#pragma mark PR management
+
+-(RunMetric)analyzePRs:(RunEvent*)runToCheckFor
+{
+    for(RunEvent * oldRun in runs)
+    {
+        //check for PRs
+        if(furthestRun)
+        {
+            if(furthestRun.distance < oldRun.distance)
+            {
+                furthestRun = oldRun;
+            }
+        }
+        else
+        {
+            furthestRun = oldRun;
+        }
+        if(fastestRun)
+        {
+            if(fastestRun.avgPace < oldRun.avgPace)
+            {
+                fastestRun = oldRun;
+            }
+        }
+        else
+        {
+            fastestRun = oldRun;
+        }
+        if(caloriesRun)
+        {
+            if(caloriesRun.calories < oldRun.calories)
+            {
+                caloriesRun = oldRun;
+            }
+        }
+        else
+        {
+            caloriesRun = oldRun;
+        }
+        if(longestRun)
+        {
+            if(longestRun.time < oldRun.time)
+            {
+                longestRun = oldRun;
+            }
+        }
+        else
+        {
+            longestRun = oldRun;
+        }
+    }
+    
+    //return yes if one of these runs if the checked
+    if(runToCheckFor)
+    {
+        if(runToCheckFor == longestRun)
+            return MetricTypeTime;
+        else if ( runToCheckFor == furthestRun)
+            return MetricTypeDistance;
+        else if(runToCheckFor == caloriesRun)
+            return MetricTypeCalories;
+        else if(runToCheckFor == fastestRun)
+            return MetricTypePace;
+        else
+            return false;
+    }
+    
+    return false;
+}
+
 
 #pragma mark -
 #pragma mark Menu Table data source
@@ -340,6 +416,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     {
         HierarchicalCell * cell = (HierarchicalCell * )sender;
         
+        //if associated is manual, don't load, just shake manual label
+        if(cell.associatedRun.eventType ==EventTypeManual)
+        {
+            [AnimationUtil shakeView:cell.manualEntryLabel];
+            //do not load
+            return;
+        }
+        
         //need to fetch real record and fill with data points
         RunRecord * recordToLoad = [RunRecord MR_findFirstByAttribute:@"date" withValue:cell.associatedRun.date];
         
@@ -377,7 +461,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         }
         
         //determine index to insert run into since date can be different due to manual entry
-        NSInteger indexToInsert = 0;
+        NSInteger indexToInsert = -1;
         //should be currently sorted such that highest (latest) date is at index 0
         for(int i = 0; i <  [runs count]; i++)
         {
@@ -386,16 +470,45 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             if([oldRun.date timeIntervalSinceReferenceDate] > [finishedRun.date timeIntervalSinceReferenceDate])
                 indexToInsert = i;
         }
-        indexToInsert++;
+        if(indexToInsert > -1)
+            indexToInsert++;
+        else
+            indexToInsert = 0;
         
         //insert at correct index
-        [runs insertObject:finishedRun atIndex:indexToInsert];
+        if(indexToInsert >= [runs count])
+        {
+            [runs addObject:finishedRun];
+            //still need to decremente to avoid inserting into wrong table index
+            indexToInsert--;
+        }
+        else
+            [runs insertObject:finishedRun atIndex:indexToInsert];
         [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [cells removeAllObjects];
         [MenuTable reloadData];
         
         //scroll to top
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
+        
+        //determine if a new PR was made, unless it was manual
+        if(finishedRun.eventType != EventTypeManual)
+        {
+            RunMetric metricPR = [self analyzePRs:finishedRun];
+            if(metricPR)
+            {
+                        
+                //present PR notification popup
+                NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
+                [vc setPrefs:[delegate curUserPrefs]];
+                [vc setPrRun:finishedRun];
+                [vc setType:metricPR];
+                
+                [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                [vc setPRLabels];
+            }
+        }
+        
     }
     
     //refresh start cell

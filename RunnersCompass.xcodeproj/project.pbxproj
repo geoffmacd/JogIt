@@ -200,6 +200,10 @@
 		67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AD171B69A900D5C9DF /* blackodometer@2x.png */; };
 		67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AF171B951400D5C9DF /* norunwoman@2x.png */; };
 		67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544B1171B958400D5C9DF /* stroke@2x.png */; };
+		67E544B7171B9C2700D5C9DF /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544B4171B9C2400D5C9DF /* MJPopupBackgroundView.m */; };
+		67E544B8171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544B6171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m */; };
+		67E544BD171B9CA800D5C9DF /* NotificationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544BB171B9CA800D5C9DF /* NotificationVC.m */; };
+		67E544BE171B9CA800D5C9DF /* NotificationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67E544BC171B9CA800D5C9DF /* NotificationVC.xib */; };
 		67EA66D41718F29900BA21FE /* RuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66D21718F29800BA21FE /* RuleCell.m */; };
 		67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D31718F29900BA21FE /* RuleCell.xib */; };
 		67EA66DA1718F72D00BA21FE /* formula.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66D81718F72D00BA21FE /* formula.png */; };
@@ -549,6 +553,13 @@
 		67E544AD171B69A900D5C9DF /* blackodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackodometer@2x.png"; sourceTree = "<group>"; };
 		67E544AF171B951400D5C9DF /* norunwoman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "norunwoman@2x.png"; sourceTree = "<group>"; };
 		67E544B1171B958400D5C9DF /* stroke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stroke@2x.png"; sourceTree = "<group>"; };
+		67E544B3171B9C2300D5C9DF /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJPopupBackgroundView.h; path = MJPopupViewController/MJPopupBackgroundView.h; sourceTree = "<group>"; };
+		67E544B4171B9C2400D5C9DF /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MJPopupBackgroundView.m; path = MJPopupViewController/MJPopupBackgroundView.m; sourceTree = "<group>"; };
+		67E544B5171B9C2500D5C9DF /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+MJPopupViewController.h"; path = "MJPopupViewController/UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
+		67E544B6171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+MJPopupViewController.m"; path = "MJPopupViewController/UIViewController+MJPopupViewController.m"; sourceTree = "<group>"; };
+		67E544BA171B9CA700D5C9DF /* NotificationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationVC.h; sourceTree = "<group>"; };
+		67E544BB171B9CA800D5C9DF /* NotificationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationVC.m; sourceTree = "<group>"; };
+		67E544BC171B9CA800D5C9DF /* NotificationVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationVC.xib; sourceTree = "<group>"; };
 		67EA66D11718F29800BA21FE /* RuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuleCell.h; sourceTree = "<group>"; };
 		67EA66D21718F29800BA21FE /* RuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuleCell.m; sourceTree = "<group>"; };
 		67EA66D31718F29900BA21FE /* RuleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RuleCell.xib; sourceTree = "<group>"; };
@@ -607,6 +618,7 @@
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
+				67E544B9171B9C7C00D5C9DF /* MJPopupViewController */,
 				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
 				67236D0E16409B7700DD13C5 /* RunnersCompass */,
 				67236D0716409B7700DD13C5 /* Frameworks */,
@@ -1094,6 +1106,17 @@
 			name = Manual;
 			sourceTree = "<group>";
 		};
+		67E544B9171B9C7C00D5C9DF /* MJPopupViewController */ = {
+			isa = PBXGroup;
+			children = (
+				67E544B3171B9C2300D5C9DF /* MJPopupBackgroundView.h */,
+				67E544B4171B9C2400D5C9DF /* MJPopupBackgroundView.m */,
+				67E544B5171B9C2500D5C9DF /* UIViewController+MJPopupViewController.h */,
+				67E544B6171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m */,
+			);
+			name = MJPopupViewController;
+			sourceTree = "<group>";
+		};
 		67FC068116A10EE000491C97 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1138,17 +1161,20 @@
 		67FC068316A10F0600491C97 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				67236D2316409B7700DD13C5 /* Menu.h */,
-				67236D2416409B7700DD13C5 /* Menu.m */,
-				6703F4ED16B75F63006A8F88 /* Menu.xib */,
+				672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */,
+				672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */,
 				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
 				67FC068916A1150C00491C97 /* HierarchicalCell.m */,
 				67FC070416ACD4F400491C97 /* HierarchicalCell.xib */,
+				67236D2316409B7700DD13C5 /* Menu.h */,
+				67236D2416409B7700DD13C5 /* Menu.m */,
+				6703F4ED16B75F63006A8F88 /* Menu.xib */,
+				67E544BA171B9CA700D5C9DF /* NotificationVC.h */,
+				67E544BB171B9CA800D5C9DF /* NotificationVC.m */,
+				67E544BC171B9CA800D5C9DF /* NotificationVC.xib */,
 				672AA38F16B4C87E00B7DEE6 /* StartCell.h */,
 				672AA39016B4C87E00B7DEE6 /* StartCell.m */,
 				672AA39116B4C87E00B7DEE6 /* StartCell.xib */,
-				672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */,
-				672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -1343,6 +1369,7 @@
 				67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */,
 				67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */,
 				67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */,
+				67E544BE171B9CA800D5C9DF /* NotificationVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1458,6 +1485,9 @@
 				67EA66D41718F29900BA21FE /* RuleCell.m in Sources */,
 				67EA66F0171A5F8100BA21FE /* PRCell.m in Sources */,
 				67E544A4171B335A00D5C9DF /* ManualVC.m in Sources */,
+				67E544B7171B9C2700D5C9DF /* MJPopupBackgroundView.m in Sources */,
+				67E544B8171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m in Sources */,
+				67E544BD171B9CA800D5C9DF /* NotificationVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

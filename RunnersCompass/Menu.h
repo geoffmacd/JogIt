@@ -22,6 +22,9 @@
 #import "CreateGoalViewController.h"
 #import "RunFormPicker.h"
 #import "ManualVC.h"
+#import "NotificationVC.h"
+#import "MJPopupBackgroundView.h"
+#import "UIViewController+MJPopupViewController.h"
 
 #import "LocationRecord.h"
 #import "ThumbnailRecord.h"
@@ -48,7 +51,10 @@
     NSMutableArray * cells;
     StartCell * start;
     BOOL showingNoRuns;
-    
+    RunEvent * longestRun;
+    RunEvent * fastestRun;
+    RunEvent * furthestRun;
+    RunEvent * caloriesRun;
 }
 
 @property (assign, nonatomic) BOOL runInProgressAsFarAsICanTell;
