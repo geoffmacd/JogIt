@@ -54,7 +54,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [runs addObject:eventToAdd];
     }
     //determine PRs
-    [self analyzePRs:nil];
+    [self analyzePRs];
     
     runInProgressAsFarAsICanTell = false;
     
@@ -86,7 +86,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 #pragma mark -
 #pragma mark PR management
 
--(RunMetric)analyzePRs:(RunEvent*)runToCheckFor
+-(void)analyzePRs
 {
     for(RunEvent * oldRun in runs)
     {
@@ -136,23 +136,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             longestRun = oldRun;
         }
     }
-    
-    //return yes if one of these runs if the checked
-    if(runToCheckFor)
-    {
-        if(runToCheckFor == longestRun)
-            return MetricTypeTime;
-        else if ( runToCheckFor == furthestRun)
-            return MetricTypeDistance;
-        else if(runToCheckFor == caloriesRun)
-            return MetricTypeCalories;
-        else if(runToCheckFor == fastestRun)
-            return MetricTypePace;
-        else
-            return false;
-    }
-    
-    return false;
 }
 
 
@@ -473,7 +456,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         if(indexToInsert > -1)
             indexToInsert++;
         else
-            indexToInsert = 0;
+            indexToInsert = 1;
         
         //insert at correct index
         if(indexToInsert >= [runs count])
@@ -494,15 +477,23 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //determine if a new PR was made, unless it was manual
         if(finishedRun.eventType != EventTypeManual)
         {
-            RunMetric metricPR = [self analyzePRs:finishedRun];
-            if(metricPR)
+            [self analyzePRs];
+            
+            if((finishedRun == longestRun) || (finishedRun == furthestRun)||(finishedRun == caloriesRun)||(finishedRun == fastestRun))
             {
-                        
                 //present PR notification popup
                 NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
                 [vc setPrefs:[delegate curUserPrefs]];
                 [vc setPrRun:finishedRun];
-                [vc setType:metricPR];
+                //return yes if one of these runs if the checked
+                if(finishedRun == fastestRun)
+                    [vc setType:MetricTypePace];
+                if (finishedRun == furthestRun)
+                    [vc setType2:MetricTypeDistance];
+                if(finishedRun == caloriesRun)
+                    [vc setType3:MetricTypeCalories];
+                if(finishedRun == longestRun)
+                    [vc setType4:MetricTypeTime];
                 
                 [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
                 [vc setPRLabels];

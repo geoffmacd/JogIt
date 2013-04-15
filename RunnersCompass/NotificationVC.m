@@ -11,17 +11,37 @@
 
 @implementation NotificationVC
 
-@synthesize type,oldPR,prRun,prefs;
-@synthesize titleLabel,hideLabel,recordLabel;
+@synthesize type, type2, type3, type4, oldPR,prRun,prefs;
+@synthesize titleLabel,hideLabel,recordLabel,recordLabel2,recordLabel3,recordLabel4;
 
 -(void)setPRLabels
 {
-    NSString * description;
     
+    if(type)
+        [recordLabel setText:[self descriptionForPR:type]];
+    else
+        [recordLabel setHidden:true];
+    if(type2)
+        [recordLabel2 setText:[self descriptionForPR:type2]];
+    else
+        [recordLabel2 setHidden:true];
+    if(type3)
+        [recordLabel3 setText:[self descriptionForPR:type3]];
+    else
+        [recordLabel3 setHidden:true];
+    if(type4)
+        [recordLabel4 setText:[self descriptionForPR:type4]];
+    else
+        [recordLabel4 setHidden:true];
+}
+
+-(NSString*)descriptionForPR:(RunMetric)metric
+{
+    NSString * description;
     BOOL metricForDisplay = [prefs.metric boolValue];
     BOOL showSpeed = [prefs.showSpeed boolValue];
     
-    switch (type) {
+    switch (metric) {
         case MetricTypeTime:
             description = [NSString stringWithFormat:@"%@ • %@", NSLocalizedString(@"LongestRunDescription", @"notification longest run word"), [RunEvent getTimeString: prRun.time]];
             break;
@@ -39,7 +59,7 @@
             break;
     }
     
-    [recordLabel setText:description];
+    return description;
 }
 
 @end
