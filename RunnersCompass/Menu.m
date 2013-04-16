@@ -88,6 +88,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(void)analyzePRs
 {
+    furthestRun = nil;
+    fastestRun = nil;
+    caloriesRun = nil;
+    longestRun = nil;
+    
     for(RunEvent * oldRun in runs)
     {
         //check for PRs
@@ -103,8 +108,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             furthestRun = oldRun;
         }
         if(fastestRun)
-        {
-            if(fastestRun.avgPace < oldRun.avgPace)
+        {   //special restriction for speed in case it's zero
+            if(fastestRun.avgPace < oldRun.avgPace && oldRun.avgPace < maxSpeedForPR)
             {
                 fastestRun = oldRun;
             }
@@ -559,6 +564,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //prepare analyze data
     Analysis * analysisToSet = [[Analysis alloc] analyzeWithRuns:runs];
+    [analysisToSet setCaloriesRun:caloriesRun];
+    [analysisToSet setFastestRun:fastestRun];
+    [analysisToSet setFurthestRun:furthestRun];
+    [analysisToSet setLongestRun:longestRun];
     
     PerformanceVC * vc = [[PerformanceVC alloc] initWithNibName:@"Performance" bundle:nil];
     [vc setAnalysis:analysisToSet];
@@ -758,6 +767,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         //reload 
         [MenuTable reloadData];
+        
+        //re-analyze PRs
+        [self analyzePRs];
 
     }
     else{

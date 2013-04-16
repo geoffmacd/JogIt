@@ -17,22 +17,74 @@
 -(void)setPRLabels
 {
     
+    [recordLabel setText:@""];
+    [recordLabel2 setText:@""];
+    [recordLabel3 setText:@""];
+    [recordLabel4 setText:@""];
+    
     if(type)
         [recordLabel setText:[self descriptionForPR:type]];
-    else
-        [recordLabel setHidden:true];
     if(type2)
-        [recordLabel2 setText:[self descriptionForPR:type2]];
-    else
-        [recordLabel2 setHidden:true];
+    {
+        if(type)
+            [recordLabel2 setText:[self descriptionForPR:type2]];
+        else
+            [recordLabel setText:[self descriptionForPR:type2]];
+    }
     if(type3)
-        [recordLabel3 setText:[self descriptionForPR:type3]];
-    else
-        [recordLabel3 setHidden:true];
+    {
+        if(type)
+        {
+            if(type2)
+                [recordLabel3 setText:[self descriptionForPR:type3]];
+            else
+                [recordLabel2 setText:[self descriptionForPR:type3]];
+        }
+        else
+        {
+            if(type2)
+                [recordLabel2 setText:[self descriptionForPR:type3]];
+            else
+                [recordLabel setText:[self descriptionForPR:type3]];
+        }
+    }
     if(type4)
-        [recordLabel4 setText:[self descriptionForPR:type4]];
-    else
-        [recordLabel4 setHidden:true];
+    {
+        if(type)
+        {
+            if(type2)
+            {
+                if(type3)
+                    [recordLabel4 setText:[self descriptionForPR:type4]];
+                else
+                    [recordLabel3 setText:[self descriptionForPR:type4]];
+            }
+            else
+            {
+                if(type3)
+                    [recordLabel3 setText:[self descriptionForPR:type4]];
+                else
+                    [recordLabel2 setText:[self descriptionForPR:type4]];
+            }
+        }
+        else
+        {
+            if(type2)
+            {
+                if(type3)
+                    [recordLabel3 setText:[self descriptionForPR:type4]];
+                else
+                    [recordLabel2 setText:[self descriptionForPR:type4]];
+            }
+            else
+            {
+                if(type3)
+                    [recordLabel2 setText:[self descriptionForPR:type4]];
+                else
+                    [recordLabel setText:[self descriptionForPR:type4]];
+            }
+        }
+    }
 }
 
 -(NSString*)descriptionForPR:(RunMetric)metric

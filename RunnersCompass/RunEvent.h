@@ -15,8 +15,8 @@
 
 #define convertMSTOminKM 16.6666666666666
 #define convertKMToMile 0.6214//0.621371
-#define runCalcPeriod 3 //s
-#define runBarPeriod 3 //s
+
+#define maxSpeedForPR 30 //m/s
 
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;

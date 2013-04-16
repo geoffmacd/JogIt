@@ -189,52 +189,6 @@
             }
             
         }
-        
-        //check for PRs
-        if(furthestRun)
-        {
-            if(furthestRun.distance < oldRun.distance)
-            {
-                furthestRun = oldRun;
-            }
-        }
-        else
-        {
-            furthestRun = oldRun;
-        }
-        if(fastestRun)
-        {
-            if(fastestRun.avgPace < oldRun.avgPace)
-            {
-                fastestRun = oldRun;
-            }
-        }
-        else
-        {
-            fastestRun = oldRun;
-        }
-        if(caloriesRun)
-        {
-            if(caloriesRun.calories < oldRun.calories)
-            {
-                caloriesRun = oldRun;
-            }
-        }
-        else
-        {
-            caloriesRun = oldRun;
-        }
-        if(longestRun)
-        {
-            if(longestRun.time < oldRun.time)
-            {
-                longestRun = oldRun;
-            }
-        }
-        else
-        {
-            longestRun = oldRun;
-        }
     }
     
     //process avg paces per week

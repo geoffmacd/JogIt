@@ -125,7 +125,7 @@
             NSString * longestString = @"";
             RunEvent * longestRun = [analysis longestRun];
             if(longestRun)
-                longestString = [RunEvent getTimeString:fastestRun.time];
+                longestString = [RunEvent getTimeString:longestRun.time];
             
             [prCell setupWithFastest:fastestString furthest:furthestString calories:caloriesString longest:longestString];
         }

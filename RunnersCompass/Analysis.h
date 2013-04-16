@@ -25,10 +25,10 @@
 @property (nonatomic, strong) NSMutableArray * monthlyRace;
 
 //PRs
-@property (weak) RunEvent * furthestRun;
-@property (weak) RunEvent * fastestRun;
-@property (weak) RunEvent * caloriesRun;
-@property (weak) RunEvent * longestRun;
+@property RunEvent * furthestRun;
+@property RunEvent * fastestRun;
+@property  RunEvent * caloriesRun;
+@property  RunEvent * longestRun;
 
 
 
