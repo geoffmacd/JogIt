@@ -55,7 +55,6 @@
                 //do not close
                 [self loadRun:runToSave close:false];
             }
-             
         }];
     }
     
@@ -124,6 +123,12 @@
     
     
     return nil;
+}
+
+-(void)lockBeforeLoad
+{
+    //slider locked until loadRun below is called so user cannot slide before load finish
+    [self.viewController setLocked:true];
 }
 
 - (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close
@@ -296,7 +301,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    //[self setupTestSQL];
+    [self setupTestSQL];
     
     //core data setup
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];

@@ -25,6 +25,7 @@
 #import "NotificationVC.h"
 #import "MJPopupBackgroundView.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "MBProgressHUD.h"
 
 #import "LocationRecord.h"
 #import "ThumbnailRecord.h"
@@ -33,6 +34,7 @@
 
 @protocol MenuViewControllerDelegate <NSObject>
 
+-(void)lockBeforeLoad;
 - (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close;
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate;
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
