@@ -127,7 +127,7 @@
         paceToFormat = paceToFormat / convertKMToMile;
     }
     
-    //constrain to 30:00
+    //constrain to 59:59
     if(paceToFormat > 3599)
     {
         if(showSpeed)
