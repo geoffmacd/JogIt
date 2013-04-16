@@ -301,7 +301,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    [self setupTestSQL];
+    //[self setupTestSQL];
     
     //core data setup
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];

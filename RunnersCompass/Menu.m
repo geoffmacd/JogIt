@@ -676,8 +676,28 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 }
 - (IBAction)paceTapped:(id)sender {
     PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [[self.delegate curUserPrefs] getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+
+    UserPrefs * curPrefs = [delegate curUserPrefs];
     
-    [pace addCustomButtonWithTitle:@"PR" value:nil];
+    //need PR in s/km form
+    NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
+    if(fastestRun)
+    {
+        if(fastestRun.avgPace >= 1.38889) //12 min/km minimum speed
+        {
+            CGFloat sKmSpeed = 1000 / fastestRun.avgPace; //convert to s/km from m/s
+            if(![curPrefs.metric boolValue])
+            {
+                //convert to imperial if neccessary
+                sKmSpeed = sKmSpeed * convertKMToMile;
+            }
+            //in s/km or s/mi 
+            pRValue = [NSNumber numberWithInt:sKmSpeed];
+        }
+        else
+            pRValue = [NSNumber numberWithInt:0];//0m 01s
+    }
+    [pace addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [pace showRunFormPicker];
     
@@ -686,7 +706,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     TimePicker *time = [[TimePicker alloc] initWithTitle:@"Time" rows:nil initialSelection:0 target:self successAction:@selector(timeRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
-    [time addCustomButtonWithTitle:@"PR" value:nil];
+    NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
+    if(longestRun)
+    {
+        if(longestRun.time >= 60)
+            pRValue = [NSNumber numberWithInt:(longestRun.time/60)];//+1 min above cur PR
+        else
+            pRValue = [NSNumber numberWithInt:0];//1 min
+    }
+    [time addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [time showRunFormPicker];
 }
@@ -694,7 +722,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 - (IBAction)calorieTapped:(id)sender {
     CaloriePicker *cal = [[CaloriePicker alloc] initWithTitle:@"Calories" rows:nil initialSelection:0 target:self successAction:@selector(caloriesRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
     
-    [cal addCustomButtonWithTitle:@"PR" value:nil];
+    NSNumber * pRValue = [NSNumber numberWithInt:0];//25 cal
+    if(caloriesRun)
+    {
+        if(caloriesRun.calories <= 2525)
+            pRValue = [NSNumber numberWithInt:(caloriesRun.calories/25)];//+25 above current PR
+        else
+            pRValue = [NSNumber numberWithInt:(2525/25)]; //2500 cal
+    }
+    [cal addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [cal showRunFormPicker];
 }
@@ -726,8 +762,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     
     DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [[self.delegate curUserPrefs] getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
-    
-    [distance addCustomButtonWithTitle:@"PR" value:nil];
+    NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
+    if(furthestRun)
+    {
+        if(furthestRun.distance >= 500)//500 m min since 1st selection is 0.5km
+            pRValue = [NSNumber numberWithInt:furthestRun.distance/500];//+0.5km above cur PR
+        else
+            pRValue = [NSNumber numberWithInt:0];//500m
+    }
+    [distance addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [distance showRunFormPicker];
 }
