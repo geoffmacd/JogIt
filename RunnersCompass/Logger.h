@@ -15,6 +15,7 @@
 #import "KMAnnotation.h"
 #import "MileAnnotation.h"
 #import "UserPrefs.h"
+#import "MBProgressHUD.h"
 
 
 #define mapZoomDefault 1000 //m
@@ -204,7 +205,6 @@
 @property (weak)  IBOutlet UILabel *swipeToPauseLabel;
 @property (weak)  IBOutlet UIButton *hamburgerBut;
 @property (weak)  IBOutlet UILabel *ghostDistanceTitle;
-@property (weak)  IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak)  IBOutlet MKMapView *iconMap;
 @property (weak, nonatomic) IBOutlet UILabel *lowSignalLabel;
 @property (weak, nonatomic) IBOutlet UIView *titleView;

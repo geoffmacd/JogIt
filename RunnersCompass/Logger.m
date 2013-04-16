@@ -40,7 +40,7 @@
 @synthesize swipeToPauseLabel;
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 @synthesize inBackground;
-@synthesize activityIndicator,lowSignalLabel,titleView;
+@synthesize lowSignalLabel,titleView;
 @synthesize autopauseLabel;
 @synthesize invisibleLastKmButton;
 
@@ -54,9 +54,6 @@
     //set rounded corners on buttons
     [finishBut.layer setCornerRadius:8.0f];
     [finishBut.layer setMasksToBounds:true];
-    
-    [activityIndicator.layer setCornerRadius:5.0];
-    [activityIndicator.layer setMasksToBounds:true];
     
     [paceScroll setDelegate:self];
     [paceScroll setScrollsToTop:false];
@@ -1749,7 +1746,7 @@
     [iconMap setShowsUserLocation:true];
     
     //stop loading indicator
-    [activityIndicator stopAnimating];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     //go back to menu and add to table at top
     [delegate finishedRun:run];
@@ -3185,7 +3182,7 @@
     [self zoomMapToEntireRun:iconMap];
     
     //start loading indicator
-    [activityIndicator startAnimating];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     //ensure map is loaded
     [self performSelector:@selector(mapIconFinishedForFinishTapped) withObject:nil afterDelay:1.0];
