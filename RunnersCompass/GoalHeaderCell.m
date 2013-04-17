@@ -24,7 +24,7 @@
     
     withGoalFrame = self.frame;
     CGRect progressRect = progress.frame;
-    withGoalFrame.size.height = progressRect.origin.y + progressRect.size.height + 4;
+    withGoalFrame.size.height = progressRect.origin.y + progressRect.size.height + 10;
     
     
     //set labels
@@ -38,9 +38,9 @@
     
     //set progress bar
     UIImage *background = [[UIImage imageNamed:@"progress-bar-bg.png"]
-                           resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 4)];
+                           resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)];
     UIImage *fill = [[UIImage imageNamed:@"progress-bar-fill.png"]
-                     resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 4)];
+                     resizableImageWithCapInsets:UIEdgeInsetsMake(0, 2, 0, 2)];
     
     [progress setTrackImage:background];
     [progress setProgressImage:fill];
