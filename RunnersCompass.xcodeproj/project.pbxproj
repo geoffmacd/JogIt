@@ -229,7 +229,6 @@
 		67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */; };
 		67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
-		67FC068D16A117B800491C97 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068C16A117B800491C97 /* Constants.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 /* End PBXBuildFile section */
@@ -590,8 +589,6 @@
 		67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = SOURCE_ROOT; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
-		67FC068B16A117B800491C97 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		67FC068C16A117B800491C97 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
@@ -665,8 +662,6 @@
 			children = (
 				67236D1716409B7700DD13C5 /* AppDelegate.h */,
 				67236D1816409B7700DD13C5 /* AppDelegate.m */,
-				67FC068B16A117B800491C97 /* Constants.h */,
-				67FC068C16A117B800491C97 /* Constants.m */,
 				67FC068316A10F0600491C97 /* Menu */,
 				67FC068216A10EE800491C97 /* Logger */,
 				67E5449F171B330100D5C9DF /* Manual */,
@@ -1407,7 +1402,6 @@
 				67236D2516409B7700DD13C5 /* Menu.m in Sources */,
 				67236D2C16409B7700DD13C5 /* Logger.m in Sources */,
 				67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */,
-				67FC068D16A117B800491C97 /* Constants.m in Sources */,
 				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
 				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
 				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,

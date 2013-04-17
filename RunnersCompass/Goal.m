@@ -419,7 +419,6 @@
     avg = (runCount > 0 ? avg / runCount : 0);
     
     //alert to negative calcs
-    //NSAssert(avg > 0 && min > 0 && max > 0, @"negative parameter in processGoalForRuns");
     NSLog(@"min: %.1f avg: %.1f max: %.1f", min,avg,max);
     
     //set goal values

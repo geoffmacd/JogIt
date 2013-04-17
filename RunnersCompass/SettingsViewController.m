@@ -58,7 +58,7 @@
         
         
         [formMapping sectionWithTitle:NSLocalizedString(@"SettingsPersonalHeader", @"personal header in settings")   identifier:@"info"];
-        
+        /*
         [formMapping mapAttribute:@"fullname" title:NSLocalizedString(@"SettingsFullName", @"full name settings")  type:FKFormAttributeMappingTypeText];
         [formMapping mappingForAttribute:@"birthdate"
                                    title:NSLocalizedString(@"SettingsBirth", @"birth date in settings") 
@@ -67,6 +67,7 @@
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
+         */
         [formMapping mapAttribute:@"weight" title:NSLocalizedString(@"SettingsWeight", @"weight in settings")  type:FKFormAttributeMappingTypeInteger];
         
         

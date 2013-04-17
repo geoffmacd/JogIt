@@ -745,7 +745,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         else
             pRValue = [NSNumber numberWithInt:0];//0m 01s
     }
-    [pace addCustomButtonWithTitle:@"PR" value:pRValue];
+    //[pace addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [pace showRunFormPicker];
     
@@ -762,7 +762,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         else
             pRValue = [NSNumber numberWithInt:0];//1 min
     }
-    [time addCustomButtonWithTitle:@"PR" value:pRValue];
+    //[time addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [time showRunFormPicker];
 }
@@ -778,9 +778,26 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         else
             pRValue = [NSNumber numberWithInt:(2525/25)]; //2500 cal
     }
-    [cal addCustomButtonWithTitle:@"PR" value:pRValue];
+    //[cal addCustomButtonWithTitle:@"PR" value:pRValue];
     
     [cal showRunFormPicker];
+}
+
+- (IBAction)distanceTapped:(id)sender {
+    
+    
+    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [[self.delegate curUserPrefs] getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
+    NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
+    if(furthestRun)
+    {
+        if(furthestRun.distance >= 500)//500 m min since 1st selection is 0.5km
+            pRValue = [NSNumber numberWithInt:furthestRun.distance/500];//+0.5km above cur PR
+        else
+            pRValue = [NSNumber numberWithInt:0];//500m
+    }
+    //[distance addCustomButtonWithTitle:@"PR" value:pRValue];
+    
+    [distance showRunFormPicker];
 }
 
 - (IBAction)manualTapped:(id)sender {
@@ -806,22 +823,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [self justGoStart];
 }
 
-- (IBAction)distanceTapped:(id)sender {
-    
-    
-    DistancePicker *distance = [[DistancePicker alloc] initWithTitle:[NSString stringWithFormat:@"Distance (%@)", [[self.delegate curUserPrefs] getDistanceUnit]] rows:nil initialSelection:0 target:self successAction:@selector(distanceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
-    NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
-    if(furthestRun)
-    {
-        if(furthestRun.distance >= 500)//500 m min since 1st selection is 0.5km
-            pRValue = [NSNumber numberWithInt:furthestRun.distance/500];//+0.5km above cur PR
-        else
-            pRValue = [NSNumber numberWithInt:0];//500m
-    }
-    [distance addCustomButtonWithTitle:@"PR" value:pRValue];
-    
-    [distance showRunFormPicker];
-}
 
 - (IBAction)garbageTapped:(id)sender {
     

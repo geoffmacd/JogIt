@@ -429,7 +429,8 @@
         switch(type)
         {
             case MetricTypePace:
-                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:showSpeed], [UserPrefs getPaceUnitWithSpeedMetric:metricForDisplay showSpeed:showSpeed]];
+                //never show speed here
+                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:false], [UserPrefs getPaceUnitWithSpeedMetric:metricForDisplay showSpeed:showSpeed]];
                 break;
             case MetricTypeCalories:
                 name = [NSString stringWithFormat:@"%@ %@ • %.0f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value, NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
