@@ -69,7 +69,7 @@
     [progress setProgress:progessValue];
     
     //hide progress if run is not applicable, ie. race time
-    if([goal.value floatValue] > runForCell.distance)
+    if([goal.value floatValue] > runForCell.distance && goal.type == GoalTypeRace)
     {
         [progress setHidden:true];
         

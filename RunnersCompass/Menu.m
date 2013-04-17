@@ -509,31 +509,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //scroll to top
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
         
-        //determine if a new PR was made, unless it was manual
-        if(finishedRun.eventType != EventTypeManual)
-        {
-            [self analyzePRs];
-            
-            if((finishedRun == longestRun) || (finishedRun == furthestRun)||(finishedRun == caloriesRun)||(finishedRun == fastestRun))
-            {
-                //present PR notification popup
-                NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
-                [vc setPrefs:[delegate curUserPrefs]];
-                [vc setPrRun:finishedRun];
-                //return yes if one of these runs if the checked
-                if(finishedRun == fastestRun)
-                    [vc setType:MetricTypePace];
-                if (finishedRun == furthestRun)
-                    [vc setType2:MetricTypeDistance];
-                if(finishedRun == caloriesRun)
-                    [vc setType3:MetricTypeCalories];
-                if(finishedRun == longestRun)
-                    [vc setType4:MetricTypeTime];
-                
-                [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
-                [vc setPRLabels];
-            }
-        }
+        BOOL alreadyPresentedNotification = false;
         
         //display goal achieved notification regardless of manual or not
         Goal * curGoal = [delegate curGoal];
@@ -570,10 +546,38 @@ static NSString * cellID = @"HierarchicalCellPrototype";
                         [vc setPrRun:finishedRun];
                         [vc setGoal:[delegate curGoal]];
                         
+                        alreadyPresentedNotification = true;
                         [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
                         [vc setLabels];
                     }
                 }
+            }
+        }
+        
+        //determine if a new PR was made, unless it was manual
+        if(finishedRun.eventType != EventTypeManual)
+        {
+            [self analyzePRs];
+            
+            //do not present notification if already popped up
+            if(!alreadyPresentedNotification && ((finishedRun == longestRun) || (finishedRun == furthestRun)||(finishedRun == caloriesRun)||(finishedRun == fastestRun)))
+            {
+                //present PR notification popup
+                NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
+                [vc setPrefs:[delegate curUserPrefs]];
+                [vc setPrRun:finishedRun];
+                //return yes if one of these runs if the checked
+                if(finishedRun == fastestRun)
+                    [vc setType:MetricTypePace];
+                if (finishedRun == furthestRun)
+                    [vc setType2:MetricTypeDistance];
+                if(finishedRun == caloriesRun)
+                    [vc setType3:MetricTypeCalories];
+                if(finishedRun == longestRun)
+                    [vc setType4:MetricTypeTime];
+                
+                [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                [vc setPRLabels];
             }
         }
     }
