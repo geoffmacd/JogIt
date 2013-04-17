@@ -26,7 +26,7 @@
 @synthesize selectedLabel,allTimeLabel;
 @synthesize weeklyValues,monthlyValues;
 @synthesize raceCell;
-@synthesize prefs;
+@synthesize prefs,unitLabel;
 
 #pragma mark - Lifecycle
 
@@ -53,7 +53,15 @@
                  */
                 
             case MetricTypeDistance:
+                [unitLabel setHidden:false];
+                [unitLabel setText:[prefs getDistanceUnit]];
+                [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
+                break;
             case MetricTypePace:
+                [unitLabel setHidden:false];
+                [unitLabel setText:[prefs getPaceUnit]];
+                [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
+                break;
             case MetricTypeActivityCount:
             case MetricTypeCadence:
             case MetricTypeCalories:

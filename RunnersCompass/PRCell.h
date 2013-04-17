@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AnimationUtil.h"
-
+#import "UserPrefs.h"
 
 @protocol PRCellDelegate <NSObject>
 
@@ -37,6 +37,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *furthestValue;
 @property (weak, nonatomic) IBOutlet UILabel *caloriesValue;
 @property (weak, nonatomic) IBOutlet UILabel *longestValue;
+@property (weak, nonatomic) IBOutlet UILabel *fastestUnit;
+@property (weak, nonatomic) IBOutlet UILabel *furthestUnit;
 
 
 //delegate
@@ -45,12 +47,12 @@
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
+@property UserPrefs *prefs;
 
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
 -(void)setupWithFastest:(NSString*)fast furthest:(NSString*)furthest calories:(NSString*)cals longest:(NSString*)longest;
-- (IBAction)expandTapped:(id)sender;
 - (IBAction)headerTapped:(id)sender;
 
 @end

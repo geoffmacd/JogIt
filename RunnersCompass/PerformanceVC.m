@@ -106,6 +106,7 @@
             prCell  =  [[[NSBundle mainBundle]loadNibNamed:@"PRCell"owner:self options:nil] objectAtIndex:0];
             
             [prCell setDelegate:self];
+            [prCell setPrefs:prefs];
             
             NSString * fastestString = @"";
             RunEvent * fastestRun = [analysis fastestRun];

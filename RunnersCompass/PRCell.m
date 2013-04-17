@@ -18,6 +18,7 @@
 @synthesize furthestTitle,furthestValue,fastestTitle,fastestValue;
 @synthesize caloriesTitle,caloriesValue,longestTitle,longestValue;
 @synthesize subtitleLabel,titleLabel;
+@synthesize furthestUnit,fastestUnit,prefs;
 
 #pragma mark - Lifecycle
 
@@ -32,6 +33,10 @@
     [fastestValue setText:fast];
     [caloriesValue setText:cals];
     [longestValue setText:longest];
+    
+    //set units
+    [furthestUnit setText:[prefs getDistanceUnit]];
+    [fastestUnit setText:[prefs getPaceUnit]];
     
     //localized labels in IB
     [furthestTitle setText:NSLocalizedString(@"prcellfurthest", @"prcell furthest")];

@@ -56,6 +56,7 @@
 @property (weak)  IBOutlet UIScrollView *scrollView;
 @property (weak)  IBOutlet UILabel *allTimeLabel;
 @property (weak)  IBOutlet UILabel *selectedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *unitLabel;
 
 //delegate
 @property id <ChartCellDelegate>delegate;

@@ -151,7 +151,7 @@
         if(ruleCell)
             height = [ruleCell getHeightRequired];
         else
-            height = 60;
+            height = 64;
     }
     else if(row <= [cells count])
     {
