@@ -19,5 +19,6 @@
 @property (weak) IBOutlet UILabel *label;
 @property (weak) IBOutlet UIProgressView *progress;
 @property (weak) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tooShortLabel;
 
 @end

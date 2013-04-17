@@ -352,7 +352,7 @@
             subtitle = NSLocalizedString(@"SubtitleGoalTypeOneDistance",@"nothing here for one distance goal");
             break;
         case GoalTypeRace:
-            subtitle = NSLocalizedString(@"SubtitleGoalTypeRace",@"nothing here for one race goal");
+            subtitle = NSLocalizedString(@"SubtitleGoalTypeRace",@"Must run at least this distance");
             break;
         case GoalTypeTotalDistance:
             subtitle = NSLocalizedString(@"SubtitleGoalTypeTotalDistance",@"nothing here for one total distance goal");
@@ -399,7 +399,8 @@
                 avg += run.avgPace;
                 if(run.avgPace < min)
                     min = run.avgPace;
-                if(run.avgPace > max)
+                //must be at least the race distance
+                if(run.avgPace > max &&  run.distance > [value floatValue])
                     max = run.avgPace;
                 break;
             case GoalTypeTotalDistance:

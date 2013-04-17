@@ -11,7 +11,7 @@
 
 @implementation GoalCell
 
-@synthesize label,progress,dateLabel;
+@synthesize label,progress,dateLabel,tooShortLabel;
 
 -(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric showSpeed:(BOOL)showSpeed withMin:(CGFloat)min withMax:(CGFloat)max
 {
@@ -40,7 +40,7 @@
             progessValue = runForCell.distance / [goal.value integerValue];
             break;
         case GoalTypeRace:
-            stringForGoal = [NSString stringWithFormat:@"%@", [RunEvent getPaceString:runForCell.avgPace withMetric:metric showSpeed:showSpeed]];
+            stringForGoal = [NSString stringWithFormat:@"%@/%.1f%@", [RunEvent getPaceString:runForCell.avgPace withMetric:metric showSpeed:showSpeed], [RunEvent getDisplayDistance:runForCell.distance withMetric:metric], [tempPrefs getDistanceUnit]];
             progessValue = runForCell.avgPace / max;
             break;
         case GoalTypeTotalDistance:
@@ -67,6 +67,15 @@
     else if(progessValue < 0)
         progessValue = 0;
     [progress setProgress:progessValue];
+    
+    //hide progress if run is not applicable, ie. race time
+    if([goal.value floatValue] > runForCell.distance)
+    {
+        [progress setHidden:true];
+        
+        [tooShortLabel setText:NSLocalizedString(@"TooShortLabel", @"label too short goals")];
+        [tooShortLabel setHidden:false];
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

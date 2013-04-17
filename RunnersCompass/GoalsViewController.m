@@ -187,13 +187,13 @@ static NSString * goalCellID = @"GoalCellPrototype";
     NSInteger row = [indexPath row];
     NSLog(@"row: %d with array: %d", row, goalRunCount);
     
-    if(row >= [cells count]){
-        
-        //GoalCell * cell = (GoalCell * )[tableView dequeueReusableCellWithIdentifier:goalCellID];
-        
+    if(row >= [cells count])
+    {
+        /*
         GoalCell * cell = (GoalCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalCell"
                                                                  owner:self
-                                                               options:nil]objectAtIndex:0];
+         options:nil]objectAtIndex:0];*/
+        GoalCell * cell = (GoalCell * )[tableView dequeueReusableCellWithIdentifier:goalCellID];
         
         [cells addObject:cell];
         RunEvent * runForCell = [sortedRunsForGoal objectAtIndex:row];
@@ -235,8 +235,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
     }
     
     return header;
-    
-    
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
