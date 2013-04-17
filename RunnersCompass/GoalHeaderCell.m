@@ -85,7 +85,7 @@
         [metricValue setText:goal.metricValueChange];
         
         //both description labels to be updated
-        [metricDescriptionLabel setText:[goal stringForDescription]];
+        [metricDescriptionLabel setText:[goal stringForProgress]];
         [metricDescriptionSubtitle setText:[goal stringForSubtitle]];
         
         //check if goal completed

@@ -64,9 +64,9 @@
         case GoalTypeRace:
             components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:time];
             if(components.hour > 0)
-                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], components.hour, components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ %@ %d hr %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], NSLocalizedString(@"InWord",@"Word for in in title"), components.hour, components.minute];
             else
-                goalName = [NSString stringWithFormat:@"%@: %@ %@ in less than %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], components.minute];
+                goalName = [NSString stringWithFormat:@"%@: %@ %@ %@ %d min", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"FinishWord",@"Word for finish in title"),[Goal getRaceNameForRun:[self.value floatValue]], NSLocalizedString(@"InWord",@"Word for in in title"), components.minute];
             break;
         case GoalTypeTotalDistance:
             goalName = [NSString stringWithFormat:@"%@: %@ %.0f %@ %@", NSLocalizedString(@"GoalWord",@"Word for Goal in title"), NSLocalizedString(@"LogWord",@"Word for log in title"), [RunEvent getDisplayDistance:[self.value floatValue] withMetric:metric], [tempPrefs getDistanceUnit],  endString];
@@ -225,6 +225,32 @@
     }
     
     return description;
+}
+
+-(NSString *)stringForProgress
+{
+    NSString * progressString;
+    
+    //switch between metric to determine label for metric description
+    switch(type)
+    {
+        case GoalTypeCalories:
+            progressString = NSLocalizedString(@"GoalprogressCalories",@"goal progress");//@"Weight Loss";
+            break;
+        case GoalTypeOneDistance:
+            progressString = NSLocalizedString(@"GoalprogressOneDistance",@"goal progress"); //@"Furthest Distance";
+            break;
+        case GoalTypeRace:
+            progressString = NSLocalizedString(@"GoalprogressRace",@"goal progress");//@"Fastest Race Time";
+            break;
+        case GoalTypeTotalDistance:
+            progressString = NSLocalizedString(@"GoalprogressTotalDistance",@"goal progress");//@"Total Distance";
+            break;
+        default:
+            return NSLocalizedString(@"GoalprogressBadMetric",@"bad metric for goal progress");//@"bad subtitle";//return @"bad description";
+    }
+    
+    return progressString;
 }
 
 
@@ -412,7 +438,7 @@
     {
         case GoalTypeCalories:
             progress = total / ([value floatValue]*calsInLbFat);
-            metricValueChange = [NSString stringWithFormat:@"%.1f lb / %.0f cal" , total / calsInLbFat, total];
+            metricValueChange = [NSString stringWithFormat:@"%.1f lb / %.0f %@" , total / calsInLbFat, total , NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
             break;
         case GoalTypeOneDistance:
             progress = max / [value floatValue];
@@ -420,10 +446,11 @@
             break;
         case GoalTypeRace:
             components = [calendar components:NSHourCalendarUnit|NSMinuteCalendarUnit fromDate:time];
+            //value is the race distance, time is the NSDate of target race time
             //calc avg pace
             avgPace = [value floatValue] / ((components.hour * 3600) + (components.minute * 60))  ; //to m/s
             progress = max / avgPace;
-            metricValueChange = [NSString stringWithFormat:@"%.1f %@ in %@", [RunEvent getDisplayDistance:[value floatValue] withMetric:metric], [tempPrefs getDistanceUnit], [RunEvent getTimeString:(max * [value floatValue])]];
+            metricValueChange = [NSString stringWithFormat:@"%.1f %@ in %@", [RunEvent getDisplayDistance:[value floatValue] withMetric:metric], [tempPrefs getDistanceUnit], [RunEvent getTimeString:([value floatValue]/max)]];
             break;
         case GoalTypeTotalDistance:
             progress = total / [value floatValue];

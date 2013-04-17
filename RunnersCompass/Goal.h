@@ -51,6 +51,7 @@ typedef enum
 -(id)initWithRecord:(GoalRecord*)record;
 -(NSString*)getName:(BOOL)metric;
 -(NSString *)stringForDescription;
+-(NSString *)stringForProgress;
 -(NSString *)stringForHeaderDescription;
 -(NSString *)stringSubtitleDescription;
 -(NSString*)stringForSubtitle;
