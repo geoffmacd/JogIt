@@ -194,12 +194,17 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [MenuTable setBackgroundView:noRunView];
         
+        //prevent table from scrolling
+        [MenuTable setScrollEnabled:false];
     }
     else{
         if(showingNoRuns)
         {
             showingNoRuns = false;
             [MenuTable setBackgroundView:nil];
+            
+            //prevent table from scrolling
+            [MenuTable setScrollEnabled:true];
         }
     }
     

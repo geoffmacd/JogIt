@@ -177,6 +177,12 @@
         [self drawMapPath:true];
         if(run.ghost)
             [self drawMapGhostPath:true];
+        //need to reload annotations regardless since showspeed or metric could have changed
+        if([mapAnnotations count] > 0)
+        {
+            [fullMap removeAnnotations:mapAnnotations];
+            [mapAnnotations removeAllObjects];
+        }
         [self drawAllAnnotations];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
@@ -1595,7 +1601,7 @@
     {
         //needs at least one position to calculate distances from
         //add position and focus in on it
-        
+    
         needsStartPos = false;
         
         //no pace
@@ -1607,6 +1613,23 @@
         //auto zoom and reload map icon
         [self autoZoomMap:newLocation animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
+        
+        //add start flag if necessary
+        //if it is the first spot, add annotation for start
+        if([mapAnnotations count] == 0)
+        {
+            StartAnnotation * firstAnnotation = [[StartAnnotation alloc] init];
+            firstAnnotation.mileName = NSLocalizedString(@"StartFlagText", @"map annotation flag - start");
+            firstAnnotation.paceString = [RunEvent getTimeString:0];
+            if([run.pos count])
+            {
+                firstAnnotation.mileCoord = newLocation.coordinate;
+            }
+            //add to array
+            [mapAnnotations addObject:firstAnnotation];
+            //actually add to map
+            [fullMap addAnnotation:firstAnnotation];
+        }
     }
     else{
         
@@ -1791,6 +1814,25 @@
     BOOL isMetric = [[curSettings metric] boolValue];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     
+    //add annotation for start
+    //called when live run is first starting as well
+    //do not process until run has added at least one position at which time, calcMetrics will have added start
+    if([run.pos count] > 0)
+    {
+        StartAnnotation * firstAnnotation = [[StartAnnotation alloc] init];
+        firstAnnotation.mileName = NSLocalizedString(@"StartFlagText", @"map annotation flag - start");
+        firstAnnotation.paceString = [RunEvent getTimeString:0];
+        if([run.pos count])
+        {
+            CLLocation * first = [run.pos objectAtIndex:0];
+            firstAnnotation.mileCoord = first.coordinate;
+        }
+        //add to array
+        [mapAnnotations addObject:firstAnnotation];
+        //actually add to map
+        [fullMap addAnnotation:firstAnnotation];
+    }
+    
     if(isMetric)
     {
         //need both pos and meta for KM to get pace for annotation display
@@ -1836,6 +1878,22 @@
             [fullMap addAnnotation:newAnnotation];
             
         }
+    }
+    
+    //add annotation for finish if it is historical
+    //need at least two points for finish flag
+    if(!run.live && [run.pos count] > 1)
+    {
+        FinishAnnotation * lastAnnotation = [[FinishAnnotation alloc] init];
+        lastAnnotation.mileName = NSLocalizedString(@"FinishFlagText", @"map annotation flag - finish");
+        lastAnnotation.paceString = [RunEvent getTimeString:run.time];
+        //last object of pos not min or km
+        CLLocation * last = [run.pos lastObject];
+        lastAnnotation.mileCoord = last.coordinate;
+        //add to array
+        [mapAnnotations addObject:lastAnnotation];
+        //actually add to map
+        [fullMap addAnnotation:lastAnnotation];
     }
 }
 
@@ -2095,16 +2153,18 @@
             // if an existing pin view was not available, create one
             MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
                                                   initWithAnnotation:annotation reuseIdentifier:kmAnnotationIdentifier];
-            customPinView.pinColor = MKPinAnnotationColorRed;//MKPinAnnotationColorPurple;
             customPinView.animatesDrop = YES;
             customPinView.canShowCallout = YES;
             
-            return customPinView;
+            pinView = customPinView;
         }
         else
         {
             pinView.annotation = annotation;
         }
+        
+        //ensure color is correct
+        pinView.pinColor = MKPinAnnotationColorRed;
         return pinView;
     }
     else if ([annotation isKindOfClass:[MileAnnotation class]])
@@ -2119,18 +2179,88 @@
             // if an existing pin view was not available, create one
             MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
                                                   initWithAnnotation:annotation reuseIdentifier:mileAnnotationIdentifier];
-            customPinView.pinColor = MKPinAnnotationColorRed;//MKPinAnnotationColorPurple;
             customPinView.animatesDrop = YES;
             customPinView.canShowCallout = YES;
             
-            return customPinView;
+            pinView = customPinView;
         }
         else
         {
             pinView.annotation = annotation;
         }
+        //ensure color is correct
+        pinView.pinColor = MKPinAnnotationColorRed;
+        
+        //ensure color is correct
+        if(annotation == [mapAnnotations objectAtIndex:0])
+        {
+            //if first object color green for start
+            pinView.pinColor = MKPinAnnotationColorGreen;
+        }
+        else if(annotation == [mapAnnotations lastObject] && !run.live)
+        {
+            //color purple for end, if historical
+            pinView.pinColor = MKPinAnnotationColorPurple;
+        }
+        else
+        {
+            pinView.pinColor = MKPinAnnotationColorRed;
+        }
         return pinView;
     }
+    else if ([annotation isKindOfClass:[StartAnnotation class]])
+    {
+        // try to dequeue an existing pin view first
+        static NSString *startAnnotationIdentifier = @"startAnnotationIdentifier";
+        
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+        [fullMap dequeueReusableAnnotationViewWithIdentifier:startAnnotationIdentifier];
+        if (pinView == nil)
+        {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                                  initWithAnnotation:annotation reuseIdentifier:startAnnotationIdentifier];
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            pinView = customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        //green color
+        
+        pinView.pinColor = MKPinAnnotationColorGreen;
+        return pinView;
+    }
+    else if ([annotation isKindOfClass:[FinishAnnotation class]])
+    {
+        // try to dequeue an existing pin view first
+        static NSString *finishAnnotationIdentifier = @"finishAnnotationIdentifier";
+        
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)
+        [fullMap dequeueReusableAnnotationViewWithIdentifier:finishAnnotationIdentifier];
+        if (pinView == nil)
+        {
+            // if an existing pin view was not available, create one
+            MKPinAnnotationView *customPinView = [[MKPinAnnotationView alloc]
+                                                  initWithAnnotation:annotation reuseIdentifier:finishAnnotationIdentifier];
+            customPinView.animatesDrop = YES;
+            customPinView.canShowCallout = YES;
+            
+            pinView = customPinView;
+        }
+        else
+        {
+            pinView.annotation = annotation;
+        }
+        //purple color
+        pinView.pinColor = MKPinAnnotationColorPurple;
+        
+        return pinView;
+    }
+    
     
     return nil;
 }

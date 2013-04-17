@@ -16,6 +16,9 @@
 #import "MileAnnotation.h"
 #import "UserPrefs.h"
 #import "MBProgressHUD.h"
+#import "StartAnnotation.h"
+#import "FinishAnnotation.h"
+
 
 
 #define mapZoomDefault 1000 //m
