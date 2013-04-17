@@ -41,7 +41,6 @@
     //time label
     [timeLabel setText:@""];
     [timeLabel setHidden:true];
-    
 }
 
 
@@ -63,8 +62,9 @@
         }
         
         
-        
     }else{
+        
+        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
         
         if(animate)
         {
@@ -72,7 +72,6 @@
             
         }
         
-        [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];
     }
     
     if(!animate)
@@ -80,9 +79,8 @@
         [expandedView setHidden:!open];
     }
     
-    
-    [delegate cellDidChangeHeight:self];
-    
+    if(delegate)
+        [delegate cellDidChangeHeight:self];
     
 }
 

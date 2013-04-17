@@ -324,7 +324,7 @@
 										</object>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 48}, {320, 267}}</string>
+								<string key="NSFrame">{{0, 47}, {320, 257}}</string>
 								<reference key="NSSuperview" ref="648043000"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="538372646"/>
@@ -333,6 +333,7 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
+								<bool key="IBUIClipsSubviews">YES</bool>
 								<array key="IBUIGestureRecognizers" id="0"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -502,7 +503,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 307}</string>
+						<string key="NSFrameSize">{320, 304}</string>
 						<reference key="NSSuperview" ref="438365395"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="245450979"/>
@@ -515,7 +516,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 308}</string>
+				<string key="NSFrameSize">{320, 305}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="648043000"/>
@@ -526,10 +527,7 @@
 				<int key="IBUISelectionStyle">0</int>
 				<reference key="IBUIContentView" ref="648043000"/>
 				<string key="IBUIReuseIdentifier">StartTableCellPrototype</string>
-				<real value="311" key="IBUIRowHeight"/>
-			</object>
-			<object class="IBUITapGestureRecognizer" id="924304487">
-				<bool key="IBUIEnabled">NO</bool>
+				<real value="305" key="IBUIRowHeight"/>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="849384263"/>
 		</array>
@@ -664,24 +662,6 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">585</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
-						<string key="label">gestureRecognizers</string>
-						<reference key="source" ref="941116554"/>
-						<reference key="destination" ref="924304487"/>
-						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
-						<bool key="addsContentToExistingCollection">YES</bool>
-					</object>
-					<int key="connectionID">516</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="924304487"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">584</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -1094,12 +1074,6 @@
 						<reference key="parent" ref="245450979"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">515</int>
-						<reference key="object" ref="924304487"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Tap Gesture Recognizer - expand</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">580</int>
 						<reference key="object" ref="534297443"/>
 						<reference key="parent" ref="245450979"/>
@@ -1200,7 +1174,6 @@
 				<string key="349.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="359.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="515.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="580.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="608.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="608.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>

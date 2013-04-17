@@ -180,8 +180,6 @@
     
     if(delegate)
         [delegate cellDidChangeHeight:self];
-    else
-        return;
     
 }
 

@@ -36,13 +36,15 @@
         
         CGRect rect = expandedView.frame;
         CGRect correct = rect;
-        rect.origin.y = 20;
+        //set expanded view to be exactly behind header on starting
+        rect.origin.y = 0;
+        rect.size.height = 48;
         
         [expandedView setFrame:rect];
         
         [expandedView setHidden:!open];
         
-        expandedView.alpha = 0.0;
+        expandedView.alpha = 0.5;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
@@ -57,17 +59,18 @@
         CGRect rect = expandedView.frame;
         CGRect correct = rect;
         rect.origin.y = 0;
+        rect.size.height = 48;
+        
         expandedView.alpha = 1.0;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
-                             expandedView.alpha = 0.0;
+                             expandedView.alpha = 0.5;
                              [expandedView setFrame:rect];
                          }
                          completion:^(BOOL finished) {
-                             [expandedView setFrame:correct];
-                             
                              [expandedView setHidden:!open];
+                             [expandedView setFrame:correct];
                          }];
     }
 }

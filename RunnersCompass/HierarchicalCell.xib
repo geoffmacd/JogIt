@@ -48,7 +48,7 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="IBUIImageView" id="981189565">
 										<reference key="NSNextResponder" ref="941116554"/>
-										<int key="NSvFlags">274</int>
+										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{20, 3}, {130, 120}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
@@ -59,7 +59,7 @@
 									</object>
 									<object class="IBUILabel" id="583987211">
 										<reference key="NSNextResponder" ref="941116554"/>
-										<int key="NSvFlags">274</int>
+										<int key="NSvFlags">256</int>
 										<string key="NSFrame">{{20, 52}, {130, 21}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
@@ -163,6 +163,7 @@
 										<string key="NSFrame">{{248, 89}, {59, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -273,6 +274,7 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
+								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 								<array key="IBUIGestureRecognizers" id="0"/>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
