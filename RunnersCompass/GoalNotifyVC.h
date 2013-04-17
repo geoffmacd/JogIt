@@ -9,23 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "RunEvent.h"
 #import "UserPrefs.h"
+#import "Goal.h"
 
 @interface GoalNotifyVC : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *recordLabel;
-@property (weak, nonatomic) IBOutlet UILabel *recordLabel2;
-@property (weak, nonatomic) IBOutlet UILabel *recordLabel3;
-@property (weak, nonatomic) IBOutlet UILabel *recordLabel4;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *hideLabel;
 
-@property RunMetric type;
-@property RunMetric type2;
-@property RunMetric type3;
-@property RunMetric type4;
-@property RunEvent * oldPR;
+@property Goal * goal;
 @property RunEvent * prRun;
 @property UserPrefs * prefs;
 
 
--(void)setPRLabels;
+-(void)setLabels;
 @end

@@ -530,6 +530,47 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             }
         }
         
+        //display goal achieved notification regardless of manual or not
+        Goal * curGoal = [delegate curGoal];
+        //did new run cause goal to be complete and wasn't completed before hand
+        if(curGoal.type != GoalTypeNoGoal)
+        {
+            //reprocess and new progress will be saved
+            //need sorted runs
+            NSMutableArray * runsToProcess = [[NSMutableArray alloc] initWithCapacity:[runs count]];
+            
+            //already sorted so that first object is latest date
+            for(RunEvent * runToConsider in runs)
+            {
+                if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
+                    ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
+                {
+                    [runsToProcess addObject:runToConsider];
+                }
+            }
+            
+            //run must be present in array otherwise , it's date is out of range
+            if([runsToProcess count] > 0 && [runsToProcess containsObject:finishedRun])
+            {
+                //only if goal wasn't previously completed
+                [runsToProcess removeObject:finishedRun];
+                if(![curGoal processGoalForRuns:runsToProcess withMetric:[[[delegate curUserPrefs] metric] boolValue]])
+                {
+                    [runsToProcess addObject:finishedRun];
+                    if([curGoal processGoalForRuns:runsToProcess withMetric:[[[delegate curUserPrefs] metric] boolValue]])
+                    {
+                        //present PR notification popup
+                        GoalNotifyVC * vc = [[GoalNotifyVC alloc] initWithNibName:@"GoalNotifyVC" bundle:nil];
+                        [vc setPrefs:[delegate curUserPrefs]];
+                        [vc setPrRun:finishedRun];
+                        [vc setGoal:[delegate curGoal]];
+                        
+                        [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                        [vc setLabels];
+                    }
+                }
+            }
+        }
     }
     
     //refresh start cell

@@ -503,7 +503,15 @@
         }
     }
     
-    
+    if(progress >= 1)
+    {
+        progress = 1;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 

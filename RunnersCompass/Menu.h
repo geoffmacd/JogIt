@@ -23,6 +23,7 @@
 #import "RunFormPicker.h"
 #import "ManualVC.h"
 #import "NotificationVC.h"
+#import "GoalNotifyVC.h"
 #import "MJPopupBackgroundView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "MBProgressHUD.h"
