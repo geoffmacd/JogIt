@@ -117,19 +117,12 @@
 
 #pragma mark - Menu Delegate Methods
 
--(NSMutableArray *)fetchAll
-{
-    //fetch all runs from db
-    
-    
-    return nil;
-}
-
 -(void)lockBeforeLoad
 {
     //slider locked until loadRun below is called so user cannot slide before load finish
     [self.viewController setLocked:true];
 }
+
 
 - (void)loadRun:(RunEvent*) runToLoad close:(BOOL)close
 {
@@ -237,11 +230,19 @@
     //this run should never be live, so you would not be stuck in menu
     
     //object is to be delete after this method
-    if(runToDelete == self.backVC.run)
+    if([runToDelete.date timeIntervalSinceReferenceDate] == [self.backVC.run.date timeIntervalSinceReferenceDate])
     {
         [self.viewController setLocked:true];
         
     }
+}
+
+-(BOOL)isRunAlreadyLoaded:(RunEvent*)runToCheck
+{
+    if([runToCheck.date timeIntervalSinceReferenceDate] == [backVC.run.date timeIntervalSinceReferenceDate])
+        return true;
+    else
+        return false;
 }
 
 -(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail

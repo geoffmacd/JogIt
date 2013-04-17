@@ -40,6 +40,7 @@
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
 - (void)finishedRun:(RunEvent *)run;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent *)runToDelete;
+-(BOOL)isRunAlreadyLoaded:(RunEvent*)runToCheck;
 -(void)updateGesturesNeededtoFail:(UIGestureRecognizer*)gestureToFail;
 -(UserPrefs *)curUserPrefs;
 -(Goal *)curGoal;

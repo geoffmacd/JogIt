@@ -3407,8 +3407,9 @@
         //share the run
         NSArray *activityItems;
         
-        //log text message
-        NSString * messageToSend = NSLocalizedString(@"LoggerShareMsg", "message to be sent with sharing");
+        //log text message - I just comleted a 17.1km run with RunIt.
+        CGFloat distanceToShare = run.distance/([[[delegate curUserPrefs] metric] boolValue] ? 1000 : (1000/convertKMToMile));
+        NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@", NSLocalizedString(@"LoggerShareMsg1", "message to be sent with sharing"), distanceToShare, [[delegate curUserPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg2", "message to be sent with sharing")];
         
         //capture screenshot without modification
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {

@@ -31,6 +31,8 @@
 		672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */; };
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
 		672D711B171CDB410054E9EB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D711A171CDB410054E9EB /* MBProgressHUD.m */; };
+		672D711F171E49850054E9EB /* GoalNotifyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D711D171E49830054E9EB /* GoalNotifyVC.m */; };
+		672D7120171E49850054E9EB /* GoalNotifyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672D711E171E49840054E9EB /* GoalNotifyVC.xib */; };
 		6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6735780C16D71CE1004A92D1 /* TimePicker.m */; };
 		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
@@ -287,6 +289,9 @@
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
 		672D7119171CDB410054E9EB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		672D711A171CDB410054E9EB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
+		672D711C171E49830054E9EB /* GoalNotifyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalNotifyVC.h; sourceTree = "<group>"; };
+		672D711D171E49830054E9EB /* GoalNotifyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalNotifyVC.m; sourceTree = "<group>"; };
+		672D711E171E49840054E9EB /* GoalNotifyVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoalNotifyVC.xib; sourceTree = "<group>"; };
 		6735780B16D71CE1004A92D1 /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
 		6735780C16D71CE1004A92D1 /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
 		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
@@ -729,6 +734,9 @@
 		672AA4F616B614F300B7DEE6 /* Goals */ = {
 			isa = PBXGroup;
 			children = (
+				672D711C171E49830054E9EB /* GoalNotifyVC.h */,
+				672D711D171E49830054E9EB /* GoalNotifyVC.m */,
+				672D711E171E49840054E9EB /* GoalNotifyVC.xib */,
 				67C8E31116D19C4E00E4DE11 /* CreateGoal.xib */,
 				67AF65E416D9B13B004A484C /* CreateGoalCell.h */,
 				67AF65E516D9B13C004A484C /* CreateGoalCell.m */,
@@ -1383,6 +1391,7 @@
 				67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */,
 				67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */,
 				67E544BE171B9CA800D5C9DF /* NotificationVC.xib in Resources */,
+				672D7120171E49850054E9EB /* GoalNotifyVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1502,6 +1511,7 @@
 				67E544B8171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m in Sources */,
 				67E544BD171B9CA800D5C9DF /* NotificationVC.m in Sources */,
 				672D711B171CDB410054E9EB /* MBProgressHUD.m in Sources */,
+				672D711F171E49850054E9EB /* GoalNotifyVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

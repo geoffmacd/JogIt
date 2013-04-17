@@ -412,6 +412,13 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             return;
         }
         
+        //if run is already loaded, slide to logger
+        if([delegate isRunAlreadyLoaded:cell.associatedRun])
+        {
+            [delegate selectedRunInProgress:false];
+            return;
+        }
+        
         //need to fetch real record and fill with data points
         RunRecord * recordToLoad = [RunRecord MR_findFirstByAttribute:@"date" withValue:cell.associatedRun.date];
         
