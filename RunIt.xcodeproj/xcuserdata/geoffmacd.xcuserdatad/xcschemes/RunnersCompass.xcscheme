@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "67236D0316409B7700DD13C5"
                BuildableName = "RunnersCompass.app"
-               BlueprintName = "RunnersCompass"
-               ReferencedContainer = "container:RunnersCompass.xcodeproj">
+               BlueprintName = "RunIt"
+               ReferencedContainer = "container:RunIt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "RunnersCompass.app"
-            BlueprintName = "RunnersCompass"
-            ReferencedContainer = "container:RunnersCompass.xcodeproj">
+            BlueprintName = "RunIt"
+            ReferencedContainer = "container:RunIt.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -53,8 +53,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "RunnersCompass.app"
-            BlueprintName = "RunnersCompass"
-            ReferencedContainer = "container:RunnersCompass.xcodeproj">
+            BlueprintName = "RunIt"
+            ReferencedContainer = "container:RunIt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,8 +71,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "RunnersCompass.app"
-            BlueprintName = "RunnersCompass"
-            ReferencedContainer = "container:RunnersCompass.xcodeproj">
+            BlueprintName = "RunIt"
+            ReferencedContainer = "container:RunIt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

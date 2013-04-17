@@ -305,7 +305,7 @@
     //[self setupTestSQL];
     
     //core data setup
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"RunCompass.sqlite"];
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"Data.sqlite"];
     
     //find prefs, if not there create it
     userPrefsRecord = [UserPrefs MR_findFirst];
