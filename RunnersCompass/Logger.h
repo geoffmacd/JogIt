@@ -136,7 +136,8 @@
     CLLocationAccuracy avgAccuracy;
     
     //positions for labels for ghost runs
-    CGFloat timeTitlex,timeLabelx;
+    CGRect orgTimeTitle;
+    CGRect orgTimeLabel;
     
     //timer tracker
     NSInteger countdown; //s
@@ -154,6 +155,8 @@
     //index for last drawn path
     NSInteger lastPathIndex;
     NSInteger lastGhostPathIndex;
+    
+    BOOL justLoaded;
 }
 
 

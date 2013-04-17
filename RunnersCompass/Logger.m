@@ -100,10 +100,17 @@
     
     //pos queue
     posQueue = [[NSMutableArray alloc] initWithCapacity:10];
+    
+    //necessary to set the frames properly in viewdidlayout
+    justLoaded = true;
 }
 
 -(void) viewDidLayoutSubviews
 {
+    //also gets when MBProgress is displayed for some reason
+    if(!justLoaded)
+        return;
+    
     //set correct position for mapview so that pulldrag is at bottom
     CGRect mapRect;
     mapRect.size =  slideView.frame.size;
@@ -141,8 +148,10 @@
     orgDistanceLabelPosition = distanceLabel.frame;
     orgDistanceTitlePosition = distanceTitle.frame;
     orgDistanceUnitPosition = distanceUnitLabel.frame;
-    timeLabelx = timeLabel.frame.origin.x;
-    timeTitlex = timeTitle.frame.origin.x;
+    orgTimeLabel = timeLabel.frame;
+    orgTimeTitle = timeTitle.frame;
+    
+    justLoaded = false;
 }
 
 - (void)didReceiveMemoryWarning
@@ -453,12 +462,8 @@
     [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
     
     //move time back
-    CGRect labelFrame = timeLabel.frame;
-    labelFrame.origin.x = timeLabelx;
-    [timeLabel setFrame:labelFrame];
-    CGRect titleFrame = timeTitle.frame;
-    titleFrame.origin.x = timeTitlex;
-    [timeTitle setFrame:titleFrame];
+    [timeLabel setFrame:orgTimeLabel];
+    [timeTitle setFrame:orgTimeTitle];
     
     //move distance back
     [distanceLabel setFrame:orgDistanceLabelPosition];
