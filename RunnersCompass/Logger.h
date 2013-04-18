@@ -55,6 +55,7 @@
 #define mapIconPathWidth 10.0//pixels
 #define mapPathSize 10 //positions
 #define paceSelectionOverrideTime 7 //s
+#define delayGoalAssessment 10 //s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 

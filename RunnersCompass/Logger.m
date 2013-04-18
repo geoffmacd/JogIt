@@ -724,7 +724,8 @@
     }
     
     //Check if goal has been achieved
-    [self determineGoalAchieved];
+    if(run.time > delayGoalAssessment)
+        [self determineGoalAchieved];
     
     //Update labels, disable selection mode
     [self updateHUD];
@@ -799,7 +800,7 @@
         
         finishBut.alpha = 1.0f;
         [runTitle setHidden:false];
-        runTitle.alpha = 0.0f;
+        runTitle.alpha = 1.0f;
         [UIView transitionWithView:finishBut
                           duration:0.5f
                            options:UIViewAnimationOptionCurveLinear
@@ -819,10 +820,6 @@
 -(void)determineGoalAchieved
 {
     switch (run.targetMetric) {
-        case NoMetricType:
-            //do nothing
-            return;
-            break;
             
         case MetricTypePace:
             if(run.avgPace >= run.metricGoal)
@@ -837,6 +834,7 @@
             }
             else{
                 
+                goalAchieved = false;
                 [goalAchievedImage setHidden:true];
             }
             break;
@@ -853,6 +851,7 @@
             }
             else{
                 
+                goalAchieved = false;
                 [goalAchievedImage setHidden:true];
             }
             break;
@@ -869,6 +868,7 @@
             }
             else{
                 
+                goalAchieved = false;
                 [goalAchievedImage setHidden:true];
             }
             break;
@@ -885,10 +885,13 @@
             }
             else{
                 
+                goalAchieved = false;
                 [goalAchievedImage setHidden:true];
             }
             break;
         default:
+            goalAchieved = false;
+            [goalAchievedImage setHidden:true];
             break;
     }
     
@@ -1312,7 +1315,6 @@
     if(!run.live)
     {
         //set title
-        /*
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -1321,8 +1323,8 @@
         [dateFormatter setLocale:usLocale];
         
         [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
-         */
-        [runTitle setText:run.name];
+        
+        //[runTitle setText:run.name];
     }
     else{
         
@@ -3401,6 +3403,13 @@
     
     //zoom to show entire map
     [self zoomMapToEntireRun:iconMap];
+    
+    //cancel low signal animation
+    [lowSignalLabel setHidden:true];
+    lowSignal = false;
+    [goalAchievedLabel setHidden:true];
+    goalAchieved = false;
+    [runTitle setFrame:orgTitleLabelPosition];
     
     //start loading indicator
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
