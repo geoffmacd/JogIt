@@ -31,6 +31,8 @@
 #import "ThumbnailRecord.h"
 #import "RunRecord.h"
 
+#define loadTimeMinForProgress 300 //s , 5min
+
 
 @protocol MenuViewControllerDelegate <NSObject>
 

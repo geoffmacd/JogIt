@@ -39,7 +39,7 @@
 #define autoZoomPeriod 4 //seconds before auto zoom
 #define userDelaysAutoZoom 15 //second delays before autozoom
 #define reloadMapIconPeriod 3 // second reload map icon period
-#define autoPauseDelay 9 // seconds before app pauses
+#define autoPauseDelay 10 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
 #define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 1//m/s

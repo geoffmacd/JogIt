@@ -396,7 +396,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 }
 
 #pragma mark -
-#pragma mark Logger Interface
+#pragma mark Logger Interface with app delegate
 
 //also heierachical cell delegate method
 -(void)selectedRun:(id)sender
@@ -427,21 +427,31 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //need to fetch real record and fill with data points
         RunRecord * recordToLoad = [RunRecord MR_findFirstByAttribute:@"date" withValue:cell.associatedRun.date];
         
-        //lock slider before beginning load
-        [delegate lockBeforeLoad];
-        
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        //only show progress if cell is big enough to justify
+        if([[recordToLoad time] doubleValue] > loadTimeMinForProgress)
+        {
+            //lock slider before beginning load
+            [delegate lockBeforeLoad];
             
-            //takes a long time
-            RunEvent * runToLoad = [[RunEvent alloc] initWithRecordToLogger:recordToLoad];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-                //set logger with this run
-                [self.delegate loadRun:runToLoad close:true];
+            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+                
+                //takes a long time
+                RunEvent * runToLoad = [[RunEvent alloc] initWithRecordToLogger:recordToLoad];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                    //set logger with this run
+                    [self.delegate loadRun:runToLoad close:true];
+                });
             });
-        });
+        }
+        else
+        {
+            RunEvent * runToLoad = [[RunEvent alloc] initWithRecordToLogger:recordToLoad];
+            //set logger with this run
+            [self.delegate loadRun:runToLoad close:true];
+        }
         
         //refresh start cell
         runInProgressAsFarAsICanTell = false;
