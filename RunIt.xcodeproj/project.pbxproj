@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
 		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
-		672061701717729500BDF810 /* RunCompass.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 6720616F1717729500BDF810 /* RunCompass.sqlite */; };
 		6720617817177FFD00BDF810 /* LocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6720617717177FFD00BDF810 /* LocationRecord.m */; };
 		6720617A1717828D00BDF810 /* RunRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 672061791717828D00BDF810 /* RunRecord.m */; };
 		672152F616FA9B35003E15F8 /* settingsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F416FA9B35003E15F8 /* settingsicon.png */; };
@@ -255,7 +254,6 @@
 /* Begin PBXFileReference section */
 		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
-		6720616F1717729500BDF810 /* RunCompass.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = RunCompass.sqlite; sourceTree = "<group>"; };
 		6720617617177FFD00BDF810 /* LocationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationRecord.h; sourceTree = "<group>"; };
 		6720617717177FFD00BDF810 /* LocationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationRecord.m; sourceTree = "<group>"; };
 		672061791717828D00BDF810 /* RunRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunRecord.m; sourceTree = "<group>"; };
@@ -1154,7 +1152,6 @@
 				6720617617177FFD00BDF810 /* LocationRecord.h */,
 				6720617717177FFD00BDF810 /* LocationRecord.m */,
 				6792EC58170FDD5700EBAF2F /* Model.xcdatamodeld */,
-				6720616F1717729500BDF810 /* RunCompass.sqlite */,
 				67FC06C216A1D15900491C97 /* RunEvent.h */,
 				6779C10016EE3F1D002BCAEC /* RunEvent.m */,
 				6721F87F16AE39AB00FE84C5 /* RunMap.h */,
@@ -1376,7 +1373,6 @@
 				67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */,
 				67AD28EC171664F500B60FB0 /* nogoal.png in Resources */,
 				67AD28ED171664F500B60FB0 /* nogoal@2x.png in Resources */,
-				672061701717729500BDF810 /* RunCompass.sqlite in Resources */,
 				67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */,
 				67EA66DA1718F72D00BA21FE /* formula.png in Resources */,
 				67EA66DB1718F72D00BA21FE /* formula@2x.png in Resources */,
@@ -1606,6 +1602,8 @@
 		67236D3416409B7700DD13C5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
@@ -1624,6 +1622,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1631,6 +1631,8 @@
 		67236D3516409B7700DD13C5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
@@ -1649,6 +1651,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
