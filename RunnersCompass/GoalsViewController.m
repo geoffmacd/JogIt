@@ -90,43 +90,78 @@ static NSString * goalCellID = @"GoalCellPrototype";
     //already sorted so that first object is latest date
     for(RunEvent * runToConsider in tempArray)
     {
-        if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
-            ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
+        if(curGoal.endDate)
         {
-            [sortedRunsForGoal addObject:runToConsider];
-            
-            //calc  value for goal
-            switch(curGoal.type)
+            if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
+                ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
             {
-                case GoalTypeCalories:
-                    if(runToConsider.calories < minValueForGoal)
-                        minValueForGoal = runToConsider.calories;
-                    else if(runToConsider.calories > maxValueForGoal)
-                        maxValueForGoal = runToConsider.calories ;
-                    break;
-                case GoalTypeOneDistance:
-                    //not used
-                    break;
-                case GoalTypeRace:
-                    if(runToConsider.avgPace < minValueForGoal)
-                        minValueForGoal = runToConsider.avgPace;
-                    else if(runToConsider.avgPace > maxValueForGoal)
-                        maxValueForGoal = runToConsider.avgPace ;
-                    break;
-                case GoalTypeTotalDistance:
-                    if(runToConsider.distance < minValueForGoal)
-                        minValueForGoal = runToConsider.distance;
-                    else if(runToConsider.distance > maxValueForGoal)
-                        maxValueForGoal = runToConsider.distance ;
-                    break;
-                default:
-                    break;
+                [sortedRunsForGoal addObject:runToConsider];
+                
+                //calc  value for goal
+                switch(curGoal.type)
+                {
+                    case GoalTypeCalories:
+                        if(runToConsider.calories < minValueForGoal)
+                            minValueForGoal = runToConsider.calories;
+                        else if(runToConsider.calories > maxValueForGoal)
+                            maxValueForGoal = runToConsider.calories ;
+                        break;
+                    case GoalTypeOneDistance:
+                        //not used
+                        break;
+                    case GoalTypeRace:
+                        if(runToConsider.avgPace < minValueForGoal)
+                            minValueForGoal = runToConsider.avgPace;
+                        else if(runToConsider.avgPace > maxValueForGoal)
+                            maxValueForGoal = runToConsider.avgPace ;
+                        break;
+                    case GoalTypeTotalDistance:
+                        if(runToConsider.distance < minValueForGoal)
+                            minValueForGoal = runToConsider.distance;
+                        else if(runToConsider.distance > maxValueForGoal)
+                            maxValueForGoal = runToConsider.distance ;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if ([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending)
+            {
+                [sortedRunsForGoal addObject:runToConsider];
+                
+                //calc  value for goal
+                switch(curGoal.type)
+                {
+                    case GoalTypeCalories:
+                        if(runToConsider.calories < minValueForGoal)
+                            minValueForGoal = runToConsider.calories;
+                        else if(runToConsider.calories > maxValueForGoal)
+                            maxValueForGoal = runToConsider.calories ;
+                        break;
+                    case GoalTypeOneDistance:
+                        //not used
+                        break;
+                    case GoalTypeRace:
+                        if(runToConsider.avgPace < minValueForGoal)
+                            minValueForGoal = runToConsider.avgPace;
+                        else if(runToConsider.avgPace > maxValueForGoal)
+                            maxValueForGoal = runToConsider.avgPace ;
+                        break;
+                    case GoalTypeTotalDistance:
+                        if(runToConsider.distance < minValueForGoal)
+                            minValueForGoal = runToConsider.distance;
+                        else if(runToConsider.distance > maxValueForGoal)
+                            maxValueForGoal = runToConsider.distance ;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
-    
-    //needs to have a max
-    //NSAssert(maxValueForGoal > 0, @"no max run value set");
     
     //set correct number of rows to show
     goalRunCount = [sortedRunsForGoal count];

@@ -517,10 +517,16 @@
 
 -(BOOL)validateGoalEntry:(BOOL)metric
 {
+    /*
     if(!self.endDate)
         return false;
-    if([self.endDate compare:self.startDate ] == NSOrderedAscending)
-        return false;
+     */
+    if(self.endDate)
+    {
+        //only check order if end date exists in the first place
+        if([self.endDate compare:self.startDate ] == NSOrderedAscending)
+            return false;
+    }
     
     
     //switch between metric to determine label for metric description
@@ -551,6 +557,12 @@
         case GoalTypeTotalDistance:
             if(value)
             {
+                if([value integerValue] <= 0)
+                {
+                    //must be greater than 0
+                    return false;
+                }
+                
                 //get to m from km
                 value = [NSNumber numberWithInt:[value integerValue] * 1000];
                 //could be a mile figure

@@ -35,16 +35,16 @@
     switch(goalType)
     {
         case GoalTypeCalories:
-            [goalImage setImage:[UIImage imageNamed:@"fatperson.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"whitecalories.png"]];
             break;
         case GoalTypeOneDistance:
             [goalImage setImage:[UIImage imageNamed:@"medal.png"]];
             break;
         case GoalTypeRace:
-            [goalImage setImage:[UIImage imageNamed:@"whiteclock.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"whitespeed.png"]];
             break;
         case GoalTypeTotalDistance:
-            [goalImage setImage:[UIImage imageNamed:@"odometer.png"]];
+            [goalImage setImage:[UIImage imageNamed:@"whiteodometer.png"]];
             break;
         default:
             break;

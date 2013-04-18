@@ -35,6 +35,9 @@
 		672D7125171F5AC60054E9EB /* FinishAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D7122171F5AC50054E9EB /* FinishAnnotation.m */; };
 		672D7126171F5AC60054E9EB /* StartAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D7124171F5AC60054E9EB /* StartAnnotation.m */; };
 		6735780D16D71CE1004A92D1 /* TimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6735780C16D71CE1004A92D1 /* TimePicker.m */; };
+		6747F62A171F92FF00B23C58 /* whitecalories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F627171F92FF00B23C58 /* whitecalories@2x.png */; };
+		6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F628171F92FF00B23C58 /* whiteodometer@2x.png */; };
+		6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F629171F92FF00B23C58 /* whitespeed@2x.png */; };
 		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
 		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
@@ -297,6 +300,9 @@
 		672D7124171F5AC60054E9EB /* StartAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartAnnotation.m; sourceTree = "<group>"; };
 		6735780B16D71CE1004A92D1 /* TimePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePicker.h; sourceTree = "<group>"; };
 		6735780C16D71CE1004A92D1 /* TimePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePicker.m; sourceTree = "<group>"; };
+		6747F627171F92FF00B23C58 /* whitecalories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitecalories@2x.png"; sourceTree = "<group>"; };
+		6747F628171F92FF00B23C58 /* whiteodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteodometer@2x.png"; sourceTree = "<group>"; };
+		6747F629171F92FF00B23C58 /* whitespeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitespeed@2x.png"; sourceTree = "<group>"; };
 		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		674C90A716F94EF10078DD8E /* PerformanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceVC.h; sourceTree = "<group>"; };
 		674C90A816F94EF10078DD8E /* PerformanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceVC.m; sourceTree = "<group>"; };
@@ -910,6 +916,9 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6747F627171F92FF00B23C58 /* whitecalories@2x.png */,
+				6747F628171F92FF00B23C58 /* whiteodometer@2x.png */,
+				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
 				67E544B1171B958400D5C9DF /* stroke@2x.png */,
 				67E544AF171B951400D5C9DF /* norunwoman@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
@@ -1394,6 +1403,9 @@
 				67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */,
 				67E544BE171B9CA800D5C9DF /* NotificationVC.xib in Resources */,
 				672D7120171E49850054E9EB /* GoalNotifyVC.xib in Resources */,
+				6747F62A171F92FF00B23C58 /* whitecalories@2x.png in Resources */,
+				6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */,
+				6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

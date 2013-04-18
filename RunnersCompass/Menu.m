@@ -523,10 +523,20 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             //already sorted so that first object is latest date
             for(RunEvent * runToConsider in runs)
             {
-                if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
-                    ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
+                if(curGoal.endDate)
                 {
-                    [runsToProcess addObject:runToConsider];
+                    if (([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending) &&
+                        ([runToConsider.date compare:curGoal.endDate] == NSOrderedAscending))
+                    {
+                        [runsToProcess addObject:runToConsider];
+                    }
+                }
+                else
+                {
+                    if ([runToConsider.date compare:curGoal.startDate ] == NSOrderedDescending)
+                    {
+                        [runsToProcess addObject:runToConsider];
+                    }
                 }
             }
             

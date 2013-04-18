@@ -57,6 +57,9 @@
         
         [formMapping buttonSave:NSLocalizedString(@"CreateGoalButton", @"Create goal in edit screen") handler:^{
             
+            //validates all forms first
+            [self.formModel save];
+            
             //confirm goal is valid before saving, this will handle error validation as well
             if([tempGoal validateGoalEntry:[[prefs metric] boolValue]])
             {
@@ -78,6 +81,15 @@
         {
             [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeInteger];
             
+            //validation
+            [formMapping validationForAttribute:@"value" validBlock:^BOOL(NSString *value, id object) {
+                //requires enddate to at least be entered
+                return [tempGoal.value integerValue] > 0;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return NSLocalizedString(@"GoalValidationDistanceError", @"validation for distance being 0 or less");
+            }];
+            
         }
         else if(tempGoal.type == GoalTypeCalories)
         {
@@ -96,6 +108,15 @@
                         return value;
                         
                     }];
+            
+            //validation
+            [formMapping validationForAttribute:@"weight" validBlock:^BOOL(NSString *value, id object) {
+                //requires enddate to at least be entered
+                return tempGoal.weight;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return NSLocalizedString(@"GoalValidationWeightError", @"validation for no weight");
+            }];
             
         }
         else if(tempGoal.type == GoalTypeOneDistance || tempGoal.type == GoalTypeRace)//need the race selector for races
@@ -116,6 +137,14 @@
                     
                 }];
             
+            //validation
+            [formMapping validationForAttribute:@"race" validBlock:^BOOL(NSString *value, id object) {
+                //requires enddate to at least be entered
+                return tempGoal.race;
+                
+            } errorMessageBlock:^NSString *(id value, id object) {
+                return NSLocalizedString(@"GoalValidationRaceError", @"validation for no race");
+            }];
         }
         
         //only if it exists do we use the time parameter
@@ -123,7 +152,7 @@
         {
             [formMapping mapAttribute:@"time" title:valueText2 type:FKFormAttributeMappingTypeTime];
             
-            //validationn
+            //validation
             [formMapping validationForAttribute:@"time" validBlock:^BOOL(NSString *value, id object) {
                 return tempGoal.time;
                 
@@ -158,9 +187,9 @@
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
-        //validationn
+        //validation
         [formMapping validationForAttribute:@"endDate" validBlock:^BOOL(NSString *value, id object) {
-            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending;
+            return [tempGoal.endDate compare:tempGoal.startDate ] == NSOrderedDescending || !tempGoal.endDate;
             
         } errorMessageBlock:^NSString *(id value, id object) {
             return NSLocalizedString(@"GoalValidationDateError", @"validation for dates being incorrect order");//@"Target date must be after start!";

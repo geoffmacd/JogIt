@@ -108,22 +108,22 @@
             [prCell setDelegate:self];
             [prCell setPrefs:prefs];
             
-            NSString * fastestString = @"";
+            NSString * fastestString = @"---";
             RunEvent * fastestRun = [analysis fastestRun];
             if(fastestRun)
                 fastestString = [RunEvent getPaceString:fastestRun.avgPace withMetric:[prefs.metric boolValue] showSpeed:[prefs.showSpeed boolValue]];
             
-            NSString * furthestString = @"";
+            NSString * furthestString = @"---";
             RunEvent * furthestRun = [analysis furthestRun];
             if(furthestRun)
                 furthestString = [NSString stringWithFormat:@"%.1f",[RunEvent getDisplayDistance:furthestRun.distance  withMetric:[prefs.metric boolValue]] ];
             
-            NSString * caloriesString = @"";
+            NSString * caloriesString = @"---";
             RunEvent * caloriesRun = [analysis caloriesRun];
             if(caloriesRun)
                 caloriesString = [NSString stringWithFormat:@"%.0f",caloriesRun.calories];
             
-            NSString * longestString = @"";
+            NSString * longestString = @"---";
             RunEvent * longestRun = [analysis longestRun];
             if(longestRun)
                 longestString = [RunEvent getTimeString:longestRun.time];
