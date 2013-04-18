@@ -12,6 +12,7 @@
 #import "JSSlidingViewController.h"
 #import "CorePlot-CocoaTouch.h"
 #import "Util.h"
+#import "AnimationUtil.h"
 #import "KMAnnotation.h"
 #import "MileAnnotation.h"
 #import "UserPrefs.h"
@@ -149,6 +150,9 @@
     BOOL lowSignal;
     BOOL animatingLowSignal;
     CGRect orgTitleLabelPosition;
+    //goal acheived label
+    BOOL goalAchieved;
+    BOOL animatingGoalAchieved;
     
     //ghost
     CGRect orgDistanceLabelPosition;
@@ -215,6 +219,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lowSignalLabel;
 @property (weak, nonatomic) IBOutlet UIView *titleView;
 @property (weak, nonatomic) IBOutlet UILabel *autopauseLabel;
+@property (weak, nonatomic) IBOutlet UILabel *goalAchievedLabel;
 
 
 //IB

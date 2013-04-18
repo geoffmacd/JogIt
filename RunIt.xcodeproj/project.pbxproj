@@ -38,6 +38,7 @@
 		6747F62A171F92FF00B23C58 /* whitecalories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F627171F92FF00B23C58 /* whitecalories@2x.png */; };
 		6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F628171F92FF00B23C58 /* whiteodometer@2x.png */; };
 		6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F629171F92FF00B23C58 /* whitespeed@2x.png */; };
+		6747F62E171F9DB900B23C58 /* redcheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F62D171F9DB900B23C58 /* redcheck@2x.png */; };
 		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
 		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
@@ -46,15 +47,6 @@
 		674C90B716F956350078DD8E /* PredictHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90B216F956340078DD8E /* PredictHeaderCell.xib */; };
 		674C90B916F956350078DD8E /* PredictorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90B516F956350078DD8E /* PredictorVC.m */; };
 		674C90BB16F958350078DD8E /* Predictor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90BA16F958350078DD8E /* Predictor.xib */; };
-		674C90BF16F9697F0078DD8E /* lightgraybutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90BE16F9697F0078DD8E /* lightgraybutton.png */; };
-		674C90C816F9716C0078DD8E /* lowsignal.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C016F9716C0078DD8E /* lowsignal.png */; };
-		674C90C916F9716C0078DD8E /* lowsignal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C116F9716C0078DD8E /* lowsignal@2x.png */; };
-		674C90CA16F9716C0078DD8E /* lowsignal1.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C216F9716C0078DD8E /* lowsignal1.png */; };
-		674C90CB16F9716C0078DD8E /* lowsignal1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C316F9716C0078DD8E /* lowsignal1@2x.png */; };
-		674C90CC16F9716C0078DD8E /* lowsignal2.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C416F9716C0078DD8E /* lowsignal2.png */; };
-		674C90CD16F9716C0078DD8E /* lowsignal2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C516F9716C0078DD8E /* lowsignal2@2x.png */; };
-		674C90CE16F9716C0078DD8E /* lowsignal3.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C616F9716C0078DD8E /* lowsignal3.png */; };
-		674C90CF16F9716C0078DD8E /* lowsignal3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 674C90C716F9716C0078DD8E /* lowsignal3@2x.png */; };
 		676CA82616D70A5B00E4B121 /* AbstractRunFormPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */; };
 		6779C0F716EE3C81002BCAEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6779C0F916EE3C81002BCAEC /* Localizable.strings */; };
 		6779C10116EE3F1D002BCAEC /* RunEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779C10016EE3F1D002BCAEC /* RunEvent.m */; };
@@ -98,8 +90,6 @@
 		67AA3EA3170FD653004181AC /* MagicalRecord+ShorthandSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E86170FD653004181AC /* MagicalRecord+ShorthandSupport.m */; };
 		67AA3EA4170FD653004181AC /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E88170FD653004181AC /* MagicalRecord.m */; };
 		67AA3EA7170FDBB7004181AC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67AA3EA6170FDBB7004181AC /* CoreData.framework */; };
-		67AD28EC171664F500B60FB0 /* nogoal.png in Resources */ = {isa = PBXBuildFile; fileRef = 67AD28EA171664F500B60FB0 /* nogoal.png */; };
-		67AD28ED171664F500B60FB0 /* nogoal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67AD28EB171664F500B60FB0 /* nogoal@2x.png */; };
 		67AED68A16D72069007F6943 /* PacePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AED68916D72069007F6943 /* PacePicker.m */; };
 		67AF65D316D9A139004A484C /* GoalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AF65D216D9A138004A484C /* GoalCell.m */; };
 		67AF65D516D9A151004A484C /* GoalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67AF65D416D9A151004A484C /* GoalCell.xib */; };
@@ -134,12 +124,6 @@
 		67B2580D16EFF8D900CF337E /* celldivision.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2580B16EFF8D900CF337E /* celldivision.png */; };
 		67B2581516EFFC2C00CF337E /* progress-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2581316EFFC2C00CF337E /* progress-bar-bg.png */; };
 		67B2581616EFFC2C00CF337E /* progress-bar-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2581416EFFC2C00CF337E /* progress-bar-fill.png */; };
-		67B2582716F00B2E00CF337E /* fatperson.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2581F16F00B2D00CF337E /* fatperson.png */; };
-		67B2582816F00B2E00CF337E /* fatperson@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582016F00B2D00CF337E /* fatperson@2x.png */; };
-		67B2582916F00B2E00CF337E /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582116F00B2D00CF337E /* flag.png */; };
-		67B2582A16F00B2E00CF337E /* flag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582216F00B2E00CF337E /* flag@2x.png */; };
-		67B2582B16F00B2E00CF337E /* odometer.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582316F00B2E00CF337E /* odometer.png */; };
-		67B2582C16F00B2E00CF337E /* odometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582416F00B2E00CF337E /* odometer@2x.png */; };
 		67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582516F00B2E00CF337E /* whiteclock.png */; };
 		67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582616F00B2E00CF337E /* whiteclock@2x.png */; };
 		67B2583016F0123100CF337E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B2582F16F0123100CF337E /* MapKit.framework */; };
@@ -186,12 +170,7 @@
 		67C8E31D16D1A1E500E4DE11 /* EditGoalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E31B16D1A1E500E4DE11 /* EditGoalViewController.xib */; };
 		67C8E34E16D1D4E300E4DE11 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67C8E34B16D1D4D100E4DE11 /* libCorePlot-CocoaTouch.a */; };
 		67CAFC7B16C3254D00C99BD6 /* UserPrefs.m in Sources */ = {isa = PBXBuildFile; fileRef = 67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */; };
-		67CFCCB8170280B10028CF70 /* calories.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB0170280B10028CF70 /* calories.png */; };
 		67CFCCB9170280B10028CF70 /* calories@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB1170280B10028CF70 /* calories@2x.png */; };
-		67CFCCBA170280B10028CF70 /* distance.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB2170280B10028CF70 /* distance.png */; };
-		67CFCCBB170280B10028CF70 /* distance@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB3170280B10028CF70 /* distance@2x.png */; };
-		67CFCCBC170280B10028CF70 /* shoe.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB4170280B10028CF70 /* shoe.png */; };
-		67CFCCBD170280B10028CF70 /* shoe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB5170280B10028CF70 /* shoe@2x.png */; };
 		67CFCCBE170280B10028CF70 /* speed.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB6170280B10028CF70 /* speed.png */; };
 		67CFCCBF170280B10028CF70 /* speed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB7170280B10028CF70 /* speed@2x.png */; };
 		67CFCCC4170281BB0028CF70 /* bigclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC2170281BB0028CF70 /* bigclock.png */; };
@@ -206,7 +185,6 @@
 		67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AB171B66AC00D5C9DF /* startrunner@2x.png */; };
 		67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AD171B69A900D5C9DF /* blackodometer@2x.png */; };
 		67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544AF171B951400D5C9DF /* norunwoman@2x.png */; };
-		67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67E544B1171B958400D5C9DF /* stroke@2x.png */; };
 		67E544B7171B9C2700D5C9DF /* MJPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544B4171B9C2400D5C9DF /* MJPopupBackgroundView.m */; };
 		67E544B8171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544B6171B9C2700D5C9DF /* UIViewController+MJPopupViewController.m */; };
 		67E544BD171B9CA800D5C9DF /* NotificationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67E544BB171B9CA800D5C9DF /* NotificationVC.m */; };
@@ -224,8 +202,6 @@
 		67EA66EC171A51BD00BA21FE /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66EB171A51BD00BA21FE /* check@2x.png */; };
 		67EA66F0171A5F8100BA21FE /* PRCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EA66EE171A5F7E00BA21FE /* PRCell.m */; };
 		67EA66F1171A5F8100BA21FE /* PRCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67EA66EF171A5F8000BA21FE /* PRCell.xib */; };
-		67F6D51C16FA871D00790A22 /* runningman.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D51A16FA871D00790A22 /* runningman.png */; };
-		67F6D51D16FA871D00790A22 /* runningman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D51B16FA871D00790A22 /* runningman@2x.png */; };
 		67F6D52216FA8CE100790A22 /* medal.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52016FA8CE100790A22 /* medal.png */; };
 		67F6D52316FA8CE100790A22 /* medal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52116FA8CE100790A22 /* medal@2x.png */; };
 		67F6D52616FA8D6800790A22 /* whitepause.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52416FA8D6800790A22 /* whitepause.png */; };
@@ -303,6 +279,7 @@
 		6747F627171F92FF00B23C58 /* whitecalories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitecalories@2x.png"; sourceTree = "<group>"; };
 		6747F628171F92FF00B23C58 /* whiteodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteodometer@2x.png"; sourceTree = "<group>"; };
 		6747F629171F92FF00B23C58 /* whitespeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitespeed@2x.png"; sourceTree = "<group>"; };
+		6747F62D171F9DB900B23C58 /* redcheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redcheck@2x.png"; sourceTree = "<group>"; };
 		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		674C90A716F94EF10078DD8E /* PerformanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceVC.h; sourceTree = "<group>"; };
 		674C90A816F94EF10078DD8E /* PerformanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceVC.m; sourceTree = "<group>"; };
@@ -315,15 +292,6 @@
 		674C90B416F956350078DD8E /* PredictorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PredictorVC.h; sourceTree = "<group>"; };
 		674C90B516F956350078DD8E /* PredictorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PredictorVC.m; sourceTree = "<group>"; };
 		674C90BA16F958350078DD8E /* Predictor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Predictor.xib; sourceTree = "<group>"; };
-		674C90BE16F9697F0078DD8E /* lightgraybutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightgraybutton.png; sourceTree = "<group>"; };
-		674C90C016F9716C0078DD8E /* lowsignal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal.png; sourceTree = "<group>"; };
-		674C90C116F9716C0078DD8E /* lowsignal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal@2x.png"; sourceTree = "<group>"; };
-		674C90C216F9716C0078DD8E /* lowsignal1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal1.png; sourceTree = "<group>"; };
-		674C90C316F9716C0078DD8E /* lowsignal1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal1@2x.png"; sourceTree = "<group>"; };
-		674C90C416F9716C0078DD8E /* lowsignal2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal2.png; sourceTree = "<group>"; };
-		674C90C516F9716C0078DD8E /* lowsignal2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal2@2x.png"; sourceTree = "<group>"; };
-		674C90C616F9716C0078DD8E /* lowsignal3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lowsignal3.png; sourceTree = "<group>"; };
-		674C90C716F9716C0078DD8E /* lowsignal3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lowsignal3@2x.png"; sourceTree = "<group>"; };
 		676CA81B16D70A5B00E4B121 /* AbstractRunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractRunFormPicker.h; sourceTree = "<group>"; };
 		676CA81C16D70A5B00E4B121 /* AbstractRunFormPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractRunFormPicker.m; sourceTree = "<group>"; };
 		676CA82116D70A5B00E4B121 /* RunFormPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunFormPicker.h; sourceTree = "<group>"; };
@@ -405,8 +373,6 @@
 		67AA3E89170FD653004181AC /* MagicalRecordShorthand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalRecordShorthand.h; sourceTree = "<group>"; };
 		67AA3E8A170FD653004181AC /* CoreData+MagicalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreData+MagicalRecord.h"; sourceTree = "<group>"; };
 		67AA3EA6170FDBB7004181AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		67AD28EA171664F500B60FB0 /* nogoal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nogoal.png; sourceTree = "<group>"; };
-		67AD28EB171664F500B60FB0 /* nogoal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nogoal@2x.png"; sourceTree = "<group>"; };
 		67AED68816D72069007F6943 /* PacePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PacePicker.h; sourceTree = "<group>"; };
 		67AED68916D72069007F6943 /* PacePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PacePicker.m; sourceTree = "<group>"; };
 		67AF65D116D9A138004A484C /* GoalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalCell.h; sourceTree = "<group>"; };
@@ -446,12 +412,6 @@
 		67B2580B16EFF8D900CF337E /* celldivision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celldivision.png; sourceTree = "<group>"; };
 		67B2581316EFFC2C00CF337E /* progress-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "progress-bar-bg.png"; path = "Graphics/progress-bar-bg.png"; sourceTree = SOURCE_ROOT; };
 		67B2581416EFFC2C00CF337E /* progress-bar-fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "progress-bar-fill.png"; path = "Graphics/progress-bar-fill.png"; sourceTree = SOURCE_ROOT; };
-		67B2581F16F00B2D00CF337E /* fatperson.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fatperson.png; sourceTree = "<group>"; };
-		67B2582016F00B2D00CF337E /* fatperson@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fatperson@2x.png"; sourceTree = "<group>"; };
-		67B2582116F00B2D00CF337E /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
-		67B2582216F00B2E00CF337E /* flag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flag@2x.png"; sourceTree = "<group>"; };
-		67B2582316F00B2E00CF337E /* odometer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = odometer.png; sourceTree = "<group>"; };
-		67B2582416F00B2E00CF337E /* odometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "odometer@2x.png"; sourceTree = "<group>"; };
 		67B2582516F00B2E00CF337E /* whiteclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteclock.png; sourceTree = "<group>"; };
 		67B2582616F00B2E00CF337E /* whiteclock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteclock@2x.png"; sourceTree = "<group>"; };
 		67B2582F16F0123100CF337E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -546,12 +506,7 @@
 		67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CorePlot-CocoaTouch.xcodeproj"; path = "CorePlot/framework/CorePlot-CocoaTouch.xcodeproj"; sourceTree = "<group>"; };
 		67CAFC7916C3254D00C99BD6 /* UserPrefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPrefs.h; sourceTree = "<group>"; };
 		67CAFC7A16C3254D00C99BD6 /* UserPrefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPrefs.m; sourceTree = "<group>"; };
-		67CFCCB0170280B10028CF70 /* calories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calories.png; sourceTree = "<group>"; };
 		67CFCCB1170280B10028CF70 /* calories@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "calories@2x.png"; sourceTree = "<group>"; };
-		67CFCCB2170280B10028CF70 /* distance.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = distance.png; sourceTree = "<group>"; };
-		67CFCCB3170280B10028CF70 /* distance@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "distance@2x.png"; sourceTree = "<group>"; };
-		67CFCCB4170280B10028CF70 /* shoe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shoe.png; sourceTree = "<group>"; };
-		67CFCCB5170280B10028CF70 /* shoe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shoe@2x.png"; sourceTree = "<group>"; };
 		67CFCCB6170280B10028CF70 /* speed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speed.png; sourceTree = "<group>"; };
 		67CFCCB7170280B10028CF70 /* speed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speed@2x.png"; sourceTree = "<group>"; };
 		67CFCCC2170281BB0028CF70 /* bigclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigclock.png; sourceTree = "<group>"; };
@@ -569,7 +524,6 @@
 		67E544AB171B66AC00D5C9DF /* startrunner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startrunner@2x.png"; sourceTree = "<group>"; };
 		67E544AD171B69A900D5C9DF /* blackodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackodometer@2x.png"; sourceTree = "<group>"; };
 		67E544AF171B951400D5C9DF /* norunwoman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "norunwoman@2x.png"; sourceTree = "<group>"; };
-		67E544B1171B958400D5C9DF /* stroke@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stroke@2x.png"; sourceTree = "<group>"; };
 		67E544B3171B9C2300D5C9DF /* MJPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MJPopupBackgroundView.h; path = MJPopupViewController/MJPopupBackgroundView.h; sourceTree = "<group>"; };
 		67E544B4171B9C2400D5C9DF /* MJPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MJPopupBackgroundView.m; path = MJPopupViewController/MJPopupBackgroundView.m; sourceTree = "<group>"; };
 		67E544B5171B9C2500D5C9DF /* UIViewController+MJPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+MJPopupViewController.h"; path = "MJPopupViewController/UIViewController+MJPopupViewController.h"; sourceTree = "<group>"; };
@@ -589,8 +543,6 @@
 		67EA66ED171A5F7D00BA21FE /* PRCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRCell.h; sourceTree = "<group>"; };
 		67EA66EE171A5F7E00BA21FE /* PRCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRCell.m; sourceTree = "<group>"; };
 		67EA66EF171A5F8000BA21FE /* PRCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PRCell.xib; sourceTree = "<group>"; };
-		67F6D51A16FA871D00790A22 /* runningman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = runningman.png; sourceTree = "<group>"; };
-		67F6D51B16FA871D00790A22 /* runningman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "runningman@2x.png"; sourceTree = "<group>"; };
 		67F6D52016FA8CE100790A22 /* medal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = medal.png; sourceTree = "<group>"; };
 		67F6D52116FA8CE100790A22 /* medal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "medal@2x.png"; sourceTree = "<group>"; };
 		67F6D52416FA8D6800790A22 /* whitepause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitepause.png; sourceTree = "<group>"; };
@@ -916,11 +868,7 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				6747F627171F92FF00B23C58 /* whitecalories@2x.png */,
-				6747F628171F92FF00B23C58 /* whiteodometer@2x.png */,
-				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
-				67E544B1171B958400D5C9DF /* stroke@2x.png */,
-				67E544AF171B951400D5C9DF /* norunwoman@2x.png */,
+				6747F62D171F9DB900B23C58 /* redcheck@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -928,17 +876,10 @@
 				67CFCCC2170281BB0028CF70 /* bigclock.png */,
 				67CFCCC3170281BB0028CF70 /* bigclock@2x.png */,
 				67E544AD171B69A900D5C9DF /* blackodometer@2x.png */,
-				67CFCCB0170280B10028CF70 /* calories.png */,
 				67CFCCB1170280B10028CF70 /* calories@2x.png */,
 				67B2580B16EFF8D900CF337E /* celldivision.png */,
 				67EA66EB171A51BD00BA21FE /* check@2x.png */,
 				67E544A7171B65C600D5C9DF /* compose@2x.png */,
-				67CFCCB2170280B10028CF70 /* distance.png */,
-				67CFCCB3170280B10028CF70 /* distance@2x.png */,
-				67B2581F16F00B2D00CF337E /* fatperson.png */,
-				67B2582016F00B2D00CF337E /* fatperson@2x.png */,
-				67B2582116F00B2D00CF337E /* flag.png */,
-				67B2582216F00B2E00CF337E /* flag@2x.png */,
 				67EA66D81718F72D00BA21FE /* formula.png */,
 				67EA66D91718F72D00BA21FE /* formula@2x.png */,
 				67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */,
@@ -953,22 +894,10 @@
 				67B257E016EFF13A00CF337E /* hamburger@2x.png */,
 				67E544A8171B65C600D5C9DF /* hourglass@2x.png */,
 				67EA66E9171A4B5A00BA21FE /* ladder@2x.png */,
-				674C90BE16F9697F0078DD8E /* lightgraybutton.png */,
-				674C90C016F9716C0078DD8E /* lowsignal.png */,
-				674C90C216F9716C0078DD8E /* lowsignal1.png */,
-				674C90C316F9716C0078DD8E /* lowsignal1@2x.png */,
-				674C90C416F9716C0078DD8E /* lowsignal2.png */,
-				674C90C516F9716C0078DD8E /* lowsignal2@2x.png */,
-				674C90C616F9716C0078DD8E /* lowsignal3.png */,
-				674C90C716F9716C0078DD8E /* lowsignal3@2x.png */,
-				674C90C116F9716C0078DD8E /* lowsignal@2x.png */,
 				67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */,
 				67F6D52016FA8CE100790A22 /* medal.png */,
 				67F6D52116FA8CE100790A22 /* medal@2x.png */,
-				67AD28EA171664F500B60FB0 /* nogoal.png */,
-				67AD28EB171664F500B60FB0 /* nogoal@2x.png */,
-				67B2582316F00B2E00CF337E /* odometer.png */,
-				67B2582416F00B2E00CF337E /* odometer@2x.png */,
+				67E544AF171B951400D5C9DF /* norunwoman@2x.png */,
 				67B257E116EFF13A00CF337E /* pause.png */,
 				67B257E216EFF13A00CF337E /* pause@2x.png */,
 				67B2581316EFFC2C00CF337E /* progress-bar-bg.png */,
@@ -977,14 +906,10 @@
 				67B257E416EFF13A00CF337E /* pull@2x.png */,
 				67B257E516EFF13A00CF337E /* record.png */,
 				67B257E616EFF13A00CF337E /* record@2x.png */,
-				67F6D51A16FA871D00790A22 /* runningman.png */,
-				67F6D51B16FA871D00790A22 /* runningman@2x.png */,
 				672152F416FA9B35003E15F8 /* settingsicon.png */,
 				672152F516FA9B35003E15F8 /* settingsicon@2x.png */,
 				67B257E916EFF13A00CF337E /* share.png */,
 				67B257EA16EFF13A00CF337E /* share@2x.png */,
-				67CFCCB4170280B10028CF70 /* shoe.png */,
-				67CFCCB5170280B10028CF70 /* shoe@2x.png */,
 				67CFCCB6170280B10028CF70 /* speed.png */,
 				67CFCCB7170280B10028CF70 /* speed@2x.png */,
 				67E544AB171B66AC00D5C9DF /* startrunner@2x.png */,
@@ -992,10 +917,13 @@
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,
 				67B257EE16EFF13B00CF337E /* triangle@2x.png */,
+				6747F627171F92FF00B23C58 /* whitecalories@2x.png */,
 				67B2582516F00B2E00CF337E /* whiteclock.png */,
 				67B2582616F00B2E00CF337E /* whiteclock@2x.png */,
+				6747F628171F92FF00B23C58 /* whiteodometer@2x.png */,
 				67F6D52416FA8D6800790A22 /* whitepause.png */,
 				67F6D52516FA8D6800790A22 /* whitepause@2x.png */,
+				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
 			);
 			path = "Retina Graphics";
 			sourceTree = SOURCE_ROOT;
@@ -1339,29 +1267,12 @@
 				67B2580D16EFF8D900CF337E /* celldivision.png in Resources */,
 				67B2581516EFFC2C00CF337E /* progress-bar-bg.png in Resources */,
 				67B2581616EFFC2C00CF337E /* progress-bar-fill.png in Resources */,
-				67B2582716F00B2E00CF337E /* fatperson.png in Resources */,
-				67B2582816F00B2E00CF337E /* fatperson@2x.png in Resources */,
-				67B2582916F00B2E00CF337E /* flag.png in Resources */,
-				67B2582A16F00B2E00CF337E /* flag@2x.png in Resources */,
-				67B2582B16F00B2E00CF337E /* odometer.png in Resources */,
-				67B2582C16F00B2E00CF337E /* odometer@2x.png in Resources */,
 				67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */,
 				67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */,
 				674C90AC16F94EF10078DD8E /* Performance.xib in Resources */,
 				674C90AF16F94EF10078DD8E /* PermHeaderCell.xib in Resources */,
 				674C90B716F956350078DD8E /* PredictHeaderCell.xib in Resources */,
 				674C90BB16F958350078DD8E /* Predictor.xib in Resources */,
-				674C90BF16F9697F0078DD8E /* lightgraybutton.png in Resources */,
-				674C90C816F9716C0078DD8E /* lowsignal.png in Resources */,
-				674C90C916F9716C0078DD8E /* lowsignal@2x.png in Resources */,
-				674C90CA16F9716C0078DD8E /* lowsignal1.png in Resources */,
-				674C90CB16F9716C0078DD8E /* lowsignal1@2x.png in Resources */,
-				674C90CC16F9716C0078DD8E /* lowsignal2.png in Resources */,
-				674C90CD16F9716C0078DD8E /* lowsignal2@2x.png in Resources */,
-				674C90CE16F9716C0078DD8E /* lowsignal3.png in Resources */,
-				674C90CF16F9716C0078DD8E /* lowsignal3@2x.png in Resources */,
-				67F6D51C16FA871D00790A22 /* runningman.png in Resources */,
-				67F6D51D16FA871D00790A22 /* runningman@2x.png in Resources */,
 				67F6D52216FA8CE100790A22 /* medal.png in Resources */,
 				67F6D52316FA8CE100790A22 /* medal@2x.png in Resources */,
 				67F6D52616FA8D6800790A22 /* whitepause.png in Resources */,
@@ -1370,18 +1281,11 @@
 				67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */,
 				672152F616FA9B35003E15F8 /* settingsicon.png in Resources */,
 				672152F716FA9B35003E15F8 /* settingsicon@2x.png in Resources */,
-				67CFCCB8170280B10028CF70 /* calories.png in Resources */,
 				67CFCCB9170280B10028CF70 /* calories@2x.png in Resources */,
-				67CFCCBA170280B10028CF70 /* distance.png in Resources */,
-				67CFCCBB170280B10028CF70 /* distance@2x.png in Resources */,
-				67CFCCBC170280B10028CF70 /* shoe.png in Resources */,
-				67CFCCBD170280B10028CF70 /* shoe@2x.png in Resources */,
 				67CFCCBE170280B10028CF70 /* speed.png in Resources */,
 				67CFCCBF170280B10028CF70 /* speed@2x.png in Resources */,
 				67CFCCC4170281BB0028CF70 /* bigclock.png in Resources */,
 				67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */,
-				67AD28EC171664F500B60FB0 /* nogoal.png in Resources */,
-				67AD28ED171664F500B60FB0 /* nogoal@2x.png in Resources */,
 				67EA66D51718F29900BA21FE /* RuleCell.xib in Resources */,
 				67EA66DA1718F72D00BA21FE /* formula.png in Resources */,
 				67EA66DB1718F72D00BA21FE /* formula@2x.png in Resources */,
@@ -1400,12 +1304,12 @@
 				67E544AC171B66AC00D5C9DF /* startrunner@2x.png in Resources */,
 				67E544AE171B69A900D5C9DF /* blackodometer@2x.png in Resources */,
 				67E544B0171B951400D5C9DF /* norunwoman@2x.png in Resources */,
-				67E544B2171B958500D5C9DF /* stroke@2x.png in Resources */,
 				67E544BE171B9CA800D5C9DF /* NotificationVC.xib in Resources */,
 				672D7120171E49850054E9EB /* GoalNotifyVC.xib in Resources */,
 				6747F62A171F92FF00B23C58 /* whitecalories@2x.png in Resources */,
 				6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */,
 				6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */,
+				6747F62E171F9DB900B23C58 /* redcheck@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

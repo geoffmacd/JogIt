@@ -40,7 +40,7 @@
 @synthesize swipeToPauseLabel;
 @synthesize ghostDistance,ghostDistanceTitle,ghostDistanceUnitLabel;
 @synthesize inBackground;
-@synthesize lowSignalLabel,titleView;
+@synthesize lowSignalLabel,titleView, goalAchievedLabel;
 @synthesize autopauseLabel;
 @synthesize invisibleLastKmButton;
 
@@ -85,6 +85,7 @@
     [lastKmLabel setText:NSLocalizedString(@"LastKMTitle", "Logger title for last km")];
     [swipeToPauseLabel setText:NSLocalizedString(@"SwipeToPauseLabel", "Label for swipe to pause shaded view")];
     [lowSignalLabel setText:NSLocalizedString(@"LowSignalLabel", "Label for low GPS signal")];
+    [goalAchievedLabel setText:NSLocalizedString(@"goalAchievedLabel", "Label for target achieved")];
     
     
     //init location manager
@@ -359,6 +360,7 @@
         
         //ensure no signal animation
         lowSignal = false;
+        goalAchieved = false;
     }
     
     //reset chart
@@ -768,8 +770,10 @@
         
         //cancel low signal animation
         [lowSignalLabel setHidden:true];
-        [runTitle setFrame:orgTitleLabelPosition];
         lowSignal = false;
+        [goalAchievedLabel setHidden:true];
+        goalAchieved = false;
+        [runTitle setFrame:orgTitleLabelPosition];
         
     }
     else
@@ -823,6 +827,12 @@
         case MetricTypePace:
             if(run.avgPace >= run.metricGoal)
             {
+                //display
+                if(!goalAchieved && !animatingGoalAchieved)
+                {
+                    [self performSelector:@selector(goalAchievedAnimation) withObject:nil];
+                    goalAchieved = true;
+                }
                 [goalAchievedImage setHidden:false];
             }
             else{
@@ -833,6 +843,12 @@
         case MetricTypeDistance:
             if(run.distance >= run.metricGoal)
             {
+                //display
+                if(!goalAchieved && !animatingGoalAchieved)
+                {
+                    [self performSelector:@selector(goalAchievedAnimation) withObject:nil];
+                    goalAchieved = true;
+                }
                 [goalAchievedImage setHidden:false];
             }
             else{
@@ -843,6 +859,12 @@
         case MetricTypeCalories:
             if(run.calories >= run.metricGoal)
             {
+                //display
+                if(!goalAchieved && !animatingGoalAchieved)
+                {
+                    [self performSelector:@selector(goalAchievedAnimation) withObject:nil];
+                    goalAchieved = true;
+                }
                 [goalAchievedImage setHidden:false];
             }
             else{
@@ -853,6 +875,12 @@
         case MetricTypeTime:
             if(run.time >= run.metricGoal)
             {
+                //display
+                if(!goalAchieved && !animatingGoalAchieved)
+                {
+                    [self performSelector:@selector(goalAchievedAnimation) withObject:nil];
+                    goalAchieved = true;
+                }
                 [goalAchievedImage setHidden:false];
             }
             else{
@@ -1132,7 +1160,7 @@
     //animation to slide in from the right
     
     //return right away if called during pause
-    if(paused || !run.live)
+    if(paused || !run.live || animatingGoalAchieved)
         return;
     
     //set low signal to org position to right of screen
@@ -1180,6 +1208,64 @@
                                               }
                                           }];
                           
+                     }];
+    
+    
+}
+
+-(void)goalAchievedAnimation
+{
+    //animation to slide in from the right
+    
+    //return right away if called during pause
+    if(paused || !run.live || animatingLowSignal)
+        return;
+    
+    //set low signal to org position to right of screen
+    CGRect goalOrgRect = orgTitleLabelPosition;
+    goalOrgRect.origin = CGPointMake(orgTitleLabelPosition.origin.x + orgTitleLabelPosition.size.width, orgTitleLabelPosition.origin.y);
+    [goalAchievedLabel setFrame:goalOrgRect];
+    [goalAchievedLabel setHidden:false];
+    
+    CGRect runTitleDestRect = orgTitleLabelPosition;
+    runTitleDestRect.origin = CGPointMake(orgTitleLabelPosition.origin.x - orgTitleLabelPosition.size.width, orgTitleLabelPosition.origin.y);
+    
+    animatingGoalAchieved = true;
+    
+    [UIView animateWithDuration:lowSignalPeriod/2
+                          delay:lowSignalPeriod
+                        options:UIViewAnimationCurveEaseIn
+                     animations:^{
+                         //move title out
+                         [runTitle setFrame:runTitleDestRect];
+                         //move low signal in
+                         [goalAchievedLabel setFrame:orgTitleLabelPosition];
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         [runTitle setFrame:goalOrgRect];
+                         [goalAchievedLabel setFrame:orgTitleLabelPosition];
+                         
+                         [UIView animateWithDuration:lowSignalPeriod/2
+                                               delay:lowSignalPeriod
+                                             options:UIViewAnimationCurveEaseIn
+                                          animations:^{
+                                              //move title in
+                                              [runTitle setFrame:orgTitleLabelPosition];
+                                              //move low signal out
+                                              [goalAchievedLabel setFrame:runTitleDestRect];
+                                          }
+                                          completion:^(BOOL finished) {
+                                              //call this method again if still playing low signal
+                                              if(goalAchieved)
+                                                  [self goalAchievedAnimation];
+                                              else
+                                              {
+                                                  animatingGoalAchieved = false;
+                                                  [goalAchievedLabel setHidden:true];
+                                              }
+                                          }];
+                         
                      }];
     
     

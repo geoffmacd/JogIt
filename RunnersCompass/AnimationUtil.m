@@ -87,4 +87,20 @@
     [ viewToShake.layer addAnimation:anim forKey:nil ] ;
 }
 
+
++ (void)blinkAnimation:(NSString *)animationID finished:(BOOL)finished target:(UIView *)target
+{
+    
+    [UIView beginAnimations:animationID context:(__bridge void *)(target)];
+    [UIView setAnimationDuration:blinkPeriod];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(blinkAnimation:finished:target:)];
+    
+    if([target alpha] == 1.0f)
+        [target setAlpha:alphaToBlinkTo];
+    else
+        [target setAlpha:1.0f];
+    [UIView commitAnimations];
+}
+
 @end

@@ -19,6 +19,9 @@
 #define folderRotationAnimationTime 0.2f
 #define distanceToShake 3.0f
 #define shakeDuration 0.1f
+#define alphaToBlinkTo 0.35f
+#define blinkPeriod 1.0f
+
 
 @interface AnimationUtil : NSObject
 +(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open;
@@ -26,4 +29,5 @@
               curve:(int)curve degrees:(CGFloat)degrees;
 
 +(void)shakeView:(UIView *)viewToShake;
++ (void)blinkAnimation:(NSString *)animationID finished:(BOOL)finished target:(UIView *)target;
 @end
