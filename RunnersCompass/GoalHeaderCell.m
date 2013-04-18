@@ -26,7 +26,6 @@
     CGRect progressRect = progress.frame;
     withGoalFrame.size.height = progressRect.origin.y + progressRect.size.height + 10;
     
-    
     //set labels
     [self setGoalLabels];
     
@@ -94,7 +93,7 @@
             [completeLabel setText:NSLocalizedString(@"GoalCompleteLabel", @"GoalCompleteLabel")];
             //hide progress, show label
             [completeLabel setHidden:false];
-            [progress setHidden:true];
+            //[progress setHidden:true];
         }
         
         //progress bar
