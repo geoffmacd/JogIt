@@ -52,6 +52,9 @@
 		6747F6461720D99E00B23C58 /* whitecalories.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6391720D99E00B23C58 /* whitecalories.png */; };
 		6747F6471720D99E00B23C58 /* whiteodometer.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F63A1720D99E00B23C58 /* whiteodometer.png */; };
 		6747F6481720D99E00B23C58 /* whitespeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F63B1720D99E00B23C58 /* whitespeed.png */; };
+		6747F64B1720EA1B00B23C58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6747F6491720E9F500B23C58 /* StoreKit.framework */; };
+		6747F6511720EAE500B23C58 /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 6747F64E1720EAE500B23C58 /* IAPHelper.m */; };
+		6747F6521720EAE500B23C58 /* IAPShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 6747F6501720EAE500B23C58 /* IAPShare.m */; };
 		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
 		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
@@ -306,6 +309,11 @@
 		6747F6391720D99E00B23C58 /* whitecalories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitecalories.png; sourceTree = "<group>"; };
 		6747F63A1720D99E00B23C58 /* whiteodometer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteodometer.png; sourceTree = "<group>"; };
 		6747F63B1720D99E00B23C58 /* whitespeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitespeed.png; sourceTree = "<group>"; };
+		6747F6491720E9F500B23C58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		6747F64D1720EAE500B23C58 /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPHelper.h; path = IAPHelper/IAPHelper.h; sourceTree = "<group>"; };
+		6747F64E1720EAE500B23C58 /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPHelper.m; path = IAPHelper/IAPHelper.m; sourceTree = "<group>"; };
+		6747F64F1720EAE500B23C58 /* IAPShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IAPShare.h; path = IAPHelper/IAPShare.h; sourceTree = "<group>"; };
+		6747F6501720EAE500B23C58 /* IAPShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IAPShare.m; path = IAPHelper/IAPShare.m; sourceTree = "<group>"; };
 		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		674C90A716F94EF10078DD8E /* PerformanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceVC.h; sourceTree = "<group>"; };
 		674C90A816F94EF10078DD8E /* PerformanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceVC.m; sourceTree = "<group>"; };
@@ -588,6 +596,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6747F64B1720EA1B00B23C58 /* StoreKit.framework in Frameworks */,
 				67AA3EA7170FDBB7004181AC /* CoreData.framework in Frameworks */,
 				67B2583216F017FF00CF337E /* CoreLocation.framework in Frameworks */,
 				67B2583016F0123100CF337E /* MapKit.framework in Frameworks */,
@@ -612,6 +621,7 @@
 				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
 				672D7118171CDB280054E9EB /* MBProgressHUD */,
+				6747F64C1720EAD500B23C58 /* IAPHelper */,
 				67E544B9171B9C7C00D5C9DF /* MJPopupViewController */,
 				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
 				67236D0E16409B7700DD13C5 /* RunIt */,
@@ -634,6 +644,7 @@
 		67236D0716409B7700DD13C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6747F6491720E9F500B23C58 /* StoreKit.framework */,
 				67AA3EA6170FDBB7004181AC /* CoreData.framework */,
 				67B2583116F017FF00CF337E /* CoreLocation.framework */,
 				67B2582F16F0123100CF337E /* MapKit.framework */,
@@ -762,6 +773,17 @@
 				672D711A171CDB410054E9EB /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		6747F64C1720EAD500B23C58 /* IAPHelper */ = {
+			isa = PBXGroup;
+			children = (
+				6747F64D1720EAE500B23C58 /* IAPHelper.h */,
+				6747F64E1720EAE500B23C58 /* IAPHelper.m */,
+				6747F64F1720EAE500B23C58 /* IAPShare.h */,
+				6747F6501720EAE500B23C58 /* IAPShare.m */,
+			);
+			name = IAPHelper;
 			sourceTree = "<group>";
 		};
 		676CA81A16D70A5B00E4B121 /* Pickers */ = {
@@ -1483,6 +1505,8 @@
 				672D711F171E49850054E9EB /* GoalNotifyVC.m in Sources */,
 				672D7125171F5AC60054E9EB /* FinishAnnotation.m in Sources */,
 				672D7126171F5AC60054E9EB /* StartAnnotation.m in Sources */,
+				6747F6511720EAE500B23C58 /* IAPHelper.m in Sources */,
+				6747F6521720EAE500B23C58 /* IAPShare.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

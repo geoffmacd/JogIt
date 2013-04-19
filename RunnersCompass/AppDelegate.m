@@ -101,6 +101,16 @@
     
 }
 
+-(void)preventIdleForLiveRun
+{
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+}
+
+-(void)resetIdle
+{
+    [UIApplication sharedApplication].idleTimerDisabled = NO;
+}
+
 #pragma mark - Delegate Methods for both
 
 

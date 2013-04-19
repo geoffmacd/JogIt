@@ -53,7 +53,7 @@
 #define lowSignalPeriod 3//s for animation
 #define mapPathWidth 15.0//pixels
 #define mapIconPathWidth 10.0//pixels
-#define mapPathSize 10 //positions
+#define mapPathSize 10 //positions before new line
 #define paceSelectionOverrideTime 5 //s
 #define delayGoalAssessment 3 //s
 
@@ -68,6 +68,8 @@
 -(void)selectedGhostRun:(RunEvent *)run;
 -(void)updateRunTimeForMenu:(NSString *)updateTimeString;
 -(UserPrefs *)curUserPrefs;
+-(void)preventIdleForLiveRun;
+-(void)resetIdle;
 
 @end
 

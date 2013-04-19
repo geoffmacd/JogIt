@@ -487,6 +487,9 @@
 
 -(void)startRun
 {
+    //tell app delegate to stop idle timer
+    [delegate preventIdleForLiveRun];
+    
     //stop map following user
     [fullMap setUserTrackingMode:MKUserTrackingModeNone];
     
@@ -536,6 +539,9 @@
         //stop updates otherwise for battery life etc
         NSLog(@"stopped tracking.....");
         [locationManager stopUpdatingLocation];
+        
+        //reset idle timer
+        [delegate resetIdle];
     }
     
     //set map to follow user before starting track
@@ -2049,7 +2055,7 @@
         }
         
         MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
-        //must remove previous line first
+        //must remove previous line first,if gradually adding
         //historical does not need this
         if(numberForLine < mapPathSize && numberForLine > 1 && [mapGhostOverlays lastObject] && !historical)
         {
@@ -3189,6 +3195,8 @@
         }
     }
     
+    inMapView = false;
+    
     [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         
         //set back to start
@@ -3214,6 +3222,8 @@
             duration = 0.4f;
         }
     }
+    
+    inMapView = true;
     
     [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         
@@ -3295,28 +3305,24 @@
             [pan setEnabled:TRUE];
             
             [self openMapWithSmoothAnimation:true completion:nil];
-            inMapView = true;
         } else if (current.y > mapDragPreventOpposite && !inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self closeMapWithSmoothAnimation:true completion:nil];
-            inMapView = false;
         } else if (current.y < -mapDragCutoff && !inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self openMapWithSmoothAnimation:true completion:nil];
-            inMapView = false;
         }else if (current.y > mapDragCutoff && inMapView){
             
             [pan setEnabled:FALSE];
             [pan setEnabled:TRUE];
             
             [self closeMapWithSmoothAnimation:true completion:nil];
-            inMapView = false;
         } else{
             
             //translate on the finger of the user with current.y
@@ -3334,10 +3340,8 @@
         
         if(slideView.frame.origin.y > mapDragCutoff){
             [self closeMapWithSmoothAnimation:true completion:nil];
-            inMapView = false;
         } else{
             [self openMapWithSmoothAnimation:true completion:nil];
-            inMapView = true;
         }
     }
 }
@@ -3346,10 +3350,8 @@
     
     if(inMapView){
         [self closeMapWithSmoothAnimation:true completion:nil];
-        inMapView = false;
     } else{
         [self openMapWithSmoothAnimation:true completion:nil];
-        inMapView = true;
     }
 
 }
@@ -3358,6 +3360,9 @@
     
     //run object must be cleanup to save in appdelegate where it is stored
     //stopRun is called in appdelegate
+    
+    //to prevent autopause from preventing stopping updates
+    pausedForAuto = false;
     
     //aggregrate last minute, starting at most recent
     NSInteger index = [run.posMeta count] - 1;
