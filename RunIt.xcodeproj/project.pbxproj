@@ -39,6 +39,19 @@
 		6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F628171F92FF00B23C58 /* whiteodometer@2x.png */; };
 		6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F629171F92FF00B23C58 /* whitespeed@2x.png */; };
 		6747F62E171F9DB900B23C58 /* redcheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F62D171F9DB900B23C58 /* redcheck@2x.png */; };
+		6747F63C1720D99E00B23C58 /* blackodometer.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F62F1720D99D00B23C58 /* blackodometer.png */; };
+		6747F63D1720D99E00B23C58 /* calories.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6301720D99D00B23C58 /* calories.png */; };
+		6747F63E1720D99E00B23C58 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6311720D99D00B23C58 /* check.png */; };
+		6747F63F1720D99E00B23C58 /* compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6321720D99E00B23C58 /* compose.png */; };
+		6747F6401720D99E00B23C58 /* hourglass.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6331720D99E00B23C58 /* hourglass.png */; };
+		6747F6411720D99E00B23C58 /* ladder.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6341720D99E00B23C58 /* ladder.png */; };
+		6747F6421720D99E00B23C58 /* manualrunthumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6351720D99E00B23C58 /* manualrunthumbnail.png */; };
+		6747F6431720D99E00B23C58 /* norunwoman.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6361720D99E00B23C58 /* norunwoman.png */; };
+		6747F6441720D99E00B23C58 /* redcheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6371720D99E00B23C58 /* redcheck.png */; };
+		6747F6451720D99E00B23C58 /* startrunner.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6381720D99E00B23C58 /* startrunner.png */; };
+		6747F6461720D99E00B23C58 /* whitecalories.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F6391720D99E00B23C58 /* whitecalories.png */; };
+		6747F6471720D99E00B23C58 /* whiteodometer.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F63A1720D99E00B23C58 /* whiteodometer.png */; };
+		6747F6481720D99E00B23C58 /* whitespeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 6747F63B1720D99E00B23C58 /* whitespeed.png */; };
 		674C90AC16F94EF10078DD8E /* Performance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 674C90A616F94EF10078DD8E /* Performance.xib */; };
 		674C90AD16F94EF10078DD8E /* PerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90A816F94EF10078DD8E /* PerformanceVC.m */; };
 		674C90AE16F94EF10078DD8E /* PermHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 674C90AA16F94EF10078DD8E /* PermHeaderCell.m */; };
@@ -280,6 +293,19 @@
 		6747F628171F92FF00B23C58 /* whiteodometer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteodometer@2x.png"; sourceTree = "<group>"; };
 		6747F629171F92FF00B23C58 /* whitespeed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitespeed@2x.png"; sourceTree = "<group>"; };
 		6747F62D171F9DB900B23C58 /* redcheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redcheck@2x.png"; sourceTree = "<group>"; };
+		6747F62F1720D99D00B23C58 /* blackodometer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackodometer.png; sourceTree = "<group>"; };
+		6747F6301720D99D00B23C58 /* calories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calories.png; sourceTree = "<group>"; };
+		6747F6311720D99D00B23C58 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		6747F6321720D99E00B23C58 /* compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = compose.png; sourceTree = "<group>"; };
+		6747F6331720D99E00B23C58 /* hourglass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hourglass.png; sourceTree = "<group>"; };
+		6747F6341720D99E00B23C58 /* ladder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ladder.png; sourceTree = "<group>"; };
+		6747F6351720D99E00B23C58 /* manualrunthumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manualrunthumbnail.png; sourceTree = "<group>"; };
+		6747F6361720D99E00B23C58 /* norunwoman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = norunwoman.png; sourceTree = "<group>"; };
+		6747F6371720D99E00B23C58 /* redcheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redcheck.png; sourceTree = "<group>"; };
+		6747F6381720D99E00B23C58 /* startrunner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startrunner.png; sourceTree = "<group>"; };
+		6747F6391720D99E00B23C58 /* whitecalories.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitecalories.png; sourceTree = "<group>"; };
+		6747F63A1720D99E00B23C58 /* whiteodometer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteodometer.png; sourceTree = "<group>"; };
+		6747F63B1720D99E00B23C58 /* whitespeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitespeed.png; sourceTree = "<group>"; };
 		674C90A616F94EF10078DD8E /* Performance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Performance.xib; sourceTree = "<group>"; };
 		674C90A716F94EF10078DD8E /* PerformanceVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceVC.h; sourceTree = "<group>"; };
 		674C90A816F94EF10078DD8E /* PerformanceVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceVC.m; sourceTree = "<group>"; };
@@ -868,6 +894,19 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6747F62F1720D99D00B23C58 /* blackodometer.png */,
+				6747F6301720D99D00B23C58 /* calories.png */,
+				6747F6311720D99D00B23C58 /* check.png */,
+				6747F6321720D99E00B23C58 /* compose.png */,
+				6747F6331720D99E00B23C58 /* hourglass.png */,
+				6747F6341720D99E00B23C58 /* ladder.png */,
+				6747F6351720D99E00B23C58 /* manualrunthumbnail.png */,
+				6747F6361720D99E00B23C58 /* norunwoman.png */,
+				6747F6371720D99E00B23C58 /* redcheck.png */,
+				6747F6381720D99E00B23C58 /* startrunner.png */,
+				6747F6391720D99E00B23C58 /* whitecalories.png */,
+				6747F63A1720D99E00B23C58 /* whiteodometer.png */,
+				6747F63B1720D99E00B23C58 /* whitespeed.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -1310,6 +1349,19 @@
 				6747F62B171F92FF00B23C58 /* whiteodometer@2x.png in Resources */,
 				6747F62C171F92FF00B23C58 /* whitespeed@2x.png in Resources */,
 				6747F62E171F9DB900B23C58 /* redcheck@2x.png in Resources */,
+				6747F63C1720D99E00B23C58 /* blackodometer.png in Resources */,
+				6747F63D1720D99E00B23C58 /* calories.png in Resources */,
+				6747F63E1720D99E00B23C58 /* check.png in Resources */,
+				6747F63F1720D99E00B23C58 /* compose.png in Resources */,
+				6747F6401720D99E00B23C58 /* hourglass.png in Resources */,
+				6747F6411720D99E00B23C58 /* ladder.png in Resources */,
+				6747F6421720D99E00B23C58 /* manualrunthumbnail.png in Resources */,
+				6747F6431720D99E00B23C58 /* norunwoman.png in Resources */,
+				6747F6441720D99E00B23C58 /* redcheck.png in Resources */,
+				6747F6451720D99E00B23C58 /* startrunner.png in Resources */,
+				6747F6461720D99E00B23C58 /* whitecalories.png in Resources */,
+				6747F6471720D99E00B23C58 /* whiteodometer.png in Resources */,
+				6747F6481720D99E00B23C58 /* whitespeed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

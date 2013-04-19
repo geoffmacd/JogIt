@@ -220,7 +220,7 @@
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
 								<string key="NSFrameSize">{242, 21}</string>
 								<reference key="NSSuperview" ref="48350372"/>
-								<reference key="NSNextKeyView" ref="859149830"/>
+								<reference key="NSNextKeyView" ref="639690992"/>
 								<reference key="IBUIBackgroundColor" ref="474603886"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -237,7 +237,7 @@
 								<reference key="IBUIFontDescription" ref="219191126"/>
 								<reference key="IBUIFont" ref="833346813"/>
 							</object>
-							<object class="IBUILabel" id="859149830">
+							<object class="IBUILabel" id="639690992">
 								<reference key="NSNextResponder" ref="48350372"/>
 								<int key="NSvFlags">-2147482336</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
@@ -934,8 +934,8 @@
 							</object>
 							<object class="IBMKMapView" id="737693121">
 								<reference key="NSNextResponder" ref="478115074"/>
-								<int key="NSvFlags">1290</int>
-								<string key="NSFrame">{{0, 30}, {321, 395}}</string>
+								<int key="NSvFlags">1288</int>
+								<string key="NSFrame">{{-1, 30}, {322, 395}}</string>
 								<reference key="NSSuperview" ref="478115074"/>
 								<reference key="NSNextKeyView" ref="176047350"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -1442,7 +1442,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">goalAchievedLabel</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="859149830"/>
+						<reference key="destination" ref="639690992"/>
 					</object>
 					<int key="connectionID">1006</int>
 				</object>
@@ -1969,7 +1969,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="1196197"/>
 							<reference ref="920167502"/>
-							<reference ref="859149830"/>
+							<reference ref="639690992"/>
 						</array>
 						<reference key="parent" ref="572499848"/>
 						<string key="objectName">title view</string>
@@ -1998,7 +1998,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1005</int>
-						<reference key="object" ref="859149830"/>
+						<reference key="object" ref="639690992"/>
 						<reference key="parent" ref="48350372"/>
 						<string key="objectName">Label - goal achieved</string>
 					</object>
