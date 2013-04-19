@@ -121,6 +121,9 @@
     [fullMap.layer setBorderWidth: 1.0];
     [fullMap setShowsUserLocation:true];
     [fullMap setDelegate:self];
+    CGRect fullMapRect = fullMap.frame;
+    fullMapRect.size.height = self.view.frame.size.height - mapViewYOffset;
+    [fullMap setFrame:fullMapRect];
     
     //setup icon map
     [iconMap.layer setCornerRadius: 5.0];
@@ -676,8 +679,8 @@
             
             //on odd periods only update graphics, so that overlay has processed
             
-            //zoom map
-            if((timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod)))
+            //zoom map, only when in full map
+            if(timeSinceMapCenter < ([NSDate timeIntervalSinceReferenceDate] - autoZoomPeriod))
             {
                 //do not zoom if user has recently touched
                 if(timeSinceMapTouch < [NSDate timeIntervalSinceReferenceDate] - userDelaysAutoZoom)
@@ -1810,10 +1813,6 @@
     }
     
     CLLocationCoordinate2D centerCoord = CLLocationCoordinate2DMake((minLat+maxLat)/2, (minLong+maxLong)/2);
-    
-    //add root 2 to the span to ensure full map is shown
-    //maxLong += 0.001;
-    //maxLat += 0.001;
     
     
     if(CLLocationCoordinate2DIsValid(centerCoord))
@@ -3226,7 +3225,7 @@
         
     } completion:^(BOOL finished) {
         //autozoom
-        if(run.live && !paused)
+        if(run.live)
             [self autoZoomMap:[run.pos lastObject] animated:true withMap:fullMap];
         if (completion) {
             completion();

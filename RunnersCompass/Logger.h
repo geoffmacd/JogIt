@@ -36,26 +36,26 @@
 #define logRequiredAccuracy 50 //m maximum
 #define calcPeriod 3 //every 3 seconds
 #define barPeriod 60 //bar represents 10 seconds
-#define autoZoomPeriod 4 //seconds before auto zoom
+#define autoZoomPeriod 6 //seconds before auto zoom
 #define userDelaysAutoZoom 15 //second delays before autozoom
-#define reloadMapIconPeriod 3 // second reload map icon period
+#define reloadMapIconPeriod 6 // second reload map icon period
 #define autoPauseDelay 10 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
-#define minSpeedUnpause 1 //m/s
+#define minSpeedUnpause 1.25 //m/s
 #define paceChartMaxYMin 1//m/s
 #define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
-#define evalAccuracyPeriod 5 //seconds
+#define evalAccuracyPeriod 12 //seconds
 #define avgPaceUpdatePeriod 3//ss
 #define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//degress
-#define mapSpanMultipler 1.03//3 percent
-#define lowSignalPeriod 3//s
+#define mapSpanMultipler 1.04// 4 percent
+#define lowSignalPeriod 3//s for animation
 #define mapPathWidth 15.0//pixels
 #define mapIconPathWidth 10.0//pixels
 #define mapPathSize 10 //positions
-#define paceSelectionOverrideTime 7 //s
-#define delayGoalAssessment 10 //s
+#define paceSelectionOverrideTime 5 //s
+#define delayGoalAssessment 3 //s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
