@@ -43,14 +43,6 @@
     if(!raceCell)
     {
         switch (associated) {
-                /*
-            case MetricTypePace:
-                [headerLabel setText:[NSString stringWithFormat:@"%@ (%@)", [RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]], [prefs getPaceUnit]]];
-                break;
-            case MetricTypeDistance:
-                [headerLabel setText:[NSString stringWithFormat:@"%@ (%@)", [RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]], [prefs getDistanceUnit]]];
-                break;
-                 */
                 
             case MetricTypeDistance:
                 [unitLabel setHidden:false];
@@ -314,6 +306,8 @@
 -(void)loadChart
 {
     NSInteger numBars = (weekly ? [weeklyValues count] : [monthlyValues count]);
+    //reset added weeks in case of week/month change
+    addedWeeksAfterReal = 0;
     
     //determine how many bars is deficient to make full screen
     if(weekly)
