@@ -438,23 +438,47 @@
             if(idx ==0)
                 idx = 52;
             
-            if(idx % 13 == 0)
+            if(idx % 4 == 0)
             {
                 NSString * tempLabel;
                 
-                switch(idx/13)
+                switch(idx/4)
                 {
                     case 1:
-                        tempLabel = NSLocalizedString(@"AprilMonth", "month string");// @"April";
+                        tempLabel = NSLocalizedString(@"JanMonth", "month string");
                         break;
                     case 2:
-                        tempLabel = NSLocalizedString(@"JulyMonth", "month string");// @"July";
+                        tempLabel = NSLocalizedString(@"FebMonth", "month string");
                         break;
                     case 3:
-                        tempLabel = NSLocalizedString(@"OctoberMonth", "month string");// @"October";
+                        tempLabel = NSLocalizedString(@"MarMonth", "month string");
                         break;
                     case 4:
-                        tempLabel = NSLocalizedString(@"JanuaryMonth", "month string");// @"January";
+                        tempLabel = NSLocalizedString(@"AprilMonth", "month string");
+                        break;
+                    case 5:
+                        tempLabel = NSLocalizedString(@"MayMonth", "month string");
+                        break;
+                    case 6:
+                        tempLabel = NSLocalizedString(@"JunMonth", "month string");
+                        break;
+                    case 7:
+                        tempLabel = NSLocalizedString(@"JulyMonth", "month string");
+                        break;
+                    case 8:
+                        tempLabel = NSLocalizedString(@"AugMonth", "month string");
+                        break;
+                    case 9:
+                        tempLabel = NSLocalizedString(@"SeptMonth", "month string");
+                        break;
+                    case 10:
+                        tempLabel = NSLocalizedString(@"OctMonth", "month string");
+                        break;
+                    case 11:
+                        tempLabel = NSLocalizedString(@"NovMonth", "month string");
+                        break;
+                    case 12:
+                        tempLabel = NSLocalizedString(@"DecMonth", "month string");
                         break;
                 }
                 if(tempLabel)
