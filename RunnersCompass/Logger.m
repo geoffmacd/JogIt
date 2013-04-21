@@ -107,19 +107,25 @@
     
     
     //open ears stuff
-    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
+    //musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
     openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
 	[openEarsEventsObserver setDelegate:self];
     fliteController = [[FliteController alloc] init];
+    //[fliteController.audioPlayer setDelegate:self];
+    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     slt = [[Slt alloc] init];
     [self setupVoice];
     speechQueue = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    /*
     if(musicWasPlaying)
     {
         MPMusicPlayerController *mp = [MPMusicPlayerController iPodMusicPlayer];
         [mp play];
         musicWasPlaying  = false;
     }
+     */
+    
 }
 
 -(void) viewDidLayoutSubviews
@@ -214,6 +220,13 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
+}
+
+#pragma mark - audio player delegate
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    //[[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
 }
 
 #pragma mark - OpenEars Delegates
@@ -467,7 +480,6 @@
     }
     
     //make it start processing
-    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
     [self sayNextSpeech];
 }
 
@@ -476,6 +488,10 @@
     if([speechQueue count])
     {
         [fliteController say:[speechQueue objectAtIndex:0] withVoice:slt];
+    }
+    else
+    {
+       [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     }
 }
 
@@ -489,17 +505,13 @@
     
     //dequeue item and play next one after duration
     if([speechQueue count])
+    {
         [speechQueue removeObjectAtIndex:0];
-    if([speechQueue count])
         [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
+    }
     else
     {
-        if(musicWasPlaying)
-        {
-            MPMusicPlayerController *mp = [MPMusicPlayerController iPodMusicPlayer];
-            [mp play];
-            musicWasPlaying  = false;
-        }
+        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     }
 }
 
@@ -835,7 +847,7 @@
     //speech at start of run
     if(run.time == 0)
     {
-        [self audioCue:SpeechIntro];
+        //[self audioCue:SpeechIntro];
     }
 }
 

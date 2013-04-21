@@ -225,13 +225,6 @@
 		67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */; };
 		67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */; };
 		67F7CB93172397230008CEBF /* cmu07a.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB83172397230008CEBF /* cmu07a.dic */; };
-		67F7CB94172397230008CEBF /* feat.params in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB85172397230008CEBF /* feat.params */; };
-		67F7CB95172397230008CEBF /* mdef in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB86172397230008CEBF /* mdef */; };
-		67F7CB96172397230008CEBF /* means in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB87172397230008CEBF /* means */; };
-		67F7CB97172397230008CEBF /* noisedict in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB88172397230008CEBF /* noisedict */; };
-		67F7CB98172397230008CEBF /* sendump in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB89172397230008CEBF /* sendump */; };
-		67F7CB99172397230008CEBF /* transition_matrices in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8A172397230008CEBF /* transition_matrices */; };
-		67F7CB9A172397230008CEBF /* variances in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8B172397230008CEBF /* variances */; };
 		67F7CB9B172397230008CEBF /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CB8C172397230008CEBF /* OpenEars.framework */; };
 		67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8D172397230008CEBF /* OpenEars1.dic */; };
 		67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8E172397230008CEBF /* OpenEars1.gram */; };
@@ -245,7 +238,6 @@
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 		67FF65751723BBF500A91E06 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65741723BBF500A91E06 /* Default@2x.png */; };
-		67FF65791723D07600A91E06 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FF65781723D07600A91E06 /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -603,13 +595,6 @@
 		67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontViewControllerDropShadow.png; path = JSSlidingViewController/frontViewControllerDropShadow.png; sourceTree = SOURCE_ROOT; };
 		67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = SOURCE_ROOT; };
 		67F7CB83172397230008CEBF /* cmu07a.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmu07a.dic; sourceTree = "<group>"; };
-		67F7CB85172397230008CEBF /* feat.params */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feat.params; sourceTree = "<group>"; };
-		67F7CB86172397230008CEBF /* mdef */ = {isa = PBXFileReference; lastKnownFileType = file; path = mdef; sourceTree = "<group>"; };
-		67F7CB87172397230008CEBF /* means */ = {isa = PBXFileReference; lastKnownFileType = file; path = means; sourceTree = "<group>"; };
-		67F7CB88172397230008CEBF /* noisedict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noisedict; sourceTree = "<group>"; };
-		67F7CB89172397230008CEBF /* sendump */ = {isa = PBXFileReference; lastKnownFileType = file; path = sendump; sourceTree = "<group>"; };
-		67F7CB8A172397230008CEBF /* transition_matrices */ = {isa = PBXFileReference; lastKnownFileType = file; path = transition_matrices; sourceTree = "<group>"; };
-		67F7CB8B172397230008CEBF /* variances */ = {isa = PBXFileReference; lastKnownFileType = file; path = variances; sourceTree = "<group>"; };
 		67F7CB8C172397230008CEBF /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
 		67F7CB8D172397230008CEBF /* OpenEars1.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.dic; sourceTree = "<group>"; };
 		67F7CB8E172397230008CEBF /* OpenEars1.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.gram; sourceTree = "<group>"; };
@@ -634,7 +619,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67FF65791723D07600A91E06 /* MediaPlayer.framework in Frameworks */,
 				67F7CBA5172397540008CEBF /* AudioToolbox.framework in Frameworks */,
 				67F7CBA3172397490008CEBF /* AVFoundation.framework in Frameworks */,
 				6747F64B1720EA1B00B23C58 /* StoreKit.framework in Frameworks */,
@@ -1197,7 +1181,6 @@
 			isa = PBXGroup;
 			children = (
 				67F7CB83172397230008CEBF /* cmu07a.dic */,
-				67F7CB84172397230008CEBF /* hub4wsj_sc_8k */,
 				67F7CB8C172397230008CEBF /* OpenEars.framework */,
 				67F7CB8D172397230008CEBF /* OpenEars1.dic */,
 				67F7CB8E172397230008CEBF /* OpenEars1.gram */,
@@ -1209,20 +1192,6 @@
 			name = Framework;
 			path = OpenEars/Framework;
 			sourceTree = SOURCE_ROOT;
-		};
-		67F7CB84172397230008CEBF /* hub4wsj_sc_8k */ = {
-			isa = PBXGroup;
-			children = (
-				67F7CB85172397230008CEBF /* feat.params */,
-				67F7CB86172397230008CEBF /* mdef */,
-				67F7CB87172397230008CEBF /* means */,
-				67F7CB88172397230008CEBF /* noisedict */,
-				67F7CB89172397230008CEBF /* sendump */,
-				67F7CB8A172397230008CEBF /* transition_matrices */,
-				67F7CB8B172397230008CEBF /* variances */,
-			);
-			path = hub4wsj_sc_8k;
-			sourceTree = "<group>";
 		};
 		67FC068116A10EE000491C97 /* Data */ = {
 			isa = PBXGroup;
@@ -1473,13 +1442,6 @@
 				6747F6471720D99E00B23C58 /* whiteodometer.png in Resources */,
 				6747F6481720D99E00B23C58 /* whitespeed.png in Resources */,
 				67F7CB93172397230008CEBF /* cmu07a.dic in Resources */,
-				67F7CB94172397230008CEBF /* feat.params in Resources */,
-				67F7CB95172397230008CEBF /* mdef in Resources */,
-				67F7CB96172397230008CEBF /* means in Resources */,
-				67F7CB97172397230008CEBF /* noisedict in Resources */,
-				67F7CB98172397230008CEBF /* sendump in Resources */,
-				67F7CB99172397230008CEBF /* transition_matrices in Resources */,
-				67F7CB9A172397230008CEBF /* variances in Resources */,
 				67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */,
 				67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */,
 				67F7CB9E172397230008CEBF /* OpenEars1.languagemodel in Resources */,
@@ -1698,6 +1660,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
@@ -1728,6 +1691,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",

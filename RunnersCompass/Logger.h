@@ -25,6 +25,7 @@
 #import <OpenEars/LanguageModelGenerator.h>
 #import <OpenEars/OpenEarsLogging.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <OpenEars/AudioSessionManager.h>
 
 
 #define mapZoomDefault 1000 //m
@@ -91,7 +92,7 @@ typedef enum {
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate>
 {
     //for ghost run
     UIActionSheet *sheet;
