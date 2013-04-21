@@ -24,6 +24,7 @@
 #import <OpenEars/FliteController.h>
 #import <OpenEars/LanguageModelGenerator.h>
 #import <OpenEars/OpenEarsLogging.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 
 #define mapZoomDefault 1000 //m
@@ -189,6 +190,7 @@ typedef enum {
 	OpenEarsEventsObserver *openEarsEventsObserver; // A class whose delegate methods which will allow us to stay informed of changes in the Flite and Pocketsphinx statuses.
 	FliteController *fliteController; // The controller for Flite (speech).
     NSMutableArray * speechQueue;
+    BOOL musicWasPlaying;
 }
 
 

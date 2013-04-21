@@ -107,12 +107,19 @@
     
     
     //open ears stuff
+    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
     openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
 	[openEarsEventsObserver setDelegate:self];
     fliteController = [[FliteController alloc] init];
     slt = [[Slt alloc] init];
     [self setupVoice];
     speechQueue = [[NSMutableArray alloc] initWithCapacity:5];
+    if(musicWasPlaying)
+    {
+        MPMusicPlayerController *mp = [MPMusicPlayerController iPodMusicPlayer];
+        [mp play];
+        musicWasPlaying  = false;
+    }
 }
 
 -(void) viewDidLayoutSubviews
@@ -450,27 +457,23 @@
     {
         case SpeechIntro:
             [speechQueue addObject:NSLocalizedString(@"SpeechIntro", "begin run speech") ];
-            [self sayNextSpeech];
             break;
         case SpeechMinute:
             break;
         case SpeechKM:
-            [self speechForDistanceChange];
-            //make it start processing
-            [self sayNextSpeech];
-            break;
         case SpeechMile:
             [self speechForDistanceChange];
-            //make it start processing
-            [self sayNextSpeech];
             break;
     }
     
+    //make it start processing
+    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
+    [self sayNextSpeech];
 }
 
 -(void)sayNextSpeech
 {
-    if([speechQueue count] > 0)
+    if([speechQueue count])
     {
         [fliteController say:[speechQueue objectAtIndex:0] withVoice:slt];
     }
@@ -487,7 +490,17 @@
     //dequeue item and play next one after duration
     if([speechQueue count])
         [speechQueue removeObjectAtIndex:0];
-    [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
+    if([speechQueue count])
+        [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
+    else
+    {
+        if(musicWasPlaying)
+        {
+            MPMusicPlayerController *mp = [MPMusicPlayerController iPodMusicPlayer];
+            [mp play];
+            musicWasPlaying  = false;
+        }
+    }
 }
 
 #pragma mark - Loading runs
