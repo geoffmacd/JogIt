@@ -335,6 +335,12 @@
         BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
         userPrefsRecord.metric = [NSNumber numberWithBool:isMetric];
         userPrefsRecord.showSpeed = [NSNumber numberWithBool:false];
+        userPrefsRecord.speech = [NSNumber numberWithBool:true];
+        userPrefsRecord.speechTime = [NSNumber numberWithBool:false];
+        userPrefsRecord.speechDistance = [NSNumber numberWithBool:true];
+        userPrefsRecord.speechPace = [NSNumber numberWithBool:true];
+        userPrefsRecord.speechCalories = [NSNumber numberWithBool:false];
+        userPrefsRecord.speechCurPace = [NSNumber numberWithBool:false];
         
         //best to leave these blank so user does not have to backspace them
         userPrefsRecord.fullname = nil;

@@ -104,6 +104,15 @@
     
     //necessary to set the frames properly in viewdidlayout
     justLoaded = true;
+    
+    
+    //open ears stuff
+    openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
+	[openEarsEventsObserver setDelegate:self];
+    fliteController = [[FliteController alloc] init];
+    slt = [[Slt alloc] init];
+    [self setupVoice];
+    speechQueue = [[NSMutableArray alloc] initWithCapacity:5];
 }
 
 -(void) viewDidLayoutSubviews
@@ -198,6 +207,287 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
+}
+
+#pragma mark - OpenEars Delegates
+
+
+- (void) setupVoice {
+    
+	fliteController.duration_stretch = 1.4; // Change the speed
+	fliteController.target_mean = 1.2; // Change the pitch
+    fliteController.target_stddev = 1.5; // Change the variance
+	
+}
+
+-(void)speechForDistanceChange
+{
+    UserPrefs * curPrefs = [delegate curUserPrefs];
+    
+    NSString * stringWithDistance = @"";
+    NSString * stringWithPace = @"";
+    NSString * stringWithCurPace = @"";
+    if([curPrefs.metric boolValue])
+    {
+        if([curPrefs.speechDistance boolValue])
+        {
+            stringWithDistance = [NSString stringWithFormat:@"%@ %d",  NSLocalizedString(@"SpeechKM", "km word for speech "), (int)(run.distance/1000)];
+        }
+        if([curPrefs.speechPace boolValue])
+        {
+            NSTimeInterval avgPace = 1000 / run.avgPace;
+            
+            if(avgPace == 0 || avgPace > 3599)
+            {
+                stringWithPace = NSLocalizedString(@"SpeechNoSpeed", "no speed word for speech ");
+            }
+            else
+            {
+                if([curPrefs.showSpeed boolValue])
+                {
+                    CGFloat speed = 3600 / avgPace;
+                    stringWithPace = [NSString stringWithFormat:@"%.0f %@ %@", speed,
+                                      NSLocalizedString(@"SpeechAvg", "average word for speech "),NSLocalizedString(@"SpeechKPH", "kph word for speech ")];
+                }
+                else
+                {
+                    //convert to per minute format
+                    NSInteger minutes,seconds;
+                    
+                    minutes = avgPace/ 60;
+                    seconds = avgPace - (minutes * 60);
+                    
+                    NSString * minuteTime = @"";
+                    NSString * secondTime = @"";
+                    
+                    if(minutes > 0)
+                        minuteTime = [NSString stringWithFormat:@"%d %@",minutes, NSLocalizedString(@"SpeechMinute", "minutes word for speech ")];
+                    
+                    if(seconds > 0)
+                        secondTime = [NSString stringWithFormat:@"%d %@",seconds, NSLocalizedString(@"SpeechSecond", "seconds word for speech ")];
+                    
+                    stringWithPace = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",minuteTime, secondTime,
+                                      NSLocalizedString(@"SpeechAvg", "average word for speech "),
+                                      NSLocalizedString(@"SpeechPacePer", "pace per word for speech "),NSLocalizedString(@"SpeechKM", "km word for speech ")];
+                }
+            }
+        }
+        if([curPrefs.speechCurPace boolValue])
+        {
+            CLLocationMeta * lastPos = [run.posMeta lastObject];
+            NSTimeInterval curPace = 1000 / [lastPos pace];
+            
+            if(curPace == 0 || curPace  > 3599)
+            {
+                stringWithCurPace = NSLocalizedString(@"SpeechNoSpeed", "no speed word for speech ");
+            }
+            else
+            {
+                if([curPrefs.showSpeed boolValue])
+                {
+                    CGFloat speed = 3600 / curPace ;
+                    stringWithCurPace = [NSString stringWithFormat:@"%.0f %@ %@", speed, NSLocalizedString(@"SpeechCurrent", "current word for speech "),
+                        NSLocalizedString(@"SpeechKPH", "kph word for speech ")];
+                }
+                else
+                {
+                    //convert to per minute format
+                    NSInteger minutes,seconds;
+                    
+                    minutes = curPace/ 60;
+                    seconds = curPace  - (minutes * 60);
+                    
+                    NSString * minuteTime = @"";
+                    NSString * secondTime = @"";
+                    
+                    if(minutes > 0)
+                        minuteTime = [NSString stringWithFormat:@"%d %@",minutes, NSLocalizedString(@"SpeechMinute", "minutes word for speech ")];
+                    
+                    if(seconds > 0)
+                        secondTime = [NSString stringWithFormat:@"%d %@",seconds, NSLocalizedString(@"SpeechSecond", "seconds word for speech ")];
+                    
+                    stringWithCurPace = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",minuteTime, secondTime,
+                                         NSLocalizedString(@"SpeechCurrent", "current word for speech "),
+                                         NSLocalizedString(@"SpeechPacePer", "pace per word for speech "),NSLocalizedString(@"SpeechKM", "km word for speech ")];
+                }
+            }
+        }
+    }
+    else
+    {
+        if([curPrefs.speechDistance boolValue])
+        {
+            stringWithDistance = [NSString stringWithFormat:@"%@ %d",   NSLocalizedString(@"SpeechMile", "mile word for speech "), (int)(run.distance*convertKMToMile/1000)];
+        }
+        if([curPrefs.speechPace boolValue])
+        {
+            NSTimeInterval avgPace = 1000  /(run.avgPace* convertKMToMile);
+            
+            if(avgPace == 0 || avgPace > 3599)
+            {
+                stringWithPace = NSLocalizedString(@"SpeechNoSpeed", "no speed word for speech ");
+            }
+            else
+            {
+                if([curPrefs.showSpeed boolValue])
+                {
+                    CGFloat speed = 3600 / avgPace;
+                    stringWithPace = [NSString stringWithFormat:@"%.0f %@ %@", speed,
+                                      NSLocalizedString(@"SpeechAvg", "average word for speech "),NSLocalizedString(@"SpeechMPH", "mph word for speech ")];
+                }
+                else
+                {
+                    //convert to per minute format
+                    NSInteger minutes,seconds;
+                    
+                    minutes = avgPace/ 60;
+                    seconds = avgPace - (minutes * 60);
+                    
+                    NSString * minuteTime = @"";
+                    NSString * secondTime = @"";
+                    
+                    if(minutes > 0)
+                        minuteTime = [NSString stringWithFormat:@"%d %@",minutes, NSLocalizedString(@"SpeechMinute", "minutes word for speech ")];
+                    
+                    if(seconds > 0)
+                        secondTime = [NSString stringWithFormat:@"%d %@",seconds, NSLocalizedString(@"SpeechSecond", "seconds word for speech ")];
+                    
+                    stringWithPace = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",minuteTime, secondTime,
+                                      NSLocalizedString(@"SpeechAvg", "average word for speech "),
+                                      NSLocalizedString(@"SpeechPacePer", "pace per word for speech "),NSLocalizedString(@"SpeechMile", "mile word for speech ")];
+                }
+            }
+        }
+        if([curPrefs.speechCurPace boolValue])
+        {
+            CLLocationMeta * lastPos = [run.posMeta lastObject];
+            NSTimeInterval curPace = 1000  / ([lastPos pace]* convertKMToMile);
+            
+            if(curPace == 0 || curPace > 3599)
+            {
+                stringWithCurPace = NSLocalizedString(@"SpeechNoSpeed", "no speed word for speech ");
+            }
+            else
+            {
+                if([curPrefs.showSpeed boolValue])
+                {
+                    CGFloat speed = 3600 / curPace ;
+                    stringWithCurPace = [NSString stringWithFormat:@"%.0f %@ %@", speed, NSLocalizedString(@"SpeechCurrent", "current word for speech "), NSLocalizedString(@"SpeechMPH", "mph word for speech ")];
+                }
+                else
+                {
+                    //convert to per minute format
+                    NSInteger minutes,seconds;
+                    
+                    minutes = curPace/ 60;
+                    seconds = curPace - (minutes * 60);
+                    
+                    NSString * minuteTime = @"";
+                    NSString * secondTime = @"";
+                    
+                    if(minutes > 0)
+                        minuteTime = [NSString stringWithFormat:@"%d %@",minutes, NSLocalizedString(@"SpeechMinute", "minutes word for speech ")];
+                    
+                    if(seconds > 0)
+                        secondTime = [NSString stringWithFormat:@"%d %@",seconds, NSLocalizedString(@"SpeechSecond", "seconds word for speech ")];
+                    
+                    stringWithCurPace = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",minuteTime, secondTime,
+                                         NSLocalizedString(@"SpeechCurrent", "current word for speech "),
+                                         NSLocalizedString(@"SpeechPacePer", "pace per word for speech "),NSLocalizedString(@"SpeechMile", "mile word for speech ")];
+                }
+            }
+        }
+    }
+    
+    NSString * stringWithCalories = @"";
+    NSString * stringWithTime = @"";
+    if([curPrefs.speechTime boolValue])
+    {
+        if(run.time < 3600000)
+        {
+            NSInteger hours,minutes,seconds;
+            
+            hours = run.time  / 3600;
+            minutes = run.time / 60 - (hours*60);
+            seconds = run.time  - (minutes * 60) - (hours * 3600);
+            
+            NSString * hourTime = @"";
+            NSString * minuteTime = @"";
+            if(hours > 0)
+                hourTime = [NSString stringWithFormat:@"%d %@", hours,  NSLocalizedString(@"SpeechHour", "hours word for speech ")];
+            
+            minuteTime = [NSString stringWithFormat:@"%d %@", minutes,  NSLocalizedString(@"SpeechMinute", "minute word for speech ")];
+            
+            stringWithTime = [NSString stringWithFormat:@"%@ %@ %@",NSLocalizedString(@"SpeechTime", "time word for speech "), hourTime, minuteTime];
+        }
+    }
+    if([curPrefs.speechCalories boolValue])
+    {
+        stringWithCalories = [NSString stringWithFormat:@"%d %@", (int)run.calories, NSLocalizedString(@"SpeechCalorie", "calorie word for speech ")];
+    }
+    
+    //add to queue in right order
+    if(stringWithDistance.length > 0)
+        [speechQueue addObject:stringWithDistance];
+    if(stringWithTime.length > 0)
+        [speechQueue addObject:stringWithTime];
+    if(stringWithCalories.length > 0)
+        [speechQueue addObject:stringWithCalories];
+    if(stringWithPace.length > 0)
+        [speechQueue addObject:stringWithPace];
+    if(stringWithCurPace.length > 0)
+        [speechQueue addObject:stringWithCurPace];
+    
+}
+
+-(void)audioCue:(AudioCueType)type
+{
+    //do not say anything if disabled
+    if(![[[delegate curUserPrefs] speech] boolValue])
+        return;
+    
+    switch(type)
+    {
+        case SpeechIntro:
+            [speechQueue addObject:NSLocalizedString(@"SpeechIntro", "begin run speech") ];
+            [self sayNextSpeech];
+            break;
+        case SpeechMinute:
+            break;
+        case SpeechKM:
+            [self speechForDistanceChange];
+            //make it start processing
+            [self sayNextSpeech];
+            break;
+        case SpeechMile:
+            [self speechForDistanceChange];
+            //make it start processing
+            [self sayNextSpeech];
+            break;
+    }
+    
+}
+
+-(void)sayNextSpeech
+{
+    if([speechQueue count] > 0)
+    {
+        [fliteController say:[speechQueue objectAtIndex:0] withVoice:slt];
+    }
+}
+
+- (void) fliteDidStartSpeaking {
+	NSLog(@"Flite has started speaking"); // Log it.
+    
+}
+
+- (void) fliteDidFinishSpeaking {
+	NSLog(@"Flite has finished speaking"); // Log it.
+    
+    //dequeue item and play next one after duration
+    if([speechQueue count])
+        [speechQueue removeObjectAtIndex:0];
+    [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
 }
 
 #pragma mark - Loading runs
@@ -528,6 +818,12 @@
     
     //reset counter
     consecutiveHeadingCount = 0;
+    
+    //speech at start of run
+    if(run.time == 0)
+    {
+        [self audioCue:SpeechIntro];
+    }
 }
 
 
@@ -542,6 +838,9 @@
         
         //reset idle timer
         [delegate resetIdle];
+        
+        //stop talking
+        [speechQueue removeAllObjects];
     }
     
     //set map to follow user before starting track
@@ -996,6 +1295,9 @@
                 
                 //update pace labels
                 [self resetPaceSelection];
+                
+                //speech
+                [self audioCue:SpeechKM];
             }
         }
         
@@ -1043,6 +1345,9 @@
                 
                 //update pace labels
                 [self resetPaceSelection];
+                
+                //speech
+                [self audioCue:SpeechMile];
             }
         }
 
@@ -2953,6 +3258,9 @@
     //then visually update chart and scroll to new minute
     [self updateChart];
     [selectedPlot reloadData];
+    
+    //speech
+    //[self audioCue:SpeechMinute];
 }
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range

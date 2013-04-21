@@ -19,7 +19,11 @@
 #import "MBProgressHUD.h"
 #import "StartAnnotation.h"
 #import "FinishAnnotation.h"
-
+#import <Slt/Slt.h>
+#import <OpenEars/OpenEarsEventsObserver.h>
+#import <OpenEars/FliteController.h>
+#import <OpenEars/LanguageModelGenerator.h>
+#import <OpenEars/OpenEarsLogging.h>
 
 
 #define mapZoomDefault 1000 //m
@@ -56,8 +60,19 @@
 #define mapPathSize 10 //positions before new line
 #define paceSelectionOverrideTime 5 //s
 #define delayGoalAssessment 3 //s
+#define delaySpeech 0.1 //s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
+
+
+
+typedef enum {
+    SpeechIntro,
+    SpeechMinute,
+    SpeechKM,
+    SpeechMile
+} AudioCueType;
+
 
 
 @protocol LoggerViewControllerDelegate <NSObject>
@@ -75,7 +90,7 @@
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate>
 {
     //for ghost run
     UIActionSheet *sheet;
@@ -166,7 +181,14 @@
     NSInteger lastPathIndex;
     NSInteger lastGhostPathIndex;
     
+    //to prevent, orgRects from being reloaded when viewdidlayoutsubs is called againa fter notification for some reason
     BOOL justLoaded;
+    
+    //Open ears vars
+    Slt *slt;
+	OpenEarsEventsObserver *openEarsEventsObserver; // A class whose delegate methods which will allow us to stay informed of changes in the Flite and Pocketsphinx statuses.
+	FliteController *fliteController; // The controller for Flite (speech).
+    NSMutableArray * speechQueue;
 }
 
 

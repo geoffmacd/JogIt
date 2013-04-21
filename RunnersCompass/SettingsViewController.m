@@ -71,11 +71,20 @@
         [formMapping sectionWithTitle:NSLocalizedString(@"SettingsMeasurementHeader", @"measurement header in settings")  identifier:@"Measurement"];
         
         [formMapping mapAttribute:@"weight" title:NSLocalizedString(@"SettingsWeight", @"weight in settings")  type:FKFormAttributeMappingTypeInteger];
+        [formMapping mapAttribute:@"countdown" title:NSLocalizedString(@"SettingsCountdown", @"countdown  in settings")type:FKFormAttributeMappingTypeInteger];
         
         [formMapping mapAttribute:@"autopause" title:NSLocalizedString(@"SettingsAutoPause", @"auto pause switch in settings") type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"metric" title:NSLocalizedString(@"SettingsUnits", @"units switch in settings") type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"showSpeed" title:NSLocalizedString(@"SettingsShowSpeed", @"show speed switch in settings") type:FKFormAttributeMappingTypeBoolean];
-        [formMapping mapAttribute:@"countdown" title:NSLocalizedString(@"SettingsCountdown", @"countdown  in settings")type:FKFormAttributeMappingTypeInteger];
+        
+        
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsAudioHeader", @"audio cues header in settings")  identifier:@"sdf"];
+        [formMapping mapAttribute:@"speech" title:NSLocalizedString(@"SettingsSpeech", @"enable speech  in settings")type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"speechTime" title:NSLocalizedString(@"SettingsSpeechTime", @"enable speech time  in settings")type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"speechDistance" title:NSLocalizedString(@"SettingsSpeechDistance", @"enable speech distance  in settings")type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"speechCalories" title:NSLocalizedString(@"SettingsSpeechCalories", @"enable speech calories  in settings")type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"speechPace" title:NSLocalizedString(@"SettingsSpeechPace", @"enable speech pace  in settings")type:FKFormAttributeMappingTypeBoolean];
+        [formMapping mapAttribute:@"speechCurPace" title:NSLocalizedString(@"SettingsSpeechCurPace", @"enable speech current pace  in settings")type:FKFormAttributeMappingTypeBoolean];
 
         
         /*

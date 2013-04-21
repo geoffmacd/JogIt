@@ -17,6 +17,12 @@
 @property (nonatomic, retain) NSNumber * showSpeed;
 @property (nonatomic, retain) NSNumber * countdown;
 @property (nonatomic, retain) NSNumber * weight;
+@property (nonatomic, retain) NSNumber * speech;
+@property (nonatomic, retain) NSNumber * speechTime;
+@property (nonatomic, retain) NSNumber * speechDistance;
+@property (nonatomic, retain) NSNumber * speechPace;
+@property (nonatomic, retain) NSNumber * speechCalories;
+@property (nonatomic, retain) NSNumber * speechCurPace;
 @property (nonatomic, retain) NSString * fullname;
 @property (nonatomic, retain) NSDate * birthdate;
 //@property (nonatomic, retain) NSNumber *facebook;

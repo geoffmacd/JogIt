@@ -224,9 +224,27 @@
 		67F6D52716FA8D6800790A22 /* whitepause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52516FA8D6800790A22 /* whitepause@2x.png */; };
 		67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */; };
 		67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */; };
+		67F7CB93172397230008CEBF /* cmu07a.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB83172397230008CEBF /* cmu07a.dic */; };
+		67F7CB94172397230008CEBF /* feat.params in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB85172397230008CEBF /* feat.params */; };
+		67F7CB95172397230008CEBF /* mdef in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB86172397230008CEBF /* mdef */; };
+		67F7CB96172397230008CEBF /* means in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB87172397230008CEBF /* means */; };
+		67F7CB97172397230008CEBF /* noisedict in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB88172397230008CEBF /* noisedict */; };
+		67F7CB98172397230008CEBF /* sendump in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB89172397230008CEBF /* sendump */; };
+		67F7CB99172397230008CEBF /* transition_matrices in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8A172397230008CEBF /* transition_matrices */; };
+		67F7CB9A172397230008CEBF /* variances in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8B172397230008CEBF /* variances */; };
+		67F7CB9B172397230008CEBF /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CB8C172397230008CEBF /* OpenEars.framework */; };
+		67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8D172397230008CEBF /* OpenEars1.dic */; };
+		67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8E172397230008CEBF /* OpenEars1.gram */; };
+		67F7CB9E172397230008CEBF /* OpenEars1.languagemodel in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */; };
+		67F7CB9F172397230008CEBF /* OpenEars2.gram in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB90172397230008CEBF /* OpenEars2.gram */; };
+		67F7CBA0172397230008CEBF /* OpenEarsCorpus.txt in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB91172397230008CEBF /* OpenEarsCorpus.txt */; };
+		67F7CBA1172397230008CEBF /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CB92172397230008CEBF /* Slt.framework */; };
+		67F7CBA3172397490008CEBF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CBA2172397490008CEBF /* AVFoundation.framework */; };
+		67F7CBA5172397540008CEBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CBA4172397540008CEBF /* AudioToolbox.framework */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
+		67FF65751723BBF500A91E06 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65741723BBF500A91E06 /* Default@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -583,12 +601,30 @@
 		67F6D52516FA8D6800790A22 /* whitepause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitepause@2x.png"; sourceTree = "<group>"; };
 		67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontViewControllerDropShadow.png; path = JSSlidingViewController/frontViewControllerDropShadow.png; sourceTree = SOURCE_ROOT; };
 		67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = SOURCE_ROOT; };
+		67F7CB83172397230008CEBF /* cmu07a.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmu07a.dic; sourceTree = "<group>"; };
+		67F7CB85172397230008CEBF /* feat.params */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = feat.params; sourceTree = "<group>"; };
+		67F7CB86172397230008CEBF /* mdef */ = {isa = PBXFileReference; lastKnownFileType = file; path = mdef; sourceTree = "<group>"; };
+		67F7CB87172397230008CEBF /* means */ = {isa = PBXFileReference; lastKnownFileType = file; path = means; sourceTree = "<group>"; };
+		67F7CB88172397230008CEBF /* noisedict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noisedict; sourceTree = "<group>"; };
+		67F7CB89172397230008CEBF /* sendump */ = {isa = PBXFileReference; lastKnownFileType = file; path = sendump; sourceTree = "<group>"; };
+		67F7CB8A172397230008CEBF /* transition_matrices */ = {isa = PBXFileReference; lastKnownFileType = file; path = transition_matrices; sourceTree = "<group>"; };
+		67F7CB8B172397230008CEBF /* variances */ = {isa = PBXFileReference; lastKnownFileType = file; path = variances; sourceTree = "<group>"; };
+		67F7CB8C172397230008CEBF /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
+		67F7CB8D172397230008CEBF /* OpenEars1.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.dic; sourceTree = "<group>"; };
+		67F7CB8E172397230008CEBF /* OpenEars1.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.gram; sourceTree = "<group>"; };
+		67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.languagemodel; sourceTree = "<group>"; };
+		67F7CB90172397230008CEBF /* OpenEars2.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars2.gram; sourceTree = "<group>"; };
+		67F7CB91172397230008CEBF /* OpenEarsCorpus.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEarsCorpus.txt; sourceTree = "<group>"; };
+		67F7CB92172397230008CEBF /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
+		67F7CBA2172397490008CEBF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		67F7CBA4172397540008CEBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
 		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
+		67FF65741723BBF500A91E06 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -596,6 +632,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67F7CBA5172397540008CEBF /* AudioToolbox.framework in Frameworks */,
+				67F7CBA3172397490008CEBF /* AVFoundation.framework in Frameworks */,
 				6747F64B1720EA1B00B23C58 /* StoreKit.framework in Frameworks */,
 				67AA3EA7170FDBB7004181AC /* CoreData.framework in Frameworks */,
 				67B2583216F017FF00CF337E /* CoreLocation.framework in Frameworks */,
@@ -605,6 +643,8 @@
 				67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */,
 				67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */,
 				67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */,
+				67F7CB9B172397230008CEBF /* OpenEars.framework in Frameworks */,
+				67F7CBA1172397230008CEBF /* Slt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,10 +654,12 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				67FF65741723BBF500A91E06 /* Default@2x.png */,
 				67EA66E4171A3CBC00BA21FE /* cloudyred@2x.png */,
 				67EA66DE171A298000BA21FE /* cloudyred.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
+				67F7CB7F172395EF0008CEBF /* OpenEars */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
 				672D7118171CDB280054E9EB /* MBProgressHUD */,
@@ -644,6 +686,8 @@
 		67236D0716409B7700DD13C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				67F7CBA2172397490008CEBF /* AVFoundation.framework */,
+				67F7CBA4172397540008CEBF /* AudioToolbox.framework */,
 				6747F6491720E9F500B23C58 /* StoreKit.framework */,
 				67AA3EA6170FDBB7004181AC /* CoreData.framework */,
 				67B2583116F017FF00CF337E /* CoreLocation.framework */,
@@ -1136,6 +1180,46 @@
 			name = MJPopupViewController;
 			sourceTree = "<group>";
 		};
+		67F7CB7F172395EF0008CEBF /* OpenEars */ = {
+			isa = PBXGroup;
+			children = (
+				67F7CB82172397220008CEBF /* Framework */,
+			);
+			name = OpenEars;
+			path = Pickers;
+			sourceTree = "<group>";
+		};
+		67F7CB82172397220008CEBF /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				67F7CB83172397230008CEBF /* cmu07a.dic */,
+				67F7CB84172397230008CEBF /* hub4wsj_sc_8k */,
+				67F7CB8C172397230008CEBF /* OpenEars.framework */,
+				67F7CB8D172397230008CEBF /* OpenEars1.dic */,
+				67F7CB8E172397230008CEBF /* OpenEars1.gram */,
+				67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */,
+				67F7CB90172397230008CEBF /* OpenEars2.gram */,
+				67F7CB91172397230008CEBF /* OpenEarsCorpus.txt */,
+				67F7CB92172397230008CEBF /* Slt.framework */,
+			);
+			name = Framework;
+			path = OpenEars/Framework;
+			sourceTree = SOURCE_ROOT;
+		};
+		67F7CB84172397230008CEBF /* hub4wsj_sc_8k */ = {
+			isa = PBXGroup;
+			children = (
+				67F7CB85172397230008CEBF /* feat.params */,
+				67F7CB86172397230008CEBF /* mdef */,
+				67F7CB87172397230008CEBF /* means */,
+				67F7CB88172397230008CEBF /* noisedict */,
+				67F7CB89172397230008CEBF /* sendump */,
+				67F7CB8A172397230008CEBF /* transition_matrices */,
+				67F7CB8B172397230008CEBF /* variances */,
+			);
+			path = hub4wsj_sc_8k;
+			sourceTree = "<group>";
+		};
 		67FC068116A10EE000491C97 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -1384,6 +1468,20 @@
 				6747F6461720D99E00B23C58 /* whitecalories.png in Resources */,
 				6747F6471720D99E00B23C58 /* whiteodometer.png in Resources */,
 				6747F6481720D99E00B23C58 /* whitespeed.png in Resources */,
+				67F7CB93172397230008CEBF /* cmu07a.dic in Resources */,
+				67F7CB94172397230008CEBF /* feat.params in Resources */,
+				67F7CB95172397230008CEBF /* mdef in Resources */,
+				67F7CB96172397230008CEBF /* means in Resources */,
+				67F7CB97172397230008CEBF /* noisedict in Resources */,
+				67F7CB98172397230008CEBF /* sendump in Resources */,
+				67F7CB99172397230008CEBF /* transition_matrices in Resources */,
+				67F7CB9A172397230008CEBF /* variances in Resources */,
+				67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */,
+				67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */,
+				67F7CB9E172397230008CEBF /* OpenEars1.languagemodel in Resources */,
+				67F7CB9F172397230008CEBF /* OpenEars2.gram in Resources */,
+				67F7CBA0172397230008CEBF /* OpenEarsCorpus.txt in Resources */,
+				67FF65751723BBF500A91E06 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1599,6 +1697,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
+					"\"$(SRCROOT)/OpenEars/Framework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/RunIt-Prefix.pch";
@@ -1628,6 +1727,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
+					"\"$(SRCROOT)/OpenEars/Framework\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/RunIt-Prefix.pch";

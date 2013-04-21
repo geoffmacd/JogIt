@@ -17,6 +17,12 @@
 @dynamic weight;
 @dynamic fullname;
 @dynamic birthdate;
+@dynamic speech;
+@dynamic speechTime;
+@dynamic speechPace;
+@dynamic speechDistance;
+@dynamic speechCalories;
+@dynamic speechCurPace;
 
 +(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric
 {
