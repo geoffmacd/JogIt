@@ -37,7 +37,7 @@
 #define paceGraphSplitLoadOffset 20
 #define paceGraphSplitObjects 30
 #define paceGraphAnimated true //for km selection to animate pace chart
-#define paceGraphBarBasePrecent 0.02 //%
+#define paceGraphBarBasePrecent 0.03 //%
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //m maximum

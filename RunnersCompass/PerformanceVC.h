@@ -13,6 +13,7 @@
 #import "UserPrefs.h"
 #import "Util.h"
 #import "PRCell.h"
+#import "UpgradeVC.h"
 
 @interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate,PRCellDelegate>
 {
