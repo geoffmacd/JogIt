@@ -2781,6 +2781,7 @@
         
         plotSpace.xRange = newRange;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
         [barPlot reloadData];
         
         //move the view with the scroll view
@@ -2804,6 +2805,7 @@
         
         plotSpace.xRange = newRange;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
         [barPlot reloadData];
         
         //move the view with the scroll view
@@ -3132,6 +3134,7 @@
         
         //only set y in case a new value needs to adjust range, x set already for the whole cache
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
         
         [barPlot reloadData];
     }
@@ -3170,6 +3173,7 @@
         
         //need to adjust plot range for potentially offscreen bars
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
+        //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
         
         if(!kmPaceShowMode && !selectedPaceShowMode)
         {
@@ -3350,6 +3354,8 @@
     barPlot.barWidth                      = CPTDecimalFromDouble(0.7);
     barPlot.barWidthsAreInViewCoordinates = NO;
     barPlot.barCornerRadius               = CPTFloat(5.0);
+    //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
+    //barPlot.barBasesVary = NO;
     //barPlot.barBaseCornerRadius             = CPTFloat(5.0);
     barPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     barPlot.dataSource = self;
@@ -3366,6 +3372,7 @@
     selectedPlot.lineStyle = selectedLineStyle;
     selectedPlot.barWidth                      = CPTDecimalFromDouble(0.7);
     selectedPlot.barCornerRadius               = CPTFloat(5.0);
+    //selectedPlot.baseValue = CPTDecimalFromDouble(0.7);
     //selectedPlot.barBaseCornerRadius             = CPTFloat(5.0);
     selectedPlot.cachePrecision = CPTPlotCachePrecisionDouble;
     selectedPlot.dataSource = self;
@@ -3405,7 +3412,10 @@
                     //x location of index
                     return [NSNumber numberWithDouble:index-0.5];
                 case CPTBarPlotFieldBarTip:
-                    return [NSNumber numberWithDouble:0];
+                    if(plot == barPlot)
+                        return [NSNumber numberWithDouble:paceGraphBarBasePrecent * [self maxYForChart]];
+                    else
+                        return [NSNumber numberWithDouble:0];
             }
         }
     }
@@ -3431,14 +3441,20 @@
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && index == selectedMinIndex))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        num = [NSNumber numberWithDouble:metaForPos.pace];
+                        if(metaForPos.pace < paceGraphBarBasePrecent * [self maxYForChart])
+                            num = [NSNumber numberWithDouble:paceGraphBarBasePrecent * [self maxYForChart]];
+                        else
+                            num = [NSNumber numberWithDouble:metaForPos.pace];
                     }
                 }
                 else{
                     if([plot.identifier isEqual: kPlot] ||  ([plot.identifier isEqual: kSelectedPlot] && (index >= selectedMinIndex && index <= (selectedMinIndex + numMinutesAtKmSelected))))
                     {
                         metaForPos = [[run minCheckpointsMeta] objectAtIndex:index];
-                        num = [NSNumber numberWithDouble:metaForPos.pace];
+                        if(metaForPos.pace < paceGraphBarBasePrecent * [self maxYForChart])
+                            num = [NSNumber numberWithDouble:paceGraphBarBasePrecent * [self maxYForChart]];
+                        else
+                            num = [NSNumber numberWithDouble:metaForPos.pace];
                     }
                 }
                 break;
@@ -3452,6 +3468,10 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
+    //ignore taps of bars that aren't created yet
+    if(idx >= [run.minCheckpoints count])
+        return;
+    
     timeSinceBarSelection = [NSDate timeIntervalSinceReferenceDate];
     
     //if ghost enabled, color bar 

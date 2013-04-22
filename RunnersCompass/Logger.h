@@ -37,6 +37,7 @@
 #define paceGraphSplitLoadOffset 20
 #define paceGraphSplitObjects 30
 #define paceGraphAnimated true //for km selection to animate pace chart
+#define paceGraphBarBasePrecent 0.02 //%
 #define kSelectedPlot @"selected"
 #define kPlot @"plot"
 #define logRequiredAccuracy 50 //m maximum
@@ -52,7 +53,7 @@
 #define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 12 //seconds
-#define avgPaceUpdatePeriod 3//ss
+#define avgPaceUpdatePeriod 1//s
 #define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//degress
 #define mapSpanMultipler 1.04// 4 percent
@@ -60,7 +61,7 @@
 #define mapPathWidth 15.0//pixels
 #define mapIconPathWidth 10.0//pixels
 #define mapPathSize 10 //positions before new line
-#define paceSelectionOverrideTime 5 //s
+#define paceSelectionOverrideTime 4 //s
 #define delayGoalAssessment 3 //s
 #define delaySpeech 0.1 //s
 
