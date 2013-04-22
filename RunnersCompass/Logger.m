@@ -3173,7 +3173,6 @@
         
         //need to adjust plot range for potentially offscreen bars
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat([self maxYForChart])];
-        //barPlot.baseValue = CPTDecimalFromDouble(paceGraphBarBasePrecent * [self maxYForChart]);//needs to be adjust with maxY
         
         if(!kmPaceShowMode && !selectedPaceShowMode)
         {
@@ -3410,7 +3409,7 @@
             switch ( fieldEnum ) {
                 case CPTBarPlotFieldBarLocation:
                     //x location of index
-                    return [NSNumber numberWithDouble:index-0.5];
+                    return [NSNumber numberWithDouble:index+0.5];
                 case CPTBarPlotFieldBarTip:
                     if(plot == barPlot)
                         return [NSNumber numberWithDouble:paceGraphBarBasePrecent * [self maxYForChart]];
@@ -3468,9 +3467,14 @@
 
 -(void)barPlot:(CPTBarPlot *)plot barWasSelectedAtRecordIndex:(NSUInteger)idx
 {
-    //ignore taps of bars that aren't created yet
+    //ignore taps of bars that aren't created yet, go to current pace
     if(idx >= [run.minCheckpoints count])
+    {
+        [self resetPaceSelection];
+        [self determineBarColors];
+        [selectedPlot reloadData];
         return;
+    }
     
     timeSinceBarSelection = [NSDate timeIntervalSinceReferenceDate];
     
