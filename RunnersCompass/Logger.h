@@ -26,6 +26,7 @@
 #import <OpenEars/OpenEarsLogging.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <OpenEars/AudioSessionManager.h>
+#import "UpgradeVC.h"
 
 
 #define mapZoomDefault 1000 //m

@@ -10,6 +10,11 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UpgradeCell.h"
 #import "UpgradeHeaderCell.h"
+#import "IAPShare.h"
+#import "StandardNotifyVC.h"
+#import "MJPopupBackgroundView.h"
+#import "UIViewController+MJPopupViewController.h"
+#import "UserPrefs.h"
 
 @interface UpgradeVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,UpgradeCellDelegate>
 {
@@ -19,6 +24,7 @@
 
 
 @property (weak)  IBOutlet UITableView *table;
+@property (weak)  UserPrefs *prefs;
 
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)upgradeTapped:(id)sender;

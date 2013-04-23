@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserPrefs.h"
+#import "IAPShare.h"
+#import "StandardNotifyVC.h"
+#import "MJPopupBackgroundView.h"
+#import "UIViewController+MJPopupViewController.h"
 
 @class FKFormModel;
 
@@ -18,5 +22,6 @@
 @property  UserPrefs *prefsToChange;
 @property  BOOL oldMetric;
 @property  BOOL oldShowSpeed;
+@property  BOOL restoreAvailable;
 
 @end

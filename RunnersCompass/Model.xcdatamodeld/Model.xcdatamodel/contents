@@ -39,6 +39,7 @@
         <attribute name="countdown" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="metric" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="purchased" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="showSpeed" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="speech" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="speechCalories" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -53,6 +54,6 @@
         <element name="LocationRecord" positionX="160" positionY="192" width="128" height="135"/>
         <element name="RunRecord" positionX="160" positionY="192" width="128" height="225"/>
         <element name="ThumbnailRecord" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="UserPrefs" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="UserPrefs" positionX="160" positionY="192" width="128" height="255"/>
     </elements>
 </model>

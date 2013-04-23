@@ -23,6 +23,7 @@
 @property (nonatomic, retain) NSNumber * speechPace;
 @property (nonatomic, retain) NSNumber * speechCalories;
 @property (nonatomic, retain) NSNumber * speechCurPace;
+@property (nonatomic, retain) NSNumber * purchased;
 @property (nonatomic, retain) NSString * fullname;
 @property (nonatomic, retain) NSDate * birthdate;
 //@property (nonatomic, retain) NSNumber *facebook;

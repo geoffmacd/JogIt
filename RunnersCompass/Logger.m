@@ -4063,13 +4063,26 @@
     
     [ghostBut.layer setBorderWidth:0.0f];
     
-    //only if it is historical
-    if(!run.live)
+    //only if purchased
+    if([[[delegate curUserPrefs] purchased] boolValue])
     {
         
-        //ask user if they want to start a ghost run
-        [self shouldUserGhostRun];
+        //only if it is historical
+        if(!run.live)
+        {
+            
+            //ask user if they want to start a ghost run
+            [self shouldUserGhostRun];
+        }
     }
+    else
+    {
+        UpgradeVC * vc = [[UpgradeVC alloc] initWithNibName:@"Upgrade" bundle:nil];
+        [vc setPrefs:[delegate curUserPrefs]];
+        
+        [self presentViewController:vc animated:true completion:nil];
+    }
+    
 }
 
 - (IBAction)ghostButTouched:(id)sender {

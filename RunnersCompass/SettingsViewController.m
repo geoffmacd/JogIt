@@ -15,7 +15,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed;
+@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed,restoreAvailable;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,6 +35,7 @@
     
     oldMetric = [prefsToChange.metric boolValue];
     oldShowSpeed = [prefsToChange.showSpeed boolValue];
+    restoreAvailable = ![prefsToChange.purchased boolValue];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
@@ -86,6 +87,42 @@
         [formMapping mapAttribute:@"speechPace" title:NSLocalizedString(@"SettingsSpeechPace", @"enable speech pace  in settings")type:FKFormAttributeMappingTypeBoolean];
         [formMapping mapAttribute:@"speechCurPace" title:NSLocalizedString(@"SettingsSpeechCurPace", @"enable speech current pace  in settings")type:FKFormAttributeMappingTypeBoolean];
 
+
+        //restore button
+        if(restoreAvailable)
+        {
+            [formMapping sectionWithTitle:@"" identifier:@"restoreButSection"];
+            
+            [formMapping button:NSLocalizedString(@"SettingsRestorePurchase", @"restore purchase word")
+                     identifier:@"restoreButton" handler:^(id object){
+                         
+                         //restore product
+                         [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue* transaction){
+                             
+                             //success
+                             //hide button
+                             restoreAvailable = false;
+                             prefsToChange.purchased = [NSNumber numberWithBool:true];
+                             
+                             //show notification
+                             StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                             [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
+                             
+                             [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             
+                         } OnFail:^(SKPaymentQueue* payment,NSError* error){
+                             
+                             //show error
+                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingsRestoreFailTitle", @"restore fail title")
+                                                                        message:NSLocalizedString(@"SettingsRestoreFail", @"restore fail ")
+                                                                            delegate:nil
+                                                                   cancelButtonTitle:@"OK"
+                                                                   otherButtonTitles:nil];
+                             [alert show];
+                         }];
+                     }
+                   accesoryType:UITableViewCellAccessoryNone];
+        }
         
         /*
         [formMapping sectionWithTitle:NSLocalizedString(@"SettingsSharingHeader", @"sharing header in settings")  identifier:@"sdf"];

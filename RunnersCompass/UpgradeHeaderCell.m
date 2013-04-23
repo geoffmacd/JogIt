@@ -25,6 +25,23 @@
     
     //localized buttons in IB
     [doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+    
+    //get price of app and append to text
+    
+    [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response)
+     {
+         NSString * upgradeText = NSLocalizedString(@"UpgradeButton", @"upgrade button");
+         SKProduct * upgrade =  [response.products lastObject];
+         NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+         [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+         [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+         [numberFormatter setLocale:upgrade.priceLocale];
+         NSString *formattedPrice = [numberFormatter stringFromNumber:upgrade.price];
+         upgradeText = [upgradeText stringByAppendingString:formattedPrice];
+         [upgradeBut setTitle:upgradeText forState:UIControlStateNormal];
+         
+     }];
+    
 }
 
 

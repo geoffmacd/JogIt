@@ -10,7 +10,7 @@
 
 @implementation UpgradeVC
 
-@synthesize table;
+@synthesize table,prefs;
 
 
 - (void)viewDidLoad
@@ -197,6 +197,34 @@
 - (IBAction)upgradeTapped:(id)sender {
     
     //purchase in-app through IAPhelper
+    
+    SKProduct* product =[[IAPShare sharedHelper].iap.products objectAtIndex:0];
+    
+    [[IAPShare sharedHelper].iap buyProduct:product
+                               onCompletion:^(SKPaymentTransaction* trans){
+                                   
+                                   //present notification and thank you
+                                   //present PR notification popup
+                                   StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                   [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
+                                   
+                                   [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                                   
+                                   NSLog(@"Purchased, Thank You");
+                                   
+                                   prefs.purchased = [NSNumber numberWithBool:true];
+                                   
+                                   //give nottification to update settings on app delegate
+                                   [[NSNotificationCenter defaultCenter]
+                                    postNotificationName:@"settingsChangedNotification"
+                                    object:prefs];
+                               }
+                                     OnFail:^(SKPaymentTransaction* trans) {
+                                         //just dismiss user cancel
+                                         [self dismissViewControllerAnimated:true completion:nil];
+                                         
+                                         NSLog(@"Error");
+                                     }];
     
 }
 

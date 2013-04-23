@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IAPShare.h"
 
 @interface UpgradeHeaderCell : UIView
 @property (weak)  IBOutlet UIButton *doneBut;

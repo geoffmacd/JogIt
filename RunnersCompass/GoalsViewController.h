@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GoalHeaderCell.h"
 #import "UserPrefs.h"
+#import "UpgradeVC.h"
 
 @interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 {

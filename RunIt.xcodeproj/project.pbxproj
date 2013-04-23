@@ -256,6 +256,8 @@
 		67FF659F1724E1BC00A91E06 /* predictionfull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65931724E1BC00A91E06 /* predictionfull@2x.png */; };
 		67FF65A01724E1BC00A91E06 /* predictsample.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65941724E1BC00A91E06 /* predictsample.png */; };
 		67FF65A11724E1BC00A91E06 /* predictsample@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65951724E1BC00A91E06 /* predictsample@2x.png */; };
+		67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65A21726367E00A91E06 /* StandardNotify.xib */; };
+		67FF65A61726368000A91E06 /* StandardNotifyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF65A41726367F00A91E06 /* StandardNotifyVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -650,6 +652,9 @@
 		67FF65931724E1BC00A91E06 /* predictionfull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "predictionfull@2x.png"; sourceTree = "<group>"; };
 		67FF65941724E1BC00A91E06 /* predictsample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = predictsample.png; sourceTree = "<group>"; };
 		67FF65951724E1BC00A91E06 /* predictsample@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "predictsample@2x.png"; sourceTree = "<group>"; };
+		67FF65A21726367E00A91E06 /* StandardNotify.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StandardNotify.xib; sourceTree = "<group>"; };
+		67FF65A31726367F00A91E06 /* StandardNotifyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardNotifyVC.h; sourceTree = "<group>"; };
+		67FF65A41726367F00A91E06 /* StandardNotifyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandardNotifyVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1326,6 +1331,9 @@
 		67FF657A1724D2DF00A91E06 /* Upgrade */ = {
 			isa = PBXGroup;
 			children = (
+				67FF65A21726367E00A91E06 /* StandardNotify.xib */,
+				67FF65A31726367F00A91E06 /* StandardNotifyVC.h */,
+				67FF65A41726367F00A91E06 /* StandardNotifyVC.m */,
 				67FF65851724D62900A91E06 /* UpgradeHeaderCell.h */,
 				67FF65861724D62900A91E06 /* UpgradeHeaderCell.m */,
 				67FF65871724D62900A91E06 /* UpgradeHeaderCell.xib */,
@@ -1529,6 +1537,7 @@
 				67FF659F1724E1BC00A91E06 /* predictionfull@2x.png in Resources */,
 				67FF65A01724E1BC00A91E06 /* predictsample.png in Resources */,
 				67FF65A11724E1BC00A91E06 /* predictsample@2x.png in Resources */,
+				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1655,6 +1664,7 @@
 				67FF65821724D2F800A91E06 /* UpgradeCell.m in Sources */,
 				67FF65841724D2F800A91E06 /* UpgradeVC.m in Sources */,
 				67FF65881724D62900A91E06 /* UpgradeHeaderCell.m in Sources */,
+				67FF65A61726368000A91E06 /* StandardNotifyVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -312,6 +312,9 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    //request products so that they are available to buy
+    [[IAPShare sharedHelper].iap requestProductsWithCompletion:nil];
+    
     //[self setupTestSQL];
     
     //core data setup
@@ -341,6 +344,8 @@
         userPrefsRecord.speechPace = [NSNumber numberWithBool:true];
         userPrefsRecord.speechCalories = [NSNumber numberWithBool:false];
         userPrefsRecord.speechCurPace = [NSNumber numberWithBool:false];
+        //ensure user has not purchased
+        userPrefsRecord.purchased = [NSNumber numberWithBool:false];
         
         //best to leave these blank so user does not have to backspace them
         userPrefsRecord.fullname = nil;

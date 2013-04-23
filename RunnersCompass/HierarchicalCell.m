@@ -130,7 +130,7 @@
     BOOL showSpeed = [prefs.showSpeed boolValue];
     
     //Set Title
-    NSString * header = [NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
+    NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
     //Set units for localization/units

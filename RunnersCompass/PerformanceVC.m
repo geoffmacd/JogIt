@@ -222,12 +222,26 @@
 }
 
 - (IBAction)predictTapped:(id)sender {
-    PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
     
-    [vc setAnalysis:analysis];
-    [vc setPrefs:prefs];
     
-    [self presentViewController:vc animated:true completion:nil];
+    if([prefs.purchased boolValue])
+    {
+        
+        PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
+        
+        [vc setAnalysis:analysis];
+        [vc setPrefs:prefs];
+        
+        [self presentViewController:vc animated:true completion:nil];
+    }
+    else
+    {
+        UpgradeVC * vc = [[UpgradeVC alloc] initWithNibName:@"Upgrade" bundle:nil];
+        [vc setPrefs:prefs];
+        
+        [self presentViewController:vc animated:true completion:nil];
+    }
+    
 }
 
 - (IBAction)weeklyTapped:(id)sender {
