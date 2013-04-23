@@ -472,6 +472,7 @@
             [speechQueue addObject:NSLocalizedString(@"SpeechIntro", "begin run speech") ];
             break;
         case SpeechMinute:
+            [self speechForDistanceChange];
             break;
         case SpeechKM:
         case SpeechMile:
@@ -1691,6 +1692,13 @@
     BOOL showSpeed = [[curSettings showSpeed] boolValue];
     BOOL isMetric = [[curSettings metric] integerValue];
     NSString *distanceUnitText = [curSettings getDistanceUnit];
+    
+    //this sort of a hack because if metric is changed, selectedKm is wrong, however, notification takes longer than tick() to call selector so we have to address it here where it would fail in the this where selectedKM > mile array
+    if(selectedKmIndex >= (isMetric ? [run.kmCheckpoints count] : [run.impCheckpoints count]))
+    {
+        selectedKmIndex = (isMetric ? [run.kmCheckpoints count]-1 : [run.impCheckpoints count]-1);
+    }
+    NSAssert(selectedKmIndex >= (isMetric ? [run.kmCheckpoints count] : [run.impCheckpoints count]), @"selected km index is wrong");
     
     //update avg pace every 3 seconds only
     if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
@@ -3278,6 +3286,8 @@
         }
     }
     
+    
+    
     //disable selection, update pace labels
     [self resetPaceSelection];
     
@@ -3288,7 +3298,7 @@
     [selectedPlot reloadData];
     
     //speech
-    //[self audioCue:SpeechMinute];
+    [self audioCue:SpeechMinute];
 }
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
