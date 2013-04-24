@@ -19,7 +19,6 @@
 #import "MBProgressHUD.h"
 #import "StartAnnotation.h"
 #import "FinishAnnotation.h"
-#import <Slt/Slt.h>
 #import <OpenEars/OpenEarsEventsObserver.h>
 #import <OpenEars/FliteController.h>
 #import <OpenEars/LanguageModelGenerator.h>
@@ -27,6 +26,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <OpenEars/AudioSessionManager.h>
 #import "UpgradeVC.h"
+#import <Slt/Slt.h>
+
 
 
 #define mapZoomDefault 1000 //m
@@ -54,7 +55,7 @@
 #define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
 #define evalAccuracyPeriod 12 //seconds
-#define avgPaceUpdatePeriod 1//s
+#define avgPaceUpdatePeriod 3//s , needs to be same or higher than calc otherwise will flucuate for these other two seconds
 #define mapLoadSinceFinishWait 2//s
 #define mapMinSpanForRun 0.005//degress
 #define mapSpanMultipler 1.04// 4 percent

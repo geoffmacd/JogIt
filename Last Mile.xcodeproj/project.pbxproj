@@ -237,7 +237,6 @@
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
-		67FF65751723BBF500A91E06 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FF65741723BBF500A91E06 /* Default@2x.png */; };
 		67FF65811724D2F800A91E06 /* Upgrade.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657B1724D2F800A91E06 /* Upgrade.xib */; };
 		67FF65821724D2F800A91E06 /* UpgradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF657D1724D2F800A91E06 /* UpgradeCell.m */; };
 		67FF65831724D2F800A91E06 /* UpgradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657E1724D2F800A91E06 /* UpgradeCell.xib */; };
@@ -287,14 +286,14 @@
 		672152F516FA9B35003E15F8 /* settingsicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsicon@2x.png"; sourceTree = "<group>"; };
 		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
 		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
-		67236D0416409B7700DD13C5 /* RunIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67236D0416409B7700DD13C5 /* Last Mile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Last Mile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67236D0816409B7700DD13C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67236D0A16409B7700DD13C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		67236D0C16409B7700DD13C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		67236D1016409B7700DD13C5 /* RunIt-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RunIt-Info.plist"; sourceTree = "<group>"; };
+		67236D1016409B7700DD13C5 /* Last Mile-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Last Mile-Info.plist"; sourceTree = "<group>"; };
 		67236D1216409B7700DD13C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67236D1416409B7700DD13C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		67236D1616409B7700DD13C5 /* RunIt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RunIt-Prefix.pch"; sourceTree = "<group>"; };
+		67236D1616409B7700DD13C5 /* Last Mile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Last Mile-Prefix.pch"; sourceTree = "<group>"; };
 		67236D1716409B7700DD13C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67236D1816409B7700DD13C5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		67236D2316409B7700DD13C5 /* Menu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
@@ -630,7 +629,6 @@
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
-		67FF65741723BBF500A91E06 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		67FF657B1724D2F800A91E06 /* Upgrade.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upgrade.xib; sourceTree = "<group>"; };
 		67FF657C1724D2F800A91E06 /* UpgradeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeCell.h; sourceTree = "<group>"; };
 		67FF657D1724D2F800A91E06 /* UpgradeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeCell.m; sourceTree = "<group>"; };
@@ -684,9 +682,6 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67FF65741723BBF500A91E06 /* Default@2x.png */,
-				67EA66E4171A3CBC00BA21FE /* cloudyred@2x.png */,
-				67EA66DE171A298000BA21FE /* cloudyred.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				67F7CB7F172395EF0008CEBF /* OpenEars */,
@@ -696,9 +691,11 @@
 				6747F64C1720EAD500B23C58 /* IAPHelper */,
 				67E544B9171B9C7C00D5C9DF /* MJPopupViewController */,
 				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
-				67236D0E16409B7700DD13C5 /* RunIt */,
+				67236D0E16409B7700DD13C5 /* Last Mile */,
 				67236D0716409B7700DD13C5 /* Frameworks */,
 				67B421BD1707D9DB006574CF /* Default-568h@2x.png */,
+				67EA66E4171A3CBC00BA21FE /* cloudyred@2x.png */,
+				67EA66DE171A298000BA21FE /* cloudyred.png */,
 				67B421BB1707D9D7006574CF /* Default@2x.png */,
 				67B421B91707D9D1006574CF /* Default.png */,
 				67236D0516409B7700DD13C5 /* Products */,
@@ -708,7 +705,7 @@
 		67236D0516409B7700DD13C5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				67236D0416409B7700DD13C5 /* RunIt.app */,
+				67236D0416409B7700DD13C5 /* Last Mile.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -730,7 +727,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		67236D0E16409B7700DD13C5 /* RunIt */ = {
+		67236D0E16409B7700DD13C5 /* Last Mile */ = {
 			isa = PBXGroup;
 			children = (
 				67236D1716409B7700DD13C5 /* AppDelegate.h */,
@@ -747,7 +744,7 @@
 				67B257D216EFF13A00CF337E /* Retina Graphics */,
 				67236D0F16409B7700DD13C5 /* Supporting Files */,
 			);
-			name = RunIt;
+			name = "Last Mile";
 			path = RunnersCompass;
 			sourceTree = "<group>";
 		};
@@ -755,10 +752,10 @@
 			isa = PBXGroup;
 			children = (
 				6779C0F416EE3C55002BCAEC /* Localization */,
-				67236D1016409B7700DD13C5 /* RunIt-Info.plist */,
+				67236D1016409B7700DD13C5 /* Last Mile-Info.plist */,
 				67236D1116409B7700DD13C5 /* InfoPlist.strings */,
 				67236D1416409B7700DD13C5 /* main.m */,
-				67236D1616409B7700DD13C5 /* RunIt-Prefix.pch */,
+				67236D1616409B7700DD13C5 /* Last Mile-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1350,9 +1347,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		67236D0316409B7700DD13C5 /* RunIt */ = {
+		67236D0316409B7700DD13C5 /* Last Mile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 67236D3316409B7700DD13C5 /* Build configuration list for PBXNativeTarget "RunIt" */;
+			buildConfigurationList = 67236D3316409B7700DD13C5 /* Build configuration list for PBXNativeTarget "Last Mile" */;
 			buildPhases = (
 				67236D0016409B7700DD13C5 /* Sources */,
 				67236D0116409B7700DD13C5 /* Frameworks */,
@@ -1363,9 +1360,9 @@
 			dependencies = (
 				67C8E34D16D1D4DC00E4DE11 /* PBXTargetDependency */,
 			);
-			name = RunIt;
+			name = "Last Mile";
 			productName = RunnersCompass;
-			productReference = 67236D0416409B7700DD13C5 /* RunIt.app */;
+			productReference = 67236D0416409B7700DD13C5 /* Last Mile.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1378,7 +1375,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Geoff MacDonald";
 			};
-			buildConfigurationList = 67236CFE16409B7700DD13C5 /* Build configuration list for PBXProject "RunIt" */;
+			buildConfigurationList = 67236CFE16409B7700DD13C5 /* Build configuration list for PBXProject "Last Mile" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1397,7 +1394,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				67236D0316409B7700DD13C5 /* RunIt */,
+				67236D0316409B7700DD13C5 /* Last Mile */,
 			);
 		};
 /* End PBXProject section */
@@ -1521,7 +1518,6 @@
 				67F7CB9E172397230008CEBF /* OpenEars1.languagemodel in Resources */,
 				67F7CB9F172397230008CEBF /* OpenEars2.gram in Resources */,
 				67F7CBA0172397230008CEBF /* OpenEarsCorpus.txt in Resources */,
-				67FF65751723BBF500A91E06 /* Default@2x.png in Resources */,
 				67FF65811724D2F800A91E06 /* Upgrade.xib in Resources */,
 				67FF65831724D2F800A91E06 /* UpgradeCell.xib in Resources */,
 				67FF65891724D62900A91E06 /* UpgradeHeaderCell.xib in Resources */,
@@ -1759,15 +1755,17 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/OpenEars/Framework\"",
+					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RunnersCompass/RunIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "RunnersCompass/Last Mile-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "RunnersCompass/RunIt-Info.plist";
+				INFOPLIST_FILE = "RunnersCompass/Last Mile-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
+					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices/Kal16.framework/Versions/A\"",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1790,15 +1788,17 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/OpenEars/Framework\"",
+					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RunnersCompass/RunIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "RunnersCompass/Last Mile-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "RunnersCompass/RunIt-Info.plist";
+				INFOPLIST_FILE = "RunnersCompass/Last Mile-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
+					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices/Kal16.framework/Versions/A\"",
 				);
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -1814,7 +1814,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		67236CFE16409B7700DD13C5 /* Build configuration list for PBXProject "RunIt" */ = {
+		67236CFE16409B7700DD13C5 /* Build configuration list for PBXProject "Last Mile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67236D3116409B7700DD13C5 /* Debug */,
@@ -1823,7 +1823,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67236D3316409B7700DD13C5 /* Build configuration list for PBXNativeTarget "RunIt" */ = {
+		67236D3316409B7700DD13C5 /* Build configuration list for PBXNativeTarget "Last Mile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67236D3416409B7700DD13C5 /* Debug */,

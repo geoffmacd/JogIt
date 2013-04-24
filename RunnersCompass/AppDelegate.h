@@ -14,6 +14,7 @@
 #import "Goal.h"
 #import "CoreData+MagicalRecord.h"
 #import "GoalRecord.h"
+#import "IAPShare.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, JSSlidingViewControllerDelegate,LoggerViewControllerDelegate, MenuViewControllerDelegate,UIActionSheetDelegate>
 {

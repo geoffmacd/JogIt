@@ -198,7 +198,8 @@
     
     //purchase in-app through IAPhelper
     
-    SKProduct* product =[[IAPShare sharedHelper].iap.products objectAtIndex:0];
+    
+    SKProduct* product =[[IAPShare sharedHelper].iap.products lastObject];
     
     [[IAPShare sharedHelper].iap buyProduct:product
                                onCompletion:^(SKPaymentTransaction* trans){

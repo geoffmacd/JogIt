@@ -21,6 +21,7 @@
 #define shakeDuration 0.1f
 #define alphaToBlinkTo 0.35f
 #define blinkPeriod 1.0f
+#define finishButtonFade 0.25f //s
 
 
 @interface AnimationUtil : NSObject

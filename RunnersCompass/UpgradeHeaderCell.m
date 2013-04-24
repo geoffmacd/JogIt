@@ -24,7 +24,7 @@
     [upgradeBut.layer setMasksToBounds:true];
     
     //localized buttons in IB
-    [doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+    [doneBut setTitle:NSLocalizedString(@"CancelWord", @"cancel word ") forState:UIControlStateNormal];
     
     //get price of app and append to text
     
@@ -37,7 +37,10 @@
          [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
          [numberFormatter setLocale:upgrade.priceLocale];
          NSString *formattedPrice = [numberFormatter stringFromNumber:upgrade.price];
-         upgradeText = [upgradeText stringByAppendingString:formattedPrice];
+         if(formattedPrice)
+         {
+             upgradeText = [upgradeText stringByAppendingString:formattedPrice];
+         }
          [upgradeBut setTitle:upgradeText forState:UIControlStateNormal];
          
      }];

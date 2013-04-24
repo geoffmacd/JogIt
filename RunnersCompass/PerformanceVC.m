@@ -223,6 +223,14 @@
 
 - (IBAction)predictTapped:(id)sender {
     
+    PredictorVC * vc = [[PredictorVC alloc] initWithNibName:@"Predictor" bundle:nil];
+    
+    [vc setAnalysis:analysis];
+    [vc setPrefs:prefs];
+    
+    [self presentViewController:vc animated:true completion:nil];
+    
+    /*
     
     if([prefs.purchased boolValue])
     {
@@ -241,6 +249,7 @@
         
         [self presentViewController:vc animated:true completion:nil];
     }
+     */
     
 }
 

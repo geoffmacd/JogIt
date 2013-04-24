@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "67236D0316409B7700DD13C5"
-               BuildableName = "RunIt.app"
-               BlueprintName = "RunIt"
-               ReferencedContainer = "container:RunIt.xcodeproj">
+               BuildableName = "Last Mile.app"
+               BlueprintName = "Last Mile"
+               ReferencedContainer = "container:Last Mile.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
-            BuildableName = "RunIt.app"
-            BlueprintName = "RunIt"
-            ReferencedContainer = "container:RunIt.xcodeproj">
+            BuildableName = "Last Mile.app"
+            BlueprintName = "Last Mile"
+            ReferencedContainer = "container:Last Mile.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
-            BuildableName = "RunIt.app"
-            BlueprintName = "RunIt"
-            ReferencedContainer = "container:RunIt.xcodeproj">
+            BuildableName = "Last Mile.app"
+            BlueprintName = "Last Mile"
+            ReferencedContainer = "container:Last Mile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
-            BuildableName = "RunIt.app"
-            BlueprintName = "RunIt"
-            ReferencedContainer = "container:RunIt.xcodeproj">
+            BuildableName = "Last Mile.app"
+            BlueprintName = "Last Mile"
+            ReferencedContainer = "container:Last Mile.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1075,14 +1075,14 @@
     
     if(paused){
         [UIView transitionWithView:pauseImage
-                          duration:0.3f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
                         } completion:NULL];
         
         [UIView transitionWithView:statusBut
-                          duration:0.3f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
@@ -1092,7 +1092,7 @@
         [finishBut setHidden:false];
         runTitle.alpha = 1.0f;
         [UIView transitionWithView:finishBut
-                          duration:0.5f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 1.0f;
@@ -1117,7 +1117,7 @@
         [autopauseLabel setHidden:true];
         
         [UIView transitionWithView:pauseImage
-                          duration:0.3f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             pauseImage.image = [UIImage imageNamed:@"record.png"];
@@ -1125,7 +1125,7 @@
         
         
         [UIView transitionWithView:statusBut
-                          duration:0.3f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
@@ -1136,7 +1136,7 @@
         [runTitle setHidden:false];
         runTitle.alpha = 1.0f;
         [UIView transitionWithView:finishBut
-                          duration:0.5f
+                          duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
                         animations:^{
                             finishBut.alpha = 0.0f;
@@ -1662,7 +1662,7 @@
         NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         [dateFormatter setLocale:usLocale];
         
-        [runTitle setText:[NSString stringWithFormat:@"%.1f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+        [runTitle setText:[NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
         
         //[runTitle setText:run.name];
     }
@@ -1698,7 +1698,6 @@
     {
         selectedKmIndex = (isMetric ? [run.kmCheckpoints count]-1 : [run.impCheckpoints count]-1);
     }
-    NSAssert(selectedKmIndex >= (isMetric ? [run.kmCheckpoints count] : [run.impCheckpoints count]), @"selected km index is wrong");
     
     //update avg pace every 3 seconds only
     if((NSInteger)run.time % avgPaceUpdatePeriod == 0)
@@ -4073,6 +4072,14 @@
     
     [ghostBut.layer setBorderWidth:0.0f];
     
+    //only if it is historical
+    if(!run.live)
+    {
+        
+        //ask user if they want to start a ghost run
+        [self shouldUserGhostRun];
+    }
+    /*
     //only if purchased
     if([[[delegate curUserPrefs] purchased] boolValue])
     {
@@ -4092,7 +4099,7 @@
         
         [self presentViewController:vc animated:true completion:nil];
     }
-    
+    */
 }
 
 - (IBAction)ghostButTouched:(id)sender {

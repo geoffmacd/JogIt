@@ -313,7 +313,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //request products so that they are available to buy
-    [[IAPShare sharedHelper].iap requestProductsWithCompletion:nil];
+    NSSet * productSet = [NSSet setWithObject:@"LM1.0Upgrade"];
+    [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:productSet];
     
     //[self setupTestSQL];
     

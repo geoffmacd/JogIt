@@ -300,6 +300,14 @@ static NSString * goalCellID = @"GoalCellPrototype";
 
 - (IBAction)goalTapped:(id)sender {
     
+    drilledDown = true;
+    
+    CreateGoalViewController  * vc = [[CreateGoalViewController alloc] initWithNibName:@"CreateGoal" bundle:nil];
+    [vc setGoal:curGoal];
+    [vc setPrefs:prefs];
+    
+    [self presentViewController:vc animated:true completion:nil];
+    /*
     
     if([prefs.purchased boolValue])
     {
@@ -317,6 +325,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
         [vc setPrefs:prefs];
         [self presentViewController:vc animated:true completion:nil];
     }
+     */
     
 }
 @end
