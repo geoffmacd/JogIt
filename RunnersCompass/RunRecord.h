@@ -29,6 +29,7 @@ typedef enum
 @property (nonatomic, retain) NSNumber * eventType;
 @property (nonatomic, retain) NSNumber * metricGoal;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * shortname;
 @property (nonatomic, retain) NSNumber * targetMetric;
 @property (nonatomic, retain) UIImage * thumbnail;
 @property (nonatomic, retain) NSNumber * time;

@@ -62,9 +62,13 @@
     //set red colour
     [headerView setBackgroundColor:[Util cellRedColour]];
     
+    //fix hack to ensure triangle is in correct orientation
+    [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
+    
     //set unexpanded
-    expanded = false;
+    [self setExpand:false withAnimation:false];
     deletionMode = false;
+    [garbageBut setHidden:true];
     [expandedView setHidden:true];
     
     //setup swipe gesture
@@ -130,6 +134,19 @@
     BOOL showSpeed = [prefs.showSpeed boolValue];
     
     //Set Title
+    /*
+    NSString *descriptionString;
+    if(associatedRun.name)
+    {
+        //set if it has one, in the case of a target
+        descriptionString = associatedRun.name;
+    }
+    else
+    {
+        //just go run
+        descriptionString = [NSString stringWithFormat:@"%.2f %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText];
+    }
+     */
     NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     
@@ -234,6 +251,7 @@
     if(!deletionMode)
     {
         //both hide and alpha
+        [garbageBut setAlpha:0.0f];
         [garbageBut setHidden:false];
         
         [UIView animateWithDuration:0.25f animations:^{

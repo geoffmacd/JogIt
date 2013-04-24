@@ -102,7 +102,7 @@
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Weekly</string>
-						<reference key="IBUIHighlightedTitleColor" ref="147330094"/>
+						<reference key="IBUIHighlightedTitleColor" ref="805622569"/>
 						<reference key="IBUINormalTitleColor" ref="147330094"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
@@ -129,7 +129,7 @@
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Monthly</string>
-						<reference key="IBUIHighlightedTitleColor" ref="147330094"/>
+						<reference key="IBUIHighlightedTitleColor" ref="805622569"/>
 						<reference key="IBUINormalTitleColor" ref="147330094"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
@@ -328,10 +328,12 @@
 				<reference key="93.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="93.showNotes"/>
 				<string key="94.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="94.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="94.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="94.showNotes"/>
 				<string key="95.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="95.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="1" key="95.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<reference key="95.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="95.showNotes"/>
 			</dictionary>
@@ -454,6 +456,39 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/PredictorVC.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">UpgradeVC</string>
+					<string key="superclassName">UITableViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="doneTapped:">id</string>
+						<string key="upgradeTapped:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="doneTapped:">
+							<string key="name">doneTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="upgradeTapped:">
+							<string key="name">upgradeTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">table</string>
+						<string key="NS.object.0">UITableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">table</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">table</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/UpgradeVC.h</string>
 					</object>
 				</object>
 			</array>

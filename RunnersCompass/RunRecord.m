@@ -21,6 +21,7 @@
 @dynamic eventType;
 @dynamic metricGoal;
 @dynamic name;
+@dynamic shortname;
 @dynamic targetMetric;
 @dynamic thumbnail;
 @dynamic time;

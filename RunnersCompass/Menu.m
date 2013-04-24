@@ -247,14 +247,17 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     NSUInteger row = [indexPath row];
     
     if(row >= [cells count]){
-        
+        /*
         HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
         
         [cells addObject:cell];
         [cell setDelegate:self];
         [cell setAssociated:[runs objectAtIndex:row]];
+         */
         
-        height = [cell getHeightRequired];
+        //delay dequeueing, not to be done here for performance
+        
+        height = 48.0f;
     }
     else{
         
@@ -475,12 +478,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //save run and add it to the menu if it exists
     if(finishedRun)
     {
-        //need to close all cells before, otherwise rotated folder images happen for some reason
-        for(HierarchicalCell * cell in cells)
-        {
-            [cell setExpand:false withAnimation:false];
-        }
-        
         //determine index to insert run into since date can be different due to manual entry
         NSInteger indexToInsert = -1;
         //should be currently sorted such that highest (latest) date is at index 0
@@ -692,7 +689,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(void)paceRunStart:(NSNumber*)selectedIndex
 {
-    CGFloat pace = [selectedIndex integerValue]; //s/km
+    CGFloat pace = [selectedIndex integerValue]; //s/km or s/mi
     
     //need m/s
     pace = 1000 / pace;

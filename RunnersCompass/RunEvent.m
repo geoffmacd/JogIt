@@ -43,6 +43,7 @@
 @synthesize pos,posMeta;
 @synthesize pausePoints;
 @synthesize associatedRun,thumbnail;
+@synthesize shortname;
 
 
 +(NSString * )stringForMetric:(RunMetric) metricForDisplay showSpeed:(BOOL)showSpeed
@@ -246,6 +247,20 @@
     return stringToSetTime;
 }
 
+-(NSString*)getDateString
+{
+    
+    //date formatting
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    NSString * dateString = [dateFormatter stringFromDate:associatedRun.date];
+    
+    return dateString;
+}
+
 
 -(void)processRunForRecord
 {
@@ -254,6 +269,7 @@
     
     //process values
     newRunRecord.name = name;
+    newRunRecord.shortname = shortname;
     newRunRecord.date = date;
     newRunRecord.distance = [NSNumber numberWithFloat:distance];
     newRunRecord.calories = [NSNumber numberWithFloat:calories];
@@ -366,7 +382,8 @@
 {
     self = [super init];
     if (self) {
-        name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
+        shortname = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
+        //name not set
         targetMetric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;
@@ -396,7 +413,8 @@
 {
     self = [super init];
     if (self) {
-        name = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
+        shortname = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
+        //name not set
         targetMetric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;    
@@ -426,20 +444,27 @@
     self = [super init];
     
     if (self) {
+        
         switch(type)
         {
             case MetricTypePace:
-                //never show speed here
-                name = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:false], [UserPrefs getPaceUnitWithSpeedMetric:metricForDisplay showSpeed:showSpeed]];
+                //never show speed here, only pace including units
+                //units will be wrong if metric switched
+                shortname = [NSString stringWithFormat:@"%@ %@ • %@ %@", [RunEvent stringForMetric:type showSpeed:false], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:false], [UserPrefs getPaceUnitWithSpeedMetric:metricForDisplay showSpeed:false]];
+                name = [NSString stringWithFormat:@"%@ %@ %@", [RunEvent getPaceString:value withMetric:metricForDisplay showSpeed:false], [UserPrefs getPaceUnitWithSpeedMetric:metricForDisplay showSpeed:false], NSLocalizedString(@"TargetInRunTitle", @"target word in title")];
                 break;
             case MetricTypeCalories:
-                name = [NSString stringWithFormat:@"%@ %@ • %.0f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value, NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
+                shortname = [NSString stringWithFormat:@"%@ %@ • %.0f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), value, NSLocalizedString(@"CalShortForm", @"Shortform for calories")];
+                name = [NSString stringWithFormat:@"%.0f %@ %@", value, NSLocalizedString(@"CalShortForm", @"Shortform for calories"), NSLocalizedString(@"TargetInRunTitle", @"target word in title")];
                 break;
             case MetricTypeDistance:
-                name = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay]];
+                //units are going to be wrong if metric switched
+                shortname = [NSString stringWithFormat:@"%@ %@ • %.1f %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay]];
+                name = [NSString stringWithFormat:@"%.1f %@ %@", [RunEvent getDisplayDistance:value withMetric:metricForDisplay], [UserPrefs getDistanceUnitWithMetric:metricForDisplay], NSLocalizedString(@"TargetInRunTitle", @"target word in title")];
                 break;
             case MetricTypeTime:
-                name = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
+                shortname = [NSString stringWithFormat:@"%@ %@ • %@", [RunEvent stringForMetric:type showSpeed:showSpeed], NSLocalizedString(@"TargetInRunTitle", @"target word in title"), [RunEvent getTimeString:value]];
+                name = [NSString stringWithFormat:@"%@ %@", [RunEvent getTimeString:value],  NSLocalizedString(@"TargetInRunTitle", @"target word in title")];
                 break;
                 
             default:
@@ -476,7 +501,8 @@
     self = [super init];
     
     if (self) {
-
+        name = record.name;
+        shortname = record.shortname;
         targetMetric = [record.targetMetric integerValue];
         metricGoal = [record.metricGoal integerValue];
         eventType = [record.eventType integerValue];
@@ -509,7 +535,8 @@
     self = [super init];
     
     if (self) {
-        
+        name = record.name;
+        shortname = record.shortname;
         targetMetric = [record.targetMetric integerValue];
         metricGoal = [record.metricGoal integerValue];
         eventType = [record.eventType integerValue];
@@ -547,7 +574,6 @@
          
          NSLog(@"Sorted location records %f",[NSDate timeIntervalSinceReferenceDate]);
         */
-        
         
         //add to correct array
         for(LocationRecord * rec in [allLocs array])//timeOrderLocs)

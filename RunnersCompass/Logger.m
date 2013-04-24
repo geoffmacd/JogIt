@@ -1662,13 +1662,19 @@
         NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
         [dateFormatter setLocale:usLocale];
         
-        [runTitle setText:[NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
-        
-        //[runTitle setText:run.name];
+        if(run.name)
+        {
+            //special name from target
+            [runTitle setText:[NSString stringWithFormat:@"%@ • %@", run.name, [dateFormatter stringFromDate:run.date]]];
+        }
+        else
+        {
+            [runTitle setText:[NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
+        }
     }
     else{
-        
-        [runTitle setText:run.name];
+        //live name
+        [runTitle setText:run.shortname];
     }
     
     //ensure it is visible

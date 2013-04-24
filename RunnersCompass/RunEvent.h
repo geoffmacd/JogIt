@@ -15,7 +15,6 @@
 
 #define convertMSTOminKM 16.6666666666666
 #define convertKMToMile 0.6214//0.621371
-
 #define maxSpeedForPR 30 //m/s
 
 @interface CLLocationMeta : NSObject{
@@ -69,7 +68,8 @@ typedef enum
 
 
 //meta data
-@property (nonatomic) NSString *name;//customized in init, to be displayed on the logger, not the hierarchial cells
+@property (nonatomic) NSString *name; // for historic runs with date
+@property (nonatomic) NSString *shortname; // for live runs
 @property (nonatomic) NSDate *date;//just set to now for all events on init
 @property (nonatomic) NSString *mapPath; //path to map location
 @property (nonatomic) EventType eventType;//not useful yet

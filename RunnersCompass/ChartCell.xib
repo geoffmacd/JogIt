@@ -209,7 +209,6 @@
 										<array class="NSMutableArray" key="NSSubviews"/>
 										<string key="NSFrameSize">{320, 198}</string>
 										<reference key="NSSuperview" ref="715024392"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<reference key="IBUIBackgroundColor" ref="730340083"/>
 										<bool key="IBUIOpaque">NO</bool>

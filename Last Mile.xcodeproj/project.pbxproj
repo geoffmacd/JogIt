@@ -237,6 +237,7 @@
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
+		67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FE524817288CC400F5E186 /* lightgraybutton@2x.png */; };
 		67FF65811724D2F800A91E06 /* Upgrade.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657B1724D2F800A91E06 /* Upgrade.xib */; };
 		67FF65821724D2F800A91E06 /* UpgradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF657D1724D2F800A91E06 /* UpgradeCell.m */; };
 		67FF65831724D2F800A91E06 /* UpgradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657E1724D2F800A91E06 /* UpgradeCell.xib */; };
@@ -629,6 +630,7 @@
 		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
+		67FE524817288CC400F5E186 /* lightgraybutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightgraybutton@2x.png"; sourceTree = "<group>"; };
 		67FF657B1724D2F800A91E06 /* Upgrade.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upgrade.xib; sourceTree = "<group>"; };
 		67FF657C1724D2F800A91E06 /* UpgradeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeCell.h; sourceTree = "<group>"; };
 		67FF657D1724D2F800A91E06 /* UpgradeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeCell.m; sourceTree = "<group>"; };
@@ -988,41 +990,20 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				67FF658A1724E1BC00A91E06 /* ghostfull.png */,
-				67FF658B1724E1BC00A91E06 /* ghostfull@2x.png */,
-				67FF658C1724E1BC00A91E06 /* ghostsample.png */,
-				67FF658D1724E1BC00A91E06 /* ghostsample@2x.png */,
-				67FF658E1724E1BC00A91E06 /* goalfull.png */,
-				67FF658F1724E1BC00A91E06 /* goalfull@2x.png */,
-				67FF65901724E1BC00A91E06 /* goalsample.png */,
-				67FF65911724E1BC00A91E06 /* goalsample@2x.png */,
-				67FF65921724E1BC00A91E06 /* predictionfull.png */,
-				67FF65931724E1BC00A91E06 /* predictionfull@2x.png */,
-				67FF65941724E1BC00A91E06 /* predictsample.png */,
-				67FF65951724E1BC00A91E06 /* predictsample@2x.png */,
-				6747F62F1720D99D00B23C58 /* blackodometer.png */,
-				6747F6301720D99D00B23C58 /* calories.png */,
-				6747F6311720D99D00B23C58 /* check.png */,
-				6747F6321720D99E00B23C58 /* compose.png */,
-				6747F6331720D99E00B23C58 /* hourglass.png */,
-				6747F6341720D99E00B23C58 /* ladder.png */,
-				6747F6351720D99E00B23C58 /* manualrunthumbnail.png */,
-				6747F6361720D99E00B23C58 /* norunwoman.png */,
-				6747F6371720D99E00B23C58 /* redcheck.png */,
-				6747F6381720D99E00B23C58 /* startrunner.png */,
-				6747F6391720D99E00B23C58 /* whitecalories.png */,
-				6747F63A1720D99E00B23C58 /* whiteodometer.png */,
-				6747F63B1720D99E00B23C58 /* whitespeed.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
 				67B257D616EFF13A00CF337E /* background@2x.png */,
 				67CFCCC2170281BB0028CF70 /* bigclock.png */,
 				67CFCCC3170281BB0028CF70 /* bigclock@2x.png */,
+				6747F62F1720D99D00B23C58 /* blackodometer.png */,
 				67E544AD171B69A900D5C9DF /* blackodometer@2x.png */,
+				6747F6301720D99D00B23C58 /* calories.png */,
 				67CFCCB1170280B10028CF70 /* calories@2x.png */,
 				67B2580B16EFF8D900CF337E /* celldivision.png */,
+				6747F6311720D99D00B23C58 /* check.png */,
 				67EA66EB171A51BD00BA21FE /* check@2x.png */,
+				6747F6321720D99E00B23C58 /* compose.png */,
 				67E544A7171B65C600D5C9DF /* compose@2x.png */,
 				67EA66D81718F72D00BA21FE /* formula.png */,
 				67EA66D91718F72D00BA21FE /* formula@2x.png */,
@@ -1032,24 +1013,42 @@
 				67B257D816EFF13A00CF337E /* garbage@2x.png */,
 				67B257D916EFF13A00CF337E /* ghost.png */,
 				67B257DA16EFF13A00CF337E /* ghost@2x.png */,
+				67FF658A1724E1BC00A91E06 /* ghostfull.png */,
+				67FF658B1724E1BC00A91E06 /* ghostfull@2x.png */,
+				67FF658C1724E1BC00A91E06 /* ghostsample.png */,
+				67FF658D1724E1BC00A91E06 /* ghostsample@2x.png */,
+				67FF658E1724E1BC00A91E06 /* goalfull.png */,
+				67FF658F1724E1BC00A91E06 /* goalfull@2x.png */,
 				67B257DB16EFF13A00CF337E /* goals.png */,
 				67B257DC16EFF13A00CF337E /* goals@2x.png */,
+				67FF65901724E1BC00A91E06 /* goalsample.png */,
+				67FF65911724E1BC00A91E06 /* goalsample@2x.png */,
 				67B257DF16EFF13A00CF337E /* hamburger.png */,
 				67B257E016EFF13A00CF337E /* hamburger@2x.png */,
+				6747F6331720D99E00B23C58 /* hourglass.png */,
 				67E544A8171B65C600D5C9DF /* hourglass@2x.png */,
+				6747F6341720D99E00B23C58 /* ladder.png */,
 				67EA66E9171A4B5A00BA21FE /* ladder@2x.png */,
+				67FE524817288CC400F5E186 /* lightgraybutton@2x.png */,
+				6747F6351720D99E00B23C58 /* manualrunthumbnail.png */,
 				67E544A5171B44FD00D5C9DF /* manualrunthumbnail@2x.png */,
 				67F6D52016FA8CE100790A22 /* medal.png */,
 				67F6D52116FA8CE100790A22 /* medal@2x.png */,
+				6747F6361720D99E00B23C58 /* norunwoman.png */,
 				67E544AF171B951400D5C9DF /* norunwoman@2x.png */,
 				67B257E116EFF13A00CF337E /* pause.png */,
 				67B257E216EFF13A00CF337E /* pause@2x.png */,
+				67FF65921724E1BC00A91E06 /* predictionfull.png */,
+				67FF65931724E1BC00A91E06 /* predictionfull@2x.png */,
+				67FF65941724E1BC00A91E06 /* predictsample.png */,
+				67FF65951724E1BC00A91E06 /* predictsample@2x.png */,
 				67B2581316EFFC2C00CF337E /* progress-bar-bg.png */,
 				67B2581416EFFC2C00CF337E /* progress-bar-fill.png */,
 				67B257E316EFF13A00CF337E /* pull.png */,
 				67B257E416EFF13A00CF337E /* pull@2x.png */,
 				67B257E516EFF13A00CF337E /* record.png */,
 				67B257E616EFF13A00CF337E /* record@2x.png */,
+				6747F6371720D99E00B23C58 /* redcheck.png */,
 				6747F62D171F9DB900B23C58 /* redcheck@2x.png */,
 				672152F416FA9B35003E15F8 /* settingsicon.png */,
 				672152F516FA9B35003E15F8 /* settingsicon@2x.png */,
@@ -1057,17 +1056,21 @@
 				67B257EA16EFF13A00CF337E /* share@2x.png */,
 				67CFCCB6170280B10028CF70 /* speed.png */,
 				67CFCCB7170280B10028CF70 /* speed@2x.png */,
+				6747F6381720D99E00B23C58 /* startrunner.png */,
 				67E544AB171B66AC00D5C9DF /* startrunner@2x.png */,
 				67B257EB16EFF13A00CF337E /* stopwatch.png */,
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,
 				67B257EE16EFF13B00CF337E /* triangle@2x.png */,
+				6747F6391720D99E00B23C58 /* whitecalories.png */,
 				6747F627171F92FF00B23C58 /* whitecalories@2x.png */,
 				67B2582516F00B2E00CF337E /* whiteclock.png */,
 				67B2582616F00B2E00CF337E /* whiteclock@2x.png */,
+				6747F63A1720D99E00B23C58 /* whiteodometer.png */,
 				6747F628171F92FF00B23C58 /* whiteodometer@2x.png */,
 				67F6D52416FA8D6800790A22 /* whitepause.png */,
 				67F6D52516FA8D6800790A22 /* whitepause@2x.png */,
+				6747F63B1720D99E00B23C58 /* whitespeed.png */,
 				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
 			);
 			path = "Retina Graphics";
@@ -1534,6 +1537,7 @@
 				67FF65A01724E1BC00A91E06 /* predictsample.png in Resources */,
 				67FF65A11724E1BC00A91E06 /* predictsample@2x.png in Resources */,
 				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
+				67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
