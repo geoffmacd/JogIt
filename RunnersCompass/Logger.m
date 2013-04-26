@@ -3198,11 +3198,14 @@
         }
         else
         {
-            //decide to switch off selection
+            //decide to switch off selection and zoom back to current pace
             if(timeSinceKmSelection < [NSDate timeIntervalSinceReferenceDate]  - paceSelectionOverrideTime &&
                timeSinceBarSelection < [NSDate timeIntervalSinceReferenceDate]  - paceSelectionOverrideTime)
             {
                 [self resetPaceSelection];
+                
+                CGRect animatedDestination = CGRectMake(([[run minCheckpointsMeta] count] * paceGraphBarWidth) - paceScroll.frame.size.width, 0, paceScroll.frame.size.width, paceScroll.frame.size.height);
+                [paceScroll scrollRectToVisible:animatedDestination animated:true];
                 
                 [self determineBarColors];
             }
@@ -3287,8 +3290,9 @@
             
             //add new currentminute object
             CLLocationMeta * curMin = [[CLLocationMeta alloc] init];
-            //leave pace to what it was
-            curMin.pace = avgPaceInMin;
+            //set pace to most recent adjusted pace
+            lastMeta = [run.posMeta lastObject];
+            curMin.pace = [lastMeta pace];
             curMin.time = run.time + barPeriod;
             [run.minCheckpointsMeta addObject:curMin];
         }
