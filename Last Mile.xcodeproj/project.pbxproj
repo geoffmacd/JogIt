@@ -225,7 +225,6 @@
 		67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */; };
 		67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */; };
 		67F7CB93172397230008CEBF /* cmu07a.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB83172397230008CEBF /* cmu07a.dic */; };
-		67F7CB9B172397230008CEBF /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CB8C172397230008CEBF /* OpenEars.framework */; };
 		67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8D172397230008CEBF /* OpenEars1.dic */; };
 		67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8E172397230008CEBF /* OpenEars1.gram */; };
 		67F7CB9E172397230008CEBF /* OpenEars1.languagemodel in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */; };
@@ -238,6 +237,7 @@
 		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 		67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FE524817288CC400F5E186 /* lightgraybutton@2x.png */; };
+		67FE524B172A0E7100F5E186 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FE524A172A0E7100F5E186 /* OpenEars.framework */; };
 		67FF65811724D2F800A91E06 /* Upgrade.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657B1724D2F800A91E06 /* Upgrade.xib */; };
 		67FF65821724D2F800A91E06 /* UpgradeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FF657D1724D2F800A91E06 /* UpgradeCell.m */; };
 		67FF65831724D2F800A91E06 /* UpgradeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FF657E1724D2F800A91E06 /* UpgradeCell.xib */; };
@@ -615,7 +615,6 @@
 		67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontViewControllerDropShadow.png; path = JSSlidingViewController/frontViewControllerDropShadow.png; sourceTree = SOURCE_ROOT; };
 		67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = SOURCE_ROOT; };
 		67F7CB83172397230008CEBF /* cmu07a.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmu07a.dic; sourceTree = "<group>"; };
-		67F7CB8C172397230008CEBF /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
 		67F7CB8D172397230008CEBF /* OpenEars1.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.dic; sourceTree = "<group>"; };
 		67F7CB8E172397230008CEBF /* OpenEars1.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.gram; sourceTree = "<group>"; };
 		67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.languagemodel; sourceTree = "<group>"; };
@@ -631,6 +630,7 @@
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FE524817288CC400F5E186 /* lightgraybutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightgraybutton@2x.png"; sourceTree = "<group>"; };
+		67FE524A172A0E7100F5E186 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = "../../../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos/OpenEars.framework"; sourceTree = "<group>"; };
 		67FF657B1724D2F800A91E06 /* Upgrade.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upgrade.xib; sourceTree = "<group>"; };
 		67FF657C1724D2F800A91E06 /* UpgradeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeCell.h; sourceTree = "<group>"; };
 		67FF657D1724D2F800A91E06 /* UpgradeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeCell.m; sourceTree = "<group>"; };
@@ -673,8 +673,8 @@
 				67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */,
 				67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */,
 				67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */,
-				67F7CB9B172397230008CEBF /* OpenEars.framework in Frameworks */,
 				67F7CBA1172397230008CEBF /* Slt.framework in Frameworks */,
+				67FE524B172A0E7100F5E186 /* OpenEars.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1235,8 +1235,8 @@
 		67F7CB82172397220008CEBF /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				67FE524A172A0E7100F5E186 /* OpenEars.framework */,
 				67F7CB83172397230008CEBF /* cmu07a.dic */,
-				67F7CB8C172397230008CEBF /* OpenEars.framework */,
 				67F7CB8D172397230008CEBF /* OpenEars1.dic */,
 				67F7CB8E172397230008CEBF /* OpenEars1.gram */,
 				67F7CB8F172397230008CEBF /* OpenEars1.languagemodel */,
@@ -1760,6 +1760,7 @@
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/OpenEars/Framework\"",
 					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/Last Mile-Prefix.pch";
@@ -1793,6 +1794,7 @@
 					"\"$(SRCROOT)/../../Documents/FacebookSDK\"",
 					"\"$(SRCROOT)/OpenEars/Framework\"",
 					"\"$(SRCROOT)/../../Downloads/Politepix-openearsextras-9f15cdb9e746/FliteVoices\"",
+					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RunnersCompass/Last Mile-Prefix.pch";

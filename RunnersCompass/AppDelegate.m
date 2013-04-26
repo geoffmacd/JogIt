@@ -437,6 +437,9 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
+    //reset badge in case of crash when badge is 1
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
     //alert logger view
     [self.backVC setInBackground:false];
 }

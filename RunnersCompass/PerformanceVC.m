@@ -229,9 +229,9 @@
     [vc setPrefs:prefs];
     
     [self presentViewController:vc animated:true completion:nil];
+     
     
     /*
-    
     if([prefs.purchased boolValue])
     {
         
@@ -248,7 +248,7 @@
         [vc setPrefs:prefs];
         
         [self presentViewController:vc animated:true completion:nil];
-    }
+     }
      */
     
 }

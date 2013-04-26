@@ -111,7 +111,6 @@
     openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
 	[openEarsEventsObserver setDelegate:self];
     fliteController = [[FliteController alloc] init];
-    //[fliteController.audioPlayer setDelegate:self];
     [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     slt = [[Slt alloc] init];
     [self setupVoice];
@@ -226,7 +225,7 @@
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    //[[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+    
 }
 
 #pragma mark - OpenEars Delegates
@@ -234,10 +233,14 @@
 
 - (void) setupVoice {
     
+    /*
+	fliteController.duration_stretch = 1.0; // Change the speed
+	fliteController.target_mean = 1.0; // Change the pitch
+     fliteController.target_stddev = 1.0; // Change the variance
+     */
 	fliteController.duration_stretch = 1.4; // Change the speed
 	fliteController.target_mean = 1.2; // Change the pitch
     fliteController.target_stddev = 1.5; // Change the variance
-	
 }
 
 -(void)speechForDistanceChange
@@ -488,11 +491,15 @@
 {
     if([speechQueue count])
     {
+        [[AVAudioSession sharedInstance] setActive:YES withOptions:AVAudioSessionCategoryPlayback error:nil];
+        OSStatus propertySetError = 0;
+        UInt32 allowMixing = true;
+        propertySetError = AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof (allowMixing), &allowMixing);
         [fliteController say:[speechQueue objectAtIndex:0] withVoice:slt];
     }
     else
     {
-       [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
+       [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionCategoryPlayback error:nil];
     }
 }
 
@@ -509,10 +516,6 @@
     {
         [speechQueue removeObjectAtIndex:0];
         [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
-    }
-    else
-    {
-        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
     }
 }
 
