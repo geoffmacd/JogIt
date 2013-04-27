@@ -3302,7 +3302,7 @@
     [selectedPlot reloadData];
     
     //speech
-    [self audioCue:SpeechMinute];
+    //[self audioCue:SpeechMinute];
 }
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range
