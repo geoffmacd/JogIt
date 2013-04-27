@@ -3290,8 +3290,6 @@
         }
     }
     
-    
-    
     //disable selection, update pace labels
     [self resetPaceSelection];
     

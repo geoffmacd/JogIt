@@ -50,7 +50,7 @@
 #define reloadMapIconPeriod 6 // second reload map icon period
 #define autoPauseDelay 10 // seconds before app pauses
 #define autoPauseSpeed 0.5 //m/s speed app pauses at 
-#define minSpeedUnpause 1.25 //m/s
+#define minSpeedUnpause 1 //m/s
 #define paceChartMaxYMin 1//m/s
 #define paceChartCutoffPercent 0.05//%
 #define maxPermittableAccuracy 30 //m
