@@ -2627,24 +2627,9 @@
         {
             pinView.annotation = annotation;
         }
-        //ensure color is correct
-        pinView.pinColor = MKPinAnnotationColorRed;
         
         //ensure color is correct
-        if(annotation == [mapAnnotations objectAtIndex:0])
-        {
-            //if first object color green for start
-            pinView.pinColor = MKPinAnnotationColorGreen;
-        }
-        else if(annotation == [mapAnnotations lastObject] && !run.live)
-        {
-            //color purple for end, if historical
-            pinView.pinColor = MKPinAnnotationColorPurple;
-        }
-        else
-        {
-            pinView.pinColor = MKPinAnnotationColorRed;
-        }
+        pinView.pinColor = MKPinAnnotationColorRed;
         return pinView;
     }
     else if ([annotation isKindOfClass:[StartAnnotation class]])
