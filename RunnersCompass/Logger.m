@@ -140,7 +140,7 @@
     [slideView setFrame:mapRect];
     [fullMap.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
     [fullMap.layer setBorderWidth: 1.0];
-    [fullMap setShowsUserLocation:true];
+    
     [fullMap setDelegate:self];
     CGRect fullMapRect = fullMap.frame;
     fullMapRect.size.height = self.view.frame.size.height - mapViewYOffset;
@@ -151,8 +151,6 @@
     [iconMap.layer setMasksToBounds:YES];
     [iconMap.layer setBorderWidth:0.5f];
     [iconMap.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
-    [iconMap setZoomEnabled:false];
-    [iconMap setShowsUserLocation:true];
     [iconMap setDelegate:self];
     
     //setup tap gesture recognizer to intercept taps
@@ -211,8 +209,16 @@
         [self drawAllAnnotations];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
-        
-        
+    }
+    else if(!inBackground && !run.live)
+    {
+        //reappearing, follow user
+        [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
+    }
+    else if(inBackground && !run.live)
+    {
+        //prevent battery loss by disabling this in background in the regular case where logger has something
+        [fullMap setUserTrackingMode:MKUserTrackingModeNone];
     }
 }
 
@@ -2206,11 +2212,8 @@
     NSLog(@"saving map thumbnail");
     waitingForMapToLoad = false;
     
-    //ensure to remove user location for image
-    [iconMap setShowsUserLocation:false];
     //set the run to have the correct picture in table cell
     run.thumbnail = [Util imageWithView:iconMap withSize:iconMap.frame.size];
-    [iconMap setShowsUserLocation:true];
     
     //stop loading indicator
     [MBProgressHUD hideHUDForView:self.view animated:YES];
