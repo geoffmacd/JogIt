@@ -2088,31 +2088,37 @@
         //posQueue builds up until unpause autopause
         if(pausedForAuto)
         {
-            //determine speed between first and last positions if speed is above minimum, unpause
-            if([posQueue count] > 1)
+            //only unpause after minimum 3 updates
+            if([posQueue count] > 2)
             {
-                CLLocation * secondLastInQueue = [posQueue objectAtIndex:[posQueue count] -2];
+                //gaurunteed to be 3 locations here
+        
+                CLLocation  * thirdLast = [posQueue objectAtIndex:[posQueue count] -3];
+                CLLocation * secondLast = [posQueue objectAtIndex:[posQueue count] -2];
                 CLLocation * lastInQueue = [posQueue lastObject];
                 
-                CLLocationDistance distance = [secondLastInQueue distanceFromLocation:lastInQueue];
-                NSTimeInterval intervalBetweenPos = [lastInQueue.timestamp timeIntervalSinceDate:secondLastInQueue.timestamp];
                 
-                CLLocationSpeed speedBetweenPos = distance / intervalBetweenPos;
+                CLLocationDistance distance2 = [thirdLast distanceFromLocation:secondLast];
+                NSTimeInterval interval2 = [secondLast.timestamp timeIntervalSinceDate:thirdLast.timestamp];
                 
-                if(speedBetweenPos > minSpeedUnpause)
+                CLLocationSpeed speed2 = distance2 / interval2;
+                
+                CLLocationDistance distance1 = [secondLast distanceFromLocation:lastInQueue];
+                NSTimeInterval interval1 = [lastInQueue.timestamp timeIntervalSinceDate:secondLast.timestamp];
+                
+                CLLocationSpeed speed1 = distance1 / interval1;
+                
+                if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause)
                 {
                     //unpause
                     [delegate pauseAnimation:nil];
                     return;
                 }
+                //else try again next update and delete first object
+                
+                //trim array to keep only 2 objects, so that there are 3 for next update
+                [posQueue removeObjectAtIndex:0];
             }
-            
-            if([posQueue count] > 10)//trim array if their is too much data
-            {
-                //remove near beginning, but not first position
-                [posQueue removeObjectAtIndex:1];
-            }
-
         }
     }
 
