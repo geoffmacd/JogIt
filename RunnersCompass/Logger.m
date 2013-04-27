@@ -210,15 +210,11 @@
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
     }
-    else if(!inBackground && !run.live)
+    else if(inBackground)
     {
-        //reappearing, follow user
-        [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
-    }
-    else if(inBackground && !run.live)
-    {
-        //prevent battery loss by disabling this in background in the regular case where logger has something
+        //prevent battery loss by disabling this in  case it is enabled
         [fullMap setUserTrackingMode:MKUserTrackingModeNone];
+        [iconMap setUserTrackingMode:MKUserTrackingModeNone];
     }
 }
 
@@ -689,6 +685,10 @@
         //ensure no signal animation
         lowSignal = false;
         goalAchieved = false;
+        
+        //set map to follow user before starting run, then stop, in order to load current location
+        [iconMap setUserTrackingMode:MKUserTrackingModeFollow];
+        [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
     }
     
     //reset chart
@@ -816,6 +816,7 @@
     [delegate preventIdleForLiveRun];
     
     //stop map following user
+    [iconMap setUserTrackingMode:MKUserTrackingModeNone];
     [fullMap setUserTrackingMode:MKUserTrackingModeNone];
     
     //start updates
@@ -877,9 +878,6 @@
         //stop talking
         [speechQueue removeAllObjects];
     }
-    
-    //set map to follow user before starting track
-    [fullMap setUserTrackingMode:MKUserTrackingModeFollow];
     
     //stop tick() processing even for autopause
     [timer invalidate];
