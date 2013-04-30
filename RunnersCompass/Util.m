@@ -116,5 +116,166 @@
     }
 }
 
++(NSInteger)numPeriodsForRuns:(NSMutableArray*)runs withWeekly:(BOOL)weekly
+{
+    NSInteger periods = 0;
+    NSDate *oldest = [NSDate date];
+    NSDate *newest = [NSDate date];
+    
+    //get oldest run
+    for(RunEvent * oldRun in runs)
+    {
+        if([oldRun.date timeIntervalSinceReferenceDate] < [oldest timeIntervalSinceReferenceDate])
+        {
+            oldest = oldRun.date;
+        }
+    }
+    
+    if(weekly)
+    {
+        NSDate *iWeek = newest;
+        
+        while([oldest timeIntervalSinceReferenceDate] < [iWeek timeIntervalSinceReferenceDate])
+        {
+            periods++;
+            //shift date one week at a time until iWeek is less
+            iWeek = shiftDateByXweeks(newest, periods);
+        }
+        
+    }
+    else
+    {
+        NSDate *iMonth = newest;
+        
+        while([oldest timeIntervalSinceReferenceDate] < [iMonth timeIntervalSinceReferenceDate])
+        {
+            periods++;
+            //shift date one month at a time until iWeek is less
+            iMonth = shiftDateByXmonths(newest, periods);
+        }
+    }
+    
+    return periods;
+}
+
+
++(NSMutableArray*)runsForPeriod:(NSMutableArray*)runs withWeekly:(BOOL)weekly withPeriodStart:(NSDate*)start
+{
+    NSMutableArray * periodRuns = [NSMutableArray new];
+    
+    if(weekly)
+    {
+        NSInteger periodWeek = weekForPeriod(start);
+        NSInteger periodYear = yearForPeriod(start);
+        
+        for(RunEvent * oldRun in runs)
+        {
+            if(periodWeek == weekForPeriod(oldRun.date) && yearForPeriod(oldRun.date) == periodYear)
+            {
+                [periodRuns addObject:oldRun];
+            }
+        }
+    }
+    else
+    {
+        NSInteger periodMonth = monthForPeriod(start);
+        NSInteger periodYear = yearForPeriod(start);
+        
+        for(RunEvent * oldRun in runs)
+        {
+            if(periodMonth == monthForPeriod(oldRun.date) && yearForPeriod(oldRun.date) == periodYear)
+            {
+                [periodRuns addObject:oldRun];
+            }
+        }
+    }
+    
+    return periodRuns;
+}
+
++(NSDate*)dateForPeriod:(NSInteger)index withWeekly:(BOOL)weekly
+{
+    NSDate * indexDate, *first = getFirstDayOfTheWeekFromDate([NSDate date]);
+    
+    //must be exclusive because index 0 should return first
+    if(weekly)
+    {
+        indexDate = shiftDateByXweeks(first, index);
+    }
+    else
+    {
+        indexDate = shiftDateByXmonths(first, index);
+    }
+    
+    return indexDate;
+}
+
+int monthForPeriod(NSDate * date) {
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    calendar.timeZone = [NSTimeZone defaultTimeZone];
+    
+    NSDateComponents *dateComps = [calendar components:(NSMonthCalendarUnit) fromDate:date];
+    
+    return [dateComps month];
+}
+
+int weekForPeriod(NSDate * date) {
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    calendar.timeZone = [NSTimeZone defaultTimeZone];
+    
+    NSDateComponents *dateComps = [calendar components:(NSWeekCalendarUnit) fromDate:date];
+    
+    return [dateComps week];
+}
+
+int yearForPeriod(NSDate * date){
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    calendar.timeZone = [NSTimeZone defaultTimeZone];
+    
+    NSDateComponents *dateComps = [calendar components:(NSYearCalendarUnit) fromDate:[NSDate date]];
+    
+    return [dateComps year];
+}
+
+int currentWeek(void) {
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    calendar.timeZone = [NSTimeZone defaultTimeZone];
+    
+    NSDateComponents *dateComps = [calendar components:(NSWeekCalendarUnit) fromDate:[NSDate date]];
+    
+    return [dateComps week];
+}
+
+// Finds the date for the first day of the week
+NSDate *getFirstDayOfTheWeekFromDate(NSDate *givenDate)
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    // Edge case where beginning of week starts in the prior month
+    NSDateComponents *edgeCase = [[NSDateComponents alloc] init];
+    [edgeCase setMonth:2];
+    [edgeCase setDay:1];
+    [edgeCase setYear:2013];
+    NSDate *edgeCaseDate = [calendar dateFromComponents:edgeCase];
+    
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:edgeCaseDate];
+    [components setWeekday:1]; // 1 == Sunday, 7 == Saturday
+    [components setWeek:[components week]];
+    
+    NSLog(@"Edge case date is %@ and beginning of that week is %@", edgeCaseDate , [calendar dateFromComponents:components]);
+    
+    // Find Sunday for the given date
+    components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:givenDate];
+    [components setWeekday:1]; // 1 == Sunday, 7 == Saturday
+    [components setWeek:[components week]];
+    
+    NSLog(@"Original date is %@ and beginning of week is %@", givenDate , [calendar dateFromComponents:components]);
+    
+    return [calendar dateFromComponents:components];
+}
 
 @end

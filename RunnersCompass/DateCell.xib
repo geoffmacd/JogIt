@@ -431,22 +431,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">timeLabel</string>
-						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="107612736"/>
-					</object>
-					<int key="connectionID">568</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">paceUnit</string>
-						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="524844911"/>
-					</object>
-					<int key="connectionID">553</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">shareBut</string>
 						<reference key="source" ref="438365395"/>
 						<reference key="destination" ref="230533418"/>

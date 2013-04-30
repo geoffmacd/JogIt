@@ -56,6 +56,7 @@
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
+@property NSDate * periodStart;
 
 @property NSMutableArray * runs;
 @property CGFloat totalDistance;

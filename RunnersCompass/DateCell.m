@@ -19,6 +19,7 @@
 
 @synthesize delegate;
 
+@synthesize periodStart;
 @synthesize runs;
 @synthesize expanded;
 @synthesize numRuns,totalDistance,avgPace;
@@ -28,22 +29,19 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(void)setup
 {
+    //all runs configured
     
     [table registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
     UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
     [table registerNib:nib forCellReuseIdentifier:cellID];
     
-    if([runs count])
-    {
+    //runs should be loaded by now
+    //no effect if 0 runs
+    [self getPeriodTotals];
     
-        //runs should be loaded by now
-        [self getPeriodTotals];
+    [self reloadUnitLabels];
     
-        [self reloadUnitLabels];
-    }
-    
-    
-    cells = [[NSMutableArray alloc] initWithCapacity:[runs count]];// 3 runs
+    cells = [[NSMutableArray alloc] initWithCapacity:[runs count]];
     
     //set table size
     CGFloat tableHeight = [runs count] * 48; //48 each
@@ -96,6 +94,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     totalDistance = 0;
     numRuns = 0;
     
+    //don't execute if nothing is here
+    if(![runs count])
+        return;
+    
     for(RunEvent * oldRun in runs)
     {
         numRuns++;
@@ -118,17 +120,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     NSString * header;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    RunEvent * firstRun = [runs objectAtIndex:0];
     if([[prefs weekly] boolValue])
     {
         
         [formatter setDateFormat:@"MMMM"];
-        header = [formatter stringFromDate:firstRun.date];
+        header = [formatter stringFromDate:periodStart];
     }
     else
     {
         [formatter setDateFormat:@"WWWW"];
-        header = [formatter stringFromDate:firstRun.date];
+        header = [formatter stringFromDate:periodStart];
     }
     
     [headerLabel setText:header];

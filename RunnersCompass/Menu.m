@@ -188,105 +188,16 @@ static NSString * cellID = @"DateCellPrototype";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-    if([runs count] == 0)
-    {
-        //if no runs exist, then display running man
-        showingNoRuns = true;
-        
-        [MenuTable setBackgroundView:noRunView];
-        
-        //prevent table from scrolling
-        [MenuTable setScrollEnabled:false];
-    }
-    else{
-        if(showingNoRuns)
-        {
-            showingNoRuns = false;
-            [MenuTable setBackgroundView:nil];
-            
-            //prevent table from scrolling
-            [MenuTable setScrollEnabled:true];
-        }
-    }
-    
-    
-    //return number of historic run
-     return [runs count];
-     */
-    /*
-    if([runs count] == 0)
-    {
-        //if no runs exist, then display running man
-        showingNoRuns = true;
-        
-        [MenuTable setBackgroundView:noRunView];
-        
-        //prevent table from scrolling
-        [MenuTable setScrollEnabled:false];
-    }
-    else{
-        if(showingNoRuns)
-        {
-            showingNoRuns = false;
-            [MenuTable setBackgroundView:nil];
-            
-            //prevent table from scrolling
-            [MenuTable setScrollEnabled:true];
-        }
-    }
-     */
-    
     //get number of periods for runs
     UserPrefs * curPrefs = [self getPrefs];
-    numPeriods = 0;
-    NSInteger curPeriod = 10000;
+
+    numPeriods = [Util numPeriodsForRuns:runs withWeekly:[[curPrefs weekly] boolValue]];
     
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //starts on thursday
-    [calendar setMinimumDaysInFirstWeek:4];
-    
-    if([[curPrefs weekly] boolValue])
-    {
-        
-        for(RunEvent * oldRun in runs)
-        {
-            //deter # of unique weeks in order
-            
-            NSDateComponents *components = [calendar components:NSWeekCalendarUnit fromDate:oldRun.date];
-            NSInteger week = components.week;
-            
-            if(week != curPeriod)
-            {
-                curPeriod = week;
-                numPeriods++;
-            }
-        }
-        
-    }
-    else
-    {
-        
-        for(RunEvent * oldRun in runs)
-        {
-            //deter # of unique weeks in order
-            
-            NSDateComponents *components = [calendar components:NSMonthCalendarUnit fromDate:oldRun.date];
-            NSInteger month = components.month;
-            
-            if(month != curPeriod)
-            {
-                curPeriod = month;
-                numPeriods++;
-            }
-        }
-    }
-    
-    if(!numPeriods)
+    //need at least one date
+    if(numPeriods <= 0)
         return 1;
     
     return numPeriods;
-    
 }
 
 // Customize the appearance of table view cells.
@@ -299,13 +210,13 @@ static NSString * cellID = @"DateCellPrototype";
         
         DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
         
+        BOOL isWeekly = [[[self getPrefs] weekly] boolValue];
+        
         [cells addObject:cell];
         [cell setDelegate:self];
         //determine runs to allocate
-        if(numPeriods =< 1)
-            [cell setRuns:runs];
-        else
-            [cell setRuns:[self runsForRow:row]];
+        [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
+        [cell setRuns:[Util runsForPeriod:runs withWeekly:[[[self getPrefs] weekly] boolValue] withPeriodStart:cell.periodStart]];
         //all prefs are requested
         [cell setup];
 
@@ -319,72 +230,6 @@ static NSString * cellID = @"DateCellPrototype";
         
         return curCell;
     } 
-}
-
--(NSMutableArray*)runsForRow:(NSInteger)row
-{
-    //todays date is index 0
-    
-    UserPrefs * curPrefs = [self getPrefs];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    //starts on thursday
-    [calendar setMinimumDaysInFirstWeek:4];
-    NSDateComponents * startComponents = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
-    NSInteger startWeek = startComponents.weekOfYear;
-    NSInteger startMonth = startComponents.month;
-    NSInteger startYear = startComponents.year;
-    NSInteger targetYear = startYear;
-    NSInteger targetWeek,targetMonth;
-    
-    
-    NSMutableArray * runsToAdd = [NSMutableArray new];
-    
-    if([[curPrefs weekly] boolValue])
-    {
-        NSInteger yearFromNow = row / 52;
-        while(startWeek - (row - yearFromNow) < 0)
-        {
-            yearFromNow++;
-            targetYear--;
-        }
-        targetWeek = row - (52*yearFromNow);
-        
-        for(RunEvent * oldRun in runs)
-        {
-            
-            NSDateComponents * components = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
-            
-            if(components.weekOfYear == targetWeek && components.year == targetYear)
-            {
-                [runsToAdd addObject: oldRun];
-            }
-        }
-        
-    }
-    else
-    {
-        NSInteger yearFromNow = row / 12;
-        while(startMonth - (row - yearFromNow) < 0)
-        {
-            yearFromNow++;
-            targetYear--;
-        }
-        targetMonth = row - (12*yearFromNow);
-        
-        for(RunEvent * oldRun in runs)
-        {
-            
-            NSDateComponents * components = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
-            
-            if(components.month == targetMonth && components.year == targetYear)
-            {
-                [runsToAdd addObject: oldRun];
-            }
-        }
-    }
-    
-    return runsToAdd;
-    
 }
 
 #pragma mark -
