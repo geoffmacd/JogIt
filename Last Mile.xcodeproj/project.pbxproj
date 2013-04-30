@@ -192,8 +192,6 @@
 		67CFCCBF170280B10028CF70 /* speed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCB7170280B10028CF70 /* speed@2x.png */; };
 		67CFCCC4170281BB0028CF70 /* bigclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC2170281BB0028CF70 /* bigclock.png */; };
 		67CFCCC5170281BB0028CF70 /* bigclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67CFCCC3170281BB0028CF70 /* bigclock@2x.png */; };
-		67D6DAA81730043F00825B19 /* DateHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D6DAA61730043F00825B19 /* DateHelpers.m */; };
-		67D6DAA91730043F00825B19 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 67D6DAA71730043F00825B19 /* README */; };
 		67D7059416D7150800A20B6F /* CaloriePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059316D7150800A20B6F /* CaloriePicker.m */; };
 		67D7059C16D71B5000A20B6F /* DistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 67D7059B16D71B5000A20B6F /* DistancePicker.m */; };
 		67E544A3171B335A00D5C9DF /* Manual.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67E544A0171B335A00D5C9DF /* Manual.xib */; };
@@ -579,9 +577,6 @@
 		67CFCCB7170280B10028CF70 /* speed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speed@2x.png"; sourceTree = "<group>"; };
 		67CFCCC2170281BB0028CF70 /* bigclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigclock.png; sourceTree = "<group>"; };
 		67CFCCC3170281BB0028CF70 /* bigclock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bigclock@2x.png"; sourceTree = "<group>"; };
-		67D6DAA51730043F00825B19 /* DateHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateHelpers.h; sourceTree = "<group>"; };
-		67D6DAA61730043F00825B19 /* DateHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateHelpers.m; sourceTree = "<group>"; };
-		67D6DAA71730043F00825B19 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		67D7059216D7150800A20B6F /* CaloriePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaloriePicker.h; sourceTree = "<group>"; };
 		67D7059316D7150800A20B6F /* CaloriePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaloriePicker.m; sourceTree = "<group>"; };
 		67D7059A16D71B5000A20B6F /* DistancePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistancePicker.h; sourceTree = "<group>"; };
@@ -689,7 +684,6 @@
 			isa = PBXGroup;
 			children = (
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
-				67D6DAA41730043F00825B19 /* DateHelpers */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				67F7CB7F172395EF0008CEBF /* OpenEars */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
@@ -1207,16 +1201,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		67D6DAA41730043F00825B19 /* DateHelpers */ = {
-			isa = PBXGroup;
-			children = (
-				67D6DAA51730043F00825B19 /* DateHelpers.h */,
-				67D6DAA61730043F00825B19 /* DateHelpers.m */,
-				67D6DAA71730043F00825B19 /* README */,
-			);
-			path = DateHelpers;
-			sourceTree = "<group>";
-		};
 		67E5449F171B330100D5C9DF /* Manual */ = {
 			isa = PBXGroup;
 			children = (
@@ -1553,7 +1537,6 @@
 				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
 				67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */,
 				67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */,
-				67D6DAA91730043F00825B19 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1680,7 +1663,6 @@
 				67FF65881724D62900A91E06 /* UpgradeHeaderCell.m in Sources */,
 				67FF65A61726368000A91E06 /* StandardNotifyVC.m in Sources */,
 				67B8E98E172F398C00DAB97F /* DateCell.m in Sources */,
-				67D6DAA81730043F00825B19 /* DateHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
