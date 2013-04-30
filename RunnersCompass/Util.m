@@ -139,7 +139,7 @@
         {
             periods++;
             //shift date one week at a time until iWeek is less
-            iWeek = shiftDateByXweeks(newest, periods);
+            iWeek = shiftDateByXweeks(newest, -periods);
         }
         
     }
@@ -151,7 +151,7 @@
         {
             periods++;
             //shift date one month at a time until iWeek is less
-            iMonth = shiftDateByXmonths(newest, periods);
+            iMonth = shiftDateByXmonths(newest, -periods);
         }
     }
     
@@ -200,11 +200,11 @@
     //must be exclusive because index 0 should return first
     if(weekly)
     {
-        indexDate = shiftDateByXweeks(first, index);
+        indexDate = shiftDateByXweeks(first, -index);
     }
     else
     {
-        indexDate = shiftDateByXmonths(first, index);
+        indexDate = shiftDateByXmonths(first, -index);
     }
     
     return indexDate;
