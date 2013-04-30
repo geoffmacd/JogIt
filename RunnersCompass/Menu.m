@@ -291,7 +291,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture
 {
     
-    [delegate updateGesturesNeededtoFail:cellGesture];
+    [self.delegate updateGesturesNeededtoFail:cellGesture];
 }
 
 -(UserPrefs*)getPrefs
@@ -377,9 +377,9 @@ static NSString * dateCellID = @"DateCellPrototype";
         }
         
         //if run is already loaded, slide to logger
-        if([delegate isRunAlreadyLoaded:cell.associatedRun])
+        if([self.delegate isRunAlreadyLoaded:cell.associatedRun])
         {
-            [delegate selectedRunInProgress:false];
+            [self.delegate selectedRunInProgress:false];
             return;
         }
         
@@ -390,7 +390,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         if([[recordToLoad time] doubleValue] > loadTimeMinForProgress)
         {
             //lock slider before beginning load
-            [delegate lockBeforeLoad];
+            [self.delegate lockBeforeLoad];
             
             [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
@@ -475,7 +475,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         BOOL alreadyPresentedNotification = false;
         
         //display goal achieved notification regardless of manual or not
-        Goal * curGoal = [delegate curGoal];
+        Goal * curGoal = [self.delegate curGoal];
         //did new run cause goal to be complete and wasn't completed before hand
         if(curGoal.type != GoalTypeNoGoal)
         {
@@ -508,16 +508,16 @@ static NSString * dateCellID = @"DateCellPrototype";
             {
                 //only if goal wasn't previously completed
                 [runsToProcess removeObject:finishedRun];
-                if(![curGoal processGoalForRuns:runsToProcess withMetric:[[[delegate curUserPrefs] metric] boolValue]])
+                if(![curGoal processGoalForRuns:runsToProcess withMetric:[[[self.delegate curUserPrefs] metric] boolValue]])
                 {
                     [runsToProcess addObject:finishedRun];
-                    if([curGoal processGoalForRuns:runsToProcess withMetric:[[[delegate curUserPrefs] metric] boolValue]])
+                    if([curGoal processGoalForRuns:runsToProcess withMetric:[[[self.delegate curUserPrefs] metric] boolValue]])
                     {
                         //present PR notification popup
                         GoalNotifyVC * vc = [[GoalNotifyVC alloc] initWithNibName:@"GoalNotifyVC" bundle:nil];
-                        [vc setPrefs:[delegate curUserPrefs]];
+                        [vc setPrefs:[self.delegate curUserPrefs]];
                         [vc setPrRun:finishedRun];
-                        [vc setGoal:[delegate curGoal]];
+                        [vc setGoal:[self.delegate curGoal]];
                         
                         alreadyPresentedNotification = true;
                         [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
@@ -537,7 +537,7 @@ static NSString * dateCellID = @"DateCellPrototype";
             {
                 //present PR notification popup
                 NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
-                [vc setPrefs:[delegate curUserPrefs]];
+                [vc setPrefs:[self.delegate curUserPrefs]];
                 [vc setPrRun:finishedRun];
                 //return yes if one of these runs if the checked
                 if(finishedRun == fastestRun)
@@ -622,8 +622,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self cleanupForNav];
     
     GoalsViewController * vc = [[GoalsViewController alloc] initWithNibName:@"Goals" bundle:nil];
-    [vc setPrefs:[delegate curUserPrefs]];
-    [vc setCurGoal:[delegate curGoal]];
+    [vc setPrefs:[self.delegate curUserPrefs]];
+    [vc setCurGoal:[self.delegate curGoal]];
     [vc setOriginalRunsSorted:runs];
     [self presentViewController:vc animated:true completion:nil];
 }
@@ -651,7 +651,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     pace = 1000 / pace;
     
     //convert to imperial if neccessary
-    UserPrefs * curPrefs = [delegate curUserPrefs];
+    UserPrefs * curPrefs = [self.delegate curUserPrefs];
     if(![curPrefs.metric boolValue])
     {
         pace = pace / convertKMToMile;
@@ -667,13 +667,13 @@ static NSString * dateCellID = @"DateCellPrototype";
     CGFloat distance = 0.5 + ([selectedIndex intValue] * 0.5);
     
     //convert to mi or km
-    UserPrefs * curPrefs = [delegate curUserPrefs];
+    UserPrefs * curPrefs = [self.delegate curUserPrefs];
     if(![curPrefs.metric boolValue])
     {
         distance = distance / convertKMToMile;
     }
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000 withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeDistance withValue:distance*1000 withMetric:[[[self.delegate curUserPrefs] metric] boolValue] showSpeed:[[[self.delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -682,7 +682,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     NSTimeInterval time = ([selectedIndex intValue] * 60);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeTime withValue:time withMetric:[[[self.delegate curUserPrefs] metric] boolValue] showSpeed:[[[self.delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -691,7 +691,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     CGFloat calories = 25 + ([selectedIndex intValue] * 25);
     
-    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories withMetric:[[[delegate curUserPrefs] metric] boolValue] showSpeed:[[[delegate curUserPrefs] showSpeed] boolValue]];
+    RunEvent * new = [[RunEvent alloc] initWithTarget:MetricTypeCalories withValue:calories withMetric:[[[self.delegate curUserPrefs] metric] boolValue] showSpeed:[[[self.delegate curUserPrefs] showSpeed] boolValue]];
     
     [self selectedNewRun:new];
     
@@ -707,7 +707,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 - (IBAction)paceTapped:(id)sender {
     PacePicker *pace = [[PacePicker alloc] initWithTitle:[NSString stringWithFormat:@"Pace (min/%@)", [[self.delegate curUserPrefs] getDistanceUnit]]  rows:nil initialSelection:0 target:self successAction:@selector(paceRunStart:) cancelAction:@selector(actionPickerCancelled:) origin:sender];
 
-    UserPrefs * curPrefs = [delegate curUserPrefs];
+    UserPrefs * curPrefs = [self.delegate curUserPrefs];
     
     //need PR in s/km form
     NSNumber * pRValue = [NSNumber numberWithInt:0];//1 min
