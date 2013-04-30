@@ -61,7 +61,7 @@
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
 						<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
-						<float key="IBUIRowHeight">48</float>
+						<float key="IBUIRowHeight">64</float>
 						<float key="IBUISectionHeaderHeight">48</float>
 						<float key="IBUISectionFooterHeight">1</float>
 					</object>
@@ -72,6 +72,7 @@
 						<string key="NSFrame">{{0, 504}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="293323269"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -156,6 +157,7 @@
 						<string key="NSFrame">{{76, 263}, {168, 21}}</string>
 						<reference key="NSSuperview" ref="259200685"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -451,21 +453,6 @@
 						<reference key="parent" ref="293323269"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">46</int>
-						<reference key="object" ref="985424494"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">48</int>
-						<reference key="object" ref="445749882"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">54</int>
-						<reference key="object" ref="937824995"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">77</int>
 						<reference key="object" ref="235024299"/>
 						<array class="NSMutableArray" key="children">
@@ -481,26 +468,6 @@
 						<int key="objectID">78</int>
 						<reference key="object" ref="141123873"/>
 						<reference key="parent" ref="235024299"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">79</int>
-						<reference key="object" ref="465021912"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">81</int>
-						<reference key="object" ref="689932405"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">90</int>
-						<reference key="object" ref="628914190"/>
-						<reference key="parent" ref="293323269"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">91</int>
-						<reference key="object" ref="831486581"/>
-						<reference key="parent" ref="293323269"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">93</int>
@@ -675,33 +642,13 @@
 						<reference key="parent" ref="259200685"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">128</int>
-						<reference key="object" ref="523081517"/>
-						<reference key="parent" ref="43826253"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">146</int>
-						<reference key="object" ref="994204873"/>
-						<reference key="parent" ref="43826253"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">166</int>
-						<reference key="object" ref="273165549"/>
-						<reference key="parent" ref="809048384"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">181</int>
-						<reference key="object" ref="912417135"/>
-						<reference key="parent" ref="809048384"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">182</int>
 						<reference key="object" ref="714910697"/>
 						<reference key="parent" ref="259200685"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">195</int>
-						<reference key="object" ref="766626850"/>
+						<int key="objectID">207</int>
+						<reference key="object" ref="874745507"/>
 						<reference key="parent" ref="259200685"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -710,9 +657,64 @@
 						<reference key="parent" ref="259200685"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">207</int>
-						<reference key="object" ref="874745507"/>
+						<int key="objectID">195</int>
+						<reference key="object" ref="766626850"/>
 						<reference key="parent" ref="259200685"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">146</int>
+						<reference key="object" ref="994204873"/>
+						<reference key="parent" ref="43826253"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">128</int>
+						<reference key="object" ref="523081517"/>
+						<reference key="parent" ref="43826253"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">181</int>
+						<reference key="object" ref="912417135"/>
+						<reference key="parent" ref="809048384"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">166</int>
+						<reference key="object" ref="273165549"/>
+						<reference key="parent" ref="809048384"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">91</int>
+						<reference key="object" ref="831486581"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">90</int>
+						<reference key="object" ref="628914190"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">81</int>
+						<reference key="object" ref="689932405"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">79</int>
+						<reference key="object" ref="465021912"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">54</int>
+						<reference key="object" ref="937824995"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">48</int>
+						<reference key="object" ref="445749882"/>
+						<reference key="parent" ref="293323269"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">46</int>
+						<reference key="object" ref="985424494"/>
+						<reference key="parent" ref="293323269"/>
 					</object>
 				</array>
 			</object>
