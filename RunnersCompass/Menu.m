@@ -18,7 +18,7 @@
 @synthesize noRunView;
 @synthesize delegate;
 
-static NSString * cellID = @"HierarchicalCellPrototype";
+static NSString * cellID = @"DateCellPrototype";
 
 #pragma mark -
 #pragma mark View Lifecycle
@@ -40,7 +40,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
     
     runs = [[NSMutableArray alloc] initWithCapacity:3];
-    cells = [[NSMutableArray alloc] initWithCapacity:3];
+    cells = [[NSMutableArray alloc] initWithCapacity:3];// 3 months
 
     //find all runs
     NSArray * runRecords = [RunRecord MR_findAllSortedBy:@"date" ascending:false];
@@ -53,6 +53,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [runs addObject:eventToAdd];
     }
+    
     //determine PRs
     [self analyzePRs];
     
@@ -63,8 +64,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
     
     //load cell
-    [MenuTable registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
-    UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
+    [MenuTable registerClass:[DateCell class] forCellReuseIdentifier:cellID];
+    UINib * nib = [UINib nibWithNibName:@"DateCell" bundle:[NSBundle mainBundle]] ;
     [MenuTable registerNib:nib forCellReuseIdentifier:cellID];
     
     //allow menu table to scroll to top
@@ -174,6 +175,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             [cell setup];
             
             start = cell;
+            
         }
         
         return start;
@@ -186,7 +188,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    
+    /*
     if([runs count] == 0)
     {
         //if no runs exist, then display running man
@@ -208,8 +210,83 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         }
     }
     
+    
     //return number of historic run
-    return [runs count];
+     return [runs count];
+     */
+    /*
+    if([runs count] == 0)
+    {
+        //if no runs exist, then display running man
+        showingNoRuns = true;
+        
+        [MenuTable setBackgroundView:noRunView];
+        
+        //prevent table from scrolling
+        [MenuTable setScrollEnabled:false];
+    }
+    else{
+        if(showingNoRuns)
+        {
+            showingNoRuns = false;
+            [MenuTable setBackgroundView:nil];
+            
+            //prevent table from scrolling
+            [MenuTable setScrollEnabled:true];
+        }
+    }
+     */
+    
+    //get number of periods for runs
+    UserPrefs * curPrefs = [self getPrefs];
+    numPeriods = 0;
+    NSInteger curPeriod = 10000;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //starts on thursday
+    [calendar setMinimumDaysInFirstWeek:4];
+    
+    if([[curPrefs weekly] boolValue])
+    {
+        
+        for(RunEvent * oldRun in runs)
+        {
+            //deter # of unique weeks in order
+            
+            NSDateComponents *components = [calendar components:NSWeekCalendarUnit fromDate:oldRun.date];
+            NSInteger week = components.week;
+            
+            if(week != curPeriod)
+            {
+                curPeriod = week;
+                numPeriods++;
+            }
+        }
+        
+    }
+    else
+    {
+        
+        for(RunEvent * oldRun in runs)
+        {
+            //deter # of unique weeks in order
+            
+            NSDateComponents *components = [calendar components:NSMonthCalendarUnit fromDate:oldRun.date];
+            NSInteger month = components.month;
+            
+            if(month != curPeriod)
+            {
+                curPeriod = month;
+                numPeriods++;
+            }
+        }
+    }
+    
+    if(!numPeriods)
+        return 1;
+    
+    return numPeriods;
+    
 }
 
 // Customize the appearance of table view cells.
@@ -220,11 +297,17 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
     if(row >= [cells count]){
         
-        HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
+        DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
         
         [cells addObject:cell];
         [cell setDelegate:self];
-        [cell setAssociated:[runs objectAtIndex:row]];
+        //determine runs to allocate
+        if(numPeriods =< 1)
+            [cell setRuns:runs];
+        else
+            [cell setRuns:[self runsForRow:row]];
+        //all prefs are requested
+        [cell setup];
 
         
         return cell;
@@ -232,10 +315,76 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     else{
         
         
-        HierarchicalCell * curCell = [cells objectAtIndex:row];
+        DateCell * curCell = [cells objectAtIndex:row];
         
         return curCell;
     } 
+}
+
+-(NSMutableArray*)runsForRow:(NSInteger)row
+{
+    //todays date is index 0
+    
+    UserPrefs * curPrefs = [self getPrefs];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    //starts on thursday
+    [calendar setMinimumDaysInFirstWeek:4];
+    NSDateComponents * startComponents = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
+    NSInteger startWeek = startComponents.weekOfYear;
+    NSInteger startMonth = startComponents.month;
+    NSInteger startYear = startComponents.year;
+    NSInteger targetYear = startYear;
+    NSInteger targetWeek,targetMonth;
+    
+    
+    NSMutableArray * runsToAdd = [NSMutableArray new];
+    
+    if([[curPrefs weekly] boolValue])
+    {
+        NSInteger yearFromNow = row / 52;
+        while(startWeek - (row - yearFromNow) < 0)
+        {
+            yearFromNow++;
+            targetYear--;
+        }
+        targetWeek = row - (52*yearFromNow);
+        
+        for(RunEvent * oldRun in runs)
+        {
+            
+            NSDateComponents * components = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
+            
+            if(components.weekOfYear == targetWeek && components.year == targetYear)
+            {
+                [runsToAdd addObject: oldRun];
+            }
+        }
+        
+    }
+    else
+    {
+        NSInteger yearFromNow = row / 12;
+        while(startMonth - (row - yearFromNow) < 0)
+        {
+            yearFromNow++;
+            targetYear--;
+        }
+        targetMonth = row - (12*yearFromNow);
+        
+        for(RunEvent * oldRun in runs)
+        {
+            
+            NSDateComponents * components = [calendar components:NSWeekOfYearCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
+            
+            if(components.month == targetMonth && components.year == targetYear)
+            {
+                [runsToAdd addObject: oldRun];
+            }
+        }
+    }
+    
+    return runsToAdd;
+    
 }
 
 #pragma mark -
@@ -247,21 +396,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     NSUInteger row = [indexPath row];
     
     if(row >= [cells count]){
-        /*
-        HierarchicalCell * cell = (HierarchicalCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
-        
-        [cells addObject:cell];
-        [cell setDelegate:self];
-        [cell setAssociated:[runs objectAtIndex:row]];
-         */
         
         //delay dequeueing, not to be done here for performance
         
-        height = 48.0f;
+        height = 64.0f;
     }
     else{
         
-        HierarchicalCell * cell = [cells objectAtIndex:row];
+        DateCell * cell = [cells objectAtIndex:row];
         
         height = [cell getHeightRequired];
     }
@@ -269,39 +411,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     return height;
 }
 
-
-
-/*
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSUInteger row = [indexPath row];
-    
-    //shouldnt happen
-    if(row > ([cells count]))
-        return;
-    
-    
-    HierarchicalCell * cell = [cells objectAtIndex:row];
-    
-    if(!cell.expanded)
-    {
-        [cell setExpand:true withAnimation:true];
-        
-        if(row == [cells count])
-        {
-            //scroll view to see rest of cell below
-            [MenuTable scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:true];
-        }
-    }
-    else{
-        [cell setExpand:false withAnimation:true];
-    }
-}
-
-*/
-
 #pragma mark -
-#pragma mark HierarchicalCellDelegate
+#pragma mark DateCellDelegate
 
 -(void) cellDidChangeHeight:(id) sender
 {
@@ -335,7 +446,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture
 {
     
-    [self.delegate updateGesturesNeededtoFail:cellGesture];
+    [delegate updateGesturesNeededtoFail:cellGesture];
 }
 
 -(UserPrefs*)getPrefs

@@ -48,6 +48,7 @@
         <attribute name="speechDistance" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="speechPace" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="speechTime" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="weekly" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
@@ -55,6 +56,6 @@
         <element name="LocationRecord" positionX="160" positionY="192" width="128" height="135"/>
         <element name="RunRecord" positionX="160" positionY="192" width="128" height="240"/>
         <element name="ThumbnailRecord" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="UserPrefs" positionX="160" positionY="192" width="128" height="255"/>
+        <element name="UserPrefs" positionX="160" positionY="192" width="128" height="270"/>
     </elements>
 </model>

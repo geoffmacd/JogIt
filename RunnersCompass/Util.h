@@ -16,5 +16,8 @@
 +(UIColor*) blueColour;
 +(UIColor*) cellRedColour;
 
++(UIColor*) flatColorForCell:(NSInteger)indexFromInstallation;
++(void)getRGBComponents:(CGFloat [3])components forColor:(UIColor *)color;
+
 
 @end

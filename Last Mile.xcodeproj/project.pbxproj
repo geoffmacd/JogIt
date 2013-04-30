@@ -177,6 +177,9 @@
 		67B2FD0C16C60013008694F1 /* BWLongTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0216C60013008694F1 /* BWLongTextViewController.m */; };
 		67B2FD0D16C60013008694F1 /* BWSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B2FD0516C60013008694F1 /* BWSelectViewController.m */; };
 		67B421A41707AE7A006574CF /* MileAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B421A31707AE7A006574CF /* MileAnnotation.m */; };
+		67B8E98E172F398C00DAB97F /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B8E98C172F398C00DAB97F /* DateCell.m */; };
+		67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B8E98D172F398C00DAB97F /* DateCell.xib */; };
+		67B8E993172F596300DAB97F /* Data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 67B8E992172F596300DAB97F /* Data.sqlite */; };
 		67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */; };
 		67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E30116D0740900E4DE11 /* ChartCell.m */; };
 		67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E30316D0742E00E4DE11 /* ChartCell.xib */; };
@@ -557,6 +560,10 @@
 		67B421B91707D9D1006574CF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		67B421BB1707D9D7006574CF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		67B421BD1707D9DB006574CF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		67B8E98B172F398C00DAB97F /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
+		67B8E98C172F398C00DAB97F /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
+		67B8E98D172F398C00DAB97F /* DateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
+		67B8E992172F596300DAB97F /* Data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = Data.sqlite; path = "Sample Data/Data.sqlite"; sourceTree = "<group>"; };
 		67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtil.h; sourceTree = "<group>"; };
 		67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtil.m; sourceTree = "<group>"; };
 		67C8E30016D0740900E4DE11 /* ChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartCell.h; sourceTree = "<group>"; };
@@ -684,6 +691,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				67B8E992172F596300DAB97F /* Data.sqlite */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				67F7CB7F172395EF0008CEBF /* OpenEars */,
@@ -1291,6 +1299,9 @@
 		67FC068316A10F0600491C97 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				67B8E98B172F398C00DAB97F /* DateCell.h */,
+				67B8E98C172F398C00DAB97F /* DateCell.m */,
+				67B8E98D172F398C00DAB97F /* DateCell.xib */,
 				672AA39B16B4F70300B7DEE6 /* FlatToolbar.h */,
 				672AA39C16B4F70300B7DEE6 /* FlatToolbar.m */,
 				67FC068816A1150C00491C97 /* HierarchicalCell.h */,
@@ -1538,6 +1549,8 @@
 				67FF65A11724E1BC00A91E06 /* predictsample@2x.png in Resources */,
 				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
 				67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */,
+				67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */,
+				67B8E993172F596300DAB97F /* Data.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1665,6 +1678,7 @@
 				67FF65841724D2F800A91E06 /* UpgradeVC.m in Sources */,
 				67FF65881724D62900A91E06 /* UpgradeHeaderCell.m in Sources */,
 				67FF65A61726368000A91E06 /* StandardNotifyVC.m in Sources */,
+				67B8E98E172F398C00DAB97F /* DateCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

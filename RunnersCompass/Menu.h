@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HierarchicalCell.h"
+#import "DateCell.h"
 #import "StartCell.h"
 #import "JSSlidingViewController.h"
 #import "Logger.h"
@@ -50,10 +50,11 @@
 @end
 
 
-@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,HierarchicalCellDelegate,StartCellDelegate,JSSlidingViewControllerDelegate,ManualVCDelegate>
+@interface MenuViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,DateCellDelegate,StartCellDelegate,JSSlidingViewControllerDelegate,ManualVCDelegate>
 {
     NSMutableArray * runs;
     NSMutableArray * cells;
+    NSInteger numPeriods;
     StartCell * start;
     BOOL showingNoRuns;
     RunEvent * longestRun;

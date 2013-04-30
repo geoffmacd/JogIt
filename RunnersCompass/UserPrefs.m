@@ -23,6 +23,7 @@
 @dynamic speechDistance;
 @dynamic speechCalories;
 @dynamic speechCurPace;
+@dynamic weekly;
 @dynamic purchased;
 
 +(NSString*)getDistanceUnitWithMetric:(BOOL) forMetric

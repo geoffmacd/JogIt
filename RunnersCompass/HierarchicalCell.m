@@ -133,20 +133,6 @@
     BOOL metricUnit = [prefs.metric integerValue];
     BOOL showSpeed = [prefs.showSpeed boolValue];
     
-    //Set Title
-    /*
-    NSString *descriptionString;
-    if(associatedRun.name)
-    {
-        //set if it has one, in the case of a target
-        descriptionString = associatedRun.name;
-    }
-    else
-    {
-        //just go run
-        descriptionString = [NSString stringWithFormat:@"%.2f %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText];
-    }
-     */
     NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
     [headerLabel setText:header];
     

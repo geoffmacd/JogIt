@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387952336.177368"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "811"
-         endingLineNumber = "811"
+         startingLineNumber = "912"
+         endingLineNumber = "912"
          landmarkName = "-calorieTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387952336.177368"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "810"
-         endingLineNumber = "810"
+         startingLineNumber = "911"
+         endingLineNumber = "911"
          landmarkName = "-calorieTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387952336.177368"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "777"
-         endingLineNumber = "777"
+         startingLineNumber = "878"
+         endingLineNumber = "878"
          landmarkName = "-paceTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387952336.177368"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "766"
-         endingLineNumber = "766"
+         startingLineNumber = "867"
+         endingLineNumber = "867"
          landmarkName = "-paceTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "93"
-         endingLineNumber = "93"
+         startingLineNumber = "94"
+         endingLineNumber = "94"
          landmarkName = "-getPaceUnit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "91"
-         endingLineNumber = "91"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
          landmarkName = "-getPaceUnit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
          landmarkName = "-getPaceUnit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,20 +138,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-getPaceUnit"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "84"
@@ -164,11 +151,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UserPrefs.m"
-         timestampString = "388379463.831424"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "87"
-         endingLineNumber = "87"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-getPaceUnit"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/UserPrefs.m"
+         timestampString = "388978857.035287"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "88"
+         endingLineNumber = "88"
          landmarkName = "-getPaceUnit"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388723469.335564"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "772"
-         endingLineNumber = "772"
+         startingLineNumber = "781"
+         endingLineNumber = "781"
          landmarkName = "-resetGhostRun"
          landmarkType = "5">
       </FileBreakpoint>
@@ -190,11 +190,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388723469.335564"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "726"
-         endingLineNumber = "726"
+         startingLineNumber = "735"
+         endingLineNumber = "735"
          landmarkName = "-enableGhostRun"
          landmarkType = "5">
       </FileBreakpoint>
@@ -203,11 +203,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388723469.335564"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "177"
-         endingLineNumber = "177"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
          landmarkName = "-viewDidLayoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -216,11 +216,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388723469.335564"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "178"
-         endingLineNumber = "178"
+         startingLineNumber = "175"
+         endingLineNumber = "175"
          landmarkName = "-viewDidLayoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -229,11 +229,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388632228.378645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "138"
-         endingLineNumber = "138"
+         startingLineNumber = "137"
+         endingLineNumber = "137"
          landmarkName = "-viewDidLayoutSubviews"
          landmarkType = "5">
       </FileBreakpoint>
@@ -242,7 +242,20 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388632228.378645"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "133"
+         endingLineNumber = "133"
+         landmarkName = "-viewDidLayoutSubviews"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "388632228.378645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "134"
@@ -255,24 +268,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "135"
-         endingLineNumber = "135"
-         landmarkName = "-viewDidLayoutSubviews"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "4014"
-         endingLineNumber = "4014"
+         startingLineNumber = "4017"
+         endingLineNumber = "4017"
          landmarkName = "-statusButTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387927851.977267"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "423"
-         endingLineNumber = "423"
+         startingLineNumber = "530"
+         endingLineNumber = "530"
          landmarkName = "-selectedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "387927851.977267"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "421"
-         endingLineNumber = "421"
+         startingLineNumber = "528"
+         endingLineNumber = "528"
          landmarkName = "-selectedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -372,11 +372,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2635"
-         endingLineNumber = "2635"
+         startingLineNumber = "2641"
+         endingLineNumber = "2641"
          landmarkName = "-mapView:viewForAnnotation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -385,11 +385,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2632"
-         endingLineNumber = "2632"
+         startingLineNumber = "2645"
+         endingLineNumber = "2645"
          landmarkName = "-mapView:viewForAnnotation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -398,37 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2640"
-         endingLineNumber = "2640"
-         landmarkName = "-mapView:viewForAnnotation:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2644"
-         endingLineNumber = "2644"
-         landmarkName = "-mapView:viewForAnnotation:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2249"
-         endingLineNumber = "2249"
+         startingLineNumber = "2265"
+         endingLineNumber = "2265"
          landmarkName = "-drawAllAnnotations"
          landmarkType = "5">
       </FileBreakpoint>
@@ -437,11 +411,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2645"
-         endingLineNumber = "2645"
+         startingLineNumber = "2646"
+         endingLineNumber = "2646"
          landmarkName = "-mapView:viewForAnnotation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -619,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2170"
-         endingLineNumber = "2170"
+         startingLineNumber = "2189"
+         endingLineNumber = "2189"
          landmarkName = "-zoomMapToEntireRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -632,11 +606,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "3585"
-         endingLineNumber = "3585"
+         startingLineNumber = "3588"
+         endingLineNumber = "3588"
          landmarkName = "-openMapWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -645,11 +619,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "3557"
-         endingLineNumber = "3557"
+         startingLineNumber = "3560"
+         endingLineNumber = "3560"
          landmarkName = "-closeMapWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -658,11 +632,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "460"
-         endingLineNumber = "460"
+         startingLineNumber = "465"
+         endingLineNumber = "465"
          landmarkName = "-speechForDistanceChange"
          landmarkType = "5">
       </FileBreakpoint>
@@ -671,11 +645,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "409"
-         endingLineNumber = "409"
+         startingLineNumber = "414"
+         endingLineNumber = "414"
          landmarkName = "-speechForDistanceChange"
          landmarkType = "5">
       </FileBreakpoint>
@@ -684,11 +658,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "412"
-         endingLineNumber = "412"
+         startingLineNumber = "417"
+         endingLineNumber = "417"
          landmarkName = "-speechForDistanceChange"
          landmarkType = "5">
       </FileBreakpoint>
@@ -697,11 +671,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "408"
-         endingLineNumber = "408"
+         startingLineNumber = "413"
+         endingLineNumber = "413"
          landmarkName = "-speechForDistanceChange"
          landmarkType = "5">
       </FileBreakpoint>
@@ -710,7 +684,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388275933.610623"
+         timestampString = "388630851.171381"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "113"
@@ -723,11 +697,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388453721.264316"
+         timestampString = "388632228.378645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
+         startingLineNumber = "115"
+         endingLineNumber = "115"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -736,11 +710,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388632228.378645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -877,20 +851,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1627"
-         endingLineNumber = "1627"
-         landmarkName = "-setLabelsForUnits"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1634"
@@ -903,11 +864,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2315"
-         endingLineNumber = "2315"
+         startingLineNumber = "1641"
+         endingLineNumber = "1641"
+         landmarkName = "-setLabelsForUnits"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "388725574.386994"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "2331"
+         endingLineNumber = "2331"
          landmarkName = "-drawAllAnnotations"
          landmarkType = "5">
       </FileBreakpoint>
@@ -916,7 +890,20 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "2282"
+         endingLineNumber = "2282"
+         landmarkName = "-drawAllAnnotations"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "2266"
@@ -929,24 +916,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454886.533962"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2250"
-         endingLineNumber = "2250"
-         landmarkName = "-drawAllAnnotations"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1683"
-         endingLineNumber = "1683"
+         startingLineNumber = "1696"
+         endingLineNumber = "1696"
          landmarkName = "-setLabelsForUnits"
          landmarkType = "5">
       </FileBreakpoint>
@@ -955,11 +929,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "388454851.520879"
+         timestampString = "388725574.386994"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1619"
-         endingLineNumber = "1619"
+         startingLineNumber = "1626"
+         endingLineNumber = "1626"
          landmarkName = "-setLabelsForUnits"
          landmarkType = "5">
       </FileBreakpoint>
@@ -968,11 +942,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/HierarchicalCell.m"
-         timestampString = "388449863.750887"
+         timestampString = "388534958.046768"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "119"
-         endingLineNumber = "119"
+         startingLineNumber = "123"
+         endingLineNumber = "123"
          landmarkName = "-reloadUnitLabels"
          landmarkType = "5">
       </FileBreakpoint>
@@ -981,11 +955,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/HierarchicalCell.m"
-         timestampString = "388449874.534551"
+         timestampString = "388978857.035287"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "147"
+         endingLineNumber = "147"
          landmarkName = "-reloadUnitLabels"
          landmarkType = "5">
       </FileBreakpoint>
@@ -994,24 +968,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/UpgradeVC.m"
-         timestampString = "388462584.506105"
+         timestampString = "388539203.38003"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "200"
          endingLineNumber = "200"
-         landmarkName = "-upgradeTapped:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/UpgradeVC.m"
-         timestampString = "388462585.943261"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "201"
-         endingLineNumber = "201"
          landmarkName = "-upgradeTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1046,7 +1007,7 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/PerformanceVC.m"
-         timestampString = "388465473.8696"
+         timestampString = "388540658.414925"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "247"
@@ -1169,6 +1130,84 @@
          startingLineNumber = "222"
          endingLineNumber = "222"
          landmarkName = "-doneTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/UpgradeHeaderCell.m"
+         timestampString = "388539177.767229"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "33"
+         endingLineNumber = "33"
+         landmarkName = "-setup"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/UpgradeHeaderCell.m"
+         timestampString = "388539231.633554"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
+         landmarkName = "-setup"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "388725574.386994"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "474"
+         endingLineNumber = "474"
+         landmarkName = "-audioCue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "388725574.386994"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "500"
+         endingLineNumber = "500"
+         landmarkName = "-sayNextSpeech"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Menu.m"
+         timestampString = "388979113.556672"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
+         landmarkName = "-viewDidLoad"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Menu.m"
+         timestampString = "388979225.581725"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "284"
+         endingLineNumber = "284"
+         landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

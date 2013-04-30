@@ -297,11 +297,11 @@
 -(void)setupTestSQL
 {
     NSURL * docURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-    NSURL * storeURL = [docURL URLByAppendingPathComponent:@"RunCompass.sqlite"];
+    NSURL * storeURL = [docURL URLByAppendingPathComponent:@"Data.sqlite"];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"RunCompass" ofType:@"sqlite"];
+    NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"Data" ofType:@"sqlite"];
     if (defaultStorePath) {
         [fileManager copyItemAtPath:defaultStorePath toPath:[storeURL path] error:NULL];
     }
@@ -316,7 +316,7 @@
     NSSet * productSet = [NSSet setWithObject:@"LM1.0Upgrade"];
     [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:productSet];
     
-    //[self setupTestSQL];
+    [self setupTestSQL];
     
     //core data setup
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"Data.sqlite"];
@@ -347,6 +347,7 @@
         userPrefsRecord.speechCurPace = [NSNumber numberWithBool:false];
         //ensure user has not purchased
         userPrefsRecord.purchased = [NSNumber numberWithBool:false];
+        userPrefsRecord.weekly = [NSNumber numberWithBool:false];
         
         //best to leave these blank so user does not have to backspace them
         userPrefsRecord.fullname = nil;
