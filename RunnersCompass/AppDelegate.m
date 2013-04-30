@@ -316,7 +316,7 @@
     NSSet * productSet = [NSSet setWithObject:@"LM1.0Upgrade"];
     [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:productSet];
     
-    [self setupTestSQL];
+    //[self setupTestSQL];
     
     //core data setup
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"Data.sqlite"];
@@ -398,8 +398,12 @@
     [self.viewController.view.layer setMasksToBounds:true];
     
     
+    NSLog(@"not past key and visible");
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    NSLog(@"past key and visible");
     
     //set badge to nothing
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;

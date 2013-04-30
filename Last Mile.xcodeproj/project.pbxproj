@@ -13,7 +13,6 @@
 		6720617A1717828D00BDF810 /* RunRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 672061791717828D00BDF810 /* RunRecord.m */; };
 		672152F616FA9B35003E15F8 /* settingsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F416FA9B35003E15F8 /* settingsicon.png */; };
 		672152F716FA9B35003E15F8 /* settingsicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F516FA9B35003E15F8 /* settingsicon@2x.png */; };
-		6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6721F88016AE39AB00FE84C5 /* RunMap.m */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
 		67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0A16409B7700DD13C5 /* Foundation.framework */; };
 		67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0C16409B7700DD13C5 /* CoreGraphics.framework */; };
@@ -179,7 +178,6 @@
 		67B421A41707AE7A006574CF /* MileAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B421A31707AE7A006574CF /* MileAnnotation.m */; };
 		67B8E98E172F398C00DAB97F /* DateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B8E98C172F398C00DAB97F /* DateCell.m */; };
 		67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67B8E98D172F398C00DAB97F /* DateCell.xib */; };
-		67B8E993172F596300DAB97F /* Data.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 67B8E992172F596300DAB97F /* Data.sqlite */; };
 		67C8E2FC16CF466500E4DE11 /* AnimationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */; };
 		67C8E30216D0740900E4DE11 /* ChartCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67C8E30116D0740900E4DE11 /* ChartCell.m */; };
 		67C8E30416D0742E00E4DE11 /* ChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67C8E30316D0742E00E4DE11 /* ChartCell.xib */; };
@@ -239,7 +237,6 @@
 		67F7CBA3172397490008CEBF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CBA2172397490008CEBF /* AVFoundation.framework */; };
 		67F7CBA5172397540008CEBF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F7CBA4172397540008CEBF /* AudioToolbox.framework */; };
 		67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC068916A1150C00491C97 /* HierarchicalCell.m */; };
-		67FC06C116A1D14000491C97 /* DataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67FC06C016A1D14000491C97 /* DataController.m */; };
 		67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 67FC070416ACD4F400491C97 /* HierarchicalCell.xib */; };
 		67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67FE524817288CC400F5E186 /* lightgraybutton@2x.png */; };
 		67FE524B172A0E7100F5E186 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67FE524A172A0E7100F5E186 /* OpenEars.framework */; };
@@ -290,8 +287,6 @@
 		672061791717828D00BDF810 /* RunRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunRecord.m; sourceTree = "<group>"; };
 		672152F416FA9B35003E15F8 /* settingsicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsicon.png; sourceTree = "<group>"; };
 		672152F516FA9B35003E15F8 /* settingsicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsicon@2x.png"; sourceTree = "<group>"; };
-		6721F87F16AE39AB00FE84C5 /* RunMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunMap.h; sourceTree = "<group>"; };
-		6721F88016AE39AB00FE84C5 /* RunMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunMap.m; sourceTree = "<group>"; };
 		67236D0416409B7700DD13C5 /* Last Mile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Last Mile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67236D0816409B7700DD13C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67236D0A16409B7700DD13C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -565,7 +560,6 @@
 		67B8E98B172F398C00DAB97F /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		67B8E98C172F398C00DAB97F /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateCell.m; sourceTree = "<group>"; };
 		67B8E98D172F398C00DAB97F /* DateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
-		67B8E992172F596300DAB97F /* Data.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = Data.sqlite; path = "Sample Data/Data.sqlite"; sourceTree = "<group>"; };
 		67C8E2FA16CF466500E4DE11 /* AnimationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationUtil.h; sourceTree = "<group>"; };
 		67C8E2FB16CF466500E4DE11 /* AnimationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationUtil.m; sourceTree = "<group>"; };
 		67C8E30016D0740900E4DE11 /* ChartCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartCell.h; sourceTree = "<group>"; };
@@ -637,8 +631,6 @@
 		67F7CBA4172397540008CEBF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		67FC068816A1150C00491C97 /* HierarchicalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HierarchicalCell.h; sourceTree = "<group>"; };
 		67FC068916A1150C00491C97 /* HierarchicalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HierarchicalCell.m; sourceTree = "<group>"; };
-		67FC06BF16A1D14000491C97 /* DataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataController.h; sourceTree = "<group>"; };
-		67FC06C016A1D14000491C97 /* DataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataController.m; sourceTree = "<group>"; };
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FE524817288CC400F5E186 /* lightgraybutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightgraybutton@2x.png"; sourceTree = "<group>"; };
@@ -696,7 +688,6 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67B8E992172F596300DAB97F /* Data.sqlite */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67D6DAA41730043F00825B19 /* DateHelpers */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
@@ -1277,8 +1268,6 @@
 			children = (
 				6779C10216EE83D8002BCAEC /* Analysis.h */,
 				6779C10316EE83D8002BCAEC /* Analysis.m */,
-				67FC06BF16A1D14000491C97 /* DataController.h */,
-				67FC06C016A1D14000491C97 /* DataController.m */,
 				67AF65EB16D9B3F2004A484C /* Goal.h */,
 				67AF65EC16D9B3F2004A484C /* Goal.m */,
 				6795A8361714DFAB00C0CE52 /* GoalRecord.h */,
@@ -1288,8 +1277,6 @@
 				6792EC58170FDD5700EBAF2F /* Model.xcdatamodeld */,
 				67FC06C216A1D15900491C97 /* RunEvent.h */,
 				6779C10016EE3F1D002BCAEC /* RunEvent.m */,
-				6721F87F16AE39AB00FE84C5 /* RunMap.h */,
-				6721F88016AE39AB00FE84C5 /* RunMap.m */,
 				6795A83B1714EE1600C0CE52 /* RunRecord.h */,
 				672061791717828D00BDF810 /* RunRecord.m */,
 				6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */,
@@ -1566,7 +1553,6 @@
 				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
 				67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */,
 				67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */,
-				67B8E993172F596300DAB97F /* Data.sqlite in Resources */,
 				67D6DAA91730043F00825B19 /* README in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1583,8 +1569,6 @@
 				67236D2516409B7700DD13C5 /* Menu.m in Sources */,
 				67236D2C16409B7700DD13C5 /* Logger.m in Sources */,
 				67FC068A16A1150C00491C97 /* HierarchicalCell.m in Sources */,
-				67FC06C116A1D14000491C97 /* DataController.m in Sources */,
-				6721F88116AE39AC00FE84C5 /* RunMap.m in Sources */,
 				672AA39216B4C87E00B7DEE6 /* StartCell.m in Sources */,
 				672AA39D16B4F70300B7DEE6 /* FlatToolbar.m in Sources */,
 				672AA3B416B5990700B7DEE6 /* SettingsViewController.m in Sources */,

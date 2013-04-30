@@ -18,7 +18,7 @@
 @synthesize noRunView;
 @synthesize delegate;
 
-static NSString * cellID = @"DateCellPrototype";
+static NSString * dateCellID = @"DateCellPrototype";
 
 #pragma mark -
 #pragma mark View Lifecycle
@@ -64,9 +64,9 @@ static NSString * cellID = @"DateCellPrototype";
     [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
     
     //load cell
-    [MenuTable registerClass:[DateCell class] forCellReuseIdentifier:cellID];
+    [MenuTable registerClass:[DateCell class] forCellReuseIdentifier:dateCellID];
     UINib * nib = [UINib nibWithNibName:@"DateCell" bundle:[NSBundle mainBundle]] ;
-    [MenuTable registerNib:nib forCellReuseIdentifier:cellID];
+    [MenuTable registerNib:nib forCellReuseIdentifier:dateCellID];
     
     //allow menu table to scroll to top
     [MenuTable setScrollsToTop:true];
@@ -208,7 +208,7 @@ static NSString * cellID = @"DateCellPrototype";
 
     if(row >= [cells count]){
         
-        DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:cellID];
+        DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:dateCellID];
         
         BOOL isWeekly = [[[self getPrefs] weekly] boolValue];
         
@@ -216,7 +216,7 @@ static NSString * cellID = @"DateCellPrototype";
         [cell setDelegate:self];
         //determine runs to allocate
         [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
-        [cell setRuns:[Util runsForPeriod:runs withWeekly:[[[self getPrefs] weekly] boolValue] withPeriodStart:cell.periodStart]];
+        [cell setRuns:[Util runsForPeriod:runs withWeekly:isWeekly withPeriodStart:cell.periodStart]];
         //all prefs are requested
         [cell setup];
 
