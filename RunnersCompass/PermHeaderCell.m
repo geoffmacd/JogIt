@@ -24,6 +24,12 @@
     
     
     //localized buttons in IB
+    /*
+    [weeklyBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    [monthlyBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    [predictBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+     */
     [predictBut setTitle:NSLocalizedString(@"PredictButtonTitle", @"button for prediction view") forState:UIControlStateNormal];
     [weeklyBut setTitle:NSLocalizedString(@"WeeklyButton", @"button for weekly") forState:UIControlStateNormal];
     [monthlyBut setTitle:NSLocalizedString(@"MonthlyButton", @"button for monthly") forState:UIControlStateNormal];

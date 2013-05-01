@@ -63,7 +63,8 @@
     RunEvent * caloriesRun;
 }
 
-@property (assign, nonatomic) BOOL runInProgressAsFarAsICanTell;
+@property BOOL runInProgressAsFarAsICanTell;
+@property NSInteger expandState;
 
 //delegate
 @property (weak, nonatomic) id <MenuViewControllerDelegate>delegate;
@@ -82,6 +83,8 @@
 - (IBAction)performanceNavPressed:(id)sender;
 - (IBAction)goalsNavPressed:(id)sender;
 - (IBAction)settingsNavPressed:(id)sender;
+- (IBAction)collapsePressed:(id)sender;
+- (IBAction)expandPressed:(id)sender;
 - (IBAction)garbageTapped:(id)sender;
 
 

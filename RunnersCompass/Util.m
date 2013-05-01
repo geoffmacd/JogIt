@@ -18,36 +18,103 @@
     //7 flat colors, return 1
     UIColor * flatColor;
     
-    switch(indexFromInstallation % 7)
+    switch(indexFromInstallation % 2)
     {
+            
+
+            
+        case 0:
+            //rgb(44, 62, 80) , midnight blue
+            flatColor = [UIColor colorWithRed:44.0/255.0 green:62.0/255.0 blue:80.0/255.0 alpha:1.0];
+            break;
+            
+        case 1:
+            //rgb(41, 128, 185), belize 
+            flatColor = [UIColor colorWithRed:41.0/255.0 green:128.0/255.0 blue:185.0/255.0 alpha:1.0];
+            break;
+            /*
+             case 0:
+             //rgb(52, 73, 94), wet asphalt
+             flatColor = [UIColor colorWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:1.0];
+             break;
+             
+             
+             case 1:
+             //rgb(52, 152, 219),pete river
+             flatColor = [UIColor colorWithRed:52.0/255.0 green:152.0/255.0 blue:219/255.0 alpha:1.0];
+             break;
+             
+             case 0:
+             //rgb(192, 57, 43), pomegranate
+             flatColor = [UIColor colorWithRed:192.0/255.0 green:57.0/255.0 blue:43.0/255.0 alpha:1.0];
+             break;
+             case 1:
+             //rgb(231, 76, 60) , alizarins
+             flatColor = [UIColor colorWithRed:231.0/255.0 green:76.0/255.0 blue:60.0/255.0 alpha:1.0];
+             break;
+            
+        case 1:
+            //rgb(39, 174, 96), nephritis
+            flatColor = [UIColor colorWithRed:39.0/255.0 green:174.0/255.0 blue:96.0/255.0 alpha:1.0];
+            break;
+        case 0:
+            //rgb(211, 84, 0), pumpkin
+            flatColor = [UIColor colorWithRed:211.0/255.0 green:84.0/255.0 blue:0.0/255.0 alpha:1.0];
+            break;
+            
+        case 3:
+            //rgb(243, 156, 18), orange
+            flatColor = [UIColor colorWithRed:243.0/255.0 green:156.0/255.0 blue:18.0/255.0 alpha:1.0];
+            break;
+            
+        case 2:
+            //rgb(22, 160, 133), green sea
+            flatColor = [UIColor colorWithRed:22.0/255.0 green:160.0/255.0 blue:133.0/255.0 alpha:1.0];
+            break;
         case 0:
             //rgb(192, 57, 43), pomegranate
-            flatColor = [UIColor colorWithRed:192/255 green:57/255 blue:43/255 alpha:1.0];
+            flatColor = [UIColor colorWithRed:192.0/255.0 green:57.0/255.0 blue:43.0/255.0 alpha:1.0];
             break;
         case 1:
+            //rgb(231, 76, 60) , alizarins
+            flatColor = [UIColor colorWithRed:231.0/255.0 green:76.0/255.0 blue:60.0/255.0 alpha:1.0];
+            break;
+        //case 1:
             //rgb(241, 196, 15), sunflower
-            flatColor = [UIColor colorWithRed:241/255 green:196/255 blue:15/255 alpha:1.0];
+            flatColor = [UIColor colorWithRed:241.0/255 green:196.0/255.0 blue:15.0/255.0 alpha:1.0];
+            break;
+        case 64:
+            //rgb(26, 188, 156), turqoise
+            flatColor = [UIColor colorWithRed:26.0/255.0 green:188.0/255.0 blue:156.0/255.0 alpha:1.0];
             break;
         case 2:
-            //rgb(26, 188, 156), turqoise
-            flatColor = [UIColor colorWithRed:26/255 green:188/255 blue:156/255 alpha:1.0];
+            //rrgb(46, 204, 113), emerald
+            flatColor = [UIColor colorWithRed:46.0/255.0 green:204.0/255.0 blue:113.0/255.0 alpha:1.0];
             break;
         case 3:
-            //rrgb(46, 204, 113), emerald
-            flatColor = [UIColor colorWithRed:46/255 green:204/255 blue:113/255 alpha:1.0];
+            //rgb(52, 152, 219),pete river
+            flatColor = [UIColor colorWithRed:52.0/255.0 green:152.0/255.0 blue:219/255.0 alpha:1.0];
             break;
         case 4:
-            //rgb(52, 152, 219),pete river
-            flatColor = [UIColor colorWithRed:52/255 green:152/255 blue:219/255 alpha:1.0];
+            //rgb(142, 68, 173), wisteria
+            flatColor = [UIColor colorWithRed:142.0/255.0 green:68.0/255.0 blue:173.0/255.0 alpha:1.0];
             break;
         case 5:
-            //rgb(142, 68, 173), wisteria
-            flatColor = [UIColor colorWithRed:142/255 green:68/255 blue:173/255 alpha:1.0];
-            break;
-        case 6:
             //rgb(44, 62, 80) , midnight blue
-            flatColor = [UIColor colorWithRed:44/255 green:62/255 blue:80/255 alpha:1.0];
+            flatColor = [UIColor colorWithRed:44.0/255.0 green:62.0/255.0 blue:80.0/255.0 alpha:1.0];
             break;
+             
+             case 5:
+             //rgb(211, 84, 0), pumpkin 
+             flatColor = [UIColor colorWithRed:211.0/255.0 green:84.0/255.0 blue:0.0/255.0 alpha:1.0];
+             break;
+             
+             case 5:
+             //rgb(243, 156, 18), orange
+             flatColor = [UIColor colorWithRed:243.0/255.0 green:156.0/255.0 blue:18.0/255.0 alpha:1.0];
+             break;
+             */
+            
     }
     
     return  flatColor;
@@ -119,7 +186,7 @@
 +(NSInteger)numPeriodsForRuns:(NSMutableArray*)runs withWeekly:(BOOL)weekly
 {
     NSInteger periods = 0;
-    NSDate *oldest = [NSDate date];
+    NSDate *oldest = [self dateForPeriod:0 withWeekly:weekly];
     NSDate *newest = [NSDate date];
     
     //get oldest run
@@ -155,6 +222,7 @@
         }
     }
     
+    NSLog(@"%d periods found for %d runs", periods, [runs count]);
     return periods;
 }
 
@@ -190,6 +258,7 @@
         }
     }
     
+    NSLog(@"%d runs returnned for period: %@", [periodRuns count], start);
     return periodRuns;
 }
 
@@ -266,14 +335,14 @@ NSDate *getFirstDayOfTheWeekFromDate(NSDate *givenDate)
     [components setWeekday:1]; // 1 == Sunday, 7 == Saturday
     [components setWeek:[components week]];
     
-    NSLog(@"Edge case date is %@ and beginning of that week is %@", edgeCaseDate , [calendar dateFromComponents:components]);
+    //NSLog(@"Edge case date is %@ and beginning of that week is %@", edgeCaseDate , [calendar dateFromComponents:components]);
     
     // Find Sunday for the given date
     components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:givenDate];
     [components setWeekday:1]; // 1 == Sunday, 7 == Saturday
     [components setWeek:[components week]];
     
-    NSLog(@"Original date is %@ and beginning of week is %@", givenDate , [calendar dateFromComponents:components]);
+    //NSLog(@"Original date is %@ and beginning of week is %@", givenDate , [calendar dateFromComponents:components]);
     
     return [calendar dateFromComponents:components];
 }

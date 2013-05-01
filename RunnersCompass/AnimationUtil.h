@@ -31,4 +31,6 @@
 
 +(void)shakeView:(UIView *)viewToShake;
 + (void)blinkAnimation:(NSString *)animationID finished:(BOOL)finished target:(UIView *)target;
+
+
 @end

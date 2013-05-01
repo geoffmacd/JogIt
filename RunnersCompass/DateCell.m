@@ -20,8 +20,9 @@
 @synthesize delegate;
 
 @synthesize periodStart;
-@synthesize runs;
+@synthesize runs,locked;
 @synthesize expanded;
+@synthesize indexForColor;
 @synthesize numRuns,totalDistance,avgPace;
 
 
@@ -44,30 +45,23 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     cells = [[NSMutableArray alloc] initWithCapacity:[runs count]];
     
     //set table size
-    CGFloat tableHeight = [runs count] * 48; //48 each
-    CGRect orgTableFrame = table.frame;
-    CGRect newFrame = orgTableFrame;
-    newFrame.size.height = tableHeight;
-    [table setFrame:newFrame];
-    [expandedView setFrame:newFrame];
-    
-    CGRect orgBounds = self.frame;
-    CGRect newBounds = orgBounds;
-    newBounds.size.height = tableHeight + 64;
-    [self setBounds:newBounds];
-     
-    
+    [self setCorrectFrames];
     
     //set UI style
     //set red colour
-    [headerView setBackgroundColor:[Util cellRedColour]];
+    
+    //set color according to index
+    [headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
+    //[self.layer setCornerRadius:15.0f];
+    //[self.layer setMasksToBounds:true];
+    //[headerView setBackgroundColor:[Util cellRedColour]];
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
     
     //set unexpanded
     [self setExpand:false withAnimation:false];
-    [expandedView setHidden:true];
+    //[expandedView setHidden:true];
     
     //setup gestures
     UITapGestureRecognizer * headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTap:)];
@@ -120,19 +114,35 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     NSString * header;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    TTTOrdinalNumberFormatter *ordinalNumberFormatter = [[TTTOrdinalNumberFormatter alloc] init];
+    [ordinalNumberFormatter setLocale:[NSLocale currentLocale]];
+    [ordinalNumberFormatter setGrammaticalGender:TTTOrdinalNumberFormatterMaleGender];
     if([[prefs weekly] boolValue])
     {
-        
+        NSDate *endPeriod = shiftDateByXdays(periodStart, 7);
         [formatter setDateFormat:@"MMMM"];
-        header = [formatter stringFromDate:periodStart];
+        header = [NSString stringWithFormat:@"%@ %@ - %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(endPeriod)]]];
     }
     else
     {
-        [formatter setDateFormat:@"WWWW"];
+        [formatter setDateFormat:@"MMMM"];
         header = [formatter stringFromDate:periodStart];
     }
     
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
     [headerLabel setText:header];
+    
+    if([runs count] == 0)
+    {
+        //disable expand and hide folder image
+        [folderImage setHidden:true];
+        locked = true;
+    }
+    else
+    {
+        [folderImage setHidden:false];
+        locked = false;
+    }
     
     //set values
     [paceValue setText:[RunEvent getPaceString:avgPace withMetric:isMetric showSpeed:showSpeed]];
@@ -193,6 +203,71 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
 }
 
+-(void)collapseAll:(NSInteger)state
+{
+    
+    if(state == 0)
+    {
+        if(expanded)
+            [self headerViewTap:nil];
+    }
+    
+    if(state == 1)
+    {
+        for(HierarchicalCell * cell in cells)
+        {
+            [cell collapseAll];
+        }
+    }
+    
+}
+
+-(void)expandAll:(NSInteger)state
+{
+    if(state == 1)
+    {
+        if(!expanded)
+            [self headerViewTap:nil];
+    }
+    
+    if(state == 2)
+    {
+        for(HierarchicalCell * cell in cells)
+        {
+            [cell expandAll];
+        }
+    }
+}
+
+-(void) setCorrectFrames
+{
+    
+    //set table size
+    CGFloat tableHeight = [runs count] * 48; //48 each,unexpanded
+    
+    for(HierarchicalCell * cell in cells)
+    {
+        if(cell.expanded)
+            tableHeight += 76;
+    }
+    
+    
+    CGRect newFrame = self.frame;
+    newFrame.size.height = tableHeight + 64;
+    [self setFrame:newFrame];
+    CGRect orgTableFrame = expandedView.frame;
+    newFrame = orgTableFrame;
+    newFrame.size.height = tableHeight;
+    [expandedView setFrame:newFrame];
+    //newFrame.origin.y = 64;
+    newFrame.origin.y = 0;
+    [table setFrame:newFrame];
+    
+    //contact menu to tell it size has changed
+    [delegate cellDidChangeHeight:self];
+
+}
+
 
 #pragma mark -
 #pragma mark Menu Table data source
@@ -221,6 +296,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [cells addObject:cell];
         [cell setDelegate:self];
+        [cell.headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
         [cell setAssociated:[runs objectAtIndex:row]];
         
         return cell;
@@ -258,7 +334,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 #pragma mark -
 #pragma mark HierarchicalCellDelegate
 
--(void) cellDidChangeHeight:(id) sender
+-(void)cellDidChangeHeight:(id) sender
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
@@ -270,20 +346,48 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [table reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
     
     
+    HierarchicalCell * senderCell = sender;
     
-    //set table size
-    CGFloat tableHeight = [runs count] * 48; //48 each
-    CGRect orgTableFrame = table.frame;
-    CGRect newFrame = orgTableFrame;
-    newFrame.size.height = tableHeight;
-    [table setFrame:newFrame];
-    [expandedView setFrame:newFrame];
+    BOOL didExpand = senderCell.expanded;
     
-    CGRect orgBounds = self.frame;
-    CGRect newBounds = orgBounds;
-    newBounds.size.height = tableHeight + 64;
-    [self setBounds:newBounds];
+    //animate date cell
+    CGRect expandFrame = expandedView.frame;
+    CGRect tableFrame = table.frame;
+    CGRect cellFrame = self.frame;
     
+    if(didExpand)
+    {
+        
+        cellFrame.size.height += 124;
+        expandFrame.size.height += 124;
+        tableFrame.size.height += 124;
+        
+        [UIView animateWithDuration:cellDropAnimationTime
+                         animations:^{
+                             [table setFrame:tableFrame];
+                             [expandedView setFrame:expandFrame];
+                             [self setFrame:cellFrame];
+                         }
+                         completion:^(BOOL finished) {
+                         }];
+    }
+    else
+    {
+        
+        cellFrame.size.height -= 124;
+        expandFrame.size.height -= 124;
+        tableFrame.size.height -= 124;
+        
+        [UIView animateWithDuration:cellDropAnimationTime
+                         animations:^{
+                             [table setFrame:tableFrame];
+                             [expandedView setFrame:expandFrame];
+                             [self setFrame:cellFrame];
+                         }
+                         completion:^(BOOL finished) {
+                         }];
+    }
+
     [delegate cellDidChangeHeight:self];
 }
 
@@ -302,17 +406,79 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     return [delegate getPrefs];
 }
 
+- (void)garbageTapped:(id)sender {
+    
+    //remove cell
+    UIButton * cellButtonTapped = sender;
+    NSUInteger indexOfCell = 10000;
+    
+    //must find owner of the button that this was tapped by
+    for(int i = 0; i < [cells count]; i++)
+    {
+        if([cellButtonTapped isDescendantOfView:[cells objectAtIndex:i]])
+        {
+            indexOfCell = i;
+            break;
+        }
+    }
+    
+    if(indexOfCell != 10000)
+    {
+        HierarchicalCell * cellToDelete = [cells objectAtIndex:indexOfCell];
+        
+        //gauranteed to be the correct row number since the array is reloaded along with the table
+        NSIndexPath * indexToDelete = [NSIndexPath indexPathForRow:indexOfCell inSection:0];
+        
+        NSArray *arrayToDeleteCells = [NSArray arrayWithObject:indexToDelete];
+        
+        RunEvent * runDeleting = [cellToDelete associatedRun];
+        
+        
+        //delete from db
+        RunRecord * recordToDelete = [RunRecord MR_findFirstByAttribute:@"date" withValue:runDeleting.date];
+        //remove both run and cell, run is most necessary
+        [runs removeObject:runDeleting];
+        if(recordToDelete)
+        {
+            [recordToDelete MR_deleteEntity];
+            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        }
+        [cells removeObjectAtIndex:indexOfCell];
+        
+        //commit and reload table here
+        [table deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
+        
+        //reload
+        [table reloadData];
+        
+        [delegate didDeleteRun];
+        
+        [self setCorrectFrames];
+        
+        [self getPeriodTotals];
+        [self reloadUnitLabels];
+        
+    }
+    else{
+        NSLog(@"Cant find cell to delete");
+    }
+}
+
 #pragma mark -
 #pragma mark IB actions
 
 
 - (IBAction)headerViewTap:(id)sender
 {
-    
-    [self setExpand:!expanded withAnimation:true];
+    if(locked)
+    {
+        //only allow to slide in when locked
+        if(expanded)
+            [self setExpand:!expanded withAnimation:true];
+    }
+    else
+        [self setExpand:!expanded withAnimation:true];
 }
-
-
 
 
 @end

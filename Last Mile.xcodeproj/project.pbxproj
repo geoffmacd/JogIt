@@ -75,6 +75,19 @@
 		6792EC5A170FDD5700EBAF2F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC58170FDD5700EBAF2F /* Model.xcdatamodeld */; };
 		6792EC6B17137F1A00EBAF2F /* ThumbnailRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC6A17137F1A00EBAF2F /* ThumbnailRecord.m */; };
 		6792EC7117137F8600EBAF2F /* UIImageToDataTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6792EC7017137F8500EBAF2F /* UIImageToDataTransformer.m */; };
+		6794266817307DDE006C2D40 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6794266617307DDE006C2D40 /* Montserrat-Bold.ttf */; };
+		6794266917307DDE006C2D40 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6794266717307DDE006C2D40 /* Montserrat-Regular.ttf */; };
+		6794266C173080C9006C2D40 /* collapse.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266A173080C8006C2D40 /* collapse.png */; };
+		6794266D173080C9006C2D40 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266B173080C8006C2D40 /* expand.png */; };
+		6794267017308EAD006C2D40 /* leftcorner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266E17308EAD006C2D40 /* leftcorner@2x.png */; };
+		6794267117308EAD006C2D40 /* rightcorner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266F17308EAD006C2D40 /* rightcorner@2x.png */; };
+		6794268117309AFA006C2D40 /* TTTAddressFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267417309AFA006C2D40 /* TTTAddressFormatter.m */; };
+		6794268217309AFA006C2D40 /* TTTArrayFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267617309AFA006C2D40 /* TTTArrayFormatter.m */; };
+		6794268317309AFA006C2D40 /* TTTLocationFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267817309AFA006C2D40 /* TTTLocationFormatter.m */; };
+		6794268417309AFA006C2D40 /* TTTOrdinalNumberFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267A17309AFA006C2D40 /* TTTOrdinalNumberFormatter.m */; };
+		6794268517309AFA006C2D40 /* TTTTimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267C17309AFA006C2D40 /* TTTTimeIntervalFormatter.m */; };
+		6794268617309AFA006C2D40 /* TTTUnitOfInformationFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267E17309AFA006C2D40 /* TTTUnitOfInformationFormatter.m */; };
+		6794268717309AFA006C2D40 /* TTTURLRequestFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794268017309AFA006C2D40 /* TTTURLRequestFormatter.m */; };
 		6795A8381714DFAB00C0CE52 /* GoalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795A8371714DFAB00C0CE52 /* GoalRecord.m */; };
 		6795A83D1714EE1700C0CE52 /* ThumbnailRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = 6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */; };
 		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
@@ -375,6 +388,26 @@
 		6792EC6A17137F1A00EBAF2F /* ThumbnailRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailRecord.m; sourceTree = "<group>"; };
 		6792EC6F17137F8500EBAF2F /* UIImageToDataTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageToDataTransformer.h; sourceTree = "<group>"; };
 		6792EC7017137F8500EBAF2F /* UIImageToDataTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageToDataTransformer.m; sourceTree = "<group>"; };
+		6794266617307DDE006C2D40 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		6794266717307DDE006C2D40 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		6794266A173080C8006C2D40 /* collapse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collapse.png; sourceTree = "<group>"; };
+		6794266B173080C8006C2D40 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
+		6794266E17308EAD006C2D40 /* leftcorner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftcorner@2x.png"; sourceTree = "<group>"; };
+		6794266F17308EAD006C2D40 /* rightcorner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightcorner@2x.png"; sourceTree = "<group>"; };
+		6794267317309AFA006C2D40 /* TTTAddressFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAddressFormatter.h; sourceTree = "<group>"; };
+		6794267417309AFA006C2D40 /* TTTAddressFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAddressFormatter.m; sourceTree = "<group>"; };
+		6794267517309AFA006C2D40 /* TTTArrayFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTArrayFormatter.h; sourceTree = "<group>"; };
+		6794267617309AFA006C2D40 /* TTTArrayFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTArrayFormatter.m; sourceTree = "<group>"; };
+		6794267717309AFA006C2D40 /* TTTLocationFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTLocationFormatter.h; sourceTree = "<group>"; };
+		6794267817309AFA006C2D40 /* TTTLocationFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTLocationFormatter.m; sourceTree = "<group>"; };
+		6794267917309AFA006C2D40 /* TTTOrdinalNumberFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTOrdinalNumberFormatter.h; sourceTree = "<group>"; };
+		6794267A17309AFA006C2D40 /* TTTOrdinalNumberFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTOrdinalNumberFormatter.m; sourceTree = "<group>"; };
+		6794267B17309AFA006C2D40 /* TTTTimeIntervalFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTTimeIntervalFormatter.h; sourceTree = "<group>"; };
+		6794267C17309AFA006C2D40 /* TTTTimeIntervalFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTTimeIntervalFormatter.m; sourceTree = "<group>"; };
+		6794267D17309AFA006C2D40 /* TTTUnitOfInformationFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTUnitOfInformationFormatter.h; sourceTree = "<group>"; };
+		6794267E17309AFA006C2D40 /* TTTUnitOfInformationFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTUnitOfInformationFormatter.m; sourceTree = "<group>"; };
+		6794267F17309AFA006C2D40 /* TTTURLRequestFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTURLRequestFormatter.h; sourceTree = "<group>"; };
+		6794268017309AFA006C2D40 /* TTTURLRequestFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTURLRequestFormatter.m; sourceTree = "<group>"; };
 		6795A8361714DFAB00C0CE52 /* GoalRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalRecord.h; sourceTree = "<group>"; };
 		6795A8371714DFAB00C0CE52 /* GoalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalRecord.m; sourceTree = "<group>"; };
 		6795A83B1714EE1600C0CE52 /* RunRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunRecord.h; sourceTree = "<group>"; };
@@ -684,6 +717,7 @@
 			isa = PBXGroup;
 			children = (
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
+				6794267217309AFA006C2D40 /* FormatterKit */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				67F7CB7F172395EF0008CEBF /* OpenEars */,
 				676CA81A16D70A5B00E4B121 /* Pickers */,
@@ -885,6 +919,27 @@
 			name = Localization;
 			sourceTree = "<group>";
 		};
+		6794267217309AFA006C2D40 /* FormatterKit */ = {
+			isa = PBXGroup;
+			children = (
+				6794267317309AFA006C2D40 /* TTTAddressFormatter.h */,
+				6794267417309AFA006C2D40 /* TTTAddressFormatter.m */,
+				6794267517309AFA006C2D40 /* TTTArrayFormatter.h */,
+				6794267617309AFA006C2D40 /* TTTArrayFormatter.m */,
+				6794267717309AFA006C2D40 /* TTTLocationFormatter.h */,
+				6794267817309AFA006C2D40 /* TTTLocationFormatter.m */,
+				6794267917309AFA006C2D40 /* TTTOrdinalNumberFormatter.h */,
+				6794267A17309AFA006C2D40 /* TTTOrdinalNumberFormatter.m */,
+				6794267B17309AFA006C2D40 /* TTTTimeIntervalFormatter.h */,
+				6794267C17309AFA006C2D40 /* TTTTimeIntervalFormatter.m */,
+				6794267D17309AFA006C2D40 /* TTTUnitOfInformationFormatter.h */,
+				6794267E17309AFA006C2D40 /* TTTUnitOfInformationFormatter.m */,
+				6794267F17309AFA006C2D40 /* TTTURLRequestFormatter.h */,
+				6794268017309AFA006C2D40 /* TTTURLRequestFormatter.m */,
+			);
+			path = FormatterKit;
+			sourceTree = "<group>";
+		};
 		67AA3E4F170FD652004181AC /* MagicalRecord */ = {
 			isa = PBXGroup;
 			children = (
@@ -989,6 +1044,8 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				6794266E17308EAD006C2D40 /* leftcorner@2x.png */,
+				6794266F17308EAD006C2D40 /* rightcorner@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -1002,8 +1059,10 @@
 				67B2580B16EFF8D900CF337E /* celldivision.png */,
 				6747F6311720D99D00B23C58 /* check.png */,
 				67EA66EB171A51BD00BA21FE /* check@2x.png */,
+				6794266A173080C8006C2D40 /* collapse.png */,
 				6747F6321720D99E00B23C58 /* compose.png */,
 				67E544A7171B65C600D5C9DF /* compose@2x.png */,
+				6794266B173080C8006C2D40 /* expand.png */,
 				67EA66D81718F72D00BA21FE /* formula.png */,
 				67EA66D91718F72D00BA21FE /* formula@2x.png */,
 				67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */,
@@ -1310,6 +1369,8 @@
 		67FC068616A111A100491C97 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
+				6794266617307DDE006C2D40 /* Montserrat-Bold.ttf */,
+				6794266717307DDE006C2D40 /* Montserrat-Regular.ttf */,
 				672D7121171F5AC50054E9EB /* FinishAnnotation.h */,
 				672D7122171F5AC50054E9EB /* FinishAnnotation.m */,
 				672D7123171F5AC50054E9EB /* StartAnnotation.h */,
@@ -1415,6 +1476,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6794266817307DDE006C2D40 /* Montserrat-Bold.ttf in Resources */,
+				6794266917307DDE006C2D40 /* Montserrat-Regular.ttf in Resources */,
 				67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */,
 				67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */,
 				672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */,
@@ -1537,6 +1600,10 @@
 				67FF65A51726368000A91E06 /* StandardNotify.xib in Resources */,
 				67FE524917288CC400F5E186 /* lightgraybutton@2x.png in Resources */,
 				67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */,
+				6794266C173080C9006C2D40 /* collapse.png in Resources */,
+				6794266D173080C9006C2D40 /* expand.png in Resources */,
+				6794267017308EAD006C2D40 /* leftcorner@2x.png in Resources */,
+				6794267117308EAD006C2D40 /* rightcorner@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,6 +1730,13 @@
 				67FF65881724D62900A91E06 /* UpgradeHeaderCell.m in Sources */,
 				67FF65A61726368000A91E06 /* StandardNotifyVC.m in Sources */,
 				67B8E98E172F398C00DAB97F /* DateCell.m in Sources */,
+				6794268117309AFA006C2D40 /* TTTAddressFormatter.m in Sources */,
+				6794268217309AFA006C2D40 /* TTTArrayFormatter.m in Sources */,
+				6794268317309AFA006C2D40 /* TTTLocationFormatter.m in Sources */,
+				6794268417309AFA006C2D40 /* TTTOrdinalNumberFormatter.m in Sources */,
+				6794268517309AFA006C2D40 /* TTTTimeIntervalFormatter.m in Sources */,
+				6794268617309AFA006C2D40 /* TTTUnitOfInformationFormatter.m in Sources */,
+				6794268717309AFA006C2D40 /* TTTURLRequestFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

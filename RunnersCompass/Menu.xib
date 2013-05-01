@@ -50,7 +50,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+							<bytes key="NSWhite">MAA</bytes>
 						</object>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -78,6 +78,32 @@
 						<int key="IBUIContentMode">1</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
+							<object class="IBUIBarButtonItem" id="357918852">
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">collapse.png</string>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="235024299"/>
+							</object>
+							<object class="IBUIBarButtonItem" id="173454155">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="235024299"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
+							<object class="IBUIBarButtonItem" id="666068906">
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">expand.png</string>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="235024299"/>
+							</object>
+							<object class="IBUIBarButtonItem" id="164391914">
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<reference key="IBUIToolbar" ref="235024299"/>
+								<int key="IBUISystemItemIdentifier">5</int>
+							</object>
 							<object class="IBUIBarButtonItem" id="141123873">
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
@@ -304,6 +330,22 @@
 					</object>
 					<int key="connectionID">98</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">collapsePressed:</string>
+						<reference key="source" ref="357918852"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">222</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">expandPressed:</string>
+						<reference key="source" ref="666068906"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">223</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -459,6 +501,10 @@
 							<reference ref="142804201"/>
 							<reference ref="749648190"/>
 							<reference ref="604243766"/>
+							<reference ref="173454155"/>
+							<reference ref="357918852"/>
+							<reference ref="666068906"/>
+							<reference ref="164391914"/>
 						</array>
 						<reference key="parent" ref="293323269"/>
 					</object>
@@ -714,6 +760,26 @@
 						<reference key="object" ref="985424494"/>
 						<reference key="parent" ref="293323269"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">211</int>
+						<reference key="object" ref="173454155"/>
+						<reference key="parent" ref="235024299"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">212</int>
+						<reference key="object" ref="357918852"/>
+						<reference key="parent" ref="235024299"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">219</int>
+						<reference key="object" ref="666068906"/>
+						<reference key="parent" ref="235024299"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">220</int>
+						<reference key="object" ref="164391914"/>
+						<reference key="parent" ref="235024299"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -749,6 +815,10 @@
 				<string key="195.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="196.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="207.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="211.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="212.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="219.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="220.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="40.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array class="NSMutableArray" key="40.IBViewMetadataConstraints">
 					<reference ref="985424494"/>
@@ -780,7 +850,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">210</int>
+			<int key="maxID">223</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -797,23 +867,24 @@
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="calorieTapped:">id</string>
-						<string key="distanceTapped:">id</string>
+						<string key="collapsePressed:">id</string>
+						<string key="expandPressed:">id</string>
 						<string key="garbageTapped:">id</string>
 						<string key="goalsNavPressed:">id</string>
-						<string key="justGoTapped:">id</string>
-						<string key="manualTapped:">id</string>
-						<string key="paceTapped:">id</string>
 						<string key="performanceNavPressed:">id</string>
 						<string key="settingsNavPressed:">id</string>
-						<string key="timeTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="calorieTapped:">
 							<string key="name">calorieTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="distanceTapped:">
-							<string key="name">distanceTapped:</string>
+						<object class="IBActionInfo" key="collapsePressed:">
+							<string key="name">collapsePressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="expandPressed:">
+							<string key="name">expandPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="garbageTapped:">
@@ -824,28 +895,12 @@
 							<string key="name">goalsNavPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="justGoTapped:">
-							<string key="name">justGoTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="manualTapped:">
-							<string key="name">manualTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="paceTapped:">
-							<string key="name">paceTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="performanceNavPressed:">
 							<string key="name">performanceNavPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="settingsNavPressed:">
 							<string key="name">settingsNavPressed:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="timeTapped:">
-							<string key="name">timeTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
@@ -908,6 +963,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="collapse.png">{25, 25}</string>
+			<string key="expand.png">{25, 25}</string>
 			<string key="goals.png">{25, 25}</string>
 			<string key="norunwoman@2x.png">{91, 120}</string>
 			<string key="settingsicon.png">{25, 25}</string>

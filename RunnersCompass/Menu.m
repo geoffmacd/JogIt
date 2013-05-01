@@ -16,6 +16,7 @@
 @synthesize settingsBut,performanceBut,goalsBut;
 @synthesize runningManImage,noRunsLabel;
 @synthesize noRunView;
+@synthesize expandState;
 @synthesize delegate;
 
 static NSString * dateCellID = @"DateCellPrototype";
@@ -70,6 +71,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     //allow menu table to scroll to top
     [MenuTable setScrollsToTop:true];
+    
+    expandState = 0;
 }
 
 
@@ -217,6 +220,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         //determine runs to allocate
         [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
         [cell setRuns:[Util runsForPeriod:runs withWeekly:isWeekly withPeriodStart:cell.periodStart]];
+        [cell setIndexForColor:row];
         //all prefs are requested
         [cell setup];
 
@@ -300,6 +304,16 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     return prefs;
     
+}
+
+-(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid
+{
+    [self.delegate preventUserFromSlidingRunInvalid:runToInvalid];
+}
+
+-(void)didDeleteRun
+{
+    [self analyzePRs];
 }
 
 #pragma mark -
@@ -465,12 +479,14 @@ static NSString * dateCellID = @"DateCellPrototype";
             [runs insertObject:finishedRun atIndex:indexToInsert];
         }
         
-        [MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+    
+        //[MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+    
         [cells removeAllObjects];
         [MenuTable reloadData];
         
         //scroll to top
-        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
+        //[MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
         
         BOOL alreadyPresentedNotification = false;
         
@@ -640,6 +656,32 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self presentViewController:vc animated:true completion:nil];
 }
 
+- (IBAction)collapsePressed:(id)sender
+{
+    expandState--;
+    if(expandState < 0)
+        expandState = 0;
+    
+    //collapse all cells
+    for(DateCell * dateCell in cells)
+    {
+        [dateCell collapseAll:expandState];
+    }
+}
+
+- (IBAction)expandPressed:(id)sender
+{
+    expandState++;
+    if(expandState > 2)
+        expandState = 2;
+    
+    //expand all cells
+    for(DateCell * dateCell in cells)
+    {
+        [dateCell expandAll:expandState];
+    }
+}
+
 #pragma mark -
 #pragma mark StartCell Actions
 
@@ -806,60 +848,6 @@ static NSString * dateCellID = @"DateCellPrototype";
 }
 
 
-- (IBAction)garbageTapped:(id)sender {
-    
-    //remove cell
-    UIButton * cellButtonTapped = sender;
-    NSUInteger indexOfCell = 10000;
-    
-    //must find owner of the button that this was tapped by
-    for(int i = 0; i < [cells count]; i++)
-    {
-        if([cellButtonTapped isDescendantOfView:[cells objectAtIndex:i]])
-        {
-            indexOfCell = i;
-            break;
-        }
-    }
-    
-    if(indexOfCell != 10000)
-    {
-        HierarchicalCell * cellToDelete = [cells objectAtIndex:indexOfCell];
-        
-        //gauranteed to be the correct row number since the array is reloaded along with the table
-        NSIndexPath * indexToDelete = [NSIndexPath indexPathForRow:indexOfCell inSection:0];
-        
-        NSArray *arrayToDeleteCells = [NSArray arrayWithObject:indexToDelete];
-        
-        RunEvent * runDeleting = [cellToDelete associatedRun];
-        
-        //if run is currently loaded in the logger replace with something else
-        [self.delegate preventUserFromSlidingRunInvalid:runDeleting];
-        
-        //delete from db
-        RunRecord * recordToDelete = [RunRecord MR_findFirstByAttribute:@"date" withValue:runDeleting.date];
-        //remove both run and cell, run is most necessary
-        [runs removeObject:runDeleting];
-        if(recordToDelete)
-        {
-            [recordToDelete MR_deleteEntity];
-            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-        }
-        [cells removeObjectAtIndex:indexOfCell];
-        
-        //commit and reload table here
-        [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
-        
-        //reload 
-        [MenuTable reloadData];
-        
-        //re-analyze PRs
-        [self analyzePRs];
 
-    }
-    else{
-        NSLog(@"Cant find cell to delete");
-    }
-}
 
 @end

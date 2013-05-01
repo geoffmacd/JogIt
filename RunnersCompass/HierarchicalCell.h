@@ -12,6 +12,7 @@
 #import "AnimationUtil.h"
 #import "UserPrefs.h"
 #import "Util.h"
+#import "TTTOrdinalNumberFormatter.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -22,10 +23,11 @@
 
 @protocol HierarchicalCellDelegate <NSObject>
 
--(void)cellDidChangeHeight:(id) sender;
+-(void)cellDidChangeHeight:(id)sender;
 -(void)selectedRun:(id)sender;
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;
+- (void)garbageTapped:(id)sender;
 
 @end
 
@@ -67,11 +69,14 @@ typedef enum
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
 -(void)reloadUnitLabels;
+-(void)collapseAll;
+-(void)expandAll;
 
 //IB actions
 - (IBAction)expandViewTap:(id)sender;
 - (IBAction)headerViewTap:(id)sender;
 - (IBAction)cellSwipedRight:(id)sender;
+- (IBAction)garbageTapped:(id)sender;
 
 
 @end

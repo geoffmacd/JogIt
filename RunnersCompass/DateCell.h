@@ -13,6 +13,7 @@
 #import "UserPrefs.h"
 #import "Util.h"
 #import "HierarchicalCell.h"
+#import "TTTOrdinalNumberFormatter.h"
 
 // This is defined in Math.h
 #define M_PI   3.14159265358979323846264338327950288   /* pi */
@@ -27,10 +28,12 @@
 -(void)selectedRun:(id)sender;
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;
+-(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid;
+-(void)didDeleteRun;
 
 @end
 
-@interface DateCell : UITableViewCell<HierarchicalCellDelegate>
+@interface DateCell : UITableViewCell <HierarchicalCellDelegate>
 {
     NSMutableArray * cells;
 }
@@ -56,22 +59,25 @@
 
 //instance variables
 @property BOOL expanded;//for whether currently expanded
+@property BOOL locked;
 @property NSDate * periodStart;
 
 @property NSMutableArray * runs;
 @property CGFloat totalDistance;
 @property CGFloat avgPace;
 @property NSInteger numRuns;
+@property NSInteger indexForColor;
 
 -(void)setup;
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
 -(void)reloadUnitLabels;
+-(void)collapseAll:(NSInteger)state;
+-(void)expandAll:(NSInteger)state;
 
 //IB actions
 - (IBAction)expandViewTap:(id)sender;
 - (IBAction)headerViewTap:(id)sender;
-
 
 @end
 

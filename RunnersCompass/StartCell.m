@@ -28,7 +28,9 @@
     expanded = false;
     [expandedView setHidden:true];
     
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     [headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
+    //[headerLabel setText:@""];
     
     //localized buttons in IB
     [timeBut setTitle:NSLocalizedString(@"TimeRunTargetButton", @"TimeRunTargetButton") forState:UIControlStateNormal];

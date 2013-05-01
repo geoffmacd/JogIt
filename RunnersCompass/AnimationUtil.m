@@ -74,7 +74,6 @@
                          }];
     }
 }
-
 +(void)shakeView:(UIView *)viewToShake
 {
     

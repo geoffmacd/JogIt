@@ -60,13 +60,13 @@
     
     //set UI style
     //set red colour
-    [headerView setBackgroundColor:[Util cellRedColour]];
+    //[headerView setBackgroundColor:[Util cellRedColour]];
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
     
     //set unexpanded
-    [self setExpand:false withAnimation:false];
+    //[self setExpand:false withAnimation:false];
     deletionMode = false;
     [garbageBut setHidden:true];
     [expandedView setHidden:true];
@@ -121,8 +121,9 @@
 -(void)reloadUnitLabels
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    //[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    //[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setDateFormat:@"EEEE"];
     
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];
@@ -133,7 +134,11 @@
     BOOL metricUnit = [prefs.metric integerValue];
     BOOL showSpeed = [prefs.showSpeed boolValue];
     
-    NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date]];
+    TTTOrdinalNumberFormatter *ordinalNumberFormatter = [[TTTOrdinalNumberFormatter alloc] init];
+    [ordinalNumberFormatter setLocale:[NSLocale currentLocale]];
+    [ordinalNumberFormatter setGrammaticalGender:TTTOrdinalNumberFormatterMaleGender];
+    
+    NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@, %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(associatedRun.date)]]];
     [headerLabel setText:header];
     
     //Set units for localization/units
@@ -199,6 +204,21 @@
     
 }
 
+
+-(void)collapseAll
+{
+    //then collapse this
+    if(expanded)
+        [self headerViewTap:nil];
+}
+
+-(void)expandAll
+{
+    //then expand this
+    if(!expanded)
+        [self headerViewTap:nil];
+}
+
 -(void)resetDeletionMode
 {
     //only if in deletion mode, get out of it
@@ -256,6 +276,12 @@
         [self resetDeletionMode];
     }
     
+}
+
+
+- (IBAction)garbageTapped:(id)sender
+{
+    [delegate garbageTapped:sender];
 }
 
 
