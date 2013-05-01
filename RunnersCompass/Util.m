@@ -264,18 +264,22 @@
 
 +(NSDate*)dateForPeriod:(NSInteger)index withWeekly:(BOOL)weekly
 {
-    NSDate * indexDate, *first = getFirstDayOfTheWeekFromDate([NSDate date]);
+    NSDate * indexDate, *first;
+    
     
     //must be exclusive because index 0 should return first
     if(weekly)
     {
+        
+        first = getFirstDayOfTheWeekFromDate([NSDate date]);
         indexDate = shiftDateByXweeks(first, -index);
     }
     else
     {
+        first = getMonthDateFromDate([NSDate date]);
         indexDate = shiftDateByXmonths(first, -index);
     }
-    
+
     return indexDate;
 }
 
@@ -317,6 +321,19 @@ int currentWeek(void) {
     NSDateComponents *dateComps = [calendar components:(NSWeekCalendarUnit) fromDate:[NSDate date]];
     
     return [dateComps week];
+}
+
+
+NSDate *getMonthDateFromDate(NSDate *givenDate)
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    
+    NSDateComponents *components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:givenDate];
+    [components setDay:1];
+    
+    
+    return [calendar dateFromComponents:components];
 }
 
 // Finds the date for the first day of the week

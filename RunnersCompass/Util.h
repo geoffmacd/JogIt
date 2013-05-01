@@ -47,7 +47,7 @@ int dayOfTheMonthFromDate(NSDate *aDate);
 // Integer of the current month
 int currentMonth(void);
 
-
+NSDate *getMonthDateFromDate(NSDate *givenDate);
 
 // Shifts the month of the date by the specified number of months. Adding a 2 months to December 15 1989, for example, will return February 15 1990
 NSDate *shiftDateByXmonths(NSDate *aDate, int shift);

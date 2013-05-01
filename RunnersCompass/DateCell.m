@@ -45,15 +45,12 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     cells = [[NSMutableArray alloc] initWithCapacity:[runs count]];
     
     //set table size
-    [self setCorrectFrames];
+    [self setCorrectFrames:false];
     
-    //set UI style
-    //set red colour
+    [table reloadData];
     
     //set color according to index
     [headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
-    //[self.layer setCornerRadius:15.0f];
-    //[self.layer setMasksToBounds:true];
     //[headerView setBackgroundColor:[Util cellRedColour]];
     
     //fix hack to ensure triangle is in correct orientation
@@ -239,7 +236,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
 }
 
--(void) setCorrectFrames
+-(void) setCorrectFrames:(BOOL)contactDel
 {
     
     //set table size
@@ -264,7 +261,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [table setFrame:newFrame];
     
     //contact menu to tell it size has changed
-    [delegate cellDidChangeHeight:self];
+    if(contactDel)
+        [delegate cellDidChangeHeight:self];
 
 }
 
@@ -432,7 +430,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         NSArray *arrayToDeleteCells = [NSArray arrayWithObject:indexToDelete];
         
         RunEvent * runDeleting = [cellToDelete associatedRun];
-        
+        NSTimeInterval runToDeleteDate = [runDeleting.date timeIntervalSinceReferenceDate];
         
         //delete from db
         RunRecord * recordToDelete = [RunRecord MR_findFirstByAttribute:@"date" withValue:runDeleting.date];
@@ -451,9 +449,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //reload
         [table reloadData];
         
-        [delegate didDeleteRun];
+        [delegate didDeleteRun:runToDeleteDate withCell:self];
         
-        [self setCorrectFrames];
+        [self setCorrectFrames:true];
         
         [self getPeriodTotals];
         [self reloadUnitLabels];

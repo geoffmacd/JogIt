@@ -29,7 +29,8 @@
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid;
--(void)didDeleteRun;
+
+-(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell;
 
 @end
 

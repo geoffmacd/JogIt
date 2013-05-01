@@ -73,6 +73,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [MenuTable setScrollsToTop:true];
     
     expandState = 0;
+    showFirstRun = false;
 }
 
 
@@ -223,6 +224,12 @@ static NSString * dateCellID = @"DateCellPrototype";
         [cell setIndexForColor:row];
         //all prefs are requested
         [cell setup];
+        
+        if(showFirstRun && row == 0)
+        {
+            [cell headerViewTap:nil];
+            showFirstRun = false;
+        }
 
         
         return cell;
@@ -269,6 +276,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
     
+    
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
     [MenuTable endUpdates];
@@ -311,8 +319,46 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self.delegate preventUserFromSlidingRunInvalid:runToInvalid];
 }
 
--(void)didDeleteRun
+-(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell
 {
+    DateCell * cell = datecell;
+    RunEvent * runToDelete;
+    
+    BOOL isWeekly = [[[self getPrefs] weekly] boolValue];
+    
+    for(RunEvent * oldRun in runs)
+    {
+        if([oldRun.date timeIntervalSinceReferenceDate] == runDate)
+        {
+            runToDelete = oldRun;
+        }
+    }
+    [runs removeObject:runToDelete];
+    
+    //see if the run was the only one left
+    if([[cell runs] count] == 0)
+    {
+        NSMutableArray *arrayToDeleteCells = [NSMutableArray new];
+        
+        NSInteger cellIndex = [cells indexOfObject:cell];
+        
+        NSInteger numPeriods = [Util numPeriodsForRuns:runs
+                                            withWeekly:isWeekly];
+        
+        while(numPeriods <= cellIndex)
+        {
+            NSIndexPath * indexToDelete = [NSIndexPath indexPathForRow:cellIndex inSection:0];
+            
+            [arrayToDeleteCells addObject:indexToDelete];
+            [cells removeLastObject];
+            
+            cellIndex--;
+        
+        }
+        if([arrayToDeleteCells count])
+            [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
+    }
+    
     [self analyzePRs];
 }
 
@@ -486,7 +532,10 @@ static NSString * dateCellID = @"DateCellPrototype";
         [MenuTable reloadData];
         
         //scroll to top
-        //[MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexToInsert inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
+        
+        //expand first thing to show where it went
+        showFirstRun = true;
         
         BOOL alreadyPresentedNotification = false;
         

@@ -57,6 +57,7 @@
     NSInteger numPeriods;
     StartCell * start;
     BOOL showingNoRuns;
+    BOOL showFirstRun;
     RunEvent * longestRun;
     RunEvent * fastestRun;
     RunEvent * furthestRun;
