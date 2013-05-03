@@ -168,7 +168,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     {
         [distanceValue setText:[NSString stringWithFormat:@"%.1f", displayDistance]];
         [distanceValue setHidden:false];
-        [distanceLabel setHidden:false];
+        //[distanceLabel setHidden:false];
         [distanceUnitLabel setHidden:false];
         
         [runsValue setText:[NSString stringWithFormat:@"%d", numRuns]];
@@ -180,7 +180,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //hide
         [distanceValue setHidden:true];
         [distanceUnitLabel setHidden:true];
-        [distanceLabel setHidden:true];
+        //[distanceLabel setHidden:true];
         [runsValue setHidden:true];
         [runsLabel setHidden:true];
     }
