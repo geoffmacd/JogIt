@@ -356,6 +356,10 @@
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
     
+    //test this every time
+    userPrefsRecord.purchased = [NSNumber numberWithBool:false];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    
     //find goal, if not there create goal with no goal
     goalRecord = [GoalRecord MR_findFirst];
     if(!goalRecord)

@@ -10,6 +10,29 @@
 
 @implementation AnimationUtil
 
++ (void)fadeView:(UIView *)view duration:(NSTimeInterval)duration toVisible:(BOOL)visible
+{
+    if(visible)
+    {
+        view.alpha = 0.0f;
+        [view setHidden:false];
+    }
+    else
+        view.alpha = 1.0f;
+    
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         if(!visible)
+                             view.alpha = 0.0f;
+                         else
+                             view.alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished) {
+                         if(!visible)
+                             [view setHidden:true];
+                     }];
+}
+
 + (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
               curve:(int)curve degrees:(CGFloat)degrees
 {

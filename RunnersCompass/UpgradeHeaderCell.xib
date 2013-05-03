@@ -42,7 +42,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{10, 7}, {300, 44}}</string>
 						<reference key="NSSuperview" ref="554188460"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="461771263"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="833323811">
 							<int key="NSColorSpace">3</int>
@@ -92,7 +91,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrame">{{10, 59}, {300, 44}}</string>
 						<reference key="NSSuperview" ref="554188460"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="296603957"/>
 						<reference key="IBUIBackgroundColor" ref="833323811"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -101,7 +99,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<reference key="IBUITintColor" ref="1022189084"/>
-						<string key="IBUINormalTitle">Upgrade - $2.99</string>
+						<string key="IBUINormalTitle">Upgrade App - $2.99</string>
 						<reference key="IBUIHighlightedTitleColor" ref="833323811"/>
 						<reference key="IBUINormalTitleColor" ref="147330094"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
@@ -118,8 +116,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{10, 107}, {300, 36}}</string>
 						<reference key="NSSuperview" ref="554188460"/>
-						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -150,7 +146,6 @@
 				</array>
 				<string key="NSFrameSize">{320, 150}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="843292753"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -268,146 +263,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">116</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">PerformanceVC</string>
-					<string key="superclassName">UITableViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="doneTapped:">id</string>
-						<string key="monthlyTapped:">id</string>
-						<string key="predictTapped:">id</string>
-						<string key="weeklyTapped:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="doneTapped:">
-							<string key="name">doneTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="monthlyTapped:">
-							<string key="name">monthlyTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="predictTapped:">
-							<string key="name">predictTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="weeklyTapped:">
-							<string key="name">weeklyTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">table</string>
-						<string key="NS.object.0">UITableView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">table</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">table</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PerformanceVC.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">PredictorVC</string>
-					<string key="superclassName">UITableViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="doneTapped:">id</string>
-						<string key="monthlyTapped:">id</string>
-						<string key="weeklyTapped:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="doneTapped:">
-							<string key="name">doneTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="monthlyTapped:">
-							<string key="name">monthlyTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="weeklyTapped:">
-							<string key="name">weeklyTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">table</string>
-						<string key="NS.object.0">UITableView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">table</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">table</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PredictorVC.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UpgradeHeaderCell</string>
-					<string key="superclassName">UIView</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="doneBut">UIButton</string>
-						<string key="upgradeBut">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="doneBut">
-							<string key="name">doneBut</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="upgradeBut">
-							<string key="name">upgradeBut</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UpgradeHeaderCell.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">UpgradeVC</string>
-					<string key="superclassName">UITableViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="doneTapped:">id</string>
-						<string key="upgradeTapped:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="doneTapped:">
-							<string key="name">doneTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="upgradeTapped:">
-							<string key="name">upgradeTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">table</string>
-						<string key="NS.object.0">UITableView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">table</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">table</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/UpgradeVC.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

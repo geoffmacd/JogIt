@@ -12,9 +12,9 @@
 
 @synthesize folderImage;
 @synthesize headerLabel;
-@synthesize expandedView;
+@synthesize expandedView,shareBut;
 @synthesize headerView;
-@synthesize distanceLabel,distanceValue,paceLabel,paceValue,runsLabel,runsValue;
+@synthesize distanceLabel,distanceValue,paceLabel,paceValue,runsLabel,runsValue,distanceUnitLabel;
 @synthesize table;
 
 @synthesize delegate;
@@ -44,6 +44,19 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //set unexpanded
     [expandedView setHidden:true];
+    
+    //set fonts
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
+    /*
+    [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [distanceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:9.0f]];
+    [distanceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [runsLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [runsValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+     */
+    
+    [distanceLabel setText:NSLocalizedString(@"DistanceMetric", @"")];
+    [runsLabel setText:NSLocalizedString(@"DateCellRuns", @"# runs in date cell")];
     
     
     //runs should be loaded by now
@@ -113,7 +126,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     if([[prefs weekly] boolValue])
     {
         NSDate *endPeriod = shiftDateByXdays(periodStart, 7);
-        [formatter setDateFormat:@"MMMM"];
+        //shorten months
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setDateFormat:@"MMM"];
         header = [NSString stringWithFormat:@"%@ %@ - %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(endPeriod)]]];
     }
     else
@@ -129,7 +144,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         header = [header stringByAppendingFormat:@" • %@", [formatter stringFromDate:periodStart]];
     }
     
-    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
     [headerLabel setText:header];
     
     
@@ -148,18 +162,38 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //set values
     [paceValue setText:[RunEvent getPaceString:avgPace withMetric:isMetric showSpeed:showSpeed]];
     CGFloat displayDistance = [RunEvent getDisplayDistance:totalDistance withMetric:isMetric];
-    [distanceValue setText:[NSString stringWithFormat:@"%.1f", displayDistance]];
-    [runsValue setText:[NSString stringWithFormat:@"%d", numRuns]];
+    //set units
+    [distanceUnitLabel setText:[prefs getDistanceUnit]];
+    if(numRuns)
+    {
+        [distanceValue setText:[NSString stringWithFormat:@"%.1f", displayDistance]];
+        [distanceValue setHidden:false];
+        [distanceLabel setHidden:false];
+        [distanceUnitLabel setHidden:false];
+        
+        [runsValue setText:[NSString stringWithFormat:@"%d", numRuns]];
+        [runsValue setHidden:false];
+        [runsLabel setHidden:false];
+    }
+    else
+    {
+        //hide
+        [distanceValue setHidden:true];
+        [distanceUnitLabel setHidden:true];
+        [distanceLabel setHidden:true];
+        [runsValue setHidden:true];
+        [runsLabel setHidden:true];
+    }
 }
 
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
     expanded = open;
-    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.00f;
     
     if(expanded){
-        
+        [AnimationUtil fadeView:shareBut duration:time toVisible:true];
         [AnimationUtil rotateImage:folderImage duration:time
                     curve:UIViewAnimationCurveEaseIn degrees:90];
         
@@ -171,6 +205,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
     }else{
         
+        [AnimationUtil fadeView:shareBut duration:time toVisible:false];
         [AnimationUtil rotateImage:folderImage duration:time
                              curve:UIViewAnimationCurveEaseIn degrees:0];
         
@@ -210,7 +245,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     if(state == 0)
     {
         if(expanded)
-            [self headerViewTap:nil];
+            [self setExpand:false withAnimation:false];
     }
     
     if(state == 1)
@@ -227,8 +262,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     if(state == 1)
     {
-        if(!expanded)
-            [self headerViewTap:nil];
+        if(!expanded && !locked)
+            [self setExpand:true withAnimation:false];
     }
     
     if(state == 2)
@@ -483,6 +518,38 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
     else
         [self setExpand:!expanded withAnimation:true];
+}
+
+-(IBAction)shareButTap:(id)sender
+{
+    [shareBut setShowsTouchWhenHighlighted:false];
+    [shareBut setHighlighted:false];
+    
+    //share the run
+    NSArray *activityItems;
+    
+    //log text message - I ran 47.2 km in May (2012)
+    CGFloat distanceToShare = totalDistance/([[[delegate getPrefs] metric] boolValue] ? 1000 : (1000/convertKMToMile));
+    NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@ %@", NSLocalizedString(@"LoggerShareMsg3", "message to be sent with sharing"), distanceToShare, [[delegate getPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg4", "message to be sent with sharing"),   headerLabel.text];
+    
+    //capture screenshot of entire month
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {
+        //Retina display
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
+    } else {
+        UIGraphicsBeginImageContext(self.bounds.size);
+    }
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *finalImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    if (finalImage)
+        activityItems = @[messageToSend,finalImage];
+    
+    //popup on menu
+    [delegate presentShareWithItems:activityItems];
+    
+    [shareBut setShowsTouchWhenHighlighted:true];
 }
 
 

@@ -28,6 +28,11 @@
 		672AA43816B5AE6700B7DEE6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */; };
 		672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */; };
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
+		672D137E17335E190060BAB6 /* whiteshare.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D137C17335E190060BAB6 /* whiteshare.png */; };
+		672D137F17335E190060BAB6 /* whiteshare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D137D17335E190060BAB6 /* whiteshare@2x.png */; };
+		672D13841733684C0060BAB6 /* progress-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D13821733684C0060BAB6 /* progress-bar-bg.png */; };
+		672D13851733684C0060BAB6 /* progress-bar-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D13831733684C0060BAB6 /* progress-bar-fill.png */; };
+		672D138717336DF60060BAB6 /* cloudyblue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D138617336DF60060BAB6 /* cloudyblue@2x.png */; };
 		672D711B171CDB410054E9EB /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D711A171CDB410054E9EB /* MBProgressHUD.m */; };
 		672D711F171E49850054E9EB /* GoalNotifyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 672D711D171E49830054E9EB /* GoalNotifyVC.m */; };
 		672D7120171E49850054E9EB /* GoalNotifyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672D711E171E49840054E9EB /* GoalNotifyVC.xib */; };
@@ -150,8 +155,6 @@
 		67B2580916EFF13B00CF337E /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B257ED16EFF13A00CF337E /* triangle.png */; };
 		67B2580A16EFF13B00CF337E /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B257EE16EFF13B00CF337E /* triangle@2x.png */; };
 		67B2580D16EFF8D900CF337E /* celldivision.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2580B16EFF8D900CF337E /* celldivision.png */; };
-		67B2581516EFFC2C00CF337E /* progress-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2581316EFFC2C00CF337E /* progress-bar-bg.png */; };
-		67B2581616EFFC2C00CF337E /* progress-bar-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2581416EFFC2C00CF337E /* progress-bar-fill.png */; };
 		67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582516F00B2E00CF337E /* whiteclock.png */; };
 		67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67B2582616F00B2E00CF337E /* whiteclock@2x.png */; };
 		67B2583016F0123100CF337E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67B2582F16F0123100CF337E /* MapKit.framework */; };
@@ -323,6 +326,11 @@
 		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
 		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
+		672D137C17335E190060BAB6 /* whiteshare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteshare.png; sourceTree = "<group>"; };
+		672D137D17335E190060BAB6 /* whiteshare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteshare@2x.png"; sourceTree = "<group>"; };
+		672D13821733684C0060BAB6 /* progress-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-bg.png"; sourceTree = "<group>"; };
+		672D13831733684C0060BAB6 /* progress-bar-fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-fill.png"; sourceTree = "<group>"; };
+		672D138617336DF60060BAB6 /* cloudyblue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cloudyblue@2x.png"; sourceTree = "<group>"; };
 		672D7119171CDB410054E9EB /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		672D711A171CDB410054E9EB /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		672D711C171E49830054E9EB /* GoalNotifyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoalNotifyVC.h; sourceTree = "<group>"; };
@@ -506,8 +514,6 @@
 		67B257ED16EFF13A00CF337E /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = triangle.png; sourceTree = "<group>"; };
 		67B257EE16EFF13B00CF337E /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "triangle@2x.png"; sourceTree = "<group>"; };
 		67B2580B16EFF8D900CF337E /* celldivision.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = celldivision.png; sourceTree = "<group>"; };
-		67B2581316EFFC2C00CF337E /* progress-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "progress-bar-bg.png"; path = "Graphics/progress-bar-bg.png"; sourceTree = SOURCE_ROOT; };
-		67B2581416EFFC2C00CF337E /* progress-bar-fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "progress-bar-fill.png"; path = "Graphics/progress-bar-fill.png"; sourceTree = SOURCE_ROOT; };
 		67B2582516F00B2E00CF337E /* whiteclock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteclock.png; sourceTree = "<group>"; };
 		67B2582616F00B2E00CF337E /* whiteclock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteclock@2x.png"; sourceTree = "<group>"; };
 		67B2582F16F0123100CF337E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -716,6 +722,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				672D138617336DF60060BAB6 /* cloudyblue@2x.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				6794267217309AFA006C2D40 /* FormatterKit */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
@@ -1044,6 +1051,10 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				672D13821733684C0060BAB6 /* progress-bar-bg.png */,
+				672D13831733684C0060BAB6 /* progress-bar-fill.png */,
+				672D137C17335E190060BAB6 /* whiteshare.png */,
+				672D137D17335E190060BAB6 /* whiteshare@2x.png */,
 				6794266E17308EAD006C2D40 /* leftcorner@2x.png */,
 				6794266F17308EAD006C2D40 /* rightcorner@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
@@ -1100,8 +1111,6 @@
 				67FF65931724E1BC00A91E06 /* predictionfull@2x.png */,
 				67FF65941724E1BC00A91E06 /* predictsample.png */,
 				67FF65951724E1BC00A91E06 /* predictsample@2x.png */,
-				67B2581316EFFC2C00CF337E /* progress-bar-bg.png */,
-				67B2581416EFFC2C00CF337E /* progress-bar-fill.png */,
 				67B257E316EFF13A00CF337E /* pull.png */,
 				67B257E416EFF13A00CF337E /* pull@2x.png */,
 				67B257E516EFF13A00CF337E /* record.png */,
@@ -1518,8 +1527,6 @@
 				67B2580916EFF13B00CF337E /* triangle.png in Resources */,
 				67B2580A16EFF13B00CF337E /* triangle@2x.png in Resources */,
 				67B2580D16EFF8D900CF337E /* celldivision.png in Resources */,
-				67B2581516EFFC2C00CF337E /* progress-bar-bg.png in Resources */,
-				67B2581616EFFC2C00CF337E /* progress-bar-fill.png in Resources */,
 				67B2582D16F00B2E00CF337E /* whiteclock.png in Resources */,
 				67B2582E16F00B2E00CF337E /* whiteclock@2x.png in Resources */,
 				674C90AC16F94EF10078DD8E /* Performance.xib in Resources */,
@@ -1604,6 +1611,11 @@
 				6794266D173080C9006C2D40 /* expand.png in Resources */,
 				6794267017308EAD006C2D40 /* leftcorner@2x.png in Resources */,
 				6794267117308EAD006C2D40 /* rightcorner@2x.png in Resources */,
+				672D137E17335E190060BAB6 /* whiteshare.png in Resources */,
+				672D137F17335E190060BAB6 /* whiteshare@2x.png in Resources */,
+				672D13841733684C0060BAB6 /* progress-bar-bg.png in Resources */,
+				672D13851733684C0060BAB6 /* progress-bar-fill.png in Resources */,
+				672D138717336DF60060BAB6 /* cloudyblue@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,7 +29,7 @@
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid;
-
+-(void)presentShareWithItems:(NSArray*)items;
 -(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell;
 
 @end
@@ -46,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *folderImage;
 @property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UIButton *shareBut;
+@property (weak, nonatomic) IBOutlet UILabel *distanceUnitLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceValue;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *paceValue;
@@ -79,6 +80,7 @@
 //IB actions
 - (IBAction)expandViewTap:(id)sender;
 - (IBAction)headerViewTap:(id)sender;
+-(IBAction)shareButTap:(id)sender;
 
 @end
 

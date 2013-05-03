@@ -21,6 +21,7 @@
 @property  FKFormModel *formModel;
 @property  UserPrefs *prefsToChange;
 @property  BOOL oldMetric;
+@property  BOOL oldGrouping;
 @property  BOOL oldShowSpeed;
 @property  BOOL restoreAvailable;
 

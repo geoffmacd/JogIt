@@ -59,8 +59,18 @@
     }
     
     //set UI style
-    //set red colour
-    //[headerView setBackgroundColor:[Util cellRedColour]];
+    //set fonts
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:16.0f]];
+    [manualEntryLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    /*
+    [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [paceUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [calUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [minUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+     */
+    
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
@@ -155,7 +165,7 @@
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
     expanded = open;
-    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.0f;
     
     if(expanded){
         
@@ -208,14 +218,15 @@
 {
     //then collapse this
     if(expanded)
-        [self headerViewTap:nil];
+        [self setExpand:false withAnimation:false];
 }
 
 -(void)expandAll
 {
     //then expand this
+    
     if(!expanded)
-        [self headerViewTap:nil];
+        [self setExpand:true withAnimation:false];
 }
 
 -(void)resetDeletionMode

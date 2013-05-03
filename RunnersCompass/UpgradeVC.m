@@ -221,6 +221,7 @@
                                     object:prefs];
                                }
                                      OnFail:^(SKPaymentTransaction* trans) {
+                                         
                                          //just dismiss user cancel
                                          [self dismissViewControllerAnimated:true completion:nil];
                                          

@@ -29,6 +29,11 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     [super viewDidLoad];
     
+    //will regroup runs
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(regroupRuns)
+                                                 name:@"groupingChangedNotification"
+                                               object:nil];
     if(!start)
     {
         StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
@@ -86,6 +91,15 @@ static NSString * dateCellID = @"DateCellPrototype";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
+}
+
+-(void)regroupRuns
+{
+    //delete all cells reload data
+    [cells removeAllObjects];
+    
+    [MenuTable reloadData];
+    
 }
 
 #pragma mark -
@@ -244,18 +258,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     }
     else{
         
-        NSInteger i = 0;
-        for(DateCell * oldCell in cells)
-        {
-            NSLog(@"save row %d for index %d...", oldCell.indexForColor, i);
-            i++;
-        }
-        
-        
-        
         DateCell * curCell = [cells objectAtIndex:row];
-        
-        NSLog(@"row %d requested - cache size: %d - returning %d", row, [cells count], curCell.indexForColor);
         
         return curCell;
     } 
@@ -377,6 +380,13 @@ static NSString * dateCellID = @"DateCellPrototype";
     }
     
     [self analyzePRs];
+}
+
+-(void)presentShareWithItems:(NSArray*)items
+{
+    
+    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 #pragma mark -

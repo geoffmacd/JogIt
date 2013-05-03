@@ -25,6 +25,8 @@
 
 
 @interface AnimationUtil : NSObject
+
++ (void)fadeView:(UIView *)view duration:(NSTimeInterval)duration toVisible:(BOOL)visible;
 +(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open;
 + (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
               curve:(int)curve degrees:(CGFloat)degrees;

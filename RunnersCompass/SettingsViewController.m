@@ -15,7 +15,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed,restoreAvailable;
+@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed,restoreAvailable,oldGrouping;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,6 +35,7 @@
     
     oldMetric = [prefsToChange.metric boolValue];
     oldShowSpeed = [prefsToChange.showSpeed boolValue];
+    oldGrouping = [prefsToChange.weekly boolValue];
     restoreAvailable = ![prefsToChange.purchased boolValue];
     
     [FKFormMapping mappingForClass:[UserPrefs class] block:^(FKFormMapping *formMapping) {
@@ -48,6 +49,13 @@
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadUnitsNotification"
                                                                 object:nil];
+            }
+            
+            //send out notification if units have changed
+            if(oldGrouping != [prefsToChange.weekly boolValue])
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"groupingChangedNotification"
+                                                                    object:nil];
             }
             
             //give nottification to update settings on app delegate
@@ -69,6 +77,12 @@
                             mapping.dateFormat = @"yyyy-MM-dd";
                         }];
          */
+        
+        
+        [formMapping sectionWithTitle:NSLocalizedString(@"SettingsOrganizeHeader", @"organize header in settings")  identifier:@"Organize"];
+        [formMapping mapAttribute:@"weekly" title:NSLocalizedString(@"SettingsWeekly", @"organize by week") type:FKFormAttributeMappingTypeBoolean];
+        
+        
         [formMapping sectionWithTitle:NSLocalizedString(@"SettingsMeasurementHeader", @"measurement header in settings")  identifier:@"Measurement"];
         
         [formMapping mapAttribute:@"weight" title:NSLocalizedString(@"SettingsWeight", @"weight in settings")  type:FKFormAttributeMappingTypeInteger];

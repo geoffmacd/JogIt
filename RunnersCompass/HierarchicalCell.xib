@@ -49,7 +49,7 @@
 									<object class="IBUIImageView" id="981189565">
 										<reference key="NSNextResponder" ref="941116554"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrame">{{20, 2}, {130, 120}}</string>
+										<string key="NSFrame">{{20, 1}, {130, 120}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="107612736"/>
@@ -199,7 +199,7 @@
 										<string key="NSFrame">{{248, 56}, {44, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="1035793873"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -220,7 +220,7 @@
 										<string key="NSFrame">{{248, 28}, {44, 15}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="583987211"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -749,7 +749,6 @@
 					<string key="className">MenuViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="calorieTapped:">id</string>
 						<string key="collapsePressed:">id</string>
 						<string key="expandPressed:">id</string>
 						<string key="garbageTapped:">id</string>
@@ -758,10 +757,6 @@
 						<string key="settingsNavPressed:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="calorieTapped:">
-							<string key="name">calorieTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="collapsePressed:">
 							<string key="name">collapsePressed:</string>
 							<string key="candidateClassName">id</string>

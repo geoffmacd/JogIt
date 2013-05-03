@@ -18,11 +18,21 @@
     //7 flat colors, return 1
     UIColor * flatColor;
     
+    //return [self redColour];
+    
     switch(indexFromInstallation % 2)
     {
             
-
+        case 0:
+            //rgb(44, 62, 80) , midnight blue
+            flatColor = [UIColor colorWithRed:44.0/255.0 green:62.0/255.0 blue:80.0/255.0 alpha:1.0];
+            break;
             
+        case 1:
+            //rgb(41, 128, 185), belize
+            flatColor = [UIColor colorWithRed:41.0/255.0 green:128.0/255.0 blue:185.0/255.0 alpha:1.0];
+            break;
+            /*
         case 0:
             //rgb(44, 62, 80) , midnight blue
             flatColor = [UIColor colorWithRed:44.0/255.0 green:62.0/255.0 blue:80.0/255.0 alpha:1.0];
@@ -32,7 +42,6 @@
             //rgb(41, 128, 185), belize 
             flatColor = [UIColor colorWithRed:41.0/255.0 green:128.0/255.0 blue:185.0/255.0 alpha:1.0];
             break;
-            /*
              case 0:
              //rgb(52, 73, 94), wet asphalt
              flatColor = [UIColor colorWithRed:52.0/255.0 green:73.0/255.0 blue:94.0/255.0 alpha:1.0];
@@ -142,6 +151,7 @@
 +(UIColor*) redColour
 {
     UIColor *redColor = [UIColor colorWithRed:192.0f/255 green:24.0f/255 blue:37.0f/255 alpha:1.0f];
+    redColor = [UIColor colorWithRed:44.0/255.0 green:62.0/255.0 blue:80.0/255.0 alpha:1.0];
     return redColor;
 }
 

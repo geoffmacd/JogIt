@@ -88,6 +88,39 @@
     [goalAchievedLabel setText:NSLocalizedString(@"goalAchievedLabel", "Label for target achieved")];
     
     
+    //set colors for fonts
+    [swipeToPauseLabel setTextColor:[UIColor whiteColor]];
+    [distanceTitle setTextColor:[Util redColour]];
+    [caloriesTitle setTextColor:[Util redColour]];
+    [avgPaceTitle setTextColor:[Util redColour]];
+    [timeTitle setTextColor:[Util redColour]];
+    [lastKmLabel setTextColor:[Util redColour]];
+    [currentPaceLabel setTextColor:[Util redColour]];
+    [currentPaceValue setTextColor:[Util redColour]];
+    /*
+    [currentPaceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [distanceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [currentPaceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [timeTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [caloriesTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [avgPaceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    */
+    
+    //set fonts
+    [swipeToPauseLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:22.0f]];
+    [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
+    [distanceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
+    [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    [caloriesLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    [currentPaceValue setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    [lastKmPace setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+    [oldpace1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+    [oldpace2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+    [oldpace3 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+    [oldpace1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+    
+    
     //init location manager
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -2216,8 +2249,17 @@
     NSLog(@"saving map thumbnail");
     waitingForMapToLoad = false;
     
+    //ensure legal is gone
+    [self removeLegalLabelForMap:iconMap];
+    
+    //ensure user location is hidden
+    [iconMap setShowsUserLocation:false];
+    
     //set the run to have the correct picture in table cell
     run.thumbnail = [Util imageWithView:iconMap withSize:iconMap.frame.size];
+    
+    //reset
+    [iconMap setShowsUserLocation:true];
     
     //stop loading indicator
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -3771,9 +3813,6 @@
     [iconMap removeOverlay:mapSelectionOverlay];
     mapSelectionOverlay = nil;
     
-    //ensure legal is gone
-    [self removeLegalLabelForMap:iconMap];
-    
     //zoom to show entire map
     [self zoomMapToEntireRun:iconMap];
     
@@ -4075,6 +4114,7 @@
     
     [ghostBut.layer setBorderWidth:0.0f];
     
+    /*
     //only if it is historical
     if(!run.live)
     {
@@ -4082,7 +4122,8 @@
         //ask user if they want to start a ghost run
         [self shouldUserGhostRun];
     }
-    /*
+     */
+    
     //only if purchased
     if([[[delegate curUserPrefs] purchased] boolValue])
     {
@@ -4102,7 +4143,6 @@
         
         [self presentViewController:vc animated:true completion:nil];
     }
-    */
 }
 
 - (IBAction)ghostButTouched:(id)sender {
