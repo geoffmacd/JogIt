@@ -40,8 +40,8 @@ static NSString * dateCellID = @"DateCellPrototype";
         start = cell;
     }
     
-    runs = [[NSMutableArray alloc] initWithCapacity:3];
-    cells = [[NSMutableArray alloc] initWithCapacity:3];// 3 months
+    runs = [NSMutableArray new];
+    cells = [NSMutableArray new];
 
     //find all runs
     NSArray * runRecords = [RunRecord MR_findAllSortedBy:@"date" ascending:false];
@@ -208,11 +208,18 @@ static NSString * dateCellID = @"DateCellPrototype";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSUInteger row = [indexPath row];
-    
 
     if(row >= [cells count]){
         
-        DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:dateCellID];
+        
+        //DateCell * cell = (DateCell * )[tableView dequeueReusableCellWithIdentifier:dateCellID];
+        DateCell * cell = [[[NSBundle mainBundle]loadNibNamed:@"DateCell"owner:self options:nil] objectAtIndex:0];
+        
+        for(DateCell *oldCell in cells)
+        {
+            NSAssert(oldCell != cell, @"stale cell");
+        }
+        
         
         BOOL isWeekly = [[[self getPrefs] weekly] boolValue];
         
@@ -230,14 +237,25 @@ static NSString * dateCellID = @"DateCellPrototype";
             [cell headerViewTap:nil];
             showFirstRun = false;
         }
-
+        
+        NSLog(@"row %d requested - cache size: %d - creating %d...", row, [cells count], cell.indexForColor);
         
         return cell;
     }
     else{
         
+        NSInteger i = 0;
+        for(DateCell * oldCell in cells)
+        {
+            NSLog(@"save row %d for index %d...", oldCell.indexForColor, i);
+            i++;
+        }
+        
+        
         
         DateCell * curCell = [cells objectAtIndex:row];
+        
+        NSLog(@"row %d requested - cache size: %d - returning %d", row, [cells count], curCell.indexForColor);
         
         return curCell;
     } 
@@ -275,7 +293,6 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
-    
     
     //animate with row belows move down nicely
     [MenuTable beginUpdates];
@@ -342,7 +359,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         
         NSInteger cellIndex = [cells indexOfObject:cell];
         
-        NSInteger numPeriods = [Util numPeriodsForRuns:runs
+        numPeriods = [Util numPeriodsForRuns:runs
                                             withWeekly:isWeekly];
         
         while(numPeriods <= cellIndex)
@@ -534,8 +551,9 @@ static NSString * dateCellID = @"DateCellPrototype";
         //scroll to top
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
         
-        //expand first thing to show where it went
-        showFirstRun = true;
+        //expand first thing to show where it went if it was not manual
+        if(finishedRun.eventType != EventTypeManual)
+            showFirstRun = true;
         
         BOOL alreadyPresentedNotification = false;
         

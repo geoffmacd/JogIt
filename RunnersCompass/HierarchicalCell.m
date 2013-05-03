@@ -66,7 +66,6 @@
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
     
     //set unexpanded
-    //[self setExpand:false withAnimation:false];
     deletionMode = false;
     [garbageBut setHidden:true];
     [expandedView setHidden:true];

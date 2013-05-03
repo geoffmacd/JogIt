@@ -30,11 +30,21 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 -(void)setup
 {
-    //all runs configured
-    
     [table registerClass:[HierarchicalCell class] forCellReuseIdentifier:cellID];
     UINib * nib = [UINib nibWithNibName:@"HierarchicalCell" bundle:[NSBundle mainBundle]] ;
     [table registerNib:nib forCellReuseIdentifier:cellID];
+    
+    //allow menu table to scroll to top
+    [table setScrollsToTop:false];
+    
+    cells = [NSMutableArray new];
+    
+    //set table size
+    [self setCorrectFrames:false];
+    
+    //set unexpanded
+    [expandedView setHidden:true];
+    
     
     //runs should be loaded by now
     //no effect if 0 runs
@@ -42,25 +52,13 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     [self reloadUnitLabels];
     
-    cells = [[NSMutableArray alloc] initWithCapacity:[runs count]];
-    
-    //set table size
-    [self setCorrectFrames:false];
-    
-    [table reloadData];
-    
     //set color according to index
     [headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
-    //[headerView setBackgroundColor:[Util cellRedColour]];
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
     
-    //set unexpanded
-    [self setExpand:false withAnimation:false];
-    //[expandedView setHidden:true];
-    
-    //setup gestures
+    //setup gesture
     UITapGestureRecognizer * headerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerViewTap:)];
     [headerTap setNumberOfTapsRequired:1];
     [headerTap setCancelsTouchesInView:true];
@@ -73,8 +71,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
                                              selector:@selector(reloadUnitLabels)
                                                  name:@"reloadUnitsNotification"
                                                object:nil];
-    
-    
 }
      
      
@@ -126,8 +122,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         header = [formatter stringFromDate:periodStart];
     }
     
+    //append year if not current year
+    if(yearForPeriod(periodStart) != yearForPeriod([NSDate date]))
+    {
+        [formatter setDateFormat:@"YYYY"];
+        header = [header stringByAppendingFormat:@" • %@", [formatter stringFromDate:periodStart]];
+    }
+    
     [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
     [headerLabel setText:header];
+    
     
     if([runs count] == 0)
     {
@@ -256,7 +260,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     newFrame = orgTableFrame;
     newFrame.size.height = tableHeight;
     [expandedView setFrame:newFrame];
-    //newFrame.origin.y = 64;
+    //table at top bounds of expandedView
     newFrame.origin.y = 0;
     [table setFrame:newFrame];
     
@@ -294,7 +298,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [cells addObject:cell];
         [cell setDelegate:self];
+        //configure color to match
         [cell.headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
+        [cell.expandedView setBackgroundColor:[Util flatColorForCell:indexForColor]];
         [cell setAssociated:[runs objectAtIndex:row]];
         
         return cell;
@@ -346,9 +352,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     HierarchicalCell * senderCell = sender;
     
+
     BOOL didExpand = senderCell.expanded;
     
-    //animate date cell
+    //we need to animate the additional height of the date cell 
     CGRect expandFrame = expandedView.frame;
     CGRect tableFrame = table.frame;
     CGRect cellFrame = self.frame;

@@ -308,7 +308,7 @@ int yearForPeriod(NSDate * date){
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     calendar.timeZone = [NSTimeZone defaultTimeZone];
     
-    NSDateComponents *dateComps = [calendar components:(NSYearCalendarUnit) fromDate:[NSDate date]];
+    NSDateComponents *dateComps = [calendar components:(NSYearCalendarUnit) fromDate:date];
     
     return [dateComps year];
 }

@@ -44,11 +44,11 @@
         
         [expandedView setHidden:!open];
         
-        expandedView.alpha = 0.5;
+        //expandedView.alpha = 0.5;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
-                             expandedView.alpha = 1.0;
+                             //expandedView.alpha = 1.0;
                              [expandedView setFrame:correct];
                          }
                          completion:^(BOOL finished) {
@@ -61,11 +61,11 @@
         rect.origin.y = 0;
         rect.size.height = 48;
         
-        expandedView.alpha = 1.0;
+        //expandedView.alpha = 1.0;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
-                             expandedView.alpha = 0.5;
+                             //expandedView.alpha = 0.5;
                              [expandedView setFrame:rect];
                          }
                          completion:^(BOOL finished) {

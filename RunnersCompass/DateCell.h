@@ -41,10 +41,10 @@
 
 
 //UI connections
-@property (strong, nonatomic) IBOutlet UIView *expandedView;
-@property (strong, nonatomic) IBOutlet UIView *headerView;
-@property (strong, nonatomic) IBOutlet UIImageView *folderImage;
-@property (strong, nonatomic) IBOutlet UILabel *headerLabel;
+@property (weak, nonatomic) IBOutlet UIView *expandedView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIImageView *folderImage;
+@property (weak, nonatomic) IBOutlet UILabel *headerLabel;
 @property (weak, nonatomic) IBOutlet UIButton *shareBut;
 @property (weak, nonatomic) IBOutlet UILabel *distanceValue;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
@@ -67,7 +67,7 @@
 @property CGFloat totalDistance;
 @property CGFloat avgPace;
 @property NSInteger numRuns;
-@property NSInteger indexForColor;
+@property NSUInteger indexForColor;
 
 -(void)setup;
 -(CGFloat)getHeightRequired;
