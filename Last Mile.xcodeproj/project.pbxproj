@@ -84,8 +84,6 @@
 		6794266917307DDE006C2D40 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6794266717307DDE006C2D40 /* Montserrat-Regular.ttf */; };
 		6794266C173080C9006C2D40 /* collapse.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266A173080C8006C2D40 /* collapse.png */; };
 		6794266D173080C9006C2D40 /* expand.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266B173080C8006C2D40 /* expand.png */; };
-		6794267017308EAD006C2D40 /* leftcorner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266E17308EAD006C2D40 /* leftcorner@2x.png */; };
-		6794267117308EAD006C2D40 /* rightcorner@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6794266F17308EAD006C2D40 /* rightcorner@2x.png */; };
 		6794268117309AFA006C2D40 /* TTTAddressFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267417309AFA006C2D40 /* TTTAddressFormatter.m */; };
 		6794268217309AFA006C2D40 /* TTTArrayFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267617309AFA006C2D40 /* TTTArrayFormatter.m */; };
 		6794268317309AFA006C2D40 /* TTTLocationFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794267817309AFA006C2D40 /* TTTLocationFormatter.m */; };
@@ -400,8 +398,6 @@
 		6794266717307DDE006C2D40 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		6794266A173080C8006C2D40 /* collapse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collapse.png; sourceTree = "<group>"; };
 		6794266B173080C8006C2D40 /* expand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expand.png; sourceTree = "<group>"; };
-		6794266E17308EAD006C2D40 /* leftcorner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "leftcorner@2x.png"; sourceTree = "<group>"; };
-		6794266F17308EAD006C2D40 /* rightcorner@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rightcorner@2x.png"; sourceTree = "<group>"; };
 		6794267317309AFA006C2D40 /* TTTAddressFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAddressFormatter.h; sourceTree = "<group>"; };
 		6794267417309AFA006C2D40 /* TTTAddressFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAddressFormatter.m; sourceTree = "<group>"; };
 		6794267517309AFA006C2D40 /* TTTArrayFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTArrayFormatter.h; sourceTree = "<group>"; };
@@ -1051,12 +1047,6 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				672D13821733684C0060BAB6 /* progress-bar-bg.png */,
-				672D13831733684C0060BAB6 /* progress-bar-fill.png */,
-				672D137C17335E190060BAB6 /* whiteshare.png */,
-				672D137D17335E190060BAB6 /* whiteshare@2x.png */,
-				6794266E17308EAD006C2D40 /* leftcorner@2x.png */,
-				6794266F17308EAD006C2D40 /* rightcorner@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67B257D516EFF13A00CF337E /* background.png */,
@@ -1111,6 +1101,8 @@
 				67FF65931724E1BC00A91E06 /* predictionfull@2x.png */,
 				67FF65941724E1BC00A91E06 /* predictsample.png */,
 				67FF65951724E1BC00A91E06 /* predictsample@2x.png */,
+				672D13821733684C0060BAB6 /* progress-bar-bg.png */,
+				672D13831733684C0060BAB6 /* progress-bar-fill.png */,
 				67B257E316EFF13A00CF337E /* pull.png */,
 				67B257E416EFF13A00CF337E /* pull@2x.png */,
 				67B257E516EFF13A00CF337E /* record.png */,
@@ -1137,6 +1129,8 @@
 				6747F628171F92FF00B23C58 /* whiteodometer@2x.png */,
 				67F6D52416FA8D6800790A22 /* whitepause.png */,
 				67F6D52516FA8D6800790A22 /* whitepause@2x.png */,
+				672D137C17335E190060BAB6 /* whiteshare.png */,
+				672D137D17335E190060BAB6 /* whiteshare@2x.png */,
 				6747F63B1720D99E00B23C58 /* whitespeed.png */,
 				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
 			);
@@ -1609,8 +1603,6 @@
 				67B8E98F172F398C00DAB97F /* DateCell.xib in Resources */,
 				6794266C173080C9006C2D40 /* collapse.png in Resources */,
 				6794266D173080C9006C2D40 /* expand.png in Resources */,
-				6794267017308EAD006C2D40 /* leftcorner@2x.png in Resources */,
-				6794267117308EAD006C2D40 /* rightcorner@2x.png in Resources */,
 				672D137E17335E190060BAB6 /* whiteshare.png in Resources */,
 				672D137F17335E190060BAB6 /* whiteshare@2x.png in Resources */,
 				672D13841733684C0060BAB6 /* progress-bar-bg.png in Resources */,
