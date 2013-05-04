@@ -132,7 +132,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     //[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     //[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setDateFormat:@"EEEE"];
+    [dateFormatter setDateFormat:@"EEE"];
     
     NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     [dateFormatter setLocale:usLocale];

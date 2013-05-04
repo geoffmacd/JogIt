@@ -166,6 +166,7 @@
 										<string key="NSFrame">{{248, 89}, {59, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -256,7 +257,7 @@
 									<object class="IBUILabel" id="18694754">
 										<reference key="NSNextResponder" ref="245450979"/>
 										<int key="NSvFlags">290</int>
-										<string key="NSFrame">{{25, 11}, {270, 21}}</string>
+										<string key="NSFrame">{{87, 11}, {200, 21}}</string>
 										<reference key="NSSuperview" ref="245450979"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="230533418"/>
@@ -273,7 +274,6 @@
 										</object>
 										<nil key="IBUIHighlightedColor"/>
 										<int key="IBUIBaselineAdjustment">0</int>
-										<int key="IBUITextAlignment">1</int>
 										<reference key="IBUIFontDescription" ref="885186289"/>
 										<reference key="IBUIFont" ref="393128828"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>

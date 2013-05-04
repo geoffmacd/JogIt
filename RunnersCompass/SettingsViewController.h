@@ -19,6 +19,7 @@
 
 @interface SettingsViewController : UITableViewController
 
+@property (strong, nonatomic) IBOutlet UITableView *table;
 
 @property  FKFormModel *formModel;
 @property  UserPrefs *prefsToChange;

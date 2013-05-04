@@ -14,7 +14,7 @@
 
 @implementation SettingsViewController
 
-@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed,restoreAvailable,oldGrouping;
+@synthesize formModel,prefsToChange,oldMetric,oldShowSpeed,restoreAvailable,oldGrouping,table;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -130,7 +130,10 @@
                              [vc.titleLabel setText:NSLocalizedString(@"thankyou","")];
                              [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
                              
-
+                             CGRect phoneRect = self.view.frame;
+                             phoneRect.origin.y = 0;
+                             [table scrollRectToVisible:phoneRect animated:FALSE];
+                             
                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
 
                              
@@ -144,7 +147,12 @@
                              [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
                              [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
                              
+                             CGRect phoneRect = self.view.frame;
+                             phoneRect.origin.y = 0;
+                             [table scrollRectToVisible:phoneRect animated:FALSE];
+                             
                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             
                              
                              /*
                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingsRestoreFailTitle", @"restore fail title")
