@@ -82,6 +82,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [MenuTable setScrollsToTop:true];
     
     expandState = 0;
+    expandedCount = 0;
     showFirstRun = false;
 }
 
@@ -269,6 +270,8 @@ static NSString * dateCellID = @"DateCellPrototype";
         [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
         [cell setRuns:[Util runsForPeriod:runs withWeekly:isWeekly withPeriodStart:cell.periodStart]];
         [cell setIndexForColor:row];
+        if(expandedCount)
+            cell.headerLabel.textColor = [UIColor lightGrayColor];
         //all prefs are requested
         [cell setup];
         
@@ -414,6 +417,46 @@ static NSString * dateCellID = @"DateCellPrototype";
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
     [self presentViewController:activityController animated:YES completion:nil];
 }
+
+-(void)dateCellDidExpand:(BOOL)expand
+{
+    if(expand)
+    {
+        if(expandedCount == 0)
+        {
+            //fade all months grey
+            for(DateCell * oldCell in cells)
+            {
+                //[AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor lightGrayColor]];
+            }
+            
+            expandState = 1;
+        }
+        
+        expandedCount++;
+    }
+    else
+    {
+        expandedCount--;
+        if(expandedCount < 0)
+            expandedCount = 0;
+        
+        if(expandedCount == 0)
+        {
+            //make them all white
+            /*
+            for(DateCell * oldCell in cells)
+            {
+                if(oldCell.headerLabel.textColor == [UIColor lightGrayColor])
+                    [AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor whiteColor]];
+            }
+            */
+            expandState = 0;
+        }
+    }
+    
+}
+
 
 #pragma mark -
 #pragma mark Start Cell Delegate

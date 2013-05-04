@@ -31,6 +31,7 @@
 -(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid;
 -(void)presentShareWithItems:(NSArray*)items;
 -(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell;
+-(void)dateCellDidExpand:(BOOL)expand;
 
 @end
 

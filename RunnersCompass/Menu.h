@@ -64,6 +64,7 @@
     RunEvent * furthestRun;
     RunEvent * caloriesRun;
     BOOL runPausedAsFarAsICanTell;
+    NSInteger expandedCount;
 }
 
 @property BOOL runInProgressAsFarAsICanTell;

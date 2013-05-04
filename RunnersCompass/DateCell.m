@@ -242,7 +242,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
     
     if(delegate)
+    {
         [delegate cellDidChangeHeight:self];
+        [delegate dateCellDidExpand:expanded];
+    }
     
 }
 

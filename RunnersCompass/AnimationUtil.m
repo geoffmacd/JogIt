@@ -10,6 +10,13 @@
 
 @implementation AnimationUtil
 
++(void)labelColorFade:(UILabel*)label withColor:(UIColor*)color
+{
+    [UIView transitionWithView:label duration:finishButtonFade options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [label setTextColor:color];
+    } completion:nil];
+}
+
 + (void)fadeView:(UIView *)view duration:(NSTimeInterval)duration toVisible:(BOOL)visible
 {
     if(visible)
