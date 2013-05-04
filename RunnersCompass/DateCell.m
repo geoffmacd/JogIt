@@ -161,11 +161,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             [addRunLabel setHidden:false];
         }
         else
+        {
             [addRunLabel setHidden:true];
-            
+            headerLabel.textColor = [UIColor lightGrayColor];
+        }
+        
     }
     else
     {
+        headerLabel.textColor = [UIColor whiteColor];
         [addRunLabel setHidden:true];
         [folderImage setHidden:false];
         locked = false;

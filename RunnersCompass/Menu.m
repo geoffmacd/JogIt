@@ -270,8 +270,6 @@ static NSString * dateCellID = @"DateCellPrototype";
         [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
         [cell setRuns:[Util runsForPeriod:runs withWeekly:isWeekly withPeriodStart:cell.periodStart]];
         [cell setIndexForColor:row];
-        if(expandedCount)
-            cell.headerLabel.textColor = [UIColor lightGrayColor];
         //all prefs are requested
         [cell setup];
         
