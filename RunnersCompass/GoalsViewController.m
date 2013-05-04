@@ -33,6 +33,12 @@ static NSString * goalCellID = @"GoalCellPrototype";
         
         drilledDown = false;
     }
+    
+    if(curGoal.type == GoalTypeNoGoal)
+    {
+        //size table to nothing to prevent scrolling
+        [table setContentSize:CGSizeMake(self.view.frame.size.width, 0)];
+    }
 }
 
 - (void)viewDidLoad
