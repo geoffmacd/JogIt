@@ -18,7 +18,7 @@
 #import "FKLabelField.h"
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////g//////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation FKLabelField
@@ -31,9 +31,9 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
+        self.textLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:15.0f];
         self.detailTextLabel.textColor = [UIColor whiteColor];
-        self.detailTextLabel.font = [UIFont fontWithName:@"Georgia" size:16.0];
+        self.detailTextLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:13.0f];
     }
     return self;
 }

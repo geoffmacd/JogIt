@@ -446,7 +446,7 @@
 						<string key="NSFrame">{{6, 62}, {172, 37}}</string>
 						<reference key="NSSuperview" ref="572499848"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="922388729"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
@@ -1092,7 +1092,7 @@
 						<reference key="NSNextResponder" ref="631474008"/>
 						<int key="NSvFlags">1312</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 194}, {280, 21}}</string>
+						<string key="NSFrame">{{20, 189}, {280, 21}}</string>
 						<reference key="NSSuperview" ref="631474008"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="810036111"/>
@@ -2163,7 +2163,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1006</int>
+			<int key="maxID">1009</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2297,6 +2297,7 @@
 						<string key="slideView">UIView</string>
 						<string key="statusBut">UIButton</string>
 						<string key="swipeToPauseLabel">UILabel</string>
+						<string key="testStepLabel">UILabel</string>
 						<string key="timeLabel">UILabel</string>
 						<string key="timeTitle">UILabel</string>
 						<string key="titleView">UIView</string>
@@ -2456,6 +2457,10 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="swipeToPauseLabel">
 							<string key="name">swipeToPauseLabel</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="testStepLabel">
+							<string key="name">testStepLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="timeLabel">

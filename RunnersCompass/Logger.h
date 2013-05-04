@@ -60,12 +60,13 @@
 #define mapMinSpanForRun 0.005//degress
 #define mapSpanMultipler 1.04// 4 percent
 #define lowSignalPeriod 3//s for animation
-#define mapPathWidth 15.0//pixels
-#define mapIconPathWidth 10.0//pixels
+#define mapPathWidth 12.0//pixels
+#define mapIconPathWidth 8.0//pixels
 #define mapPathSize 10 //positions before new line
 #define paceSelectionOverrideTime 4 //s
 #define delayGoalAssessment 3 //s
 #define delaySpeech 0.1 //s
+#define AccelUpdateFreq    30.0 //hz
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -75,7 +76,9 @@ typedef enum {
     SpeechIntro,
     SpeechMinute,
     SpeechKM,
-    SpeechMile
+    SpeechMile,
+    SpeechAutoPause,
+    SpeechResume
 } AudioCueType;
 
 
@@ -95,7 +98,7 @@ typedef enum {
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate,UIAccelerometerDelegate>
 {
     //for ghost run
     UIActionSheet *sheet;
@@ -195,6 +198,13 @@ typedef enum {
 	FliteController *fliteController; // The controller for Flite (speech).
     NSMutableArray * speechQueue;
     BOOL musicWasPlaying;
+    
+    //accelerometer
+    float px;
+    float py;
+    float pz;
+    BOOL isChange;
+    BOOL isSleeping;
 }
 
 

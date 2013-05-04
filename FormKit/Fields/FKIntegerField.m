@@ -25,6 +25,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
+        self.textLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:15.0f];
     }
     return self;
 }

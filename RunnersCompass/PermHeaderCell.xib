@@ -102,7 +102,7 @@
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Weekly</string>
-						<reference key="IBUIHighlightedTitleColor" ref="609808976"/>
+						<reference key="IBUIHighlightedTitleColor" ref="147330094"/>
 						<reference key="IBUINormalTitleColor" ref="147330094"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>
@@ -128,7 +128,7 @@
 						<bool key="IBUIAdjustsImageWhenHighlighted">NO</bool>
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<string key="IBUINormalTitle">Monthly</string>
-						<reference key="IBUIHighlightedTitleColor" ref="609808976"/>
+						<reference key="IBUIHighlightedTitleColor" ref="147330094"/>
 						<reference key="IBUINormalTitleColor" ref="147330094"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
 							<int key="NSColorSpace">3</int>

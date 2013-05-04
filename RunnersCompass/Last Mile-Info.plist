@@ -41,6 +41,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Bold.ttf</string>
+		<string>Montserrat-Regular.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

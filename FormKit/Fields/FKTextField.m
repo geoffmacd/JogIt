@@ -33,7 +33,7 @@
         _textField = [[UITextField alloc] init];
         
         self.textField.textAlignment = UITextAlignmentRight;
-        self.textField.font = [UIFont fontWithName:@"Georgia" size:16.0];
+        self.textField.font = [UIFont fontWithName:@"Montserrat-Regular" size:15.0f];
         self.textField.textColor = [UIColor whiteColor];
         
         [self.textField addTarget:self
@@ -43,7 +43,7 @@
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
+        self.textLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:13.0f];
         
         self.valueView = self.textField;
     }

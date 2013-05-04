@@ -28,6 +28,12 @@
 @dynamic locations;
 @dynamic thumbnailRecord;
 
+@dynamic steps;
+@dynamic cadence;
+@dynamic climbed;
+@dynamic descended;
+@dynamic stride;
+
 + (void)initialize {
 	if (self == [RunRecord class]) {
 		UIImageToDataTransformer *transformer = [[UIImageToDataTransformer alloc] init];

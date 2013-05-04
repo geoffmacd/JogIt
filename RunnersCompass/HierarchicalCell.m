@@ -62,14 +62,14 @@
     //set fonts
     [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:16.0f]];
     [manualEntryLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
-    /*
-    [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [paceUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
-    [calUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
-    [minUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
-     */
+    
+    [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [paceUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [calUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [minUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+     
     
     
     //fix hack to ensure triangle is in correct orientation

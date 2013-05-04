@@ -86,9 +86,11 @@ typedef enum
 
 @property (nonatomic) CGFloat distance;
 @property (nonatomic) CGFloat calories;
-//@property (nonatomic) CGFloat climbed;
-//@property (nonatomic) CGFloat stride;
-//@property (nonatomic) CGFloat cadence;
+@property (nonatomic) CGFloat climbed;
+@property (nonatomic) CGFloat descended;
+@property (nonatomic) CGFloat stride;
+@property (nonatomic) CGFloat cadence;
+@property (nonatomic) NSInteger steps;
 @property (nonatomic) NSTimeInterval avgPace;
 @property (nonatomic) NSTimeInterval time;
 @property (nonatomic) UIImage* thumbnail;

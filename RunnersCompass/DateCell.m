@@ -14,7 +14,7 @@
 @synthesize headerLabel;
 @synthesize expandedView,shareBut;
 @synthesize headerView;
-@synthesize distanceLabel,distanceValue,paceLabel,paceValue,runsLabel,runsValue,distanceUnitLabel;
+@synthesize distanceLabel,distanceValue,paceLabel,paceValue,runsLabel,runsValue,distanceUnitLabel,addRunLabel;
 @synthesize table;
 
 @synthesize delegate;
@@ -47,16 +47,15 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //set fonts
     [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
-    /*
+    
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
-    [distanceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:9.0f]];
     [distanceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     [runsLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     [runsValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
-     */
-    
+    [addRunLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+     
     [distanceLabel setText:NSLocalizedString(@"DistanceMetric", @"")];
-    [runsLabel setText:NSLocalizedString(@"DateCellRuns", @"# runs in date cell")];
+    [addRunLabel setText:NSLocalizedString(@"NoRunsLabel", @"")];
     
     
     //runs should be loaded by now
@@ -152,9 +151,22 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //disable expand and hide folder image
         [folderImage setHidden:true];
         locked = true;
+        //hide share if shown
+        if(expanded)
+            [shareBut setHidden:true];
+        
+        if(monthForPeriod(periodStart) == monthForPeriod([NSDate date]) && yearForPeriod(periodStart) == yearForPeriod([NSDate date]))
+        {
+            //display message
+            [addRunLabel setHidden:false];
+        }
+        else
+            [addRunLabel setHidden:true];
+            
     }
     else
     {
+        [addRunLabel setHidden:true];
         [folderImage setHidden:false];
         locked = false;
     }
@@ -174,6 +186,14 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [runsValue setText:[NSString stringWithFormat:@"%d", numRuns]];
         [runsValue setHidden:false];
         [runsLabel setHidden:false];
+        if([runs count] == 1)
+        {
+            [runsLabel setText:NSLocalizedString(@"DateCellRun", "")];
+        }
+        else
+        {
+            [runsLabel setText:NSLocalizedString(@"DateCellRuns", @"# runs in date cell")];
+        }
     }
     else
     {
@@ -515,6 +535,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //only allow to slide in when locked
         if(expanded)
             [self setExpand:!expanded withAnimation:true];
+        else
+        {
+            //shake month name
+            [AnimationUtil shakeView:headerLabel];
+        }
     }
     else
         [self setExpand:!expanded withAnimation:true];
@@ -530,7 +555,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //log text message - I ran 47.2 km in May (2012)
     CGFloat distanceToShare = totalDistance/([[[delegate getPrefs] metric] boolValue] ? 1000 : (1000/convertKMToMile));
-    NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@ %@", NSLocalizedString(@"LoggerShareMsg3", "message to be sent with sharing"), distanceToShare, [[delegate getPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg4", "message to be sent with sharing"),   headerLabel.text];
+    NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@ %@ %@", NSLocalizedString(@"LoggerShareMsg3", "message to be sent with sharing"), distanceToShare, [[delegate getPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg4", "message to be sent with sharing"),   headerLabel.text, NSLocalizedString(@"LoggerShareMsg2", "message to be sent with sharing")];
     
     //capture screenshot of entire month
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {

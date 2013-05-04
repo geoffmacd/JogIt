@@ -17,13 +17,18 @@
     </entity>
     <entity name="RunRecord" representedClassName="RunRecord" syncable="YES">
         <attribute name="avgPace" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="cadence" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="calories" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="climbed" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="descended" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="distance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="eventType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="metricGoal" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shortname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="steps" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="stride" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="targetMetric" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="UIImageToDataTransformer" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -54,7 +59,7 @@
     <elements>
         <element name="GoalRecord" positionX="160" positionY="192" width="128" height="120"/>
         <element name="LocationRecord" positionX="160" positionY="192" width="128" height="135"/>
-        <element name="RunRecord" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="RunRecord" positionX="160" positionY="192" width="128" height="315"/>
         <element name="ThumbnailRecord" positionX="160" positionY="192" width="128" height="75"/>
         <element name="UserPrefs" positionX="160" positionY="192" width="128" height="270"/>
     </elements>

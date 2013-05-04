@@ -37,7 +37,7 @@
         _switchControl.onTintColor = [Util redColour];
         self.accessoryView = self.switchControl;
         self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.font = [UIFont fontWithName:@"Georgia" size:18.0];
+        self.textLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:15.0f];
     }
     return self;
 }

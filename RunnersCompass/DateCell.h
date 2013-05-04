@@ -54,6 +54,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *runsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *runsValue;
 @property (weak, nonatomic) IBOutlet UITableView *table;
+@property (weak, nonatomic) IBOutlet UILabel *addRunLabel;
 
 
 //delegate

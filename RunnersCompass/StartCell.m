@@ -18,7 +18,7 @@
 @synthesize delegate;
 @synthesize addRunButton;
 @synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
-@synthesize expanded,locked,garbageBut,timeLabel,manualBut;
+@synthesize expanded,locked,garbageBut,timeLabel,manualBut,recordImage;
 
 -(void)setup
 {
@@ -41,6 +41,14 @@
     [paceBut setTitle:NSLocalizedString(@"PaceRunTargetButton", @"PaceRunTargetButton") forState:UIControlStateNormal];
     [distanceBut setTitle:NSLocalizedString(@"DistanceRunTargetButton", @"DistanceRunTargetButton") forState:UIControlStateNormal];
     [manualBut setTitle:NSLocalizedString(@"ManualRunButton", @"ManualRunButton") forState:UIControlStateNormal];
+    
+    //set custom font
+    [timeBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [caloriesBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [distanceBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [manualBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [paceBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    [justGoBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     
     //time label
     [timeLabel setText:@""];

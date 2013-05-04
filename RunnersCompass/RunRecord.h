@@ -35,6 +35,13 @@ typedef enum
 @property (nonatomic, retain) NSNumber * time;
 @property (nonatomic, retain) NSOrderedSet *locations;
 @property (nonatomic, retain) ThumbnailRecord *thumbnailRecord;
+
+@property (nonatomic, retain) NSNumber * steps;
+@property (nonatomic, retain) NSNumber * climbed;
+@property (nonatomic, retain) NSNumber * descended;
+@property (nonatomic, retain) NSNumber * cadence;
+@property (nonatomic, retain) NSNumber * stride;
+
 @end
 
 @interface RunRecord (CoreDataGeneratedAccessors)

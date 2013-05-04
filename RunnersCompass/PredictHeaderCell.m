@@ -29,6 +29,11 @@
     [weeklyBut setTitle:NSLocalizedString(@"WeeklyButton", @"button for weekly") forState:UIControlStateNormal];
     [monthlyBut setTitle:NSLocalizedString(@"MonthlyButton", @"button for monthly") forState:UIControlStateNormal];
     [doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
+    
+    
+    [weeklyBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [monthlyBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
 }
 
 

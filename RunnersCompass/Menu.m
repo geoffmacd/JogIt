@@ -34,6 +34,10 @@ static NSString * dateCellID = @"DateCellPrototype";
                                              selector:@selector(regroupRuns)
                                                  name:@"groupingChangedNotification"
                                                object:nil];
+    //change start cell image
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(didReceivePause:)
+                                                name:@"pauseToggleNotification" object:nil];
     if(!start)
     {
         StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"
@@ -103,6 +107,24 @@ static NSString * dateCellID = @"DateCellPrototype";
     [cells removeAllObjects];
     
     [MenuTable reloadData];
+    
+}
+
+- (void)didReceivePause:(NSNotification *)notification
+{
+    //change image to record/pause
+    runPausedAsFarAsICanTell = !runPausedAsFarAsICanTell;
+    
+    //disappear and reappear with fade
+    if(runPausedAsFarAsICanTell)
+    {
+        [start.recordImage setImage:[UIImage imageNamed:@"whitepause.png"]];
+    }
+    else
+    {
+        [start.recordImage setImage:[UIImage imageNamed:@"record.png"]];
+    }
+    [AnimationUtil fadeView:start.recordImage duration:cellDropAnimationTime toVisible:true];
     
 }
 
@@ -413,7 +435,9 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     //modifiy header to indicate progressing run
     runInProgressAsFarAsICanTell = true;
-    [start.timeLabel setHidden:false];
+    runPausedAsFarAsICanTell = true;
+    [start.recordImage setHidden:false];
+    //[start.timeLabel setHidden:false];
     start.headerLabel.text = NSLocalizedString(@"RunInProgressTitle", @"start cell title for runs in progress");
     [start setExpand:false withAnimation:true];
     start.locked = true;//to prevent expanding
@@ -505,7 +529,8 @@ static NSString * dateCellID = @"DateCellPrototype";
         
         //refresh start cell
         runInProgressAsFarAsICanTell = false;
-        [start.timeLabel setHidden:true];
+        [start.recordImage setHidden:true];
+        //[start.timeLabel setHidden:true];
         [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
         start.locked = false;//to prevent expanding
         [start.garbageBut setHidden:true];
@@ -555,9 +580,6 @@ static NSString * dateCellID = @"DateCellPrototype";
             //insert at correct index
             [runs insertObject:finishedRun atIndex:indexToInsert];
         }
-        
-    
-        //[MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         
         //scroll to top
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:false];
@@ -632,29 +654,35 @@ static NSString * dateCellID = @"DateCellPrototype";
             //do not present notification if already popped up
             if(!alreadyPresentedNotification && ((finishedRun == longestRun) || (finishedRun == furthestRun)||(finishedRun == caloriesRun)||(finishedRun == fastestRun)))
             {
-                //present PR notification popup
-                NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
-                [vc setPrefs:[self.delegate curUserPrefs]];
-                [vc setPrRun:finishedRun];
-                //return yes if one of these runs if the checked
-                if(finishedRun == fastestRun)
-                    [vc setType:MetricTypePace];
-                if (finishedRun == furthestRun)
-                    [vc setType2:MetricTypeDistance];
-                if(finishedRun == caloriesRun)
-                    [vc setType3:MetricTypeCalories];
-                if(finishedRun == longestRun)
-                    [vc setType4:MetricTypeTime];
                 
-                [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
-                [vc setPRLabels];
+                //only present if run is meaningful, ie. don't show PR on run with 0.05km
+                if(finishedRun.distance > PRMinDistanceRequirement)
+                {
+                    //present PR notification popup
+                    NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
+                    [vc setPrefs:[self.delegate curUserPrefs]];
+                    [vc setPrRun:finishedRun];
+                    //return yes if one of these runs if the checked
+                    if(finishedRun == fastestRun)
+                        [vc setType:MetricTypePace];
+                    if (finishedRun == furthestRun)
+                        [vc setType2:MetricTypeDistance];
+                    if(finishedRun == caloriesRun)
+                        [vc setType3:MetricTypeCalories];
+                    if(finishedRun == longestRun)
+                        [vc setType4:MetricTypeTime];
+                    
+                    [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                    [vc setPRLabels];
+                }
             }
         }
     }
     
     //refresh start cell
     runInProgressAsFarAsICanTell = false;
-    [start.timeLabel setHidden:true];
+    [start.recordImage setHidden:true];
+    //[start.timeLabel setHidden:true];
     [start.headerLabel setText:NSLocalizedString(@"StartRunTitle", @"Title for start cell")];
     start.locked = false;//to prevent expanding
     [start.garbageBut setHidden:true];

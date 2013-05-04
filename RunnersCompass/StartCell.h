@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *garbageBut;
 @property (weak, nonatomic) IBOutlet UIButton *manualBut;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *recordImage;
 
 //delegate
 @property (weak, nonatomic) id <StartCellDelegate>delegate;

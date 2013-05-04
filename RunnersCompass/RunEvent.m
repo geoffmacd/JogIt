@@ -29,7 +29,7 @@
 
 @synthesize name;
 @synthesize date;
-@synthesize calories;
+@synthesize calories,climbed,stride,cadence,steps,descended;
 @synthesize distance;
 @synthesize avgPace;
 @synthesize time;
@@ -274,6 +274,7 @@
     newRunRecord.distance = [NSNumber numberWithFloat:distance];
     newRunRecord.calories = [NSNumber numberWithFloat:calories];
     newRunRecord.avgPace = [NSNumber numberWithDouble:avgPace];
+    newRunRecord.steps = [NSNumber numberWithInt:steps];
     newRunRecord.time = [NSNumber numberWithDouble:time];
     newRunRecord.eventType = [NSNumber numberWithInt:eventType];
     newRunRecord.targetMetric = [NSNumber numberWithInt:targetMetric];
@@ -286,6 +287,86 @@
     newRunRecord.thumbnail = thumbnail;
     newRunRecord.thumbnailRecord = thumbNailRecord;
     
+    //calculate post-processed metrics: descended,climbed,stride,cadence
+    BOOL goingUp = false;
+    BOOL streaking = false;
+    BOOL initStreaking = false;
+    CLLocation * startPos;
+    CLLocation * lastPos;
+    for(CLLocation * curPos in pos)
+    {
+        if(streaking)
+        {
+            if(goingUp)
+            {
+                //curPos must be higher than lastPos
+                if(curPos.altitude >= lastPos.altitude)
+                {
+                    lastPos = curPos;
+                    continue;
+                }
+                else
+                {
+                    //abort
+                    streaking = false;
+                    climbed += lastPos.altitude - startPos.altitude;
+                }
+            }
+            else
+            {
+                //curPos must be lower than lastPos
+                if(curPos.altitude <= lastPos.altitude)
+                {
+                    lastPos = curPos;
+                    continue;
+                }
+                else
+                {
+                    //abort
+                    streaking = false;
+                    descended += startPos.altitude - lastPos.altitude;
+                }
+            }
+        }
+        else
+        {
+            if(initStreaking)
+            {
+                //start streaking
+                startPos = curPos;
+                initStreaking = false;
+                streaking = true;
+                //set direction
+                if(lastPos.altitude < curPos.altitude)
+                    goingUp = true;
+                else
+                    goingUp = false;
+            }
+            else
+            {
+                //wait once
+                initStreaking = true;
+            }
+        }
+        
+        lastPos = curPos;
+    }
+    
+    //strides per minute
+    if(time > 0)
+        cadence = steps / (time / 60);
+    else
+        cadence = 0;
+    // m per stride
+    if(steps > 0)
+        stride = distance / steps;
+    else
+        stride = 0;
+    newRunRecord.cadence = [NSNumber numberWithFloat:cadence];
+    newRunRecord.stride = [NSNumber numberWithFloat:stride];
+    newRunRecord.climbed = [NSNumber numberWithFloat:climbed];
+    newRunRecord.descended = [NSNumber numberWithFloat:descended];
+    newRunRecord.steps = [NSNumber numberWithInt:steps];
     
     NSMutableArray * allLocationsToAdd = [NSMutableArray new];
     
@@ -365,7 +446,7 @@
         //construct location record
         LocationRecord * recToAdd = [LocationRecord MR_createEntity];
         //no meta to add
-        recToAdd.type = [NSNumber numberWithInt:RecordPauseType];
+        recToAdd.type = RecordPauseType;
         recToAdd.date = [date timeIntervalSinceReferenceDate];
         
         recToAdd.location = positionToAdd;
@@ -391,6 +472,11 @@
         distance = 0;
         calories = 0;
         avgPace = 0;
+        steps = 0;
+        cadence = 0.0f;
+        stride = 0.0f;
+        climbed = 0.0f;
+        descended = 0.0f;
         time = 0;
         live = true;
         ghost = true;
@@ -422,6 +508,11 @@
         distance = 0;
         calories = 0;
         avgPace = 0;
+        steps = 0;
+        cadence = 0.0f;
+        stride = 0.0f;
+        climbed = 0.0f;
+        descended = 0.0f;
         time = 0;
         live = true;
         ghost = false;
@@ -479,6 +570,11 @@
         distance = 0;
         calories = 0;
         avgPace = 0;
+        steps = 0;
+        cadence = 0.0f;
+        stride = 0.0f;
+        climbed = 0.0f;
+        descended = 0.0f;
         time = 0;
         live = true;
         ghost = false;
@@ -513,6 +609,11 @@
         time = [record.time doubleValue];
         live = false;
         ghost = false;
+        steps = [record.steps integerValue];
+        cadence = [record.cadence floatValue];
+        stride = [record.stride floatValue];
+        climbed = [record.climbed floatValue];
+        descended = [record.descended floatValue];
         
         thumbnail = record.thumbnailRecord.image;
         
@@ -547,6 +648,11 @@
         time = [record.time doubleValue];
         live = false;
         ghost = false;
+        steps = [record.steps integerValue];
+        cadence = [record.cadence floatValue];
+        stride = [record.stride floatValue];
+        climbed = [record.climbed floatValue];
+        descended = [record.descended floatValue];
         
         thumbnail = record.thumbnailRecord.image;
         

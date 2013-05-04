@@ -46,6 +46,11 @@
     [progress.layer setCornerRadius:6.0f];
     [progress.layer setMasksToBounds:true];
     
+    
+    [goalButton.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    
+    
 }
 
 -(void)setGoalLabels

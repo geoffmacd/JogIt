@@ -45,6 +45,7 @@ int dayOfTheWeekFromDate(NSDate *aDate);
 int dayOfTheMonthFromDate(NSDate *aDate);
 
 int yearForPeriod(NSDate * date);
+int monthForPeriod(NSDate * date);
 
 // Integer of the current month
 int currentMonth(void);

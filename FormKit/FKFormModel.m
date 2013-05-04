@@ -337,7 +337,7 @@
     UILabel * newlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 20)];
     newlabel.text = [self titleForHeaderInSection:section];
     newlabel.textColor = [UIColor whiteColor];
-    newlabel.font = [UIFont fontWithName:@"Georgia" size:14.0];
+    newlabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:14.0f];
     newlabel.backgroundColor = [UIColor blackColor];
     
     [newView addSubview:newlabel];

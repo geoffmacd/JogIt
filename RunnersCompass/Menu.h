@@ -32,6 +32,7 @@
 #import "RunRecord.h"
 
 #define loadTimeMinForProgress 300 //s , 5min
+#define PRMinDistanceRequirement 50 //m
 
 
 @protocol MenuViewControllerDelegate <NSObject>
@@ -62,6 +63,7 @@
     RunEvent * fastestRun;
     RunEvent * furthestRun;
     RunEvent * caloriesRun;
+    BOOL runPausedAsFarAsICanTell;
 }
 
 @property BOOL runInProgressAsFarAsICanTell;

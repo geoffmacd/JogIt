@@ -43,6 +43,7 @@
 @synthesize lowSignalLabel,titleView, goalAchievedLabel;
 @synthesize autopauseLabel;
 @synthesize invisibleLastKmButton;
+//@synthesize testStepLabel;
 
 #pragma mark - Lifecycle
 
@@ -97,28 +98,44 @@
     [lastKmLabel setTextColor:[Util redColour]];
     [currentPaceLabel setTextColor:[Util redColour]];
     [currentPaceValue setTextColor:[Util redColour]];
-    /*
-    [currentPaceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [distanceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [currentPaceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [timeTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [caloriesTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    [avgPaceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
-    */
     
-    //set fonts
-    [swipeToPauseLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:22.0f]];
-    [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
-    [distanceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
-    [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
-    [caloriesLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    //set custom fonts
+    
+    //[timeLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
+    //[distanceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:36.0f]];
+    //[paceLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    //[caloriesLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
+    //[currentPaceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    
+    //top run titles
+    [runTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [lowSignalLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [goalAchievedLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
+    [autopauseLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    
+    //hud titles
+    [distanceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [timeTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [caloriesTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [avgPaceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    //bottom titles
+    [currentPaceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
+    //units
+    [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [paceUnitLabel1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [paceUnitLabel2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    
+    
+    
+    [swipeToPauseLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:22.0f]];
+    /*
     [currentPaceValue setFont:[UIFont fontWithName:@"Montserrat-Bold" size:25.0f]];
     [lastKmPace setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
     [oldpace1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
     [oldpace2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
     [oldpace3 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
-    [oldpace1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:20.0f]];
+     */
     
     
     //init location manager
@@ -126,8 +143,7 @@
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    //locationManager.activityType = CLActivityTypeFitness;//causes location not to respond if not moving
-    //[locationManager startUpdatingLocation];
+    
     
     //map annotations
     mapAnnotations = [[NSMutableArray alloc] initWithCapacity:10];
@@ -137,7 +153,6 @@
     
     //necessary to set the frames properly in viewdidlayout
     justLoaded = true;
-    
     
     //open ears stuff
     //musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
@@ -256,26 +271,56 @@
     return NO;
 }
 
-#pragma mark - audio player delegate
+#pragma mark - Accelerometer delegate
 
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
+-(void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration {
+    
+    if(!run)
+        return;
+    if(paused || !run.live)
+        return;
+    
+    // UIAccelerometerDelegate method, called when the device accelerates.
+    float xx = acceleration.x;
+    float yy = acceleration.y;
+    float zz = acceleration.z;
+    
+    float dot = (px * xx) + (py * yy) + (pz * zz);
+    float a = ABS(sqrt(px * px + py * py + pz * pz));
+    float b = ABS(sqrt(xx * xx + yy * yy + zz * zz));
+    
+    dot /= (a * b);
+    
+    if (dot <= 0.82) {
+        if (!isSleeping) {
+            isSleeping = YES;
+            [self performSelector:@selector(wakeUp) withObject:nil afterDelay:0.3];
+            run.steps++;
+            //testStepLabel.text = [NSString stringWithFormat:@"%d", run.steps];
+            //NSLog(@"Stepped: %d", run.steps);
+        }
+    }
+    
+    px = xx; py = yy; pz = zz;
     
 }
+
+- (void)wakeUp {
+    isSleeping = NO;
+}
+
 
 #pragma mark - OpenEars Delegates
 
 
 - (void) setupVoice {
     
-    /*
-	fliteController.duration_stretch = 1.0; // Change the speed
-	fliteController.target_mean = 1.0; // Change the pitch
-     fliteController.target_stddev = 1.0; // Change the variance
-     */
 	fliteController.duration_stretch = 1.4; // Change the speed
 	fliteController.target_mean = 1.2; // Change the pitch
     fliteController.target_stddev = 1.5; // Change the variance
+    
+    //max volume for vocie
+    [fliteController.audioPlayer setVolume:1.0f];
 }
 
 -(void)speechForDistanceChange
@@ -515,6 +560,12 @@
         case SpeechKM:
         case SpeechMile:
             [self speechForDistanceChange];
+            break;
+        case SpeechAutoPause:
+            [speechQueue addObject:NSLocalizedString(@"SpeechAutopause", "autopause speech") ];
+            break;
+        case SpeechResume:
+            [speechQueue addObject:NSLocalizedString(@"SpeechResume", "resume speech") ];
             break;
     }
     
@@ -864,6 +915,13 @@
     //begin updating location again
     [locationManager startUpdatingLocation];
     
+    //need to scroll to current position in fight
+    [self updateChart];
+    
+    //reset selection
+    [self resetPaceSelection];
+    [self updateHUD];
+    
     //set timer up to run once a second
     if(![timer isValid])
     {
@@ -872,14 +930,6 @@
         timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
-    
-    
-    //need to scroll to current position in fight
-    [self updateChart];
-    
-    //reset selection
-    [self resetPaceSelection];
-    [self updateHUD];
     
     //reset autopause variables
     pausedForAuto = false;
@@ -893,6 +943,11 @@
     {
         //[self audioCue:SpeechIntro];
     }
+    
+    //init accelerometer
+    [[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / AccelUpdateFreq];
+    [[UIAccelerometer sharedAccelerometer] setDelegate:self];
+    px = py = pz = 0;
 }
 
 
@@ -914,6 +969,9 @@
     
     //stop tick() processing even for autopause
     [timer invalidate];
+    
+    //stop updating accelerometer by setting nil delegate
+    [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
     
     //only zoom if there exists a last point
     if([run.pos lastObject])
@@ -975,6 +1033,8 @@
                 
                 [delegate pauseAnimation:nil];
                 [autopauseLabel setHidden:false];
+                
+                [self audioCue:SpeechAutoPause];
             }
         }
     }else{
@@ -992,6 +1052,8 @@
                 
                 [delegate pauseAnimation:nil];
                 [autopauseLabel setHidden:false];
+                
+                [self audioCue:SpeechAutoPause];
             }
         }
     }
@@ -1297,15 +1359,15 @@
         NSLog(@"%f distance added", distanceToAdd);
         
         //2.climbed
-        //CLLocationDistance climbed = latest.altitude - prior.altitude;
+        CLLocationDistance climbed = latest.altitude - prior.altitude;
         //run.climbed += climbed;
         
         //3.avg pace calced in position independant
         
         //4.calories
         CGFloat grade = 0;
-        if(distanceToAdd > 0.5)
-            grade = 0;//climbed / distanceToAdd;
+        if(distanceToAdd > 1)
+            grade = climbed / distanceToAdd;
         UserPrefs * curSettings = [delegate curUserPrefs];
         BOOL showSpeed = [[curSettings showSpeed] boolValue];
         BOOL isMetric = [[curSettings metric] boolValue];
@@ -2064,7 +2126,7 @@
     }
     
     //update start header cell in menu
-    [delegate updateRunTimeForMenu:stringToSetTime];
+    //[delegate updateRunTimeForMenu:stringToSetTime];
 }
 
 #pragma mark - Location Manager Delegate
@@ -2143,6 +2205,7 @@
                 {
                     //unpause
                     [delegate pauseAnimation:nil];
+                    [self audioCue:SpeechResume];
                     return;
                 }
                 //else try again next update and delete first object

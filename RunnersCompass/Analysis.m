@@ -66,13 +66,6 @@
     NSInteger numWeeksToAnalyze = (startWeek - endWeek) + 52 * (startYear - endYear) + 1;
     NSInteger numMonthsToAnalyze = (startMonth - endMonth) + 12 * (startYear - endYear) + 1;
     
-    /*
-    if(numMonthsToAnalyze == 0)
-        numMonthsToAnalyze = 1;
-    if(numWeeksToAnalyze == 0)
-        numWeeksToAnalyze = 1;
-     */
-    
     NSLog(@"weeks: %d months: %d", numWeeksToAnalyze, numMonthsToAnalyze);
     
     

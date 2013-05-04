@@ -168,9 +168,11 @@
         //set rounded corners on button
         [header.doneBut.layer setCornerRadius:8.0f];
         [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
-        
         [header.doneBut.layer setMasksToBounds:true];
+        [header.doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+        
         [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
+        [header.sectionHeaderCreateGoal setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
 
     }
     
@@ -189,9 +191,11 @@
         //set rounded corners on button
         [header.doneBut.layer setCornerRadius:8.0f];
         [header.doneBut setTitle:NSLocalizedString(@"DoneButton", @"done button") forState:UIControlStateNormal];
-        
         [header.doneBut.layer setMasksToBounds:true];
+        [header.doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+        
         [header.sectionHeaderCreateGoal setText:NSLocalizedString(@"CreateGoalHeader", @"header to describe create goal")];
+        [header.sectionHeaderCreateGoal setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
         
         
     }

@@ -26,6 +26,9 @@
     //localized buttons in IB
     [doneBut setTitle:NSLocalizedString(@"CancelWord", @"cancel word ") forState:UIControlStateNormal];
     
+    [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [upgradeBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    
     //get price of app and append to text
     
     [[IAPShare sharedHelper].iap requestProductsWithCompletion:^(SKProductsRequest* request,SKProductsResponse* response)

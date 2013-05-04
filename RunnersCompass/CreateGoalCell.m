@@ -50,6 +50,8 @@
             break;
     }
     
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
