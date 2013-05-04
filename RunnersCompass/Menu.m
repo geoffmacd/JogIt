@@ -558,12 +558,12 @@ static NSString * dateCellID = @"DateCellPrototype";
         
     
         //[MenuTable insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexToInsert inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+        
+        //scroll to top
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:false];
     
         [cells removeAllObjects];
         [MenuTable reloadData];
-        
-        //scroll to top
-        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
         
         //expand first thing to show where it went if it was not manual
         if(finishedRun.eventType != EventTypeManual)
