@@ -39,6 +39,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *longestValue;
 @property (weak, nonatomic) IBOutlet UILabel *fastestUnit;
 @property (weak, nonatomic) IBOutlet UILabel *furthestUnit;
+@property (weak, nonatomic) IBOutlet UILabel *fastestDate;
+@property (weak, nonatomic) IBOutlet UILabel *furthestDate;
+@property (weak, nonatomic) IBOutlet UILabel *calsDate;
+@property (weak, nonatomic) IBOutlet UILabel *longestDate;
 
 
 //delegate
@@ -52,7 +56,7 @@
 
 -(CGFloat)getHeightRequired;
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate;
--(void)setupWithFastest:(NSString*)fast furthest:(NSString*)furthest calories:(NSString*)cals longest:(NSString*)longest;
+-(void)setupWithFastest:(NSString*)fast fastDate:(NSDate*)fastDateObj furthest:(NSString*)furthest furthestDate:(NSDate*)furthestDateObj calories:(NSString*)cals calsDate:(NSDate*)calsDateObj longest:(NSString*)longest longestDate:(NSDate*)longestDateObj;
 - (IBAction)headerTapped:(id)sender;
 
 @end

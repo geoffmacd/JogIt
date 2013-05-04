@@ -128,7 +128,7 @@
             if(longestRun)
                 longestString = [RunEvent getTimeString:longestRun.time];
             
-            [prCell setupWithFastest:fastestString furthest:furthestString calories:caloriesString longest:longestString];
+            [prCell setupWithFastest:fastestString fastDate:fastestRun.date furthest:furthestString furthestDate:furthestRun.date calories:caloriesString calsDate:caloriesRun.date  longest:longestString  longestDate:longestRun.date];
         }
         return prCell;
     }

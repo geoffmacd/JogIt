@@ -19,10 +19,11 @@
 @synthesize caloriesTitle,caloriesValue,longestTitle,longestValue;
 @synthesize subtitleLabel,titleLabel;
 @synthesize furthestUnit,fastestUnit,prefs;
+@synthesize fastestDate,furthestDate,longestDate,calsDate;
 
 #pragma mark - Lifecycle
 
--(void)setupWithFastest:(NSString*)fast furthest:(NSString*)furthest calories:(NSString*)cals longest:(NSString*)longest
+-(void)setupWithFastest:(NSString*)fast fastDate:(NSDate*)fastDateObj furthest:(NSString*)furthest furthestDate:(NSDate*)furthestDateObj calories:(NSString*)cals calsDate:(NSDate*)calsDateObj longest:(NSString*)longest longestDate:(NSDate*)longestDateObj
 {
     
     [statView setHidden:true];
@@ -33,6 +34,21 @@
     [fastestValue setText:fast];
     [caloriesValue setText:cals];
     [longestValue setText:longest];
+    
+    NSString * dateString;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    //dateFormatter.dateFormat = @"dd-MMM-yyyy";
+    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dateFormatter setLocale:usLocale];
+    dateString = [dateFormatter stringFromDate:furthestDateObj];
+    [furthestDate setText:dateString];
+    dateString = [dateFormatter stringFromDate:fastDateObj];
+    [fastestDate setText:dateString];
+    dateString = [dateFormatter stringFromDate:calsDateObj];
+    [calsDate setText:dateString];
+    dateString = [dateFormatter stringFromDate:longestDateObj];
+    [longestDate setText:dateString];
     
     //set units
     [furthestUnit setText:[prefs getDistanceUnit]];

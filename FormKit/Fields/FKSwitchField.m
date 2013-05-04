@@ -34,7 +34,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         _switchControl = [[UISwitch alloc] init];
-        _switchControl.onTintColor = [Util redColour];
+        _switchControl.onTintColor = nil;
+        [_switchControl setOnImage:[UIImage imageNamed:@"onswitch.png"]];
+        [_switchControl setOffImage:[UIImage imageNamed:@"offswitch.png"]];
         self.accessoryView = self.switchControl;
         self.textLabel.textColor = [UIColor whiteColor];
         self.textLabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:15.0f];

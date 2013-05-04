@@ -330,6 +330,9 @@ static NSString * dateCellID = @"DateCellPrototype";
     [MenuTable reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
     
     
+    //we will need to scroll to correct hierarchy cell if it is just off screen here
+    
+    
     //if sender was last cell or second last, then scroll to show expanded view
     //ensure there is at least something to avoid crash from pressing the startcell
     if(sender == [cells lastObject])
@@ -687,10 +690,11 @@ static NSString * dateCellID = @"DateCellPrototype";
             }
         }
         
+        [self analyzePRs];
+        
         //determine if a new PR was made, unless it was manual
         if(finishedRun.eventType != EventTypeManual)
         {
-            [self analyzePRs];
             
             //do not present notification if already popped up
             if(!alreadyPresentedNotification && ((finishedRun == longestRun) || (finishedRun == furthestRun)||(finishedRun == caloriesRun)||(finishedRun == fastestRun)))

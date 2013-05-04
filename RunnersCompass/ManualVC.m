@@ -50,6 +50,10 @@
         [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
             NSLog(@"save pressed");
             
+            //prevent future runs form being added
+            if(!([manualRun.date compare:shiftDateByXdays([NSDate date],0)] == NSOrderedAscending))
+                return;
+            
             //multiply distance by 1000x to get meters
             manualRun.distance = [NSNumber numberWithDouble:[manualRun.distance doubleValue] * 1000];
             
@@ -80,12 +84,21 @@
         
         //run details
         [formMapping mappingForAttribute:@"date"
-                                   title:NSLocalizedString(@"ManualDate", @"run date for manual run") 
+                                   title:NSLocalizedString(@"ManualDate", @"run date for manual run")
                                     type:FKFormAttributeMappingTypeDate
                         attributeMapping:^(FKFormAttributeMapping *mapping) {
                             
                             mapping.dateFormat = @"yyyy-MM-dd";
-                        }];
+                        }];        //validation
+        [formMapping validationForAttribute:@"date" validBlock:^BOOL(NSString *value, id object) {
+            //need to add one day to eliminate date concern if the same day is chosen
+            //
+            return [manualRun.date compare:shiftDateByXdays([NSDate date],0)] == NSOrderedAscending;
+            
+        } errorMessageBlock:^NSString *(id value, id object) {
+            return NSLocalizedString(@"ManualRunDateValidation", @"");
+        }];
+        
         [formMapping mapAttribute:@"distance" title:titleForDistance  type:FKFormAttributeMappingTypeInteger];
         [formMapping mapAttribute:@"calories" title:NSLocalizedString(@"ManualCaloriesEntry", @"calories in manual run")  type:FKFormAttributeMappingTypeInteger];
         [formMapping mapAttribute:@"time" title:NSLocalizedString(@"ManualTimeEntry", @"time in manual run")  type:FKFormAttributeMappingTypeInteger];

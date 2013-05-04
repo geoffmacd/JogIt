@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *recordLabel3;
 @property (weak, nonatomic) IBOutlet UILabel *recordLabel4;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *hideLabel;
 
 @property RunMetric type;
 @property RunMetric type2;

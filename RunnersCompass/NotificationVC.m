@@ -12,10 +12,16 @@
 @implementation NotificationVC
 
 @synthesize type, type2, type3, type4, oldPR,prRun,prefs;
-@synthesize titleLabel,hideLabel,recordLabel,recordLabel2,recordLabel3,recordLabel4;
+@synthesize titleLabel,recordLabel,recordLabel2,recordLabel3,recordLabel4;
 
 -(void)setPRLabels
 {
+    
+    [recordLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [recordLabel2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [recordLabel3 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [recordLabel4 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:16.0f]];
     
     [recordLabel setText:@""];
     [recordLabel2 setText:@""];

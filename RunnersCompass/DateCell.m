@@ -413,8 +413,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     
     HierarchicalCell * senderCell = sender;
-    
-
     BOOL didExpand = senderCell.expanded;
     
     //we need to animate the additional height of the date cell 
