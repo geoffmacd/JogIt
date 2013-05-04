@@ -63,10 +63,16 @@
             return NSLocalizedString(@"TimeMetric", @"Time name for title or goal");
         case MetricTypeClimbed:
             return NSLocalizedString(@"AscentionMetric", @"Climbed name for title or goal");
+        case MetricTypeActivityCount:
+            return NSLocalizedString(@"CountMetric", @"");
         case MetricTypeCadence:
             return NSLocalizedString(@"CadenceMetric", @"Cadence name for title or goal");
         case MetricTypeStride:
             return NSLocalizedString(@"StrideMetric", @"Stride name for title or goal");
+        case MetricTypeDescended:
+            return NSLocalizedString(@"DescendMetric", @"");
+        case MetricTypeSteps:
+            return NSLocalizedString(@"StepsMetric", @"");
         case NoMetricType:
         default:
             return @"UNKNOWNMETRIC";

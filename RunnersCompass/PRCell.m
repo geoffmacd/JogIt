@@ -62,6 +62,24 @@
     
     [titleLabel setText:NSLocalizedString(@"prcelltitle", @"prcell title")];
     [subtitleLabel setText:NSLocalizedString(@"prcellsubtitle", @"prcell subtitle")];
+    
+    
+    [subtitleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [fastestTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [furthestTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [caloriesTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [longestTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [fastestValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [furthestValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [caloriesValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [longestValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [fastestUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [furthestUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [fastestDate setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [furthestDate setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [calsDate setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [longestDate setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:14.0f]];
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly

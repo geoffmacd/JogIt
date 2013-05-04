@@ -12,7 +12,7 @@
 @implementation GoalNotifyVC
 
 @synthesize goal,prRun,prefs;
-@synthesize titleLabel,hideLabel,recordLabel;
+@synthesize titleLabel,recordLabel;
 
 -(void)setLabels
 {
@@ -25,6 +25,9 @@
         
         goalAchieved = [goal getName:[[prefs metric] boolValue]];
         [recordLabel setText:goalAchieved];
+        
+        [recordLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+        [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:17.0f]];
     }
 }
 

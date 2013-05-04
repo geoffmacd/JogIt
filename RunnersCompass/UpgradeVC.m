@@ -207,7 +207,10 @@
                                    //present notification and thank you
                                    //present PR notification popup
                                    StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                   [vc.view setBackgroundColor:[Util redColour]];
+                                   [vc.view.layer setCornerRadius:5.0f];
                                    [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
+                                   [vc.updateLabel setText:NSLocalizedString(@"AppUpdated","description on notification label")];
                                    
                                    [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
                                    

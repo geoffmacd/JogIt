@@ -678,6 +678,8 @@ static NSString * dateCellID = @"DateCellPrototype";
                     {
                         //present PR notification popup
                         GoalNotifyVC * vc = [[GoalNotifyVC alloc] initWithNibName:@"GoalNotifyVC" bundle:nil];
+                        [vc.view setBackgroundColor:[Util redColour]];
+                        [vc.view.layer setCornerRadius:5.0f];
                         [vc setPrefs:[self.delegate curUserPrefs]];
                         [vc setPrRun:finishedRun];
                         [vc setGoal:[self.delegate curGoal]];
@@ -705,6 +707,8 @@ static NSString * dateCellID = @"DateCellPrototype";
                 {
                     //present PR notification popup
                     NotificationVC * vc = [[NotificationVC alloc] initWithNibName:@"NotificationVC" bundle:nil];
+                    [vc.view.layer setCornerRadius:5.0f];
+                    [vc.view setBackgroundColor:[Util redColour]];
                     [vc setPrefs:[self.delegate curUserPrefs]];
                     [vc setPrRun:finishedRun];
                     //return yes if one of these runs if the checked

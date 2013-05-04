@@ -11,7 +11,7 @@
 
 @implementation StandardNotifyVC
 
-@synthesize titleLabel,hideLabel;
+@synthesize titleLabel,updateLabel;
 
 
 @end

@@ -12,6 +12,8 @@
 #import "StandardNotifyVC.h"
 #import "MJPopupBackgroundView.h"
 #import "UIViewController+MJPopupViewController.h"
+#import "AnimationUtil.h"
+#import "FormKit.h"
 
 @class FKFormModel;
 

@@ -55,11 +55,18 @@
                 [unitLabel setText:[prefs getPaceUnit]];
                 [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
                 break;
+            case MetricTypeDescended:
+            case MetricTypeClimbed:
+                [unitLabel setHidden:false];
+                [unitLabel setText:[prefs getElevationUnit]];
+                [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
+                break;
+                
             case MetricTypeActivityCount:
             case MetricTypeCadence:
             case MetricTypeCalories:
-            case MetricTypeClimbed:
             case MetricTypeStride:
+            case MetricTypeSteps:
             case MetricTypeTime:
                 [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
                 break;
@@ -75,6 +82,18 @@
     //localized buttons in IB
     [selectedLabel setText:NSLocalizedString(@"PerformanceSelectedLabel", @"label for selected performance")];
     [allTimeLabel setText:NSLocalizedString(@"PerformanceAllTimeLabel", @"label for all time performance")];
+    
+    //fonts
+    [previousLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [currentLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [currentValueLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [previousValueLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [allTimeValueLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [selectedValueLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [allTimeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [selectedLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [unitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:14.0f]];
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly
@@ -193,6 +212,20 @@
                 [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
                 [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
+                break;
+            case MetricTypeClimbed:
+                if([[prefs metric] boolValue])
+                {
+                    [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
+                    [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
+                    [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
+                }
+                else
+                {
+                    [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]*convertMToFt]];
+                    [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]*convertMToFt]];
+                    [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime*convertMToFt]];
+                }
                 break;
                 
             default:
@@ -666,7 +699,12 @@
             case MetricTypeCalories:
                 [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
                 break;
-                
+            case MetricTypeClimbed:
+                if([[prefs metric] boolValue])
+                    [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
+                else
+                    [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]*convertMToFt]];
+                break;
             default:
                 break;
         }

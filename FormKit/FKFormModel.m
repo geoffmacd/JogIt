@@ -334,7 +334,7 @@
     
     
     UIView * newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
-    UILabel * newlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 20)];
+    UILabel * newlabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 20)];
     newlabel.text = [self titleForHeaderInSection:section];
     newlabel.textColor = [UIColor whiteColor];
     newlabel.font = [UIFont fontWithName:@"Montserrat-Regular" size:14.0f];

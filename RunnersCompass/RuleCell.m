@@ -33,6 +33,13 @@
     [rule1Label setText:NSLocalizedString(@"rule1", @"rule1")];
     [rule2Label setText:NSLocalizedString(@"rule2", @"rule2")];
     [rule3Label setText:NSLocalizedString(@"rule3", @"rule3")];
+    
+    
+    [subtitleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [rule1Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [rule2Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [rule3Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:14.0f]];
 }
 
 -(void)setTimePeriod:(BOOL) toWeekly

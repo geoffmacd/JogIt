@@ -51,6 +51,7 @@
     }
     
     [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [subtitleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
     
 }
 

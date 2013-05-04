@@ -12,6 +12,7 @@
 @interface UpgradeHeaderCell : UIView
 @property (weak)  IBOutlet UIButton *doneBut;
 @property (weak, nonatomic) IBOutlet UIButton *upgradeBut;
+@property (weak, nonatomic) IBOutlet UILabel *upgradeDescriptionLabel;
 
 
 -(void) setup;

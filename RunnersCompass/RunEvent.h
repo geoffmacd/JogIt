@@ -15,6 +15,7 @@
 
 #define convertMSTOminKM 16.6666666666666
 #define convertKMToMile 0.6214//0.621371
+#define convertMToFt 3.28084 
 #define maxSpeedForPR 30 //m/s
 
 @interface CLLocationMeta : NSObject{
@@ -50,10 +51,12 @@ typedef enum
     MetricTypePace,
     MetricTypeTime,
     MetricTypeCalories,
-    MetricTypeActivityCount,
     MetricTypeClimbed,
+    MetricTypeActivityCount, //this is max array 
     MetricTypeCadence,
-    MetricTypeStride
+    MetricTypeStride,
+    MetricTypeDescended,
+    MetricTypeSteps
 } RunMetric;
 
 typedef enum

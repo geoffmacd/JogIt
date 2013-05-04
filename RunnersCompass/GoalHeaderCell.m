@@ -51,6 +51,15 @@
     [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
     
     
+    [metricValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [metricDescriptionLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [metricDescriptionSubtitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [beganLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [beganValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [targetLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [targetValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [countLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [countValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
 }
 
 -(void)setGoalLabels

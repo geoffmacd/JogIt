@@ -15,7 +15,7 @@
 @synthesize headerView;
 @synthesize delegate;
 @synthesize expanded;
-@synthesize point1Label,point2Label,point3Label;
+@synthesize point1Label,point2Label,point3Label,titleLabel;
 @synthesize sampleImage,fullImage;
 
 #pragma mark - Lifecycle
@@ -32,6 +32,12 @@
     
     [fullImage.layer setBorderWidth:1.0f];
     [fullImage.layer setBorderColor:[[UIColor darkGrayColor] CGColor]];
+
+    
+    [point3Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [point2Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [point1Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:14.0f]];
     
     //localized labels setup in upgradeVC
 }

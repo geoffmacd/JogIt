@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import "FormKit.h"
 
 @interface SettingsViewController()
 
@@ -120,19 +119,30 @@
                              
                              //show notification
                              StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
-                             [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
+                             [vc.view setBackgroundColor:[Util redColour]];
+                             [vc.view.layer setCornerRadius:5.0f];
+                             [vc.titleLabel setText:NSLocalizedString(@"thankyou","")];
+                             [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
                              
                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
                              
                          } OnFail:^(SKPaymentQueue* payment,NSError* error){
                              
                              //show error
+                             //show notification
+                             StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                             [vc.view setBackgroundColor:[Util redColour]];
+                             [vc.view.layer setCornerRadius:5.0f];
+                             [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
+                             [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
+                             /*
                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingsRestoreFailTitle", @"restore fail title")
                                                                         message:NSLocalizedString(@"SettingsRestoreFail", @"restore fail ")
                                                                             delegate:nil
                                                                    cancelButtonTitle:@"OK"
                                                                    otherButtonTitles:nil];
                              [alert show];
+                              */
                          }];
                      }
                    accesoryType:UITableViewCellAccessoryNone];

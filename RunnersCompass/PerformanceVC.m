@@ -26,7 +26,7 @@
     weekly = false;
     
     //add cells to views
-    cells = [[NSMutableArray alloc] initWithCapacity:5];
+    cells = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
     
 }
 
@@ -90,7 +90,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of charts
-    return MetricTypeCalories + 1; //for pr cell
+    return MetricTypeClimbed + 1; //for pr cell
 }
 
 // Customize the appearance of table view cells.

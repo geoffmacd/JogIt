@@ -15,6 +15,7 @@
 #import "MJPopupBackgroundView.h"
 #import "UIViewController+MJPopupViewController.h"
 #import "UserPrefs.h"
+#import "Util.h"
 
 @interface UpgradeVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,UpgradeCellDelegate>
 {

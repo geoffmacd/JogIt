@@ -34,6 +34,7 @@
 +(NSString*)getPaceUnitWithSpeedMetric:(BOOL)metric showSpeed:(BOOL)showSpeed;
 -(NSString*)getDistanceUnit;
 -(NSString*)getPaceUnit;
+-(NSString*)getElevationUnit;
 -(NSString*)getTimeStringWithSeconds:(NSTimeInterval) f;
 -(NSString*)getTimeString:(NSTimeInterval) f;
 @end

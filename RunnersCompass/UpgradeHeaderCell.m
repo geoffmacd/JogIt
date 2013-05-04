@@ -11,7 +11,7 @@
 
 @implementation UpgradeHeaderCell
 
-@synthesize doneBut,upgradeBut;
+@synthesize doneBut,upgradeBut,upgradeDescriptionLabel;
 
 -(void) setup
 {
@@ -28,6 +28,7 @@
     
     [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
     [upgradeBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
+    [upgradeDescriptionLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     
     //get price of app and append to text
     

@@ -74,6 +74,18 @@
     
 }
 
+-(NSString*)getElevationUnit
+{
+    
+    //should not need to be translated
+    
+    if([self.metric boolValue])
+        return NSLocalizedString(@"MeterMetricUnitShort", @"shortform for m");
+    else
+        return NSLocalizedString(@"FtImperialUnitShort", @"shortform for ft");
+    
+}
+
 -(NSString*)getPaceUnit
 {
     

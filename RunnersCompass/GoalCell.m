@@ -15,6 +15,10 @@
 
 -(void)setupWithRun:(RunEvent*)runForCell withGoal:(Goal*)goal withMetric:(BOOL)metric showSpeed:(BOOL)showSpeed withMin:(CGFloat)min withMax:(CGFloat)max
 {
+    [label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [tooShortLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    [dateLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
+    
     //always show the date in label
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];

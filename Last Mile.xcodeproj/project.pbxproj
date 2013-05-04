@@ -95,6 +95,7 @@
 		6795A83D1714EE1700C0CE52 /* ThumbnailRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = 6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */; };
 		67A7D1741735755900365CE2 /* offswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67A7D1721735755900365CE2 /* offswitch@2x.png */; };
 		67A7D1751735755900365CE2 /* onswitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67A7D1731735755900365CE2 /* onswitch@2x.png */; };
+		67A7D179173589D600365CE2 /* cloudyblue.png in Resources */ = {isa = PBXBuildFile; fileRef = 67A7D178173589D500365CE2 /* cloudyblue.png */; };
 		67A8D59616F150EE0070E38B /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A8D59516F150EE0070E38B /* Util.m */; };
 		67AA3E8B170FD653004181AC /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E53170FD653004181AC /* MagicalImportFunctions.m */; };
 		67AA3E8C170FD653004181AC /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 67AA3E55170FD653004181AC /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -420,6 +421,7 @@
 		6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailRecord.h; sourceTree = "<group>"; };
 		67A7D1721735755900365CE2 /* offswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "offswitch@2x.png"; sourceTree = "<group>"; };
 		67A7D1731735755900365CE2 /* onswitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "onswitch@2x.png"; sourceTree = "<group>"; };
+		67A7D178173589D500365CE2 /* cloudyblue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloudyblue.png; sourceTree = "<group>"; };
 		67A8D59416F150EE0070E38B /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		67A8D59516F150EE0070E38B /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		67AA3E52170FD653004181AC /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
@@ -722,6 +724,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				67A7D178173589D500365CE2 /* cloudyblue.png */,
 				672D138617336DF60060BAB6 /* cloudyblue@2x.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				6794267217309AFA006C2D40 /* FormatterKit */,
@@ -1616,6 +1619,7 @@
 				672D138717336DF60060BAB6 /* cloudyblue@2x.png in Resources */,
 				67A7D1741735755900365CE2 /* offswitch@2x.png in Resources */,
 				67A7D1751735755900365CE2 /* onswitch@2x.png in Resources */,
+				67A7D179173589D600365CE2 /* cloudyblue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

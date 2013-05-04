@@ -14,7 +14,6 @@
 @interface GoalNotifyVC : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *recordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *hideLabel;
 
 @property Goal * goal;
 @property RunEvent * prRun;

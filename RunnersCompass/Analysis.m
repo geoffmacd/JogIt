@@ -19,10 +19,10 @@
     runMeta = runToAnalyze;
     
     //consider 5 metricss
-    weeklyRace = [[NSMutableArray alloc] initWithCapacity:5];
-    monthlyRace = [[NSMutableArray alloc] initWithCapacity:5];
-    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:5];
-    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:5];
+    weeklyRace = [[NSMutableArray alloc] initWithCapacity:RaceTypeFullMarathon];
+    monthlyRace = [[NSMutableArray alloc] initWithCapacity:RaceTypeFullMarathon];
+    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
+    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
     
     //init arrays within arrays representing week/month units
     for(int i = MetricTypeDistance; i <= MetricTypeActivityCount; i++)
@@ -70,26 +70,41 @@
     
     
     //for all calculated weeks fill out zeros for each array
-    for(int i = 0; i < 5; i++)
+    for(int i = 0; i < MetricTypeActivityCount; i++)
     {
         NSMutableArray * tempWeeklyMeta = [weeklyMeta objectAtIndex:i];
         NSMutableArray * tempMonthlyMeta = [monthlyMeta objectAtIndex:i];
-        NSMutableArray * tempWeeklyRace = [weeklyRace objectAtIndex:i];
-        NSMutableArray * tempMonthlyRace= [monthlyRace objectAtIndex:i];
         
         //add 0's for all weeks to be analyzed
         for(int j = 0; j < numWeeksToAnalyze; j++)
         {
             NSNumber * value = [NSNumber numberWithInt:0];
             [tempWeeklyMeta addObject:value];
-            [tempWeeklyRace addObject:value];
         }
         //add 0's for all months to be analyzed
         for(int j = 0; j < numMonthsToAnalyze; j++)
         {
             NSNumber * value = [NSNumber numberWithInt:0];
             [tempMonthlyMeta addObject:value];
-            [tempMonthlyRace addObject:value];
+        }
+        
+        if(i < RaceTypeFullMarathon)
+        {
+            NSMutableArray * tempWeeklyRace = [weeklyRace objectAtIndex:i];
+            NSMutableArray * tempMonthlyRace= [monthlyRace objectAtIndex:i];
+            
+            //add 0's for all weeks to be analyzed
+            for(int j = 0; j < numWeeksToAnalyze; j++)
+            {
+                NSNumber * value = [NSNumber numberWithInt:0];
+                [tempWeeklyRace addObject:value];
+            }
+            //add 0's for all months to be analyzed
+            for(int j = 0; j < numMonthsToAnalyze; j++)
+            {
+                NSNumber * value = [NSNumber numberWithInt:0];
+                [tempMonthlyRace addObject:value];
+            }
         }
     }
     
@@ -132,6 +147,9 @@
                     case MetricTypeCalories:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.calories];
                         break;
+                    case MetricTypeClimbed:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.climbed];
+                        break;
                     case MetricTypeActivityCount:
                         newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
                         break;
@@ -169,6 +187,9 @@
                         break;
                     case MetricTypeCalories:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.calories];
+                        break;
+                    case MetricTypeClimbed:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.climbed];
                         break;
                     case MetricTypeActivityCount:
                         newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
@@ -308,8 +329,12 @@
 
 -(void)runPrediction:(NSInteger)index withWeekly:(BOOL)weekly withRun:(RunEvent*)run forRace:(RaceType)racetype
 {
+    if(racetype > RaceTypeFullMarathon)
+        return;
+        
     //decide if to replace predicted run time in the array for that week or month
     //use the Riegel formula of time = oldtime * (prediction distance / old distance) ^ 1.06
+    
     
     NSTimeInterval racetime = 0;
     

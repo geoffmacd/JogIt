@@ -10,7 +10,7 @@
 
 @interface StandardNotifyVC : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *hideLabel;
+@property (weak, nonatomic) IBOutlet UILabel *updateLabel;
 
 
 -(void)setLabels;
