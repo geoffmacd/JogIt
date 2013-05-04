@@ -15,10 +15,11 @@
 #import "PRCell.h"
 #import "UpgradeVC.h"
 
-@interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate,PRCellDelegate>
+@interface PerformanceVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,ChartCellDelegate,PRCellDelegate,UpgradeVCDelegate>
 {
     NSMutableArray * cells;
     PRCell * prCell;
+    BOOL showPurchaseNotification;
 }
 
 @property PermHeaderCell * header;

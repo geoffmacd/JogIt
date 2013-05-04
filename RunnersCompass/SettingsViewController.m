@@ -25,6 +25,11 @@
     return self;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -61,6 +66,7 @@
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"settingsChangedNotification"
              object:prefsToChange];
+            
             [self dismissViewControllerAnimated:true completion:nil];
         }];
         /*
@@ -124,17 +130,22 @@
                              [vc.titleLabel setText:NSLocalizedString(@"thankyou","")];
                              [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
                              
+
                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+
                              
                          } OnFail:^(SKPaymentQueue* payment,NSError* error){
                              
-                             //show error
+                             //show error, do not dismiss
                              //show notification
                              StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
                              [vc.view setBackgroundColor:[Util redColour]];
                              [vc.view.layer setCornerRadius:5.0f];
                              [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
                              [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
+                             
+                             [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             
                              /*
                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingsRestoreFailTitle", @"restore fail title")
                                                                         message:NSLocalizedString(@"SettingsRestoreFail", @"restore fail ")

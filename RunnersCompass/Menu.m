@@ -38,6 +38,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(didReceivePause:)
                                                 name:@"pauseToggleNotification" object:nil];
+    
     if(!start)
     {
         StartCell * cell  =  [[[NSBundle mainBundle]loadNibNamed:@"StartCell"

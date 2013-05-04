@@ -17,6 +17,12 @@
 #import "UserPrefs.h"
 #import "Util.h"
 
+@protocol UpgradeVCDelegate <NSObject>
+
+-(void)didPurchase;
+
+@end
+
 @interface UpgradeVC: UITableViewController<UITableViewDataSource,UITableViewDelegate,UpgradeCellDelegate>
 {
     UpgradeHeaderCell * header;
@@ -26,6 +32,10 @@
 
 @property (weak)  IBOutlet UITableView *table;
 @property (weak)  UserPrefs *prefs;
+
+//delegate
+@property id <UpgradeVCDelegate>delegate;
+
 
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)upgradeTapped:(id)sender;

@@ -16,6 +16,24 @@
 
 @synthesize table,header, weekly, analysis, prefs;
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(showPurchaseNotification)
+    {
+        //present notification and thank you
+        //present PR notification popup
+        StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+        [vc.view setBackgroundColor:[Util redColour]];
+        [vc.view.layer setCornerRadius:5.0f];
+        [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
+        [vc.updateLabel setText:NSLocalizedString(@"AppUpdated","description on notification label")];
+        
+        [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+        
+        showPurchaseNotification = false;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,7 +45,6 @@
     
     //add cells to views
     cells = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,6 +56,15 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
+}
+
+#pragma mark -
+#pragma mark UpgradeVC Delegate
+
+-(void)didPurchase
+{
+    prefs.purchased = [NSNumber numberWithBool:true];
+    showPurchaseNotification = true;
 }
 
 #pragma mark -
@@ -247,6 +273,7 @@
     {
         UpgradeVC * vc = [[UpgradeVC alloc] initWithNibName:@"Upgrade" bundle:nil];
         [vc setPrefs:prefs];
+        [vc setDelegate:self];
         
         [self presentViewController:vc animated:true completion:nil];
      }

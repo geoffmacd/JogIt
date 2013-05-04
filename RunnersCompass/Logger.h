@@ -98,7 +98,7 @@ typedef enum {
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate,UIAccelerometerDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate,UIAccelerometerDelegate,UpgradeVCDelegate>
 {
     //for ghost run
     UIActionSheet *sheet;
@@ -205,6 +205,9 @@ typedef enum {
     float pz;
     BOOL isChange;
     BOOL isSleeping;
+    
+    //purchase notification
+    BOOL showPurchaseNotification;
 }
 
 

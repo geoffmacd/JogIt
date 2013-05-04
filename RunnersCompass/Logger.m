@@ -47,6 +47,23 @@
 
 #pragma mark - Lifecycle
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(showPurchaseNotification)
+    {
+        //present notification and thank you
+        //present PR notification popup
+        StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+        [vc.view setBackgroundColor:[Util redColour]];
+        [vc.view.layer setCornerRadius:5.0f];
+        [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
+        [vc.updateLabel setText:NSLocalizedString(@"AppUpdated","description on notification label")];
+        
+        [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+        
+        showPurchaseNotification = false;
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -118,11 +135,13 @@
     [timeTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     [caloriesTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     [avgPaceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
+    [ghostDistanceTitle setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     //bottom titles
     [currentPaceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     //units
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [ghostDistanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     
@@ -269,6 +288,14 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return NO;
+}
+
+#pragma mark -
+#pragma mark UpgradeVC Delegate
+
+-(void)didPurchase
+{
+    showPurchaseNotification = true;
 }
 
 #pragma mark - Accelerometer delegate
@@ -4203,6 +4230,7 @@
     {
         UpgradeVC * vc = [[UpgradeVC alloc] initWithNibName:@"Upgrade" bundle:nil];
         [vc setPrefs:[delegate curUserPrefs]];
+        [vc setDelegate:self];
         
         [self presentViewController:vc animated:true completion:nil];
     }

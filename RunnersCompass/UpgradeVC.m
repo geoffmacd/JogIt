@@ -10,7 +10,7 @@
 
 @implementation UpgradeVC
 
-@synthesize table,prefs;
+@synthesize table,prefs,delegate;
 
 
 - (void)viewDidLoad
@@ -204,29 +204,35 @@
     [[IAPShare sharedHelper].iap buyProduct:product
                                onCompletion:^(SKPaymentTransaction* trans){
                                    
-                                   //present notification and thank you
-                                   //present PR notification popup
-                                   StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
-                                   [vc.view setBackgroundColor:[Util redColour]];
-                                   [vc.view.layer setCornerRadius:5.0f];
-                                   [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
-                                   [vc.updateLabel setText:NSLocalizedString(@"AppUpdated","description on notification label")];
-                                   
-                                   [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+
                                    
                                    NSLog(@"Purchased, Thank You");
                                    
                                    prefs.purchased = [NSNumber numberWithBool:true];
+                                   [delegate didPurchase];
                                    
                                    //give nottification to update settings on app delegate
                                    [[NSNotificationCenter defaultCenter]
                                     postNotificationName:@"settingsChangedNotification"
                                     object:prefs];
+                                   
+                                   //just dismiss user cancel
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                                   
                                }
                                      OnFail:^(SKPaymentTransaction* trans) {
                                          
-                                         //just dismiss user cancel
-                                         [self dismissViewControllerAnimated:true completion:nil];
+                                         //present notification and thank you
+                                         //present PR notification popup
+                                         StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                         [vc.view setBackgroundColor:[Util redColour]];
+                                         [vc.view.layer setCornerRadius:5.0f];
+                                         [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
+                                         [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
+                                         
+                                         [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                                         
+                                         
                                          
                                          NSLog(@"Error");
                                      }];
