@@ -384,7 +384,11 @@ static NSString * dateCellID = @"DateCellPrototype";
             runToDelete = oldRun;
         }
     }
-    [runs removeObject:runToDelete];
+    if(runToDelete)
+    {
+        [runs removeObject:runToDelete];
+        [self preventUserFromSlidingRunInvalid:runToDelete];
+    }
     
     //see if the run was the only one left
     if([[cell runs] count] == 0)

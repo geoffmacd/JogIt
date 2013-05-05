@@ -141,7 +141,7 @@
     [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     //units
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
-    [ghostDistanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     
@@ -1829,7 +1829,7 @@
     NSString *distanceUnitText = [curSettings getDistanceUnit];
     
     //this sort of a hack because if metric is changed, selectedKm is wrong, however, notification takes longer than tick() to call selector so we have to address it here where it would fail in the this where selectedKM > mile array
-    if(selectedKmIndex >= (isMetric ? [run.kmCheckpoints count] : [run.impCheckpoints count]))
+    if(selectedKmIndex > (isMetric ? [run.kmCheckpoints count] : [run.impCheckpoints count]))
     {
         selectedKmIndex = (isMetric ? [run.kmCheckpoints count]-1 : [run.impCheckpoints count]-1);
     }
