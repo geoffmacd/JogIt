@@ -342,11 +342,11 @@
 
 - (void) setupVoice {
     
-	fliteController.duration_stretch = 1.4; // Change the speed
-	fliteController.target_mean = 1.2; // Change the pitch
+	fliteController.duration_stretch = 1.35; // Change the speed
+	fliteController.target_mean = 1.3; // Change the pitch
     fliteController.target_stddev = 1.5; // Change the variance
     
-    //max volume for vocie
+    //max volume for voice
     [fliteController.audioPlayer setVolume:1.0f];
 }
 
@@ -596,6 +596,12 @@
             break;
     }
     
+    //remember if music was playinh 
+    MPMusicPlayerController * mp = [MPMusicPlayerController iPodMusicPlayer];
+    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
+    if(musicWasPlaying)
+        [mp pause];
+    
     //make it start processing
     [self sayNextSpeech];
 }
@@ -612,7 +618,13 @@
     }
     else
     {
-       [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionCategoryPlayback error:nil];
+        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionCategoryPlayback error:nil];
+        if(musicWasPlaying)
+        {
+            MPMusicPlayerController * mp = [MPMusicPlayerController iPodMusicPlayer];
+            [mp play];
+            musicWasPlaying = false;
+        }
     }
 }
 
@@ -1399,7 +1411,7 @@
         BOOL showSpeed = [[curSettings showSpeed] boolValue];
         BOOL isMetric = [[curSettings metric] boolValue];
         CGFloat weight = [[curSettings weight] floatValue] / 2.2046; //weight in kg
-        CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ (12600);
+        CGFloat calsToAdd = (paceTimeInterval * weight * (3.5 + (0.2 * speedmMin) + (0.9 * speedmMin * grade)))/ 12600;
         //only add calories if it is positive
         if(calsToAdd > 0.0f)
             run.calories += calsToAdd;
@@ -2707,7 +2719,7 @@
     if(mapSelectionOverlay == overlay)
     {
         polylineView.strokeColor = [UIColor lightGrayColor];
-        polylineView.lineWidth = mapIconPathWidth + 3; // to highlight
+        polylineView.lineWidth = mapIconPathWidth + 2; // to highlight
     }
     
     return polylineView;

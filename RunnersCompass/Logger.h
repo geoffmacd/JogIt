@@ -27,6 +27,7 @@
 #import <OpenEars/AudioSessionManager.h>
 #import "UpgradeVC.h"
 #import <Slt/Slt.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 
 
@@ -66,7 +67,7 @@
 #define paceSelectionOverrideTime 4 //s
 #define delayGoalAssessment 3 //s
 #define delaySpeech 0.1 //s
-#define AccelUpdateFreq    30.0 //hz
+#define AccelUpdateFreq    60.0 //hz
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -197,6 +198,7 @@ typedef enum {
 	OpenEarsEventsObserver *openEarsEventsObserver; // A class whose delegate methods which will allow us to stay informed of changes in the Flite and Pocketsphinx statuses.
 	FliteController *fliteController; // The controller for Flite (speech).
     NSMutableArray * speechQueue;
+    CGFloat ipodVolume;
     BOOL musicWasPlaying;
     
     //accelerometer

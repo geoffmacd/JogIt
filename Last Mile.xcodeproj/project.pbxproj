@@ -28,6 +28,7 @@
 		672AA43816B5AE6700B7DEE6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AA43716B5AE6600B7DEE6 /* QuartzCore.framework */; };
 		672AA50D16B73DAE00B7DEE6 /* JSSlidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */; };
 		672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */ = {isa = PBXBuildFile; fileRef = 672AA50E16B7437100B7DEE6 /* Logger.xib */; };
+		672AFF6D17360C2F002F7C05 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 672AFF69173608AB002F7C05 /* MediaPlayer.framework */; };
 		672D137E17335E190060BAB6 /* whiteshare.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D137C17335E190060BAB6 /* whiteshare.png */; };
 		672D137F17335E190060BAB6 /* whiteshare@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D137D17335E190060BAB6 /* whiteshare@2x.png */; };
 		672D13841733684C0060BAB6 /* progress-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 672D13821733684C0060BAB6 /* progress-bar-bg.png */; };
@@ -327,6 +328,7 @@
 		672AA50916B73DAE00B7DEE6 /* JSSlidingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSSlidingViewController.h; sourceTree = "<group>"; };
 		672AA50A16B73DAE00B7DEE6 /* JSSlidingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSSlidingViewController.m; sourceTree = "<group>"; };
 		672AA50E16B7437100B7DEE6 /* Logger.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Logger.xib; sourceTree = "<group>"; };
+		672AFF69173608AB002F7C05 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		672D137C17335E190060BAB6 /* whiteshare.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteshare.png; sourceTree = "<group>"; };
 		672D137D17335E190060BAB6 /* whiteshare@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteshare@2x.png"; sourceTree = "<group>"; };
 		672D13821733684C0060BAB6 /* progress-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress-bar-bg.png"; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				672AFF6D17360C2F002F7C05 /* MediaPlayer.framework in Frameworks */,
 				67F7CBA5172397540008CEBF /* AudioToolbox.framework in Frameworks */,
 				67F7CBA3172397490008CEBF /* AVFoundation.framework in Frameworks */,
 				6747F64B1720EA1B00B23C58 /* StoreKit.framework in Frameworks */,
@@ -724,6 +727,7 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
+				672AFF69173608AB002F7C05 /* MediaPlayer.framework */,
 				67A7D178173589D500365CE2 /* cloudyblue.png */,
 				672D138617336DF60060BAB6 /* cloudyblue@2x.png */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
