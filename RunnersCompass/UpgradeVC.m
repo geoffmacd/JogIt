@@ -172,19 +172,8 @@
     //still need to animate hidden expandedView
     
     //if sender was last cell or second last, then scroll to show expanded view
-    if(sender == [cells lastObject])
-    {
-        NSIndexPath *path = [table indexPathForCell:sender];
-        [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
-    }
-    if([cells count] >= 2)
-    {
-        if([cells objectAtIndex:[cells count]-2])
-        {
-            NSIndexPath *path = [table indexPathForCell:sender];
-            [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
-        }
-    }
+    NSIndexPath *path = [table indexPathForCell:sender];
+    [table scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionTop animated:true];
 }
 
 #pragma mark -
@@ -201,41 +190,57 @@
     
     SKProduct* product =[[IAPShare sharedHelper].iap.products lastObject];
     
-    [[IAPShare sharedHelper].iap buyProduct:product
-                               onCompletion:^(SKPaymentTransaction* trans){
-                                   
-
-                                   
-                                   NSLog(@"Purchased, Thank You");
-                                   
-                                   prefs.purchased = [NSNumber numberWithBool:true];
-                                   [delegate didPurchase];
-                                   
-                                   //give nottification to update settings on app delegate
-                                   [[NSNotificationCenter defaultCenter]
-                                    postNotificationName:@"settingsChangedNotification"
-                                    object:prefs];
-                                   
-                                   //just dismiss user cancel
-                                   [self dismissViewControllerAnimated:true completion:nil];
-                                   
-                               }
-                                     OnFail:^(SKPaymentTransaction* trans) {
-                                         
-                                         //present notification and thank you
-                                         //present PR notification popup
-                                         StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
-                                         [vc.view setBackgroundColor:[Util redColour]];
-                                         [vc.view.layer setCornerRadius:5.0f];
-                                         [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
-                                         [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
-                                         
-                                         [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
-                                         
-                                         
-                                         
-                                         NSLog(@"Error");
-                                     }];
+    if(product)
+    {
+        
+        [[IAPShare sharedHelper].iap buyProduct:product
+                                   onCompletion:^(SKPaymentTransaction* trans){
+                                       
+                                       
+                                       
+                                       NSLog(@"Purchased, Thank You");
+                                       
+                                       prefs.purchased = [NSNumber numberWithBool:true];
+                                       [delegate didPurchase];
+                                       
+                                       //give nottification to update settings on app delegate
+                                       [[NSNotificationCenter defaultCenter]
+                                        postNotificationName:@"settingsChangedNotification"
+                                        object:prefs];
+                                       
+                                       //just dismiss user cancel
+                                       [self dismissViewControllerAnimated:true completion:nil];
+                                       
+                                   }
+                                         OnFail:^(SKPaymentTransaction* trans) {
+                                             
+                                             //present fail notification
+                                             StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                             [vc.view setBackgroundColor:[Util redColour]];
+                                             [vc.view.layer setCornerRadius:5.0f];
+                                             [vc.titleLabel setText:NSLocalizedString(@"SettingsPurchaseFail","purchase fail title")];
+                                             [vc.updateLabel setText:@""];
+                                             
+                                             [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                                             
+                                             
+                                             
+                                             NSLog(@"Error");
+                                         }];
+    }
+    else
+    {
+        //did not get product yet
+        
+        //present fail notification
+        StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+        [vc.view setBackgroundColor:[Util redColour]];
+        [vc.view.layer setCornerRadius:5.0f];
+        [vc.titleLabel setText:NSLocalizedString(@"SettingsPurchaseFail","purchase fail title")];
+        [vc.updateLabel setText:@""];
+        
+        [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+    }
     
 }
 
