@@ -107,7 +107,6 @@
                 [cell.point1Label setText:NSLocalizedString(@"InAppGoal1", "bullet pt for goal")];
                 [cell.point2Label setText:NSLocalizedString(@"InAppGoal2", "bullet pt for goal")];
                 [cell.point3Label setText:NSLocalizedString(@"InAppGoal3", "bullet pt for goal")];
-                [cell.sampleImage setImage:[UIImage imageNamed:@"goalsample.png"]];
                 [cell.fullImage setImage:[UIImage imageNamed:@"goalfull.png"]];
                 break;
             case 1:
@@ -115,7 +114,6 @@
                 [cell.point1Label setText:NSLocalizedString(@"InAppPredict1", "bullet pt for Predict")];
                 [cell.point2Label setText:NSLocalizedString(@"InAppPredict2", "bullet pt for Predict")];
                 [cell.point3Label setText:NSLocalizedString(@"InAppPredict3", "bullet pt for Predict")];
-                [cell.sampleImage setImage:[UIImage imageNamed:@"predictsample.png"]];
                 [cell.fullImage setImage:[UIImage imageNamed:@"predictionfull.png"]];
                 break;
             case 2:
@@ -123,7 +121,6 @@
                 [cell.point1Label setText:NSLocalizedString(@"InAppGhost1", "bullet pt for Ghost")];
                 [cell.point2Label setText:NSLocalizedString(@"InAppGhost2", "bullet pt for Ghost")];
                 [cell.point3Label setText:NSLocalizedString(@"InAppGhost3", "bullet pt for Ghost")];
-                [cell.sampleImage setImage:[UIImage imageNamed:@"ghostsample.png"]];
                 [cell.fullImage setImage:[UIImage imageNamed:@"ghostfull.png"]];
                 break;
         }
@@ -153,7 +150,7 @@
         height = [cell getHeightRequired];
     }
     else{
-        height = 112.0f;
+        height = 110.0f;
     }
     
     return height;

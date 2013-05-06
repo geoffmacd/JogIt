@@ -31,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *point1Label;
 @property (weak, nonatomic) IBOutlet UILabel *point2Label;
 @property (weak, nonatomic) IBOutlet UILabel *point3Label;
-@property (weak, nonatomic) IBOutlet UIImageView *sampleImage;
 @property (weak, nonatomic) IBOutlet UIImageView *fullImage;
 
 //delegate

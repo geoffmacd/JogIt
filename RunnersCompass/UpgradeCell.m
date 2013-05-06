@@ -16,7 +16,7 @@
 @synthesize delegate;
 @synthesize expanded;
 @synthesize point1Label,point2Label,point3Label,titleLabel;
-@synthesize sampleImage,fullImage;
+@synthesize fullImage;
 
 #pragma mark - Lifecycle
 
@@ -37,7 +37,7 @@
     [point3Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     [point2Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
     [point1Label setFont:[UIFont fontWithName:@"Montserrat-Regular" size:11.0f]];
-    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:14.0f]];
+    [titleLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:15.0f]];
     
     //localized labels setup in upgradeVC
 }
@@ -45,9 +45,6 @@
 -(void)setTimePeriod:(BOOL) toWeekly
 {
 
-}
-
-- (IBAction)expandTapped:(id)sender {
 }
 
 - (IBAction)headerTapped:(id)sender {

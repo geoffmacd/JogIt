@@ -330,10 +330,8 @@
         
         //default user 
         userPrefsRecord.countdown = [NSNumber numberWithInt:3];
-        userPrefsRecord.autopause = [NSNumber numberWithInt:0];
+        userPrefsRecord.autopause = [NSNumber numberWithInt:1];
         userPrefsRecord.weight = [NSNumber numberWithInt:150];
-        //new.twitter = [NSNumber numberWithInt:0];
-        //new.facebook = [NSNumber numberWithInt:0];
         //find systems default unit measure
         NSLocale *locale = [NSLocale currentLocale];
         BOOL isMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
@@ -352,13 +350,11 @@
         //best to leave these blank so user does not have to backspace them
         userPrefsRecord.fullname = nil;
         userPrefsRecord.birthdate = nil;
+        //new.twitter = [NSNumber numberWithInt:0];
+        //new.facebook = [NSNumber numberWithInt:0];
         
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
-    
-    //test this every time
-    userPrefsRecord.purchased = [NSNumber numberWithBool:false];
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     //find goal, if not there create goal with no goal
     goalRecord = [GoalRecord MR_findFirst];

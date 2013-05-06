@@ -25,6 +25,7 @@
     
     //localized buttons in IB
     [doneBut setTitle:NSLocalizedString(@"CancelWord", @"cancel word ") forState:UIControlStateNormal];
+    [upgradeDescriptionLabel setText:NSLocalizedString(@"UpgradeDescription", @"description in upgrade header")];
     
     [doneBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];
     [upgradeBut.titleLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:15.0f]];

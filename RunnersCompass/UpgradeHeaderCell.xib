@@ -116,16 +116,17 @@
 					<object class="IBUILabel" id="296603957">
 						<reference key="NSNextResponder" ref="554188460"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{10, 107}, {300, 36}}</string>
+						<string key="NSFrame">{{10, 110}, {300, 24}}</string>
 						<reference key="NSSuperview" ref="554188460"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">Upgrade to include all features below and more features to come in updates</string>
+						<string key="IBUIText">Upgrade to include all features</string>
 						<reference key="IBUITextColor" ref="1022189084"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">0</int>
@@ -147,7 +148,7 @@
 						<double key="preferredMaxLayoutWidth">300</double>
 					</object>
 				</array>
-				<string key="NSFrameSize">{320, 150}</string>
+				<string key="NSFrameSize">{320, 134}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="843292753"/>
@@ -364,6 +365,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="doneBut">UIButton</string>
 						<string key="upgradeBut">UIButton</string>
+						<string key="upgradeDescriptionLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="doneBut">
@@ -373,6 +375,10 @@
 						<object class="IBToOneOutletInfo" key="upgradeBut">
 							<string key="name">upgradeBut</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="upgradeDescriptionLabel">
+							<string key="name">upgradeDescriptionLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

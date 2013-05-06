@@ -582,7 +582,7 @@
             [speechQueue addObject:NSLocalizedString(@"SpeechIntro", "begin run speech") ];
             break;
         case SpeechMinute:
-            [self speechForDistanceChange];
+            //[self speechForDistanceChange];
             break;
         case SpeechKM:
         case SpeechMile:
@@ -838,11 +838,6 @@
     
     NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
     
-    
-    
-    //TESTING
-    
-    [run processRunForRecord];
 }
 
 
