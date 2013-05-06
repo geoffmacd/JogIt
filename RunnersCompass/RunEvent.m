@@ -296,60 +296,71 @@
     //calculate post-processed metrics: descended,climbed,stride,cadence
     climbed = 0;
     descended = 0;
-    CLLocation * highest = [pos objectAtIndex:0];
-    CLLocation * lowest = [pos objectAtIndex:0];
+    BOOL firstGoingUp = false;
+    BOOL goingUp = false;
+    NSInteger skip = 0;
+    CLLocationDistance maxAccuracy = 0.0;
+    for(CLLocation * curPos in pos)
+    {
+        maxAccuracy += curPos.verticalAccuracy;
+    }
+    //set to either double average to eliminate outliers or max acceptable
+    maxAccuracy = MIN((maxAccuracy / [pos count]) * 2.5, maxVerticalAccuracy);
+    CLLocationDistance curAlt = 0.0;
+    CLLocationDistance priorAlt = 0.0;
+    CLLocationDistance lastAlt = 0.0;
+    CLLocationDistance startAlt = 0.0;
     for(CLLocation * curPos in pos)
     {
         
-        if(curPos.verticalAccuracy > maxVerticalAccuracy)
-            continue;
-        
-        //need points even if they are equal
-        if(curPos.altitude >= highest.altitude)
-        {
-            highest = curPos;
-        }
-        
-        if(curPos.altitude <= lowest.altitude)
-        {
-            lowest = curPos;
-        }
-        
-        /*
         //consider ignoring point altogether
-        if(curPos.verticalAccuracy > maxVerticalAccuracy)
+        if(curPos.verticalAccuracy > maxAccuracy)
             continue;
         
-        if(!lastPos)
+        skip++;
+        //skip every 2
+        if(skip % 2 != 0)
         {
-            lastPos = curPos;
+            priorAlt = curPos.altitude;
+            continue;
+        }
+        else
+        {
+            //average the two
+            curAlt = (priorAlt + curPos.altitude) / 2;
+            //process now
+        }
+        
+        if(skip == 2)
+        {
+            lastAlt = curAlt;
             firstGoingUp = true;
             continue;
         }
         
         if(firstGoingUp)
         {
-            startPos = curPos;
-            goingUp = (curPos.altitude >= lastPos.altitude);
+            startAlt = curAlt;
+            goingUp = (curAlt >= lastAlt);
             firstGoingUp = false;
         }
         
         
-        if(curPos.altitude >= lastPos.altitude)
+        if(curAlt >= lastAlt)
         {
             if(goingUp)
             {
                 
-                lastPos = curPos;
+                lastAlt = curAlt;
             }
             else
             {
                 //end of descend phase
-                descended += MAX(startPos.altitude - lastPos.altitude,0);
-                NSLog(@"descended %.1f", startPos.altitude - lastPos.altitude);
+                descended += MAX(startAlt- lastAlt,0);
+                NSLog(@"descended %.1f", startAlt - lastAlt);
                 goingUp = true;
-                startPos = curPos;
-                lastPos = curPos;
+                startAlt = curAlt;
+                lastAlt = curAlt;
             }
             
         }
@@ -357,123 +368,20 @@
         {
             if(!goingUp)
             {
-                
-                lastPos = curPos;
+                lastAlt = curAlt;
             }
             else
             {
                 //end of climb phase
-                climbed += MAX(lastPos.altitude - startPos.altitude,0);
-                NSLog(@"climbed %.1f", lastPos.altitude - startPos.altitude);
+                climbed += MAX(lastAlt - startAlt,0);
+                NSLog(@"climbed %.1f", lastAlt - startAlt);
                 goingUp = false;
-                startPos = curPos;
-                lastPos = curPos;
+                startAlt = curAlt;
+                lastAlt = curAlt;
             }
         }
-        */
-        
-        
-        /*
-        if(streaking)
-        {
-            if(goingUp)
-            {
-                //curPos must be higher than lastPos
-                if(curPos.altitude >= lastPos.altitude)
-                {
-                    lastPos = curPos;
-                    continue;
-                }
-                else
-                {
-                    //abort
-                    streaking = false;
-                    climbed += lastPos.altitude - startPos.altitude;
-                }
-            }
-            else
-            {
-                //curPos must be lower than lastPos
-                if(curPos.altitude <= lastPos.altitude)
-                {
-                    lastPos = curPos;
-                    continue;
-                }
-                else
-                {
-                    //abort
-                    streaking = false;
-                    descended += startPos.altitude - lastPos.altitude;
-                }
-            }
-        }
-        else
-        {
-            if(initStreaking && lastPos.altitude != curPos.altitude)
-            {
-                //start streaking
-                startPos = curPos;
-                initStreaking = false;
-                streaking = true;
-                //set direction
-                if(lastPos.altitude < curPos.altitude)
-                    goingUp = true;
-                else
-                    goingUp = false;
-            }
-            else
-            {
-                //wait once
-                initStreaking = true;
-            }
-        }
-        
-        lastPos = curPos;
-         */
     }
-    
-    //determine
-    NSInteger highestIndex = [pos indexOfObject:highest];
-    NSInteger lowestIndex = [pos indexOfObject:lowest];
-    CLLocation * highestPreLow = [pos objectAtIndex:0];
-    CLLocation * lowestPreHigh = [pos objectAtIndex:0];
-    //find highest point before lowest point
-    if(highestIndex <= lowestIndex)
-    {
-        highestPreLow = highest;
-    }
-    else
-    {
-        for(int i = 0; i < lowestIndex; i++)
-        {
-            CLLocation * curPos = [pos objectAtIndex:i];
-            if(curPos.verticalAccuracy > maxVerticalAccuracy)
-                continue;
-            
-            if(curPos.altitude >= highestPreLow.altitude)
-                highestPreLow = curPos;
-        }
-    }
-    descended = highestPreLow.altitude - lowest.altitude;
-    
-    //find lowest point before high point
-    if(lowestIndex <= highestIndex)
-    {
-        lowestPreHigh = lowest;
-    }
-    else
-    {
-        for(int i = 0; i < highestIndex; i++)
-        {
-            CLLocation * curPos = [pos objectAtIndex:i];
-            if(curPos.verticalAccuracy > maxVerticalAccuracy)
-                continue;
-            
-            if(curPos.altitude >= lowestPreHigh.altitude)
-                lowestPreHigh = curPos;
-        }
-    }
-    climbed = highest.altitude - lowestPreHigh.altitude;
+
     
     //strides per minute
     if(time > 0)
