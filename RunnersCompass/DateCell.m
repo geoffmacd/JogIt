@@ -208,6 +208,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [runsValue setHidden:true];
         [runsLabel setHidden:true];
     }
+    
+    /*
+    //for splash
+    [runsLabel setHidden:true];
+    [runsValue setHidden:true];
+    [distanceValue setHidden:true];
+    [distanceUnitLabel setHidden:true];
+    [headerLabel setHidden:true];
+    [folderImage setHidden:true];
+     */
 }
 
 

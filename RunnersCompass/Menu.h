@@ -57,7 +57,6 @@
     NSMutableArray * cells;
     NSInteger numPeriods;
     StartCell * start;
-    BOOL showingNoRuns;
     BOOL showFirstRun;
     RunEvent * longestRun;
     RunEvent * fastestRun;
@@ -78,9 +77,6 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *goalsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *performanceBut;
-@property (strong, nonatomic) IBOutlet UIImageView *runningManImage;
-@property (strong, nonatomic) IBOutlet UILabel *noRunsLabel;
-@property (strong, nonatomic) IBOutlet UIView *noRunView;
 
 
 //actions

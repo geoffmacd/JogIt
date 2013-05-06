@@ -14,8 +14,6 @@
 @synthesize MenuTable;
 @synthesize runInProgressAsFarAsICanTell;
 @synthesize settingsBut,performanceBut,goalsBut;
-@synthesize runningManImage,noRunsLabel;
-@synthesize noRunView;
 @synthesize expandState;
 @synthesize delegate;
 
@@ -69,10 +67,6 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self analyzePRs];
     
     runInProgressAsFarAsICanTell = false;
-    
-    //no run stuff
-    showingNoRuns = false;
-    [noRunsLabel setText:NSLocalizedString(@"NoRunsLabel", @"label describing no runs in menu")];
     
     //load cell
     [MenuTable registerClass:[DateCell class] forCellReuseIdentifier:dateCellID];

@@ -53,6 +53,14 @@
     //time label
     [timeLabel setText:@""];
     [timeLabel setHidden:true];
+    
+    
+    /*
+    //for splash
+    [addRunButton setHidden:true];
+    [headerLabel setHidden:true];
+    [folderImage setHidden:true];
+     */
 }
 
 
