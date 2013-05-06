@@ -233,10 +233,6 @@ static NSString * dateCellID = @"DateCellPrototype";
 
     numPeriods = [Util numPeriodsForRuns:runs withWeekly:[[curPrefs weekly] boolValue]];
     
-    //need at least one date
-    if(numPeriods <= 0)
-        return 1;
-    
     return numPeriods;
 }
 
