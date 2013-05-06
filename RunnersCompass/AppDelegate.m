@@ -43,7 +43,6 @@
             //handle case where run is being deleted and logger view is not valid
             if(!runToSave)
             {
-                
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
                 
@@ -57,6 +56,9 @@
             }
         }];
     }
+    
+    //alert APPirater
+    [Appirater userDidSignificantEvent:YES];
     
     //save to db
     if(runToSave)
@@ -369,6 +371,14 @@
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
     
+    //APPirater configure
+    [Appirater setAppId:@"552035781"];
+    [Appirater setDaysUntilPrompt:10];//10 days
+    [Appirater setUsesUntilPrompt:15];//15 uses
+    [Appirater setSignificantEventsUntilPrompt:3]; //3 runs until prompt
+    [Appirater setTimeBeforeReminding:5];//5 day wait after pressing remind later
+    [Appirater setDebug:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(settingsChanged:)
                                                  name:@"settingsChangedNotification"
@@ -407,6 +417,9 @@
     
     //set badge to nothing
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
+    //tell APPirater we are ready
+    [Appirater appLaunched:YES];
     
     return YES;//to indicate success
 }
@@ -447,6 +460,9 @@
     
     //alert logger view
     [self.backVC setInBackground:false];
+    
+    //alert APPirater
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

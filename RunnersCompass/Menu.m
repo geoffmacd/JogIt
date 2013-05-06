@@ -333,22 +333,6 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     //we will need to scroll to correct hierarchy cell if it is just off screen here
     
-    
-    //if sender was last cell or second last, then scroll to show expanded view
-    //ensure there is at least something to avoid crash from pressing the startcell
-    if(sender == [cells lastObject])
-    {
-        NSIndexPath *path = [MenuTable indexPathForCell:sender];
-        [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
-    }
-    else if([cells count] > 1 )
-    {
-        if(sender == [cells objectAtIndex:([cells count] - 2)])
-        {
-            NSIndexPath *path = [MenuTable indexPathForCell:sender];
-            [MenuTable scrollToRowAtIndexPath:path atScrollPosition:UITableViewScrollPositionNone animated:true];
-        }
-    }
 }
 
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture
