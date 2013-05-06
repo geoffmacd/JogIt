@@ -12,6 +12,7 @@
 
 @synthesize table,prefs,delegate;
 
+static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
 
 - (void)viewDidLoad
 {
@@ -185,7 +186,14 @@
     //purchase in-app through IAPhelper
     
     //should only be 1 product, the upgrade
-    SKProduct* product =[[IAPShare sharedHelper].iap.products lastObject];
+    SKProduct* product;
+    
+    for(SKProduct * p in [IAPShare sharedHelper].iap.products)
+    {
+        if([p.productIdentifier isEqualToString:upgradeID])
+            product = p;
+        
+    }
     
     if(product)
     {
