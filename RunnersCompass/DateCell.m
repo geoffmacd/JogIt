@@ -326,7 +326,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     for(HierarchicalCell * cell in cells)
     {
         if(cell.expanded)
-            tableHeight += 76;
+            tableHeight += 124;
     }
     
     

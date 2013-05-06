@@ -245,7 +245,6 @@
 										<int key="NSvFlags">289</int>
 										<string key="NSFrame">{{213, 186}, {50, 50}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<float key="IBUIAlpha">0.5</float>
 										<int key="IBUIContentMode">1</int>
