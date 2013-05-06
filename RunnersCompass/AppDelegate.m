@@ -379,7 +379,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     [Appirater setUsesUntilPrompt:15];//15 uses
     [Appirater setSignificantEventsUntilPrompt:3]; //3 runs until prompt
     [Appirater setTimeBeforeReminding:5];//5 day wait after pressing remind later
-    [Appirater setDebug:YES];
+    [Appirater setDebug:NO];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(settingsChanged:)
