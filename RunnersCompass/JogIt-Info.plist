@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Last Mile</string>
+	<string>JogIt</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
@@ -14,9 +14,9 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>cloudyblue.png</string>
+				<string>J5small.png</string>
 				<string>3dshoe.png</string>
-				<string>cloudyblue@2x.png</string>
+				<string>J5.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
