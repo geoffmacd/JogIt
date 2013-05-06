@@ -32,7 +32,7 @@
 #import "RunRecord.h"
 
 #define loadTimeMinForProgress 300 //s , 5min
-#define PRMinDistanceRequirement 50 //m
+#define PRMinDistanceRequirement 100 //m
 
 
 @protocol MenuViewControllerDelegate <NSObject>

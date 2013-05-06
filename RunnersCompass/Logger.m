@@ -629,12 +629,12 @@
 }
 
 - (void) fliteDidStartSpeaking {
-	NSLog(@"Flite has started speaking"); // Log it.
+	//NSLog(@"Flite has started speaking"); // Log it.
     
 }
 
 - (void) fliteDidFinishSpeaking {
-	NSLog(@"Flite has finished speaking"); // Log it.
+	//NSLog(@"Flite has finished speaking"); // Log it.
     
     //dequeue item and play next one after duration
     if([speechQueue count])
@@ -742,7 +742,7 @@
         //erase ghost ui
         [self resetGhostRun];
         
-        NSLog(@"Reset Logger %f",[NSDate timeIntervalSinceReferenceDate]);
+        //NSLog(@"Reset Logger %f",[NSDate timeIntervalSinceReferenceDate]);
         
         //zoom to entire run
         [self drawMapPath:true];
@@ -836,7 +836,7 @@
     
     [selectedPlot reloadData];
     
-    NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
+    //NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
     
 }
 
@@ -944,7 +944,7 @@
     [fullMap setUserTrackingMode:MKUserTrackingModeNone];
     
     //start updates
-    NSLog(@"started tracking.....");
+    //NSLog(@"started tracking.....");
     //tells to process first pos directly without calcing pace
     needsStartPos = true;
     //clear queue
@@ -997,7 +997,7 @@
     if(!pausedForAuto || finished)
     {
         //stop updates otherwise for battery life etc
-        NSLog(@"stopped tracking.....");
+        //NSLog(@"stopped tracking.....");
         [locationManager stopUpdatingLocation];
         
         //reset idle timer
@@ -1067,7 +1067,7 @@
             UserPrefs * curSettings = [delegate curUserPrefs];
             if([curSettings.autopause integerValue] == 1)
             {
-                NSLog(@"Autopaused - no location updates");
+                //NSLog(@"Autopaused - no location updates");
                 
                 pausedForAuto = true;
                 
@@ -1086,7 +1086,7 @@
             UserPrefs * curSettings = [delegate curUserPrefs];
             if([curSettings.autopause integerValue] == 1)
             {
-                NSLog(@"Autopaused - pace too slow");
+                //NSLog(@"Autopaused - pace too slow");
                 
                 pausedForAuto = true;
                 
@@ -1396,7 +1396,7 @@
         
         //1.distance
         run.distance += distanceToAdd;
-        NSLog(@"%f distance added", distanceToAdd);
+        //NSLog(@"%f distance added", distanceToAdd);
         
         //2.climbed
         CLLocationDistance climbed = latest.altitude - prior.altitude;
@@ -1595,7 +1595,7 @@
         distanceToAdd = [latest distanceFromLocation:prior];
     }
     
-    NSLog(@"Consequtive %d", consecutiveHeadingCount);
+    //NSLog(@"Consequtive %d", consecutiveHeadingCount);
     
     return distanceToAdd;
 }
@@ -2175,7 +2175,7 @@
     //last should the last object in run.pos
     CLLocation *newLocation = [locations lastObject];
     
-    NSLog(@"%d  - lat%f - lon%f - accur%f - alt%f - speed%f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.altitude, newLocation.speed);
+    //NSLog(@"%d  - lat%f - lon%f - accur%f - alt%f - speed%f", [run.pos count], newLocation.coordinate.latitude, newLocation.coordinate.longitude, newLocation.horizontalAccuracy, newLocation.altitude, newLocation.speed);
     
     
     //see if first pos since unpause
@@ -2349,7 +2349,7 @@
         return;
     }
     
-    NSLog(@"saving map thumbnail");
+    //NSLog(@"saving map thumbnail");
     waitingForMapToLoad = false;
     
     //ensure legal is gone
@@ -2599,7 +2599,7 @@
             
             CLLocationMeta *locationMeta = [run.posMeta  objectAtIndex:i];
             CLLocationDistance testAlt = location.altitude;
-            NSLog(@"Altitude @ %.0fs : %.1f m    - accuracy:%.1f", [locationMeta time], testAlt, location.verticalAccuracy);
+            //NSLog(@"Altitude @ %.0fs : %.1f m    - accuracy:%.1f", [locationMeta time], testAlt, location.verticalAccuracy);
             
             CLLocationCoordinate2D coordinate = location.coordinate;
             
@@ -2848,7 +2848,7 @@
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView
 {
-    NSLog(@"finished loading tiles..");
+    //NSLog(@"finished loading tiles..");
     
     if(waitingForMapToLoad)
     {
@@ -2859,7 +2859,7 @@
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
 {
-    NSLog(@"start loading tiles..");
+    //NSLog(@"start loading tiles..");
     
     if(waitingForMapToLoad)
     {
@@ -2922,7 +2922,7 @@
     CGFloat endLocation = [self convertToX:endLocationMinute];
     
     
-    NSLog(@"Scroll @ %.f with cache @ %d, %d min with plot start = %f , end = %f , %d min", curViewOffset, lastCacheMinute, curViewMinute, startLocation, endLocation, endLocationMinute);
+    //NSLog(@"Scroll @ %.f with cache @ %d, %d min with plot start = %f , end = %f , %d min", curViewOffset, lastCacheMinute, curViewMinute, startLocation, endLocation, endLocationMinute);
     
 
     if(curViewMinute < lastCacheMinute)
@@ -2933,7 +2933,7 @@
         if(lastCacheMinute < 0)
             lastCacheMinute = 0;
         
-        NSLog(@"Reload to left @ %d", lastCacheMinute);
+        //NSLog(@"Reload to left @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
         
@@ -2957,7 +2957,7 @@
         if(lastCacheMinute >= [[run minCheckpoints] count] - (paceGraphSplitObjects - paceGraphSplitLoadOffset))
             lastCacheMinute = [[run minCheckpoints] count] - (paceGraphSplitObjects - paceGraphSplitLoadOffset);
         
-        NSLog(@"Reload to right @ %d", lastCacheMinute);
+        //NSLog(@"Reload to right @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(paceGraphSplitObjects)];
         
@@ -3768,7 +3768,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Button %d", buttonIndex);
+    //NSLog(@"Button %d", buttonIndex);
     
     if(buttonIndex == 0)
     {

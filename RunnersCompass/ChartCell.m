@@ -745,7 +745,7 @@
     CGFloat endLocation = [self convertToX:endLocationMinute];
     
     
-    NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
+    //NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);
 
     
     if(curViewMinute < lastCacheMinute)
@@ -756,7 +756,7 @@
         if(lastCacheMinute < 0)
             lastCacheMinute = 0;
         
-        NSLog(@"Reload to left @ %d", lastCacheMinute);
+        //NSLog(@"Reload to left @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(performanceSplitObjects)];
         
@@ -777,7 +777,7 @@
         if(lastCacheMinute >= numBars - (performanceSplitObjects - performanceLoadObjectsOffset))
             lastCacheMinute = numBars - (performanceSplitObjects - performanceLoadObjectsOffset);
         
-        NSLog(@"Reload to right @ %d", lastCacheMinute);
+        //NSLog(@"Reload to right @ %d", lastCacheMinute);
         
         CPTPlotRange * newRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(lastCacheMinute) length:CPTDecimalFromFloat(performanceSplitObjects)];
         

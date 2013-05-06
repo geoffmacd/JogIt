@@ -420,7 +420,7 @@
     avg = (runCount > 0 ? avg / runCount : 0);
     
     //alert to negative calcs
-    NSLog(@"min: %.1f avg: %.1f max: %.1f", min,avg,max);
+    //NSLog(@"min: %.1f avg: %.1f max: %.1f", min,avg,max);
     
     //set goal values
     activityCount = [NSNumber numberWithFloat:runCount];

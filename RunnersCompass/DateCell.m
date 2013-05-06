@@ -535,7 +535,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
     }
     else{
-        NSLog(@"Cant find cell to delete");
+        //NSLog(@"Cant find cell to delete");
     }
 }
 

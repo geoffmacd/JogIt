@@ -715,7 +715,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
 }
 
 - (void)printFrame:(CGRect)frame {
-    NSLog(@"Frame: %g %g %g %g", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    //NSLog(@"Frame: %g %g %g %g", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 }
 
 #pragma mark - Add/Remove Back View if Appropriate

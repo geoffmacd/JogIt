@@ -48,7 +48,7 @@
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
         [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
-            NSLog(@"save pressed");
+            //NSLog(@"save pressed");
             
             //prevent future runs form being added
             if(!([manualRun.date compare:shiftDateByXdays([NSDate date],0)] == NSOrderedAscending))
@@ -126,7 +126,7 @@
     }];
     
     [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
-        NSLog(@"did change model value");
+        //NSLog(@"did change model value");
     }];
     
     [self.formModel loadFieldsWithObject:manualRun];

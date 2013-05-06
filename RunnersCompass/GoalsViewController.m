@@ -226,7 +226,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = [indexPath row];
-    NSLog(@"row: %d with array: %d", row, goalRunCount);
+    //NSLog(@"row: %d with array: %d", row, goalRunCount);
     
     if(row >= [cells count])
     {

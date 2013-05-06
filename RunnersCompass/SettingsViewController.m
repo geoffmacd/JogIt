@@ -46,7 +46,7 @@
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
         [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
-            NSLog(@"save pressed");
+            //NSLog(@"save pressed");
             
             //send out notification if units have changed
             if(oldMetric != [prefsToChange.metric boolValue] || oldShowSpeed != [prefsToChange.showSpeed boolValue])
@@ -178,7 +178,7 @@
     }];
     
     [self.formModel setDidChangeValueWithBlock:^(id object, id value, NSString *keyPath) {
-        NSLog(@"did change model value");
+        //NSLog(@"did change model value");
     }];
     
     [self.formModel loadFieldsWithObject:prefsToChange ];

@@ -274,7 +274,7 @@ static NSString * dateCellID = @"DateCellPrototype";
             showFirstRun = false;
         }
         
-        NSLog(@"row %d requested - cache size: %d - creating %d...", row, [cells count], cell.indexForColor);
+        //NSLog(@"row %d requested - cache size: %d - creating %d...", row, [cells count], cell.indexForColor);
         
         return cell;
     }
@@ -504,7 +504,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     [self cleanupForNav];
     
-    NSLog(@"Selected Run from Menu %f",[NSDate timeIntervalSinceReferenceDate]);
+    //NSLog(@"Selected Run from Menu %f",[NSDate timeIntervalSinceReferenceDate]);
     
     if(!runInProgressAsFarAsICanTell)
     {
@@ -734,7 +734,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Button %d", buttonIndex);
+    //NSLog(@"Button %d", buttonIndex);
     
     //for discarding active run
     if(buttonIndex == 0)

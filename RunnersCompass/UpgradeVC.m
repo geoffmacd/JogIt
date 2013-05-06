@@ -195,7 +195,7 @@
                                        
                                        
                                        
-                                       NSLog(@"Purchased, Thank You");
+                                       //NSLog(@"Purchased, Thank You");
                                        
                                        prefs.purchased = [NSNumber numberWithBool:true];
                                        [delegate didPurchase];
@@ -222,7 +222,7 @@
                                              
                                              
                                              
-                                             NSLog(@"Error");
+                                             //NSLog(@"Error");
                                          }];
     }
     else

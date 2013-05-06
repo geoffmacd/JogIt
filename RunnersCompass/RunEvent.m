@@ -357,7 +357,7 @@
             {
                 //end of descend phase
                 descended += MAX(startAlt- lastAlt,0);
-                NSLog(@"descended %.1f", startAlt - lastAlt);
+                //NSLog(@"descended %.1f", startAlt - lastAlt);
                 goingUp = true;
                 startAlt = curAlt;
                 lastAlt = curAlt;
@@ -374,7 +374,7 @@
             {
                 //end of climb phase
                 climbed += MAX(lastAlt - startAlt,0);
-                NSLog(@"climbed %.1f", lastAlt - startAlt);
+                //NSLog(@"climbed %.1f", lastAlt - startAlt);
                 goingUp = false;
                 startAlt = curAlt;
                 lastAlt = curAlt;
@@ -699,7 +699,7 @@
         
         NSOrderedSet * allLocs = record.locations;
         
-        NSLog(@"Retrieved location records %f",[NSDate timeIntervalSinceReferenceDate]);
+        //NSLog(@"Retrieved location records %f",[NSDate timeIntervalSinceReferenceDate]);
         
         //no need to sort, since stored as nsorderedset
         /*
@@ -751,12 +751,12 @@
                     break;
                     
                 default:
-                    NSLog(@"bad location record type");
+                    //NSLog(@"bad location record type");
                     break;
             }
         }
         
-        NSLog(@"Loading Run from Record %f",[NSDate timeIntervalSinceReferenceDate]);
+        //NSLog(@"Loading Run from Record %f",[NSDate timeIntervalSinceReferenceDate]);
         return self;
     }
     return nil;

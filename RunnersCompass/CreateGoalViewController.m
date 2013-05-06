@@ -55,7 +55,7 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"Button %d", buttonIndex);
+    //NSLog(@"Button %d", buttonIndex);
     
     if(buttonIndex == 0)
     {

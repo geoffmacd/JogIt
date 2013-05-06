@@ -159,7 +159,7 @@
 
 
 - (void)customButtonPressed:(id)sender {
-    NSLog(@"Not implemented. If you get around to it, please contribute back to the project :)");
+    //NSLog(@"Not implemented. If you get around to it, please contribute back to the project :)");
 }
 
 @end

@@ -232,7 +232,7 @@
         }
     }
     
-    NSLog(@"%d periods found for %d runs", periods, [runs count]);
+    //NSLog(@"%d periods found for %d runs", periods, [runs count]);
     return periods;
 }
 
@@ -268,7 +268,7 @@
         }
     }
     
-    NSLog(@"%d runs returnned for period: %@", [periodRuns count], start);
+    //NSLog(@"%d runs returnned for period: %@", [periodRuns count], start);
     return periodRuns;
 }
 
