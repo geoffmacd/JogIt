@@ -410,10 +410,12 @@ static NSString * dateCellID = @"DateCellPrototype";
                 //[AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor lightGrayColor]];
             }
             
-            expandState = 1;
+            //expandState = 1;
         }
         
         expandedCount++;
+        if(expandedCount > 2)
+            expandedCount = 2;
     }
     else
     {
@@ -431,7 +433,7 @@ static NSString * dateCellID = @"DateCellPrototype";
                     [AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor whiteColor]];
             }
             */
-            expandState = 0;
+            //expandState = 0;
         }
     }
     
@@ -798,6 +800,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     expandState--;
     if(expandState < 0)
         expandState = 0;
+    else if(expandState > 1)//must collapse something
+        expandState = 1;
     
     //collapse all cells
     for(DateCell * dateCell in cells)
@@ -811,6 +815,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     expandState++;
     if(expandState > 2)
         expandState = 2;
+    else if(expandState < 1)//has to at least expand something
+        expandState = 1;
     
     //expand all cells
     for(DateCell * dateCell in cells)

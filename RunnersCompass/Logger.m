@@ -141,6 +141,7 @@
     [lastKmLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     //units
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
+    [ghostDistanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel1 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];
     [paceUnitLabel2 setFont:[UIFont fontWithName:@"Montserrat-Regular" size:10.0f]];

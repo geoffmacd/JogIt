@@ -305,6 +305,11 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     if(state == 2)
     {
+        //in case it
+        if(!expanded && !locked)
+        {
+            [self setExpand:true withAnimation:false];
+        }
         for(HierarchicalCell * cell in cells)
         {
             [cell expandAll];
