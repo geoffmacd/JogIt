@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Last Mile.xcodeproj">
+      location = "self:JogIt.xcodeproj">
    </FileRef>
 </Workspace>

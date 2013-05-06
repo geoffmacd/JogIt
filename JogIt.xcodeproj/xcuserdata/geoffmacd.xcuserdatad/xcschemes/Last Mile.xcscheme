@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "67236D0316409B7700DD13C5"
                BuildableName = "Last Mile.app"
-               BlueprintName = "Last Mile"
-               ReferencedContainer = "container:Last Mile.xcodeproj">
+               BlueprintName = "JogIt"
+               ReferencedContainer = "container:JogIt.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "Last Mile.app"
-            BlueprintName = "Last Mile"
-            ReferencedContainer = "container:Last Mile.xcodeproj">
+            BlueprintName = "JogIt"
+            ReferencedContainer = "container:JogIt.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -53,8 +53,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "Last Mile.app"
-            BlueprintName = "Last Mile"
-            ReferencedContainer = "container:Last Mile.xcodeproj">
+            BlueprintName = "JogIt"
+            ReferencedContainer = "container:JogIt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,8 +71,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "67236D0316409B7700DD13C5"
             BuildableName = "Last Mile.app"
-            BlueprintName = "Last Mile"
-            ReferencedContainer = "container:Last Mile.xcodeproj">
+            BlueprintName = "JogIt"
+            ReferencedContainer = "container:JogIt.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
