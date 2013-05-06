@@ -294,13 +294,86 @@
     newRunRecord.thumbnailRecord = thumbNailRecord;
     
     //calculate post-processed metrics: descended,climbed,stride,cadence
-    BOOL goingUp = false;
-    BOOL streaking = false;
-    BOOL initStreaking = false;
-    CLLocation * startPos;
-    CLLocation * lastPos;
+    climbed = 0;
+    descended = 0;
+    CLLocation * highest = [pos objectAtIndex:0];
+    CLLocation * lowest = [pos objectAtIndex:0];
     for(CLLocation * curPos in pos)
     {
+        
+        if(curPos.verticalAccuracy > maxVerticalAccuracy)
+            continue;
+        
+        //need points even if they are equal
+        if(curPos.altitude >= highest.altitude)
+        {
+            highest = curPos;
+        }
+        
+        if(curPos.altitude <= lowest.altitude)
+        {
+            lowest = curPos;
+        }
+        
+        /*
+        //consider ignoring point altogether
+        if(curPos.verticalAccuracy > maxVerticalAccuracy)
+            continue;
+        
+        if(!lastPos)
+        {
+            lastPos = curPos;
+            firstGoingUp = true;
+            continue;
+        }
+        
+        if(firstGoingUp)
+        {
+            startPos = curPos;
+            goingUp = (curPos.altitude >= lastPos.altitude);
+            firstGoingUp = false;
+        }
+        
+        
+        if(curPos.altitude >= lastPos.altitude)
+        {
+            if(goingUp)
+            {
+                
+                lastPos = curPos;
+            }
+            else
+            {
+                //end of descend phase
+                descended += MAX(startPos.altitude - lastPos.altitude,0);
+                NSLog(@"descended %.1f", startPos.altitude - lastPos.altitude);
+                goingUp = true;
+                startPos = curPos;
+                lastPos = curPos;
+            }
+            
+        }
+        else
+        {
+            if(!goingUp)
+            {
+                
+                lastPos = curPos;
+            }
+            else
+            {
+                //end of climb phase
+                climbed += MAX(lastPos.altitude - startPos.altitude,0);
+                NSLog(@"climbed %.1f", lastPos.altitude - startPos.altitude);
+                goingUp = false;
+                startPos = curPos;
+                lastPos = curPos;
+            }
+        }
+        */
+        
+        
+        /*
         if(streaking)
         {
             if(goingUp)
@@ -336,7 +409,7 @@
         }
         else
         {
-            if(initStreaking)
+            if(initStreaking && lastPos.altitude != curPos.altitude)
             {
                 //start streaking
                 startPos = curPos;
@@ -356,7 +429,51 @@
         }
         
         lastPos = curPos;
+         */
     }
+    
+    //determine
+    NSInteger highestIndex = [pos indexOfObject:highest];
+    NSInteger lowestIndex = [pos indexOfObject:lowest];
+    CLLocation * highestPreLow = [pos objectAtIndex:0];
+    CLLocation * lowestPreHigh = [pos objectAtIndex:0];
+    //find highest point before lowest point
+    if(highestIndex <= lowestIndex)
+    {
+        highestPreLow = highest;
+    }
+    else
+    {
+        for(int i = 0; i < lowestIndex; i++)
+        {
+            CLLocation * curPos = [pos objectAtIndex:i];
+            if(curPos.verticalAccuracy > maxVerticalAccuracy)
+                continue;
+            
+            if(curPos.altitude >= highestPreLow.altitude)
+                highestPreLow = curPos;
+        }
+    }
+    descended = highestPreLow.altitude - lowest.altitude;
+    
+    //find lowest point before high point
+    if(lowestIndex <= highestIndex)
+    {
+        lowestPreHigh = lowest;
+    }
+    else
+    {
+        for(int i = 0; i < highestIndex; i++)
+        {
+            CLLocation * curPos = [pos objectAtIndex:i];
+            if(curPos.verticalAccuracy > maxVerticalAccuracy)
+                continue;
+            
+            if(curPos.altitude >= lowestPreHigh.altitude)
+                lowestPreHigh = curPos;
+        }
+    }
+    climbed = highest.altitude - lowestPreHigh.altitude;
     
     //strides per minute
     if(time > 0)

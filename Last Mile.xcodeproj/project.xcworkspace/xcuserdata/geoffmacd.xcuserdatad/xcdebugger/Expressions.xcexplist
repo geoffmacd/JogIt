@@ -3,16 +3,24 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "-[HUDView awakeFromNib]:HUDView.m">
-      </ContextState>
-      <ContextState
-         contextName = "-[HUDView initWithFrame:]:HUDView.m">
-      </ContextState>
-      <ContextState
          contextName = "-[MenuViewController tableView:heightForRowAtIndexPath:]:Menu.m">
       </ContextState>
       <ContextState
+         contextName = "-[LoggerViewController drawMapPath:]:Logger.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(NSObject)location">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[HierarchicalCell setup]:HierarchicalCell.m">
+      </ContextState>
+      <ContextState
          contextName = "-[HUDView initWithCoder:]:HUDView.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[HUDView initWithFrame:]:HUDView.m">
       </ContextState>
       <ContextState
          contextName = "-[MenuViewController cellDidChangeHeight:]:Menu.m">
@@ -23,7 +31,7 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "-[HierarchicalCell setup]:HierarchicalCell.m">
+         contextName = "-[HUDView awakeFromNib]:HUDView.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -837,6 +837,12 @@
     [selectedPlot reloadData];
     
     NSLog(@"Completed run load %f",[NSDate timeIntervalSinceReferenceDate]);
+    
+    
+    
+    //TESTING
+    
+    [run processRunForRecord];
 }
 
 
@@ -2595,6 +2601,11 @@
         for (NSInteger i = lastConnectedIndex; i < numberOfSteps; i++)
         {
             CLLocation *location = [run.pos  objectAtIndex:i];
+            
+            CLLocationMeta *locationMeta = [run.posMeta  objectAtIndex:i];
+            CLLocationDistance testAlt = location.altitude;
+            NSLog(@"Altitude @ %.0fs : %.1f m    - accuracy:%.1f", [locationMeta time], testAlt, location.verticalAccuracy);
+            
             CLLocationCoordinate2D coordinate = location.coordinate;
             
             coordinates[numberForLine] = coordinate;

@@ -17,6 +17,7 @@
 #define convertKMToMile 0.6214//0.621371
 #define convertMToFt 3.28084 
 #define maxSpeedForPR 30 //m/s
+#define maxVerticalAccuracy 20 //m
 
 @interface CLLocationMeta : NSObject{
     NSTimeInterval pace;
