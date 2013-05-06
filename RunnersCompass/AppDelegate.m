@@ -16,6 +16,8 @@
 @synthesize frontVC, backVC;
 
 
+static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
+
 #pragma mark - Logger Delegate Methods
 
 - (void)menuButtonPressed:(id)sender{
@@ -315,7 +317,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //request products so that they are available to buy
-    NSSet * productSet = [NSSet setWithObject:@"LM1.0Upgrade"];
+    NSSet * productSet = [NSSet setWithObject:upgradeID];
     [IAPShare sharedHelper].iap = [[IAPHelper alloc] initWithProductIdentifiers:productSet];
     
     //[self setupTestSQL];
@@ -372,7 +374,7 @@
     }
     
     //APPirater configure
-    [Appirater setAppId:@"552035781"];
+    [Appirater setAppId:@"645670297"];
     [Appirater setDaysUntilPrompt:10];//10 days
     [Appirater setUsesUntilPrompt:15];//15 uses
     [Appirater setSignificantEventsUntilPrompt:3]; //3 runs until prompt

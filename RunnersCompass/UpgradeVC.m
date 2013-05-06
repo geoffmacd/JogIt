@@ -184,7 +184,7 @@
     
     //purchase in-app through IAPhelper
     
-    
+    //should only be 1 product, the upgrade
     SKProduct* product =[[IAPShare sharedHelper].iap.products lastObject];
     
     if(product)
