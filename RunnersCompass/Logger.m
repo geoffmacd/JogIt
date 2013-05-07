@@ -43,6 +43,7 @@
 @synthesize lowSignalLabel,titleView, goalAchievedLabel;
 @synthesize autopauseLabel;
 @synthesize invisibleLastKmButton;
+@synthesize startSilently;
 //@synthesize testStepLabel;
 
 #pragma mark - Lifecycle
@@ -173,6 +174,8 @@
     
     //necessary to set the frames properly in viewdidlayout
     justLoaded = true;
+    
+    startSilently = false;
     
     //open ears stuff
     //musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
@@ -672,8 +675,10 @@
     else
     {
         [shadeView setHidden:true];
-        //just start
+        //just start silently to not screw with slider
+        startSilently = true;
         [delegate pauseAnimation:nil];
+        startSilently = false;
     }
 }
 

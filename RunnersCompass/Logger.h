@@ -221,6 +221,7 @@ typedef enum {
 @property BOOL paused;
 //APP IS IN BACKGROUND
 @property (setter = setInBackground:) BOOL inBackground;
+@property BOOL startSilently;
 
 
 //UI

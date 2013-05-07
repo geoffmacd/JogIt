@@ -73,7 +73,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
 - (void)pauseAnimation:(void(^)(void))completion {
     
     //if in logger view and not in background, do animation
-    if(!self.viewController.isOpen && !self.backVC.inBackground)
+    if(!self.viewController.isOpen && !self.backVC.inBackground && !self.backVC.startSilently)
     {
         [self.viewController pauseWithBounceAnimation:completion];
     }
