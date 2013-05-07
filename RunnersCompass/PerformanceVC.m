@@ -120,7 +120,7 @@
 {
     //return number of charts
     BOOL purchase = [[prefs purchased] boolValue];
-    return (purchase) ? MetricTypeSteps : MetricTypeActivityCount; //for pr cell
+    return (purchase) ? MetricTypeStride : MetricTypeActivityCount; //for pr cell
 }
 
 // Customize the appearance of table view cells.
