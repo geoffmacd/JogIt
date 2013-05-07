@@ -278,12 +278,55 @@
         [self drawAllAnnotations];
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
+        
+        //process accelerometer data
+        NSInteger wakeup = 0;
+        for(int i = 0 ; i < [accelerometerReadings count];i++)
+        {
+            CMAccelerometerData * acceleration = [accelerometerReadings objectAtIndex:i];
+            
+            if(wakeup < i)
+                isSleeping = false;
+            
+            float xx = acceleration.acceleration.x;
+            float yy = acceleration.acceleration.y;
+            float zz = acceleration.acceleration.z;
+            
+            float dot = (px * xx) + (py * yy) + (pz * zz);
+            float a = ABS(sqrt(px * px + py * py + pz * pz));
+            float b = ABS(sqrt(xx * xx + yy * yy + zz * zz));
+            
+            dot /= (a * b);
+            
+            if (dot <= 0.82) {
+                
+                //skip next .3seconds
+                if (!isSleeping) {
+                    isSleeping = YES;
+                    wakeup = i + 19;
+                    run.steps++;
+                }
+            }
+            
+            px = xx; py = yy; pz = zz;
+        }
+ 
     }
     else if(inBackground)
     {
         //prevent battery loss by disabling this in  case it is enabled
         [fullMap setUserTrackingMode:MKUserTrackingModeNone];
         [iconMap setUserTrackingMode:MKUserTrackingModeNone];
+        
+        //set accelerometer updates
+        accelerometerReadings = [NSMutableArray new];
+        //add acelerometer to queue in background
+        [cMManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
+                                        withHandler:^(CMAccelerometerData *data, NSError *error) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                
+                                                [accelerometerReadings addObject:data];
+                                            });}];
     }
 }
 
@@ -349,7 +392,7 @@
     fliteController.target_stddev = 1.5; // Change the variance
     
     //max volume for voice
-    [fliteController.audioPlayer setVolume:1.0f];
+    [fliteController.audioPlayer setVolume:2.0f];
 }
 
 -(void)speechForDistanceChange
@@ -661,7 +704,7 @@
     countdown = [[[delegate curUserPrefs] countdown] integerValue];
     if(countdown < 1)
         countdown = 1;
-        
+    
     [shadeView setHidden:false];
     [countdownLabel setAlpha:1.0f];
     [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
@@ -992,6 +1035,8 @@
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / AccelUpdateFreq];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     px = py = pz = 0;
+    cMManager = [[CMMotionManager alloc] init];
+    [cMManager setAccelerometerUpdateInterval:(1/AccelUpdateFreq)];
 }
 
 

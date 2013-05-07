@@ -28,6 +28,7 @@
 #import "UpgradeVC.h"
 #import <Slt/Slt.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <CoreMotion/CoreMotion.h>
 
 
 
@@ -207,6 +208,8 @@ typedef enum {
     float pz;
     BOOL isChange;
     BOOL isSleeping;
+    CMMotionManager * cMManager;
+    NSMutableArray * accelerometerReadings;
     
     //purchase notification
     BOOL showPurchaseNotification;
