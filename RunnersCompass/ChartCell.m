@@ -753,12 +753,12 @@
     CGFloat curViewOffset = tempScrollView.contentOffset.x;
     NSInteger curViewMinute = [self convertToCheckpointMinute:curViewOffset];
     
-    NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.location];
-    NSInteger startLocationMinute = [startLocDecimal integerValue];
-    CGFloat startLocation = [self convertToX:startLocationMinute];
-    NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
-    NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
-    CGFloat endLocation = [self convertToX:endLocationMinute];
+    //NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.location];
+    //NSInteger startLocationMinute = [startLocDecimal integerValue];
+    //CGFloat startLocation = [self convertToX:startLocationMinute];
+    //NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
+    //NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
+    //CGFloat endLocation = [self convertToX:endLocationMinute];
     
     
     //NSLog(@"Scroll @ %.f , %d min with plot start = %f , %d min, end = %f , %d min", curViewOffset, curViewMinute, startLocation, startLocationMinute, endLocation, endLocationMinute);

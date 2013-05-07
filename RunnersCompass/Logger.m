@@ -2657,10 +2657,6 @@
         {
             CLLocation *location = [run.pos  objectAtIndex:i];
             
-            CLLocationMeta *locationMeta = [run.posMeta  objectAtIndex:i];
-            CLLocationDistance testAlt = location.altitude;
-            //NSLog(@"Altitude @ %.0fs : %.1f m    - accuracy:%.1f", [locationMeta time], testAlt, location.verticalAccuracy);
-            
             CLLocationCoordinate2D coordinate = location.coordinate;
             
             coordinates[numberForLine] = coordinate;
@@ -2974,12 +2970,12 @@
     CGFloat curViewOffset = paceScroll.contentOffset.x;
     NSInteger curViewMinute = [self convertToCheckpointMinute:curViewOffset];
     
-    NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.location];
-    NSInteger startLocationMinute = [startLocDecimal integerValue];
-    CGFloat startLocation = [self convertToX:startLocationMinute];
-    NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
-    NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
-    CGFloat endLocation = [self convertToX:endLocationMinute];
+    //NSDecimalNumber *startLocDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.location];
+    //NSInteger startLocationMinute = [startLocDecimal integerValue];
+    //CGFloat startLocation = [self convertToX:startLocationMinute];
+    //NSDecimalNumber *endLengthDecimal = [NSDecimalNumber decimalNumberWithDecimal:plotSpace.xRange.length];
+    //NSInteger endLocationMinute = [startLocDecimal integerValue] + [endLengthDecimal integerValue];
+    //CGFloat endLocation = [self convertToX:endLocationMinute];
     
     
     //NSLog(@"Scroll @ %.f with cache @ %d, %d min with plot start = %f , end = %f , %d min", curViewOffset, lastCacheMinute, curViewMinute, startLocation, endLocation, endLocationMinute);
