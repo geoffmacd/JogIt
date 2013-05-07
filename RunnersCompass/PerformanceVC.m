@@ -31,6 +31,9 @@
         [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
         
         showPurchaseNotification = false;
+        
+        //add more rows for added metrics
+        [table reloadData];
     }
 }
 
@@ -116,7 +119,8 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //return number of charts
-    return MetricTypeClimbed + 1; //for pr cell
+    BOOL purchase = [[prefs purchased] boolValue];
+    return (purchase) ? MetricTypeSteps : MetricTypeActivityCount; //for pr cell
 }
 
 // Customize the appearance of table view cells.
@@ -167,12 +171,15 @@
         [cell setDelegate:self];
         [cell setPrefs:prefs];
         //set data for cells with array at index of the metric
-        NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:row-1];
-        NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:row-1];
+        RunMetric metricToSet = row;
+        if(metricToSet >= MetricTypeActivityCount)
+            metricToSet++;//skip activity count
+        NSMutableArray * weeklyValuesToSet = [analysis.weeklyMeta objectAtIndex:metricToSet-1];
+        NSMutableArray * monthlyValuesToSet = [analysis.monthlyMeta objectAtIndex:metricToSet-1];
         [cell setWeeklyValues:weeklyValuesToSet];
         [cell setMonthlyValues:monthlyValuesToSet];
         [cell setRaceCell:false];
-        [cell setAssociated:row];//convert row to runmetric assuming
+        [cell setAssociated:metricToSet];//convert row to runmetric assuming
         [cell setTimePeriod:weekly];
         
         return cell;

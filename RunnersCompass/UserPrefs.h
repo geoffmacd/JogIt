@@ -37,4 +37,5 @@
 -(NSString*)getElevationUnit;
 -(NSString*)getTimeStringWithSeconds:(NSTimeInterval) f;
 -(NSString*)getTimeString:(NSTimeInterval) f;
+-(NSString*)getCadenceUnit;
 @end

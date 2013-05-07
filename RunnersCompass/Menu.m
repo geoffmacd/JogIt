@@ -759,7 +759,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self cleanupForNav];
     
     //prepare analyze data
-    Analysis * analysisToSet = [[Analysis alloc] analyzeWithRuns:runs];
+    Analysis * analysisToSet = [[Analysis alloc] analyzeWithRuns:runs withPurchase:true];//for now generate all data and only hide rows in performanceVC
     [analysisToSet setCaloriesRun:caloriesRun];
     [analysisToSet setFastestRun:fastestRun];
     [analysisToSet setFurthestRun:furthestRun];

@@ -86,6 +86,16 @@
     
 }
 
+
+-(NSString*)getCadenceUnit
+{
+    
+    //should not need to be translated
+    
+    return NSLocalizedString(@"CadenceUnit", @"");
+    
+}
+
 -(NSString*)getPaceUnit
 {
     

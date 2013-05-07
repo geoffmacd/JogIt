@@ -32,7 +32,8 @@
 
 
 
--(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze;
+
+-(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze withPurchase:(BOOL)purchased;
 
 -(CGFloat)timeForRace:(RaceType)raceType WithPace:(NSTimeInterval)paceForRace;
 @end

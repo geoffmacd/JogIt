@@ -14,18 +14,19 @@
 @synthesize furthestRun,fastestRun,caloriesRun,longestRun;
 @synthesize runMeta;
 
--(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze
+-(id)analyzeWithRuns:(NSMutableArray *)runToAnalyze withPurchase:(BOOL)purchased
 {
     runMeta = runToAnalyze;
+    NSInteger numMetricToAnalyze = ((purchased) ? MetricTypeStride: MetricTypeActivityCount);
     
     //consider 5 metricss
     weeklyRace = [[NSMutableArray alloc] initWithCapacity:RaceTypeFullMarathon];
     monthlyRace = [[NSMutableArray alloc] initWithCapacity:RaceTypeFullMarathon];
-    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
-    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
+    weeklyMeta = [[NSMutableArray alloc] initWithCapacity:numMetricToAnalyze];
+    monthlyMeta = [[NSMutableArray alloc] initWithCapacity:numMetricToAnalyze];
     
     //init arrays within arrays representing week/month units
-    for(int i = MetricTypeDistance; i <= MetricTypeActivityCount; i++)
+    for(int i = MetricTypeDistance; i <= numMetricToAnalyze; i++)
     {
         NSMutableArray * arrayToAdd2 = [[NSMutableArray alloc] initWithCapacity:100];
         NSMutableArray * arrayToAdd3 = [[NSMutableArray alloc] initWithCapacity:100];
@@ -70,7 +71,7 @@
     
     
     //for all calculated weeks fill out zeros for each array
-    for(int i = 0; i < MetricTypeActivityCount; i++)
+    for(int i = 0; i < numMetricToAnalyze; i++)
     {
         NSMutableArray * tempWeeklyMeta = [weeklyMeta objectAtIndex:i];
         NSMutableArray * tempMonthlyMeta = [monthlyMeta objectAtIndex:i];
@@ -125,7 +126,7 @@
         {
             
             //modify the value for this in each metric
-            for(NSInteger i = MetricTypeDistance; i <= MetricTypeActivityCount; i++)
+            for(NSInteger i = MetricTypeDistance; i <= numMetricToAnalyze; i++)
             {
                 NSMutableArray * array = [weeklyMeta objectAtIndex:i-1];
                 
@@ -147,11 +148,24 @@
                     case MetricTypeCalories:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.calories];
                         break;
+                    case MetricTypeActivityCount:
+                        newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
+                        break;
+                        //purchased
                     case MetricTypeClimbed:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.climbed];
                         break;
-                    case MetricTypeActivityCount:
-                        newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
+                    case MetricTypeDescended:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.descended];
+                        break;
+                    case MetricTypeStride:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.stride];
+                        break;
+                    case MetricTypeCadence:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.cadence];
+                        break;
+                    case MetricTypeSteps:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.steps];
                         break;
                 }
                 //replace value
@@ -166,7 +180,7 @@
         {
             
             //modify the value for this in each metric
-            for(NSInteger i = MetricTypeDistance; i <= MetricTypeActivityCount; i++)
+            for(NSInteger i = MetricTypeDistance; i <= numMetricToAnalyze; i++)
             {
                 NSMutableArray * array = [monthlyMeta objectAtIndex:i-1];
                 
@@ -188,11 +202,24 @@
                     case MetricTypeCalories:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.calories];
                         break;
+                    case MetricTypeActivityCount:
+                        newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
+                        break;
+                        //purchased
                     case MetricTypeClimbed:
                         newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.climbed];
                         break;
-                    case MetricTypeActivityCount:
-                        newValue = [NSNumber numberWithFloat:[currentValue integerValue] + 1];
+                    case MetricTypeDescended:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.descended];
+                        break;
+                    case MetricTypeStride:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.stride];
+                        break;
+                    case MetricTypeCadence:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.cadence];
+                        break;
+                    case MetricTypeSteps:
+                        newValue = [NSNumber numberWithFloat:[currentValue floatValue] + oldRun.steps];
                         break;
                 }
                 //replace value
@@ -218,6 +245,29 @@
         else//set 0 pace if there was no activity
             weeklyAvgPace = [NSNumber numberWithInt:0];
         [paceArray replaceObjectAtIndex:i withObject:weeklyAvgPace];
+        
+        if(purchased)
+        {
+            //cadence
+            NSMutableArray * cadenceArray = [weeklyMeta objectAtIndex:MetricTypeCadence-1];
+            NSNumber * curWeekCadenceSum = [cadenceArray objectAtIndex:i];
+            NSNumber * weeklyAvgCadence;
+            if([weekCount integerValue] > 0 )
+                weeklyAvgCadence = [NSNumber numberWithFloat:[curWeekCadenceSum floatValue] / [weekCount integerValue]];
+            else//set 0 pace if there was no activity
+                weeklyAvgCadence = [NSNumber numberWithInt:0];
+            [cadenceArray replaceObjectAtIndex:i withObject:weeklyAvgCadence];
+            
+            //stride
+            NSMutableArray * strideArray = [weeklyMeta objectAtIndex:MetricTypeStride-1];
+            NSNumber * curWeekStrideSum = [strideArray objectAtIndex:i];
+            NSNumber * weeklyAvgStride;
+            if([weekCount integerValue] > 0 )
+                weeklyAvgStride = [NSNumber numberWithFloat:[curWeekStrideSum floatValue] / [weekCount integerValue]];
+            else//set 0 pace if there was no activity
+                weeklyAvgStride = [NSNumber numberWithInt:0];
+            [strideArray replaceObjectAtIndex:i withObject:weeklyAvgStride];
+        }
     }
     //process avg paces per month
     for(NSInteger i = 0; i < [[monthlyMeta objectAtIndex:MetricTypePace-1] count]; i++)
@@ -232,6 +282,30 @@
         else//set 0 pace if there was no activity
             monthlyAvgPace = [NSNumber numberWithInt:0];
         [paceArray replaceObjectAtIndex:i withObject:monthlyAvgPace];
+        
+        
+        if(purchased)
+        {
+            //cadence
+            NSMutableArray * cadenceArray = [monthlyMeta objectAtIndex:MetricTypeCadence-1];
+            NSNumber * curMonthCadenceSum = [cadenceArray objectAtIndex:i];
+            NSNumber * monthlyAvgCadence;
+            if([monthCount integerValue] > 0 )
+                monthlyAvgCadence = [NSNumber numberWithFloat:[curMonthCadenceSum floatValue] / [monthCount integerValue]];
+            else//set 0 pace if there was no activity
+                monthlyAvgCadence = [NSNumber numberWithInt:0];
+            [cadenceArray replaceObjectAtIndex:i withObject:monthlyAvgCadence];
+            
+            //stride
+            NSMutableArray * strideArray = [monthlyMeta objectAtIndex:MetricTypeStride-1];
+            NSNumber * curMonthStrideSum = [strideArray objectAtIndex:i];
+            NSNumber * monthlyAvgStride;
+            if([monthCount integerValue] > 0 )
+                monthlyAvgStride = [NSNumber numberWithFloat:[curMonthStrideSum floatValue] / [monthCount integerValue]];
+            else//set 0 pace if there was no activity
+                monthlyAvgStride = [NSNumber numberWithInt:0];
+            [strideArray replaceObjectAtIndex:i withObject:monthlyAvgStride];
+        }
     }
     
     //predict race times

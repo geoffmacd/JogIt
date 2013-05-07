@@ -657,15 +657,24 @@
     RunEvent * loadRun = newRunTemplate;
     [self setRun:loadRun];
     
-    [shadeView setHidden:false];
-    [countdownLabel setAlpha:1.0f];
     countdown = [[[delegate curUserPrefs] countdown] integerValue];
-    [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
-    
-    //previous notification in app delegate has already changed status to paused
-    NSAssert(paused, @"not yet paused from appdelegate notification");
-    
-    [self newRunAnimationLoop];
+    if(countdown > 0)
+    {
+        [shadeView setHidden:false];
+        [countdownLabel setAlpha:1.0f];
+        [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
+        
+        //previous notification in app delegate has already changed status to paused
+        NSAssert(paused, @"not yet paused from appdelegate notification");
+        
+        [self newRunAnimationLoop];
+    }
+    else
+    {
+        [shadeView setHidden:true];
+        //just start
+        [delegate pauseAnimation:nil];
+    }
 }
 
 -(void) newRunAnimationLoop

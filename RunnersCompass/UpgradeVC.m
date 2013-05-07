@@ -20,7 +20,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     // Do any additional setup after loading the view from its nib.
     
     //add 3
-    cells = [[NSMutableArray alloc] initWithCapacity:3];
+    cells = [[NSMutableArray alloc] initWithCapacity:4];
     
 }
 
@@ -84,7 +84,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 // Customize the appearance of table view cells.
@@ -123,6 +123,13 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
                 [cell.point2Label setText:NSLocalizedString(@"InAppGhost2", "bullet pt for Ghost")];
                 [cell.point3Label setText:NSLocalizedString(@"InAppGhost3", "bullet pt for Ghost")];
                 [cell.fullImage setImage:[UIImage imageNamed:@"ghostfull.png"]];
+                break;
+            case 3:
+                [cell.titleLabel setText:NSLocalizedString(@"InAppMetric", "")];
+                [cell.point1Label setText:NSLocalizedString(@"InAppMetric1", "")];
+                [cell.point2Label setText:NSLocalizedString(@"InAppMetric2", "")];
+                [cell.point3Label setText:NSLocalizedString(@"InAppMetric3", "")];
+                [cell.fullImage setImage:[UIImage imageNamed:@"statsfull.png"]];
                 break;
         }
         
@@ -227,8 +234,6 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
                                              [vc.updateLabel setText:@""];
                                              
                                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
-                                             
-                                             
                                              
                                              //NSLog(@"Error");
                                          }];

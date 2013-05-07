@@ -57,15 +57,20 @@
                 break;
             case MetricTypeDescended:
             case MetricTypeClimbed:
+            case MetricTypeStride:
                 [unitLabel setHidden:false];
                 [unitLabel setText:[prefs getElevationUnit]];
                 [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
                 break;
                 
-            case MetricTypeActivityCount:
             case MetricTypeCadence:
+                [unitLabel setHidden:false];
+                [unitLabel setText:[prefs getCadenceUnit]];
+                [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
+                break;
+                
+            case MetricTypeActivityCount:
             case MetricTypeCalories:
-            case MetricTypeStride:
             case MetricTypeSteps:
             case MetricTypeTime:
                 [headerLabel setText:[RunEvent stringForMetric:associated showSpeed:[[prefs showSpeed] boolValue]]];
@@ -188,7 +193,7 @@
     }
     else{
         //calc alltime avg pace if associated is pace
-        if(associated == MetricTypePace && recordCount > 0)
+        if((associated == MetricTypePace || associated == MetricTypeStride || associated == MetricTypeCadence) && recordCount > 0)
             allTime = allTime / recordCount;
         
         switch(associated)
@@ -209,11 +214,15 @@
                 [allTimeValueLabel setText:[RunEvent getTimeString:allTime]];
                 break;
             case MetricTypeCalories:
+            case MetricTypeSteps:
+            case MetricTypeCadence:
                 [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
                 [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]]];
                 [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime]];
                 break;
             case MetricTypeClimbed:
+            case MetricTypeDescended:
+            case MetricTypeStride:
                 if([[prefs metric] boolValue])
                 {
                     [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
@@ -227,7 +236,6 @@
                     [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime*convertMToFt]];
                 }
                 break;
-                
             default:
                 break;
         }
@@ -697,9 +705,17 @@
                 [selectedValueLabel setText:[RunEvent getTimeString:[valueToDisplay doubleValue]]];
                 break;
             case MetricTypeCalories:
+            case MetricTypeSteps:
                 [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
                 break;
+            case MetricTypeCadence:
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
+                break;
+            case MetricTypeStride:
+                [selectedValueLabel setText:[NSString stringWithFormat:@"%.2f",[valueToDisplay floatValue]]];
+                break;
             case MetricTypeClimbed:
+            case MetricTypeDescended:
                 if([[prefs metric] boolValue])
                     [selectedValueLabel setText:[NSString stringWithFormat:@"%.0f",[valueToDisplay floatValue]]];
                 else

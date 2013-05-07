@@ -52,12 +52,12 @@ typedef enum
     MetricTypePace,
     MetricTypeTime,
     MetricTypeCalories,
+    MetricTypeActivityCount, //this is max array
     MetricTypeClimbed,
-    MetricTypeActivityCount, //this is max array 
-    MetricTypeCadence,
-    MetricTypeStride,
     MetricTypeDescended,
-    MetricTypeSteps
+    MetricTypeSteps,
+    MetricTypeCadence,
+    MetricTypeStride
 } RunMetric;
 
 typedef enum
