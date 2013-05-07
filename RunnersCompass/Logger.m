@@ -1121,7 +1121,7 @@
         CLLocation * last = [run.pos lastObject];
         
         //ensure it hasn't recently autopaused
-        if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate])
+        if([last.timestamp timeIntervalSinceReferenceDate]  + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate]  && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate] && [run.date timeIntervalSinceReferenceDate] + (autoPauseDelay * 2) < [NSDate timeIntervalSinceReferenceDate])
         {
             //determine if autopause is enabled in settings
             UserPrefs * curSettings = [delegate curUserPrefs];
