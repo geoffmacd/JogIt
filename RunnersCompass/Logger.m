@@ -43,7 +43,6 @@
 @synthesize lowSignalLabel,titleView, goalAchievedLabel;
 @synthesize autopauseLabel;
 @synthesize invisibleLastKmButton;
-@synthesize startSilently;
 //@synthesize testStepLabel;
 
 #pragma mark - Lifecycle
@@ -175,7 +174,6 @@
     //necessary to set the frames properly in viewdidlayout
     justLoaded = true;
     
-    startSilently = false;
     
     //open ears stuff
     //musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
@@ -661,25 +659,17 @@
     [self setRun:loadRun];
     
     countdown = [[[delegate curUserPrefs] countdown] integerValue];
-    if(countdown > 0)
-    {
-        [shadeView setHidden:false];
-        [countdownLabel setAlpha:1.0f];
-        [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
+    if(countdown < 1)
+        countdown = 1;
         
-        //previous notification in app delegate has already changed status to paused
-        NSAssert(paused, @"not yet paused from appdelegate notification");
-        
-        [self newRunAnimationLoop];
-    }
-    else
-    {
-        [shadeView setHidden:true];
-        //just start silently to not screw with slider
-        startSilently = true;
-        [delegate pauseAnimation:nil];
-        startSilently = false;
-    }
+    [shadeView setHidden:false];
+    [countdownLabel setAlpha:1.0f];
+    [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
+    
+    //previous notification in app delegate has already changed status to paused
+    NSAssert(paused, @"not yet paused from appdelegate notification");
+    
+    [self newRunAnimationLoop];
 }
 
 -(void) newRunAnimationLoop
@@ -734,7 +724,6 @@
 -(void)setRun:(RunEvent *)_run
 {
     run = _run;
-    
     
     //hide these by default unless newrun overrides them
     [finishBut setHidden:true];
