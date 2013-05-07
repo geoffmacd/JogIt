@@ -15,7 +15,6 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>J5small.png</string>
-				<string>3dshoe.png</string>
 				<string>J5.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
