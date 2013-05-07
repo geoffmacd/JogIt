@@ -279,37 +279,44 @@
         [self autoZoomMap:[run.pos lastObject] animated:false withMap:fullMap];
         [self zoomMapToEntireRun:iconMap];
         
-        //process accelerometer data
+        //process accelerometer data, if there is any
         NSInteger wakeup = 0;
-        for(int i = 0 ; i < [accelerometerReadings count];i++)
+        if(accelerometerReadings)
         {
-            CMAccelerometerData * acceleration = [accelerometerReadings objectAtIndex:i];
-            
-            if(wakeup < i)
-                isSleeping = false;
-            
-            float xx = acceleration.acceleration.x;
-            float yy = acceleration.acceleration.y;
-            float zz = acceleration.acceleration.z;
-            
-            float dot = (px * xx) + (py * yy) + (pz * zz);
-            float a = ABS(sqrt(px * px + py * py + pz * pz));
-            float b = ABS(sqrt(xx * xx + yy * yy + zz * zz));
-            
-            dot /= (a * b);
-            
-            if (dot <= 0.82) {
-                
-                //skip next .3seconds
-                if (!isSleeping) {
-                    isSleeping = YES;
-                    wakeup = i + 19;
-                    run.steps++;
+            if([accelerometerReadings count])
+            {
+                for(int i = 0 ; i < [accelerometerReadings count];i++)
+                {
+                    CMAccelerometerData * acceleration = [accelerometerReadings objectAtIndex:i];
+                    
+                    if(wakeup < i)
+                        isSleeping = false;
+                    
+                    float xx = acceleration.acceleration.x;
+                    float yy = acceleration.acceleration.y;
+                    float zz = acceleration.acceleration.z;
+                    
+                    float dot = (px * xx) + (py * yy) + (pz * zz);
+                    float a = ABS(sqrt(px * px + py * py + pz * pz));
+                    float b = ABS(sqrt(xx * xx + yy * yy + zz * zz));
+                    
+                    dot /= (a * b);
+                    
+                    if (dot <= 0.82) {
+                        
+                        //skip next .3seconds
+                        if (!isSleeping) {
+                            isSleeping = YES;
+                            wakeup = i + 19;
+                            run.steps++;
+                        }
+                    }
+                    
+                    px = xx; py = yy; pz = zz;
                 }
             }
-            
-            px = xx; py = yy; pz = zz;
         }
+        
  
     }
     else if(inBackground)
@@ -319,14 +326,18 @@
         [iconMap setUserTrackingMode:MKUserTrackingModeNone];
         
         //set accelerometer updates
-        accelerometerReadings = [NSMutableArray new];
-        //add acelerometer to queue in background
-        [cMManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
-                                        withHandler:^(CMAccelerometerData *data, NSError *error) {
-                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                
-                                                [accelerometerReadings addObject:data];
-                                            });}];
+        if(run.live)
+        {
+            accelerometerReadings = [NSMutableArray new];
+            //add acelerometer to queue in background
+            [cMManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
+                                            withHandler:^(CMAccelerometerData *data, NSError *error) {
+                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                    //don't add data if it autopaused
+                                                    if(!paused)
+                                                        [accelerometerReadings addObject:data];
+                                                });}];
+        }
     }
 }
 
