@@ -40,7 +40,6 @@
     [self setExpand:false withAnimation:false];
     
     //set title to match the metric
-    //[headerLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     if(!raceCell)
     {
         switch (associated) {
@@ -327,8 +326,8 @@
         [scrollView setHidden:!open];
         [statView setHidden:!open];
     }
-    
-    [delegate cellDidChangeHeight:self];
+    else
+        [delegate cellDidChangeHeight:self];
 }
 
 -(CGFloat)getHeightRequired

@@ -765,7 +765,9 @@
                              //start run
                              [shadeView setHidden:true];
                              [shadeView setAlpha:1.0f];
-                             [delegate pauseAnimation:nil];
+                             //in case user has swiped during this last second
+                             if(paused)
+                                 [delegate pauseAnimation:nil];
                          }
                          
                      }
@@ -1053,6 +1055,9 @@
 
 -(void) stopRun:(BOOL)finished
 {
+    //stop tick() processing even for autopause
+    [timer invalidate];
+    
     //if autopause caused this, do not stop location updates
     if(!pausedForAuto || finished)
     {
@@ -1066,9 +1071,6 @@
         //stop talking
         [speechQueue removeAllObjects];
     }
-    
-    //stop tick() processing even for autopause
-    [timer invalidate];
     
     //stop updating accelerometer by setting nil delegate
     [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
@@ -1131,10 +1133,12 @@
                 
                 pausedForAuto = true;
                 
-                [delegate pauseAnimation:nil];
+                //don't speak until animation finished
+                [delegate pauseAnimation:^{
+                    [self audioCue:SpeechAutoPause];
+                }];
                 [autopauseLabel setHidden:false];
                 
-                [self audioCue:SpeechAutoPause];
             }
         }
     }else{
@@ -1150,10 +1154,12 @@
                 
                 pausedForAuto = true;
                 
-                [delegate pauseAnimation:nil];
+                //don't speak until finished
+                [delegate pauseAnimation:^{
+                    [self audioCue:SpeechAutoPause];
+                }];
                 [autopauseLabel setHidden:false];
                 
-                [self audioCue:SpeechAutoPause];
             }
         }
     }
@@ -1173,6 +1179,12 @@
      -determing if accuray is awful
      -determining if a new km happend
      */
+    
+    if(paused)
+    {
+        [timer invalidate];
+        return;
+    }
     
     //update time with 1 second
     run.time += 1;
@@ -1276,6 +1288,9 @@
     UIImageView * pauseImage = (UIImageView *) [notification object];
     
     if(paused){
+        //stop location updates
+        [self stopRun:false];
+        
         [UIView transitionWithView:pauseImage
                           duration:finishButtonFade
                            options:UIViewAnimationOptionCurveLinear
@@ -1301,8 +1316,6 @@
                             runTitle.alpha = 0.0f;
                         } completion:^(BOOL finish){
                             [runTitle setHidden:true];
-                            //stop location updates
-                            [self stopRun:false];
                         }];
         
         //cancel low signal animation
@@ -2304,8 +2317,10 @@
                 if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause)
                 {
                     //unpause
-                    [delegate pauseAnimation:nil];
-                    [self audioCue:SpeechResume];
+                    [delegate pauseAnimation:^{
+                        //don't process speech until bounced
+                        [self audioCue:SpeechResume];
+                    }];
                     return;
                 }
                 //else try again next update and delete first object
@@ -4194,9 +4209,6 @@
     //action depends on if the run is live
     if(run.live)
     {
-        //show label again but only in right condition otherwise it will appear in historical,etc
-        if(pausedForAuto)
-            [autopauseLabel setHidden:false];
         
         //animate the logger to opposite of paused/record state
         //asks the jsslider to animate the pause, includes the automatic pausing/record logic
@@ -4233,9 +4245,7 @@
 
 - (IBAction)statusTouched:(id)sender {
     
-    //hide the auto label if autopaused
-    if(pausedForAuto && run.live)
-        [autopauseLabel setHidden:true];
+
     
     [statusBut.layer setCornerRadius:5.0f];
     [statusBut.layer setMasksToBounds:true];
@@ -4246,9 +4256,7 @@
 
 - (IBAction)statusUntouched:(id)sender {
     
-    //show label again but only in right condition otherwise it will appear in historical,etc
-    if(pausedForAuto && run.live)
-        [autopauseLabel setHidden:false];
+
     
     [statusBut.layer setBorderWidth:0.0f];
 }

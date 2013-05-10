@@ -47,7 +47,7 @@
     weekly = false;
     
     //add cells to views
-    cells = [[NSMutableArray alloc] initWithCapacity:MetricTypeActivityCount];
+    cells = [[NSMutableArray alloc] initWithCapacity:MetricTypeStride];
 }
 
 - (void)didReceiveMemoryWarning

@@ -1044,12 +1044,12 @@
 						<int key="objectID">349</int>
 						<reference key="object" ref="245450979"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="18694754"/>
 							<reference ref="534297443"/>
 							<reference ref="1015228628"/>
 							<reference ref="118061487"/>
 							<reference ref="983072587"/>
 							<reference ref="876753565"/>
+							<reference ref="18694754"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">HeaderView</string>

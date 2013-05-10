@@ -33,6 +33,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
 {
     //prevent state collision with historical runs becoming live
     [self.backVC stopRun:true];
+    self.backVC.paused = true;
     
     //send run to menu to add it to list
     [self.frontVC finishedRun:runToSave];
@@ -84,6 +85,8 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"pauseToggleNotification"
          object:self.viewController.pauseImage];
+        if(completion)
+            completion();
     }
     
 }
@@ -334,7 +337,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
         
         //default user 
         userPrefsRecord.countdown = [NSNumber numberWithInt:3];
-        userPrefsRecord.autopause = [NSNumber numberWithInt:1];
+        userPrefsRecord.autopause = [NSNumber numberWithInt:0];
         userPrefsRecord.weight = [NSNumber numberWithInt:150];//default weight
         //find systems default unit measure
         NSLocale *locale = [NSLocale currentLocale];
