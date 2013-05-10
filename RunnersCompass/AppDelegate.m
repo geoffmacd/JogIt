@@ -337,7 +337,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
         
         //default user 
         userPrefsRecord.countdown = [NSNumber numberWithInt:3];
-        userPrefsRecord.autopause = [NSNumber numberWithInt:0];
+        userPrefsRecord.autopause = [NSNumber numberWithInt:1];
         userPrefsRecord.weight = [NSNumber numberWithInt:150];//default weight
         //find systems default unit measure
         NSLocale *locale = [NSLocale currentLocale];

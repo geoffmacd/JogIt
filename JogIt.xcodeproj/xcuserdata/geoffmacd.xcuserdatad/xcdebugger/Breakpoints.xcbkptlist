@@ -3111,11 +3111,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "389849938.156816"
+         timestampString = "389851405.136447"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "753"
-         endingLineNumber = "753"
+         startingLineNumber = "754"
+         endingLineNumber = "754"
          landmarkName = "-newRunAnimationLoop"
          landmarkType = "5">
       </FileBreakpoint>
@@ -3124,11 +3124,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "389849938.156816"
+         timestampString = "389851405.136447"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "756"
-         endingLineNumber = "756"
+         startingLineNumber = "757"
+         endingLineNumber = "757"
          landmarkName = "-newRunAnimationLoop"
          landmarkType = "5">
       </FileBreakpoint>
