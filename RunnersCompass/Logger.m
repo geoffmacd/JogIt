@@ -264,6 +264,7 @@
     //refresh view if coming out of background
     if(!inBackground && run.live)
     {
+        
         //scroll to newest
         [self updateChart];
         [self drawMapPath:true];
@@ -321,6 +322,14 @@
     }
     else if(inBackground)
     {
+        //still counting down
+        if(countdown && paused && run.live)
+        {
+            [self.view.layer removeAllAnimations];
+            [self performSelector:@selector(newRunAnimationLoop) withObject:nil afterDelay:countdown];
+            countdown = 0;
+        }
+        
         //prevent battery loss by disabling this in  case it is enabled
         [fullMap setUserTrackingMode:MKUserTrackingModeNone];
         [iconMap setUserTrackingMode:MKUserTrackingModeNone];
@@ -737,43 +746,55 @@
         return;
     }
     
-    [UIView animateWithDuration:1.0
-                     animations:^{
-                         
-                         if(countdownLabel.alpha == 0.6f)
-                             [countdownLabel setAlpha:1.0f];
-                         else
-                             [countdownLabel setAlpha:0.6f];
-                         
-                         if(countdown == 1)
-                         {
-                             [shadeView setAlpha:0.1f];
+    //called by didReceivePause if not called
+    if(inBackground)
+    {
+        //start run
+        [shadeView setHidden:true];
+        [shadeView setAlpha:1.0f];
+        //in case user has swiped during this last second
+        if(paused)
+            [delegate pauseAnimation:nil];
+        
+    }
+    else
+    {
+        [UIView animateWithDuration:1.0
+                         animations:^{
+                             
+                             if(countdownLabel.alpha == 0.6f)
+                                 [countdownLabel setAlpha:1.0f];
+                             else
+                                 [countdownLabel setAlpha:0.6f];
+                             
+                             if(countdown == 1)
+                             {
+                                 [shadeView setAlpha:0.1f];
+                             }
                          }
-                     }
-     
-                     completion:^(BOOL finish){
-                         
-                         countdown--;
-                         [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
-                         
-                         if(countdown > 0)
-                         {
-                             [self newRunAnimationLoop];
+         
+                         completion:^(BOOL finish){
+                             
+                             countdown--;
+                             [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
+                             
+                             if(countdown > 0)
+                             {
+                                 [self newRunAnimationLoop];
+                             }
+                             else
+                             {
+                                 //start run
+                                 [shadeView setHidden:true];
+                                 [shadeView setAlpha:1.0f];
+                                 //in case user has swiped during this last second
+                                 if(paused)
+                                     [delegate pauseAnimation:nil];
+                             }
+                             
                          }
-                         else
-                         {
-                             //start run
-                             [shadeView setHidden:true];
-                             [shadeView setAlpha:1.0f];
-                             //in case user has swiped during this last second
-                             if(paused)
-                                 [delegate pauseAnimation:nil];
-                         }
-                         
-                     }
-     ];
-
-    
+         ];
+    }
 }
 
 
@@ -1282,7 +1303,6 @@
 
 - (void)didReceivePause:(NSNotification *)notification
 {
-    //assume it is not locked
     paused = !paused;
     
     UIImageView * pauseImage = (UIImageView *) [notification object];
@@ -1347,6 +1367,7 @@
                         } completion:NULL];
         
         
+        countdown = 0;
         finishBut.alpha = 1.0f;
         [runTitle setHidden:false];
         runTitle.alpha = 1.0f;
@@ -1360,8 +1381,6 @@
                             [finishBut setHidden:true];
                             //start run
                             [self startRun];
-                            
-                            
                         }];
     }
 }
