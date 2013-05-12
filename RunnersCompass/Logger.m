@@ -1043,6 +1043,10 @@
     [self resetPaceSelection];
     [self updateHUD];
     
+    //reset autopause variables
+    pausedForAuto = false;
+    timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
+    
     //set timer up to run once a second
     if(![timer isValid])
     {
@@ -1051,10 +1055,6 @@
         timer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:1] interval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     }
-    
-    //reset autopause variables
-    pausedForAuto = false;
-    timeSinceUnpause = [NSDate timeIntervalSinceReferenceDate];
     
     //reset counter
     consecutiveHeadingCount = 0;
@@ -1155,9 +1155,12 @@
                 pausedForAuto = true;
                 
                 //don't speak until animation finished
-                [delegate pauseAnimation:^{
-                    [self audioCue:SpeechAutoPause];
-                }];
+                if(!paused)
+                {
+                    [delegate pauseAnimation:^{
+                        [self audioCue:SpeechAutoPause];
+                    }];
+                }
                 [autopauseLabel setHidden:false];
                 
             }
@@ -1165,7 +1168,7 @@
     }else{
         
         //if current pace is less than minimum
-        if(speedToConsider < autoPauseSpeed && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate] )
+        if(speedToConsider < autoPauseSpeed && timeSinceUnpause + autoPauseDelay < [NSDate timeIntervalSinceReferenceDate] && [run.date timeIntervalSinceReferenceDate] + (autoPauseDelay * 2) < [NSDate timeIntervalSinceReferenceDate])
         {
             //determine if autopause is enabled in settings
             UserPrefs * curSettings = [delegate curUserPrefs];
@@ -1176,9 +1179,12 @@
                 pausedForAuto = true;
                 
                 //don't speak until finished
-                [delegate pauseAnimation:^{
-                    [self audioCue:SpeechAutoPause];
-                }];
+                if(!paused)
+                {
+                    [delegate pauseAnimation:^{
+                        [self audioCue:SpeechAutoPause];
+                    }];
+                }
                 [autopauseLabel setHidden:false];
                 
             }
@@ -2333,13 +2339,17 @@
                 
                 CLLocationSpeed speed1 = distance1 / interval1;
                 
-                if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause)
+                if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause && interval1 + interval2 > minUnpauseDelay)
                 {
                     //unpause
-                    [delegate pauseAnimation:^{
-                        //don't process speech until bounced
-                        [self audioCue:SpeechResume];
-                    }];
+                    
+                    if(paused)
+                    {
+                        [delegate pauseAnimation:^{
+                            //don't process speech until bounced
+                            [self audioCue:SpeechResume];
+                        }];
+                    }
                     return;
                 }
                 //else try again next update and delete first object
