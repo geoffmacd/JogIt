@@ -1314,35 +1314,6 @@
     UIImageView * pauseImage = (UIImageView *) [notification object];
     
     if(paused){
-        //stop location updates
-        [self stopRun:false];
-        
-        [UIView transitionWithView:pauseImage
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
-                        } completion:NULL];
-        
-        [UIView transitionWithView:statusBut
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
-                        } completion:NULL];
-        
-        finishBut.alpha = 0.0f;
-        [finishBut setHidden:false];
-        runTitle.alpha = 1.0f;
-        [UIView transitionWithView:finishBut
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            finishBut.alpha = 1.0f;
-                            runTitle.alpha = 0.0f;
-                        } completion:^(BOOL finish){
-                            [runTitle setHidden:true];
-                        }];
         
         //cancel low signal animation
         [lowSignalLabel setHidden:true];
@@ -1350,44 +1321,100 @@
         [goalAchievedLabel setHidden:true];
         goalAchieved = false;
         [runTitle setFrame:orgTitleLabelPosition];
+        //begin to show finish button
+        finishBut.alpha = 0.0f;
+        [finishBut setHidden:false];
+        runTitle.alpha = 1.0f;
         
+        //stop location updates
+        [self stopRun:false];
+        
+        if(!inBackground)
+        {
+            [UIView transitionWithView:pauseImage
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
+                            } completion:NULL];
+            
+            [UIView transitionWithView:statusBut
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+                            } completion:NULL];
+            
+            [UIView transitionWithView:finishBut
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                finishBut.alpha = 1.0f;
+                                runTitle.alpha = 0.0f;
+                            } completion:^(BOOL finish){
+                                [runTitle setHidden:true];
+                            }];
+        }
+        else{
+            
+            pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
+            [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+            finishBut.alpha = 1.0f;
+            runTitle.alpha = 0.0f;
+            [runTitle setHidden:true];
+        }
+    
+    
     }
     else
     {
         //hide autopause again
         [autopauseLabel setHidden:true];
-        
-        [UIView transitionWithView:pauseImage
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            pauseImage.image = [UIImage imageNamed:@"record.png"];
-                        } completion:NULL];
-        
-        
-        [UIView transitionWithView:statusBut
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
-                        } completion:NULL];
-        
-        
         countdown = 0;
+        //begin to hide finish button
         finishBut.alpha = 1.0f;
         [runTitle setHidden:false];
         runTitle.alpha = 1.0f;
-        [UIView transitionWithView:finishBut
-                          duration:finishButtonFade
-                           options:UIViewAnimationOptionCurveLinear
-                        animations:^{
-                            finishBut.alpha = 0.0f;
-                            runTitle.alpha = 1.0f;
-                        } completion:^(BOOL finish){
-                            [finishBut setHidden:true];
-                            //start run
-                            [self startRun];
-                        }];
+        
+        //start run
+        [self startRun];
+        
+        if(!inBackground)
+        {
+            [UIView transitionWithView:pauseImage
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                pauseImage.image = [UIImage imageNamed:@"record.png"];
+                            } completion:NULL];
+            
+            
+            [UIView transitionWithView:statusBut
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
+                            } completion:NULL];
+            
+            
+            [UIView transitionWithView:finishBut
+                              duration:finishButtonFade
+                               options:UIViewAnimationOptionCurveLinear
+                            animations:^{
+                                finishBut.alpha = 0.0f;
+                                runTitle.alpha = 1.0f;
+                            } completion:^(BOOL finish){
+                                [finishBut setHidden:true];
+                            }];
+        }
+        else{
+            pauseImage.image = [UIImage imageNamed:@"record.png"];
+            [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
+            [finishBut setHidden:true];
+            finishBut.alpha = 0.0f;
+            runTitle.alpha = 1.0f;
+            
+        }
     }
 }
 
