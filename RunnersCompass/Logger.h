@@ -214,6 +214,9 @@ typedef enum {
     
     //purchase notification
     BOOL showPurchaseNotification;
+    
+    //new run timer
+    NSTimer *newRunTimer;
 }
 
 

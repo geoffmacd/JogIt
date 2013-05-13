@@ -322,13 +322,6 @@
     }
     else if(inBackground)
     {
-        //still counting down
-        if(countdown && paused && run.live)
-        {
-            [self.view.layer removeAllAnimations];
-            [self performSelector:@selector(newRunAnimationLoop) withObject:nil afterDelay:countdown];
-            countdown = 0;
-        }
         
         //prevent battery loss by disabling this in  case it is enabled
         [fullMap setUserTrackingMode:MKUserTrackingModeNone];
@@ -337,6 +330,11 @@
         //set accelerometer updates
         if(run.live)
         {
+            if(run.time == 0 && paused)
+            {
+                [delegate pauseAnimation:nil];
+            }
+            
             accelerometerReadings = [NSMutableArray new];
             //add acelerometer to queue in background
             [cMManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
@@ -346,6 +344,8 @@
                                                     if(!paused)
                                                         [accelerometerReadings addObject:data];
                                                 });}];
+            
+            
         }
     }
 }
@@ -732,45 +732,42 @@
     //previous notification in app delegate has already changed status to paused
     NSAssert(paused, @"not yet paused from appdelegate notification");
     
+    //animation
     [self newRunAnimationLoop];
+    //start run if not already started
+    
+    newRunTimer = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:countdown] interval:countdown target:self selector:@selector(startNewRun) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:newRunTimer forMode:NSRunLoopCommonModes];
+}
+
+-(void)startNewRun
+{
+    
+    //start run
+    [shadeView setHidden:true];
+    [shadeView setAlpha:1.0f];
+    
+    //in case user has swiped during this last second
+    if(paused)
+        [delegate pauseAnimation:nil];
+    
 }
 
 -(void) newRunAnimationLoop
 {
-    if(!paused)
-    {
-        //user has swiped early
-        //start run
-        [shadeView setHidden:true];
-        [shadeView setAlpha:1.0f];
-        return;
-    }
+    //just the animation part
     
-    //called by didReceivePause if not called
-    if(inBackground)
-    {
-        //start run
-        [shadeView setHidden:true];
-        [shadeView setAlpha:1.0f];
-        //in case user has swiped during this last second
-        if(paused)
-            [delegate pauseAnimation:nil];
-        
-    }
-    else
+    if(paused)
     {
         [UIView animateWithDuration:1.0
                          animations:^{
                              
                              if(countdownLabel.alpha == 0.6f)
                                  [countdownLabel setAlpha:1.0f];
+                             else if(countdown == 1)
+                                 [shadeView setAlpha:0.1f];
                              else
                                  [countdownLabel setAlpha:0.6f];
-                             
-                             if(countdown == 1)
-                             {
-                                 [shadeView setAlpha:0.1f];
-                             }
                          }
          
                          completion:^(BOOL finish){
@@ -778,22 +775,14 @@
                              countdown--;
                              [countdownLabel setText:[NSString stringWithFormat:@"%d", countdown]];
                              
-                             if(countdown > 0)
-                             {
-                                 [self newRunAnimationLoop];
-                             }
-                             else
-                             {
-                                 //start run
-                                 [shadeView setHidden:true];
-                                 [shadeView setAlpha:1.0f];
-                                 //in case user has swiped during this last second
-                                 if(paused)
-                                     [delegate pauseAnimation:nil];
-                             }
-                             
-                         }
-         ];
+                             [self newRunAnimationLoop];                
+                         }];
+    }
+    else
+    {
+        
+        [shadeView setHidden:true];
+        [shadeView setAlpha:1.0f];
     }
 }
 
@@ -1314,6 +1303,7 @@
     UIImageView * pauseImage = (UIImageView *) [notification object];
     
     if(paused){
+        //NSLog(@"paused");
         
         //cancel low signal animation
         [lowSignalLabel setHidden:true];
@@ -1368,6 +1358,8 @@
     }
     else
     {
+        //NSLog(@"record");
+        
         //hide autopause again
         [autopauseLabel setHidden:true];
         countdown = 0;
@@ -2365,24 +2357,28 @@
                 NSTimeInterval interval1 = [lastInQueue.timestamp timeIntervalSinceDate:secondLast.timestamp];
                 
                 CLLocationSpeed speed1 = distance1 / interval1;
+                CLLocation * lastRecorded = [run.pos lastObject];
                 
-                if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause && interval1 + interval2 > minUnpauseDelay)
+                if(lastRecorded)
                 {
-                    //unpause
-                    
-                    if(paused)
+                    if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause && [lastInQueue.timestamp timeIntervalSinceDate:lastRecorded.timestamp] > minUnpauseDelay)
                     {
-                        [delegate pauseAnimation:^{
-                            //don't process speech until bounced
-                            [self audioCue:SpeechResume];
-                        }];
+                        //unpause
+                        
+                        if(paused)
+                        {
+                            [delegate pauseAnimation:^{
+                                //don't process speech until bounced
+                                [self audioCue:SpeechResume];
+                            }];
+                        }
                     }
-                    return;
                 }
                 //else try again next update and delete first object
                 
                 //trim array to keep only 2 objects, so that there are 3 for next update
-                [posQueue removeObjectAtIndex:0];
+                if([posQueue count] > 2)
+                    [posQueue removeObjectAtIndex:0];
             }
         }
     }

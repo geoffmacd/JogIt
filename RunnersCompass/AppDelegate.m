@@ -454,6 +454,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     
     //alert logger view
     [self.backVC setInBackground:true];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

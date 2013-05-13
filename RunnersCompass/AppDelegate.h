@@ -22,6 +22,7 @@
     UIActionSheet *  sheet;
     UserPrefs * userPrefsRecord;//shared among entire app
     GoalRecord * goalRecord;//shared among app
+    //UIBackgroundTaskIdentifier bgTask;
 }
 
 @property (strong, nonatomic) UIWindow *window;
