@@ -407,7 +407,7 @@
 
 - (void) setupVoice {
     
-	fliteController.duration_stretch = 1.35; // Change the speed
+	fliteController.duration_stretch = 1.45; // Change the speed
 	fliteController.target_mean = 1.3; // Change the pitch
     fliteController.target_stddev = 1.5; // Change the variance
     
@@ -1620,7 +1620,7 @@
                 MileAnnotation * newAnnotation = [[MileAnnotation alloc] init];
                 //illustrate with pace @ KM ##
                 NSString *distanceUnitText = [curSettings getDistanceUnit];
-                newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
+                newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance*convertKMToMile/1000)];
                 newAnnotation.paceString = [RunEvent getPaceString:[newMile pace] withMetric:false showSpeed:showSpeed];
                 newAnnotation.mileCoord = [latest coordinate];
                 //add to array
