@@ -1068,6 +1068,9 @@
     //stop tick() processing even for autopause
     [timer invalidate];
     
+    //do not unpause until 5 seconds after
+    timeSincePause = [NSDate timeIntervalSinceReferenceDate];
+    
     //if autopause caused this, do not stop location updates
     if(!pausedForAuto || finished)
     {
@@ -1081,6 +1084,7 @@
         //stop talking
         [speechQueue removeAllObjects];
     }
+    
     
     //stop updating accelerometer by setting nil delegate
     [[UIAccelerometer sharedAccelerometer] setDelegate:nil];
@@ -2357,21 +2361,17 @@
                 NSTimeInterval interval1 = [lastInQueue.timestamp timeIntervalSinceDate:secondLast.timestamp];
                 
                 CLLocationSpeed speed1 = distance1 / interval1;
-                CLLocation * lastRecorded = [run.pos lastObject];
                 
-                if(lastRecorded)
+                if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause && [lastInQueue.timestamp timeIntervalSinceReferenceDate] - timeSincePause > minUnpauseDelay)
                 {
-                    if(speed1 > minSpeedUnpause && speed2 > minSpeedUnpause && [lastInQueue.timestamp timeIntervalSinceDate:lastRecorded.timestamp] > minUnpauseDelay)
+                    //unpause
+                    
+                    if(paused)
                     {
-                        //unpause
-                        
-                        if(paused)
-                        {
-                            [delegate pauseAnimation:^{
-                                //don't process speech until bounced
-                                [self audioCue:SpeechResume];
-                            }];
-                        }
+                        [delegate pauseAnimation:^{
+                            //don't process speech until bounced
+                            [self audioCue:SpeechResume];
+                        }];
                     }
                 }
                 //else try again next update and delete first object

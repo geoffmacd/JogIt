@@ -69,7 +69,7 @@
 #define delayGoalAssessment 3 //s
 #define delaySpeech 0.1 //s
 #define AccelUpdateFreq    60.0 //hz
-#define minUnpauseDelay 3 //s
+#define minUnpauseDelay 5 //s
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
@@ -139,9 +139,11 @@ typedef enum {
     NSTimeInterval timeSinceMapCenter;
     NSTimeInterval timeSinceMapIconRefresh;
     NSTimeInterval timeSinceUnpause;
+    NSTimeInterval timeSincePause;
     NSTimeInterval timeSinceMapTouch;
     NSTimeInterval timeSinceKmSelection;
     NSTimeInterval timeSinceBarSelection;
+    NSTimeInterval timeSinceLastMapLoadFinish;
 
     //quetostore positions not processed
     NSMutableArray *posQueue;
@@ -163,7 +165,6 @@ typedef enum {
     //for finishing map loading before screen grab
     BOOL waitingForMapToLoad;
     NSInteger loadingMapTiles;
-    NSTimeInterval timeSinceLastMapLoadFinish;
     
     //low signal
     CLLocationAccuracy avgAccuracy;

@@ -812,11 +812,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390182282.820721"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1875"
-         endingLineNumber = "1875"
+         startingLineNumber = "1879"
+         endingLineNumber = "1879"
          landmarkName = "@implementation LoggerViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -825,11 +825,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390182282.820721"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1882"
-         endingLineNumber = "1882"
+         startingLineNumber = "1886"
+         endingLineNumber = "1886"
          landmarkName = "-setLabelsForUnits"
          landmarkType = "5">
       </FileBreakpoint>
@@ -877,11 +877,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390182282.820721"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1937"
-         endingLineNumber = "1937"
+         startingLineNumber = "1941"
+         endingLineNumber = "1941"
          landmarkName = "-setLabelsForUnits"
          landmarkType = "5">
       </FileBreakpoint>
@@ -890,11 +890,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390182282.820721"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1867"
-         endingLineNumber = "1867"
+         startingLineNumber = "1871"
+         endingLineNumber = "1871"
          landmarkName = "-goalAchievedAnimation"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2578,11 +2578,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390182282.820721"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1953"
-         endingLineNumber = "1953"
+         startingLineNumber = "1957"
+         endingLineNumber = "1957"
          landmarkName = "-setPaceLabels"
          landmarkType = "5">
       </FileBreakpoint>
@@ -3007,11 +3007,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390178942.141205"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1293"
-         endingLineNumber = "1293"
+         startingLineNumber = "1297"
+         endingLineNumber = "1297"
          landmarkName = "-tick"
          landmarkType = "5">
       </FileBreakpoint>
@@ -3020,11 +3020,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Logger.m"
-         timestampString = "390178942.141205"
+         timestampString = "390187291.686558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1296"
-         endingLineNumber = "1296"
+         startingLineNumber = "1300"
+         endingLineNumber = "1300"
          landmarkName = "-tick"
          landmarkType = "5">
       </FileBreakpoint>
