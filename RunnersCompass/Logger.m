@@ -407,7 +407,7 @@
 
 - (void) setupVoice {
     
-	fliteController.duration_stretch = 1.45; // Change the speed
+	fliteController.duration_stretch = 1.1; // Change the speed
 	fliteController.target_mean = 1.3; // Change the pitch
     fliteController.target_stddev = 1.5; // Change the variance
     
