@@ -221,7 +221,6 @@
                 break;
             case MetricTypeClimbed:
             case MetricTypeDescended:
-            case MetricTypeStride:
                 if([[prefs metric] boolValue])
                 {
                     [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]]];
@@ -233,6 +232,20 @@
                     [currentValueLabel setText:[NSString stringWithFormat:@"%.0f", [current floatValue]*convertMToFt]];
                     [previousValueLabel setText:[NSString stringWithFormat:@"%.0f", [previous floatValue]*convertMToFt]];
                     [allTimeValueLabel setText:[NSString stringWithFormat:@"%.0f", allTime*convertMToFt]];
+                }
+                break;
+            case MetricTypeStride:
+                if([[prefs metric] boolValue])
+                {
+                    [currentValueLabel setText:[NSString stringWithFormat:@"%.2f", [current floatValue]]];
+                    [previousValueLabel setText:[NSString stringWithFormat:@"%.2f", [previous floatValue]]];
+                    [allTimeValueLabel setText:[NSString stringWithFormat:@"%.2f", allTime]];
+                }
+                else
+                {
+                    [currentValueLabel setText:[NSString stringWithFormat:@"%.2f", [current floatValue]*convertMToFt]];
+                    [previousValueLabel setText:[NSString stringWithFormat:@"%.2f", [previous floatValue]*convertMToFt]];
+                    [allTimeValueLabel setText:[NSString stringWithFormat:@"%.2f", allTime*convertMToFt]];
                 }
                 break;
             default:

@@ -320,7 +320,7 @@
         
  
     }
-    else if(inBackground)
+    else if(inBackground)   //prepare to go into background
     {
         
         //prevent battery loss by disabling this in  case it is enabled
@@ -330,6 +330,7 @@
         //set accelerometer updates
         if(run.live)
         {
+            //begin run right away, do not wait for timer to complete because it won't in background
             if(run.time == 0 && paused)
             {
                 [delegate pauseAnimation:nil];
@@ -388,8 +389,6 @@
             isSleeping = YES;
             [self performSelector:@selector(wakeUp) withObject:nil afterDelay:0.3];
             run.steps++;
-            //testStepLabel.text = [NSString stringWithFormat:@"%d", run.steps];
-            //NSLog(@"Stepped: %d", run.steps);
         }
     }
     
@@ -412,7 +411,7 @@
     fliteController.target_stddev = 1.5; // Change the variance
     
     //max volume for voice
-    [fliteController.audioPlayer setVolume:2.0f];
+    [fliteController.audioPlayer setVolume:1.0f];
 }
 
 -(void)speechForDistanceChange
@@ -1269,12 +1268,13 @@
         [self evalAutopause:-1];
         
     }
-
-    //position independant information processed from here on:
     
-    //update ghost run map
-    if(run.ghost)
-        [self drawMapGhostPath:false];
+    //update ghost run map, will only draw every three seconds
+    if(((int)run.time) % calcPeriod == 0)
+    {
+        if(run.ghost)
+            [self drawMapGhostPath:false];
+    }
     
     //update avgPace, needs to be here in case no pos recorded
     run.avgPace =  run.distance / run.time; //m/s
@@ -1750,7 +1750,7 @@
 
     for(CLLocationMeta * position in run.associatedRun.posMeta)
     {
-        if(position.time == run.time)
+        if(position.time == timeToFind)
             return indexToReturn;
         
         indexToReturn++;
@@ -2619,15 +2619,27 @@
 {
     if(inBackground)
         return;
+    if(!run.ghost)
+        return;
     
     //find associated run position for current run time
-    NSInteger ghostPosToUse = [self indexForGhostRunAtTime:run.time];
-    
-    if(!run.ghost || ghostPosToUse < 1)
+    NSInteger ghostPosToUse;
+    if(!historical)
     {
-        //don't draw 
-        return;
+        ghostPosToUse = [self indexForGhostRunAtTime:run.time];
     }
+    else
+    {
+        //need to backtrack to most recent ghost position
+        NSTimeInterval lastGhostTime = run.time;
+        while((int)lastGhostTime % calcPeriod != 0)
+            lastGhostTime++;
+        ghostPosToUse = [self indexForGhostRunAtTime:lastGhostTime];
+    }
+    
+    //return if ghost pos not available
+    if(ghostPosToUse < 1)
+        return;
     
     BOOL discontinuousPathBreak = false;
     BOOL continuousPathBreak = false;
@@ -2679,18 +2691,22 @@
                 break;
         }
         
-        MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
-        //must remove previous line first,if gradually adding
-        //historical does not need this
-        if(numberForLine < mapPathSize && numberForLine > 1 && [mapGhostOverlays lastObject] && !historical)
+        //only add if there is something
+        if(numberForLine > 0)
         {
-            [fullMap removeOverlay:[mapGhostOverlays lastObject]];
-            [mapGhostOverlays removeLastObject];
+            MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberForLine];
+            //must remove previous line first,if gradually adding
+            //historical does not need this
+            if(numberForLine < mapPathSize && numberForLine > 1 && [mapGhostOverlays lastObject] && !historical)
+            {
+                [fullMap removeOverlay:[mapGhostOverlays lastObject]];
+                [mapGhostOverlays removeLastObject];
+            }
+            [mapGhostOverlays addObject:polyLine];
+            
+            //add to map
+            [fullMap addOverlay:polyLine];
         }
-        [mapGhostOverlays addObject:polyLine];
-        
-        //add to both maps
-        [fullMap addOverlay:polyLine];
         
     }while(discontinuousPathBreak || continuousPathBreak);
     

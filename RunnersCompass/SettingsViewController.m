@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 
+static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
+
 @interface SettingsViewController()
 
 @end
@@ -118,23 +120,54 @@
                          //restore product
                          [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue* transaction){
                              
+                             
                              //success
                              //hide button
-                             restoreAvailable = false;
-                             prefsToChange.purchased = [NSNumber numberWithBool:true];
+                             NSString* product;
                              
-                             //show notification
-                             StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
-                             [vc.view setBackgroundColor:[Util redColour]];
-                             [vc.view.layer setCornerRadius:5.0f];
-                             [vc.titleLabel setText:NSLocalizedString(@"thankyou","")];
-                             [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
+                             for(NSString * p in [IAPShare sharedHelper].iap.purchasedProducts)
+                             {
+                                 if([p isEqualToString:upgradeID])
+                                     product = p;
+                                 
+                             }
                              
-                             CGRect phoneRect = self.view.frame;
-                             phoneRect.origin.y = 0;
-                             [table scrollRectToVisible:phoneRect animated:FALSE];
-                             
-                             [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             if(product)
+                             {
+                                 
+                                 restoreAvailable = false;
+                                 prefsToChange.purchased = [NSNumber numberWithBool:true];
+                                 
+                                 //show notification
+                                 StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                 [vc.view setBackgroundColor:[Util redColour]];
+                                 [vc.view.layer setCornerRadius:5.0f];
+                                 [vc.titleLabel setText:NSLocalizedString(@"thankyou","")];
+                                 [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreSuccess","restore succes")];
+                                 
+                                 CGRect phoneRect = self.view.frame;
+                                 phoneRect.origin.y = 0;
+                                 [table scrollRectToVisible:phoneRect animated:FALSE];
+                                 
+                                 [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             }
+                             else
+                             {
+                                 
+                                 //show error, do not dismiss
+                                 //show notification
+                                 StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                 [vc.view setBackgroundColor:[Util redColour]];
+                                 [vc.view.layer setCornerRadius:5.0f];
+                                 [vc.titleLabel setText:NSLocalizedString(@"SettingsRestoreFailTitle","restore fail title")];
+                                 [vc.updateLabel setText:NSLocalizedString(@"SettingsRestoreFail","restore fail title")];
+                                 
+                                 CGRect phoneRect = self.view.frame;
+                                 phoneRect.origin.y = 0;
+                                 [table scrollRectToVisible:phoneRect animated:FALSE];
+                                 
+                                 [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                             }
 
                              
                          } OnFail:^(SKPaymentQueue* payment,NSError* error){
@@ -153,15 +186,6 @@
                              
                              [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
                              
-                             
-                             /*
-                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingsRestoreFailTitle", @"restore fail title")
-                                                                        message:NSLocalizedString(@"SettingsRestoreFail", @"restore fail ")
-                                                                            delegate:nil
-                                                                   cancelButtonTitle:@"OK"
-                                                                   otherButtonTitles:nil];
-                             [alert show];
-                              */
                          }];
                      }
                    accesoryType:UITableViewCellAccessoryNone];
