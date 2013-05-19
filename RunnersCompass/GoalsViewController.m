@@ -34,6 +34,24 @@ static NSString * goalCellID = @"GoalCellPrototype";
         drilledDown = false;
     }
     
+    if(showPurchaseNotification)
+    {
+        //present notification and thank you
+        //present PR notification popup
+        StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+        [vc.view setBackgroundColor:[Util redColour]];
+        [vc.view.layer setCornerRadius:5.0f];
+        [vc.titleLabel setText:NSLocalizedString(@"thankyou","thank you on notification label")];
+        [vc.updateLabel setText:NSLocalizedString(@"AppUpdated","description on notification label")];
+        
+        [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+        
+        showPurchaseNotification = false;
+        
+        //add more rows for added metrics
+        [table reloadData];
+    }
+    
     if(curGoal.type == GoalTypeNoGoal)
     {
         //size table to nothing to prevent scrolling
@@ -198,6 +216,14 @@ static NSString * goalCellID = @"GoalCellPrototype";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -
+#pragma mark UpgradeVC Delegate
+
+-(void)didPurchase
+{
+    prefs.purchased = [NSNumber numberWithBool:true];
+    showPurchaseNotification = true;
+}
 
 #pragma mark -
 #pragma mark  Table data source
@@ -330,6 +356,7 @@ static NSString * goalCellID = @"GoalCellPrototype";
     {
         UpgradeVC * vc = [[UpgradeVC alloc] initWithNibName:@"Upgrade" bundle:nil];
         [vc setPrefs:prefs];
+        [vc setDelegate:self];
         [self presentViewController:vc animated:true completion:nil];
     }
     

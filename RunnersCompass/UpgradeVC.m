@@ -212,16 +212,39 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
                                        
                                        //NSLog(@"Purchased, Thank You");
                                        
-                                       prefs.purchased = [NSNumber numberWithBool:true];
-                                       [delegate didPurchase];
+                                       NSString* product;
                                        
-                                       //give nottification to update settings on app delegate
-                                       [[NSNotificationCenter defaultCenter]
-                                        postNotificationName:@"settingsChangedNotification"
-                                        object:prefs];
+                                       for(NSString * p in [IAPShare sharedHelper].iap.purchasedProducts)
+                                       {
+                                           if([p isEqualToString:upgradeID])
+                                               product = p;
+                                           
+                                       }
                                        
-                                       //just dismiss user cancel
-                                       [self dismissViewControllerAnimated:true completion:nil];
+                                       if(product)
+                                       {
+                                           prefs.purchased = [NSNumber numberWithBool:true];
+                                           [delegate didPurchase];
+                                           
+                                           //give nottification to update settings on app delegate
+                                           [[NSNotificationCenter defaultCenter]
+                                            postNotificationName:@"settingsChangedNotification"
+                                            object:prefs];
+                                           
+                                           //just dismiss user cancel
+                                           [self dismissViewControllerAnimated:true completion:nil];
+                                       }
+                                       else
+                                       {
+                                           //present fail notification
+                                           StandardNotifyVC * vc = [[StandardNotifyVC alloc] initWithNibName:@"StandardNotify" bundle:nil];
+                                           [vc.view setBackgroundColor:[Util redColour]];
+                                           [vc.view.layer setCornerRadius:5.0f];
+                                           [vc.titleLabel setText:NSLocalizedString(@"SettingsPurchaseFail","purchase fail title")];
+                                           [vc.updateLabel setText:@""];
+                                           
+                                           [self presentPopupViewController:vc animationType:MJPopupViewAnimationSlideTopBottom];
+                                       }
                                        
                                    }
                                          OnFail:^(SKPaymentTransaction* trans) {

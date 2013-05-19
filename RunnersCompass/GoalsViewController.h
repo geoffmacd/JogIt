@@ -11,7 +11,7 @@
 #import "UserPrefs.h"
 #import "UpgradeVC.h"
 
-@interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GoalsViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,UpgradeVCDelegate>
 {
     
     NSInteger totalRunCount;
@@ -21,6 +21,7 @@
     NSMutableArray * cells;
     NSMutableArray * sortedRunsForGoal;
     BOOL drilledDown;
+    BOOL showPurchaseNotification;
     
 }
 

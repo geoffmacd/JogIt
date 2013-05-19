@@ -120,9 +120,6 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
                          //restore product
                          [[IAPShare sharedHelper].iap restoreProductsWithCompletion:^(SKPaymentQueue* transaction){
                              
-                             
-                             //success
-                             //hide button
                              NSString* product;
                              
                              for(NSString * p in [IAPShare sharedHelper].iap.purchasedProducts)
