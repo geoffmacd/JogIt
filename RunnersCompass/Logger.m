@@ -290,7 +290,7 @@
                 {
                     CMAccelerometerData * acceleration = [accelerometerReadings objectAtIndex:i];
                     
-                    if(wakeup < i)
+                    if(wakeup <= i)
                         isSleeping = false;
                     
                     float xx = acceleration.acceleration.x;
@@ -303,12 +303,12 @@
                     
                     dot /= (a * b);
                     
-                    if (dot <= 0.82) {
+                    if (dot <= stepMaxDotProduct) {
                         
-                        //skip next .3seconds
+                        //skip next .2 seconds
                         if (!isSleeping) {
                             isSleeping = YES;
-                            wakeup = i + 19;
+                            wakeup = i + 12;
                             run.steps++;
                         }
                     }
@@ -383,11 +383,13 @@
     float b = ABS(sqrt(xx * xx + yy * yy + zz * zz));
     
     dot /= (a * b);
+    //NSLog(@"dot: %.2f", dot);
     
-    if (dot <= 0.82) {
+    if (dot <= stepMaxDotProduct) {
         if (!isSleeping) {
             isSleeping = YES;
-            [self performSelector:@selector(wakeUp) withObject:nil afterDelay:0.3];
+            //0.2 seconds 
+            [self performSelector:@selector(wakeUp) withObject:nil afterDelay:0.2];
             run.steps++;
         }
     }

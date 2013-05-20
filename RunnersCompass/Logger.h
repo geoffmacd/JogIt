@@ -70,6 +70,7 @@
 #define delaySpeech 0.1 //s
 #define AccelUpdateFreq    60.0 //hz
 #define minUnpauseDelay 5 //s
+#define stepMaxDotProduct 0.85 //relatively high sensitivity
 
 #define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height-568)?NO:YES)
 
