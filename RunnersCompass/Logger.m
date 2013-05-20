@@ -1758,6 +1758,11 @@
         indexToReturn++;
     }
     
+    //need to return last position if time is over the last run
+    CLLocationMeta * lastGhostPos = [run.associatedRun.posMeta lastObject];
+    if(timeToFind > lastGhostPos.time)
+        return indexToReturn;
+    
     return 0;
 }
 
