@@ -514,6 +514,12 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         RunEvent * runDeleting = [cellToDelete associatedRun];
         NSTimeInterval runToDeleteDate = [runDeleting.date timeIntervalSinceReferenceDate];
         
+        
+        BOOL bigEnoughForProgress = (runDeleting.distance > DeleteRunMinDistanceForProgress && runDeleting.eventType != EventTypeManual);
+        //notify menu if necessary
+        if(bigEnoughForProgress)
+            [delegate startDeleteRun];
+        
         //delete from db
         RunRecord * recordToDelete = [RunRecord MR_findFirstByAttribute:@"date" withValue:runDeleting.date];
         //remove both run and cell, run is most necessary
@@ -531,7 +537,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //reload
         [table reloadData];
         
-        [delegate didDeleteRun:runToDeleteDate withCell:self];
+        [delegate didDeleteRun:runToDeleteDate withCell:self hideProgress:bigEnoughForProgress];
         
         [self setCorrectFrames:true];
         

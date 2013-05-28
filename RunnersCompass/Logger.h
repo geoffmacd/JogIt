@@ -67,7 +67,7 @@
 #define mapPathSize 10 //positions before new line
 #define paceSelectionOverrideTime 4 //s
 #define delayGoalAssessment 3 //s
-#define delaySpeech 0.1 //s
+#define delaySpeech 0.0 //s
 #define AccelUpdateFreq    60.0 //hz
 #define minUnpauseDelay 5 //s
 #define stepMaxDotProduct 0.85 //relatively high sensitivity

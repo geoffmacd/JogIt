@@ -32,6 +32,8 @@ NSDate *getFirstDayOfTheWeekFromDate(NSDate *givenDate);
 // Calculate the number of days (the number of "midnights") between two dates.
 NSUInteger daysBetween(NSDate *fromDate, NSDate *toDate);
 
+NSString * getTimeString(NSDate * timeDate);
+
 // Set the date to 0:0:0:0000
 NSDate *setDateToMidnite(NSDate *aDate);
 

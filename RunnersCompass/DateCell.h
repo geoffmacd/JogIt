@@ -20,6 +20,7 @@
 
 // Our conversion definition
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
+#define DeleteRunMinDistanceForProgress 5000
 
 
 @protocol DateCellDelegate <NSObject>
@@ -30,8 +31,10 @@
 -(UserPrefs*)getPrefs;
 -(void)preventUserFromSlidingRunInvalid:(RunEvent*)runToInvalid;
 -(void)presentShareWithItems:(NSArray*)items;
--(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell;
+-(void)startDeleteRun;
+-(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell hideProgress:(BOOL)hideProg;
 -(void)dateCellDidExpand:(BOOL)expand;
+
 
 @end
 

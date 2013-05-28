@@ -344,8 +344,18 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self.delegate preventUserFromSlidingRunInvalid:runToInvalid];
 }
 
--(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell
+-(void)startDeleteRun
 {
+    //start loading indicator
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+}
+
+-(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell hideProgress:(BOOL)hideProg
+{
+    //hide loading indicator
+    if(hideProg)
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
     DateCell * cell = datecell;
     RunEvent * runToDelete;
     

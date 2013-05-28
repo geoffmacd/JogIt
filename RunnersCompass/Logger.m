@@ -706,7 +706,7 @@
     if([speechQueue count])
     {
         [speechQueue removeObjectAtIndex:0];
-        [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];
+        [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];//no delay now
     }
 }
 
@@ -1577,7 +1577,7 @@
                 //illustrate with pace @ KM ##
                 NSString *distanceUnitText = [curSettings getDistanceUnit];
                 newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance/1000)];
-                newAnnotation.paceString = [RunEvent getPaceString:[newKM pace] withMetric:true showSpeed:showSpeed];
+                newAnnotation.paceString = [NSString stringWithFormat:@"%@ %@",[RunEvent getPaceString:[newKM pace] withMetric:true showSpeed:showSpeed], NSLocalizedString(@"MinuteWord", "")];
                 newAnnotation.kmCoord = [latest coordinate];
                 //add to array
                 [mapAnnotations addObject:newAnnotation];
@@ -1627,7 +1627,7 @@
                 //illustrate with pace @ KM ##
                 NSString *distanceUnitText = [curSettings getDistanceUnit];
                 newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, (NSInteger)(run.distance*convertKMToMile/1000)];
-                newAnnotation.paceString = [RunEvent getPaceString:[newMile pace] withMetric:false showSpeed:showSpeed];
+                newAnnotation.paceString = [NSString stringWithFormat:@"%@ %@",[RunEvent getPaceString:[newMile pace] withMetric:false showSpeed:showSpeed], NSLocalizedString(@"MinuteWord", "")];
                 newAnnotation.mileCoord = [latest coordinate];
                 //add to array
                 [mapAnnotations addObject:newAnnotation];
@@ -2330,7 +2330,7 @@
         {
             StartAnnotation * firstAnnotation = [[StartAnnotation alloc] init];
             firstAnnotation.mileName = NSLocalizedString(@"StartFlagText", @"map annotation flag - start");
-            firstAnnotation.paceString = [RunEvent getTimeString:0];
+            firstAnnotation.paceString = getTimeString(run.date);
             if([run.pos count])
             {
                 firstAnnotation.mileCoord = newLocation.coordinate;
@@ -2546,7 +2546,7 @@
     {
         StartAnnotation * firstAnnotation = [[StartAnnotation alloc] init];
         firstAnnotation.mileName = NSLocalizedString(@"StartFlagText", @"map annotation flag - start");
-        firstAnnotation.paceString = [RunEvent getTimeString:0];
+        firstAnnotation.paceString = getTimeString(run.date);
         if([run.pos count])
         {
             CLLocation * first = [run.pos objectAtIndex:0];
@@ -2571,7 +2571,7 @@
             
             //km is just the index plus 1
             newAnnotation.kmName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-            newAnnotation.paceString = [RunEvent getPaceString:[kmMeta pace] withMetric:true showSpeed:showSpeed];
+            newAnnotation.paceString = [NSString stringWithFormat:@"%@ %@",[RunEvent getPaceString:[kmMeta pace] withMetric:true showSpeed:showSpeed], NSLocalizedString(@"MinuteWord", "")];
             newAnnotation.kmCoord = [kmPos coordinate];
             
             //add to array
@@ -2594,7 +2594,7 @@
             
             //km is just the index plus 1
             newAnnotation.mileName = [NSString stringWithFormat:@"%@ %d", distanceUnitText, i + 1];
-            newAnnotation.paceString = [RunEvent getPaceString:[mileMeta pace] withMetric:false showSpeed:showSpeed];
+            newAnnotation.paceString = [NSString stringWithFormat:@"%@ %@",[RunEvent getPaceString:[mileMeta pace] withMetric:false showSpeed:showSpeed], NSLocalizedString(@"MinuteWord", "")];
             newAnnotation.mileCoord = [milePos coordinate];
             
             //add to array

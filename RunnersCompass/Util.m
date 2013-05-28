@@ -337,6 +337,14 @@ int currentWeek(void) {
     return [dateComps week];
 }
 
+NSString * getTimeString(NSDate * timeDate)
+{
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    [timeFormatter setDateFormat:@"hh:mm a"];
+    NSString *dateString = [timeFormatter stringFromDate: timeDate];
+    
+    return dateString;
+}
 
 NSDate *getMonthDateFromDate(NSDate *givenDate)
 {
