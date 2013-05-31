@@ -8,7 +8,20 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "953"
+         endingLineNumber = "953"
+         landmarkName = "-calorieTapped:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Menu.m"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "952"
@@ -21,24 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "951"
-         endingLineNumber = "951"
-         landmarkName = "-calorieTapped:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "918"
-         endingLineNumber = "918"
+         startingLineNumber = "919"
+         endingLineNumber = "919"
          landmarkName = "-paceTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "907"
-         endingLineNumber = "907"
+         startingLineNumber = "908"
+         endingLineNumber = "908"
          landmarkName = "-paceTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "525"
-         endingLineNumber = "525"
+         startingLineNumber = "526"
+         endingLineNumber = "526"
          landmarkName = "-selectedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -294,11 +294,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "523"
-         endingLineNumber = "523"
+         startingLineNumber = "524"
+         endingLineNumber = "524"
          landmarkName = "-selectedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1356,11 +1356,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "331"
-         endingLineNumber = "331"
+         startingLineNumber = "332"
+         endingLineNumber = "332"
          landmarkName = "-updateGestureFailForCell:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1369,11 +1369,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "315"
-         endingLineNumber = "315"
+         startingLineNumber = "316"
+         endingLineNumber = "316"
          landmarkName = "-cellDidChangeHeight:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1577,11 +1577,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "586"
-         endingLineNumber = "586"
+         startingLineNumber = "587"
+         endingLineNumber = "587"
          landmarkName = "-finishedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1590,11 +1590,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "627"
-         endingLineNumber = "627"
+         startingLineNumber = "628"
+         endingLineNumber = "628"
          landmarkName = "-finishedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1603,11 +1603,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389557376.41157"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "230"
-         endingLineNumber = "230"
+         startingLineNumber = "240"
+         endingLineNumber = "240"
          landmarkName = "-setExpand:withAnimation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1629,11 +1629,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "297"
-         endingLineNumber = "297"
+         startingLineNumber = "298"
+         endingLineNumber = "298"
          landmarkName = "-tableView:heightForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1642,11 +1642,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "304"
+         endingLineNumber = "304"
          landmarkName = "-tableView:heightForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1655,11 +1655,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "306"
-         endingLineNumber = "306"
+         startingLineNumber = "307"
+         endingLineNumber = "307"
          landmarkName = "-tableView:heightForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1668,11 +1668,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389557376.41157"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "255"
-         endingLineNumber = "255"
+         startingLineNumber = "265"
+         endingLineNumber = "265"
          landmarkName = "-setExpand:withAnimation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1772,11 +1772,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389557376.41157"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "221"
-         endingLineNumber = "221"
+         startingLineNumber = "231"
+         endingLineNumber = "231"
          landmarkName = "-reloadUnitLabels"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1785,11 +1785,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "623"
-         endingLineNumber = "623"
+         startingLineNumber = "624"
+         endingLineNumber = "624"
          landmarkName = "-finishedRun:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1811,11 +1811,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "279"
-         endingLineNumber = "279"
+         startingLineNumber = "280"
+         endingLineNumber = "280"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1837,11 +1837,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "267"
-         endingLineNumber = "267"
+         startingLineNumber = "268"
+         endingLineNumber = "268"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1889,11 +1889,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569059.892652"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "496"
-         endingLineNumber = "496"
+         startingLineNumber = "506"
+         endingLineNumber = "506"
          landmarkName = "-garbageTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1902,11 +1902,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569059.892652"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "491"
-         endingLineNumber = "491"
+         startingLineNumber = "501"
+         endingLineNumber = "501"
          landmarkName = "-garbageTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1915,11 +1915,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569059.892652"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "492"
-         endingLineNumber = "492"
+         startingLineNumber = "502"
+         endingLineNumber = "502"
          landmarkName = "-garbageTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1928,11 +1928,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569059.892652"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "346"
-         endingLineNumber = "346"
+         startingLineNumber = "356"
+         endingLineNumber = "356"
          landmarkName = "-setCorrectFrames:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1941,11 +1941,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "319"
-         endingLineNumber = "319"
+         startingLineNumber = "320"
+         endingLineNumber = "320"
          landmarkName = "-cellDidChangeHeight:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1954,11 +1954,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "378"
-         endingLineNumber = "378"
+         startingLineNumber = "379"
+         endingLineNumber = "379"
          landmarkName = "-didDeleteRun:withCell:hideProgress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1967,11 +1967,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "387"
-         endingLineNumber = "387"
+         startingLineNumber = "388"
+         endingLineNumber = "388"
          landmarkName = "-didDeleteRun:withCell:hideProgress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1980,11 +1980,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "398"
-         endingLineNumber = "398"
+         startingLineNumber = "399"
+         endingLineNumber = "399"
          landmarkName = "-didDeleteRun:withCell:hideProgress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1993,11 +1993,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "392"
-         endingLineNumber = "392"
+         startingLineNumber = "393"
+         endingLineNumber = "393"
          landmarkName = "-didDeleteRun:withCell:hideProgress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2006,11 +2006,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "265"
-         endingLineNumber = "265"
+         startingLineNumber = "266"
+         endingLineNumber = "266"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2032,11 +2032,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "389559903.909058"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "281"
-         endingLineNumber = "281"
+         startingLineNumber = "282"
+         endingLineNumber = "282"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2071,11 +2071,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/Menu.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736789.408663"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "359"
-         endingLineNumber = "359"
+         startingLineNumber = "360"
+         endingLineNumber = "360"
          landmarkName = "-didDeleteRun:withCell:hideProgress:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2097,11 +2097,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389557376.41157"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "227"
-         endingLineNumber = "227"
+         startingLineNumber = "237"
+         endingLineNumber = "237"
          landmarkName = "-setExpand:withAnimation:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2851,11 +2851,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "391476398.034354"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "535"
-         endingLineNumber = "535"
+         startingLineNumber = "545"
+         endingLineNumber = "545"
          landmarkName = "-garbageTapped:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2864,11 +2864,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569394.755382"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "339"
-         endingLineNumber = "339"
+         startingLineNumber = "349"
+         endingLineNumber = "349"
          landmarkName = "-setCorrectFrames:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2877,11 +2877,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569615.229802"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "363"
-         endingLineNumber = "363"
+         startingLineNumber = "373"
+         endingLineNumber = "373"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2890,11 +2890,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RunnersCompass/DateCell.m"
-         timestampString = "389569618.043337"
+         timestampString = "391736853.439374"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "329"
-         endingLineNumber = "329"
+         startingLineNumber = "339"
+         endingLineNumber = "339"
          landmarkName = "-setCorrectFrames:"
          landmarkType = "5">
       </FileBreakpoint>

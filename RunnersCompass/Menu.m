@@ -261,6 +261,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         [cell setPeriodStart:[Util dateForPeriod:row withWeekly:isWeekly]];
         [cell setRuns:[Util runsForPeriod:runs withWeekly:isWeekly withPeriodStart:cell.periodStart]];
         [cell setIndexForColor:row];
+        [cell setWeekly:isWeekly];
         //all prefs are requested
         [cell setup];
         

@@ -67,6 +67,7 @@
 //instance variables
 @property BOOL expanded;//for whether currently expanded
 @property BOOL locked;
+@property BOOL weekly; //to determine if first run msg neceessary
 @property NSDate * periodStart;
 
 @property NSMutableArray * runs;

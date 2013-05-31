@@ -20,7 +20,7 @@
 @synthesize delegate;
 
 @synthesize periodStart;
-@synthesize runs,locked;
+@synthesize runs,locked,weekly;
 @synthesize expanded;
 @synthesize indexForColor;
 @synthesize numRuns,totalDistance,avgPace;
@@ -157,8 +157,18 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         if(monthForPeriod(periodStart) == monthForPeriod([NSDate date]) && yearForPeriod(periodStart) == yearForPeriod([NSDate date]))
         {
-            //display message
-            [addRunLabel setHidden:false];
+            //only if monthly or within the same week
+            if(!weekly || weekForPeriod(periodStart) == weekForPeriod([NSDate date]))
+            {
+                //display message
+                [addRunLabel setHidden:false];
+            }
+            else
+            {
+                
+                [addRunLabel setHidden:true];
+                headerLabel.textColor = [UIColor lightGrayColor];
+            }
         }
         else
         {
