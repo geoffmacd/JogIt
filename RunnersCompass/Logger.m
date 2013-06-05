@@ -176,7 +176,6 @@
     
     
     //open ears stuff
-    //musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
     openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
 	[openEarsEventsObserver setDelegate:self];
     fliteController = [[FliteController alloc] init];
@@ -184,15 +183,6 @@
     slt = [[Slt alloc] init];
     [self setupVoice];
     speechQueue = [[NSMutableArray alloc] initWithCapacity:5];
-    
-    /*
-    if(musicWasPlaying)
-    {
-        MPMusicPlayerController *mp = [MPMusicPlayerController iPodMusicPlayer];
-        [mp play];
-        musicWasPlaying  = false;
-    }
-     */
     
 }
 

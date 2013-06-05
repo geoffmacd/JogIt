@@ -624,6 +624,9 @@
 		67B421B91707D9D1006574CF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		67B421BB1707D9D7006574CF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		67B421BD1707D9DB006574CF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		67B5EAE51759702D002C87E6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67B5EAE617597076002C87E6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67B5EAE71759708A002C87E6 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		67B8E98B172F398C00DAB97F /* DateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCell.h; sourceTree = "<group>"; };
 		67B8E98C172F398C00DAB97F /* DateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DateCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		67B8E98D172F398C00DAB97F /* DateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateCell.xib; sourceTree = "<group>"; };
@@ -1822,6 +1825,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				6779C0F816EE3C81002BCAEC /* en */,
+				67B5EAE51759702D002C87E6 /* fr */,
+				67B5EAE617597076002C87E6 /* es */,
+				67B5EAE71759708A002C87E6 /* ja */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

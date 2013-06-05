@@ -79,7 +79,7 @@
         //all of the following use the value parameter
         if(tempGoal.type == GoalTypeTotalDistance)
         {
-            [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeInteger];
+            [formMapping mapAttribute:@"value" title:valueText type:FKFormAttributeMappingTypeFloat];
             
             //validation
             [formMapping validationForAttribute:@"value" validBlock:^BOOL(NSString *value, id object) {

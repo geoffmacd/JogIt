@@ -99,7 +99,7 @@
             return NSLocalizedString(@"ManualRunDateValidation", @"");
         }];
         
-        [formMapping mapAttribute:@"distance" title:titleForDistance  type:FKFormAttributeMappingTypeInteger];
+        [formMapping mapAttribute:@"distance" title:titleForDistance  type:FKFormAttributeMappingTypeFloat];
         [formMapping mapAttribute:@"calories" title:NSLocalizedString(@"ManualCaloriesEntry", @"calories in manual run")  type:FKFormAttributeMappingTypeInteger];
         [formMapping mapAttribute:@"time" title:NSLocalizedString(@"ManualTimeEntry", @"time in manual run")  type:FKFormAttributeMappingTypeInteger];
         

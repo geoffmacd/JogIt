@@ -422,7 +422,7 @@
         
     } else if (attributeMapping.type == FKFormAttributeMappingTypeFloat) {
         float floatValue = [(NSNumber *)value floatValue];
-        convertedValue = [NSString stringWithFormat:@"%f", floatValue];
+        convertedValue = [NSString stringWithFormat:@"%.2f", floatValue];
         
     } else if (attributeMapping.type == FKFormAttributeMappingTypeDateTime ||
                attributeMapping.type == FKFormAttributeMappingTypeDate ||

@@ -182,7 +182,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "967"
          endingLineNumber = "967"
-         landmarkName = "-enableGhostRun"
+         landmarkName = "-resetGhostRun"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -195,7 +195,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "921"
          endingLineNumber = "921"
-         landmarkName = "-shouldUserGhostRun"
+         landmarkName = "-enableGhostRun"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -208,7 +208,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "243"
          endingLineNumber = "243"
-         landmarkName = "-viewDidLayoutSubviews"
+         landmarkName = "-didReceiveMemoryWarning"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -221,8 +221,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "244"
          endingLineNumber = "244"
-         landmarkName = "-viewDidLayoutSubviews"
-         landmarkType = "5">
+         landmarkName = "@implementation LoggerViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -611,7 +611,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "3873"
          endingLineNumber = "3873"
-         landmarkName = "-closeMapWithSmoothAnimation:completion:"
+         landmarkName = "-openMapWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -624,7 +624,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "3845"
          endingLineNumber = "3845"
-         landmarkName = "-barPlot:barWasSelectedAtRecordIndex:"
+         landmarkName = "-closeMapWithSmoothAnimation:completion:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -702,19 +702,6 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "184"
          endingLineNumber = "184"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "RunnersCompass/Logger.m"
-         timestampString = "389581753.445763"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "191"
-         endingLineNumber = "191"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -817,8 +804,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1886"
          endingLineNumber = "1886"
-         landmarkName = "@implementation LoggerViewController"
-         landmarkType = "3">
+         landmarkName = "-setLabelsForUnits"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -895,7 +882,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1878"
          endingLineNumber = "1878"
-         landmarkName = "-goalAchievedAnimation"
+         landmarkName = "-setLabelsForUnits"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1116,7 +1103,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "636"
          endingLineNumber = "636"
-         landmarkName = "-speechForDistanceChange"
+         landmarkName = "-audioCue:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1129,8 +1116,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "674"
          endingLineNumber = "674"
-         landmarkName = "@implementation LoggerViewController"
-         landmarkType = "3">
+         landmarkName = "-sayNextSpeech"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2531,7 +2518,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "4086"
          endingLineNumber = "4086"
-         landmarkName = "-finishTapped:"
+         landmarkName = "-invisibleButtonTapped:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2570,8 +2557,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "3129"
          endingLineNumber = "3129"
-         landmarkName = "@implementation LoggerViewController"
-         landmarkType = "3">
+         landmarkName = "-getMinBarIndexForKMSelecton:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2804,7 +2791,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "2408"
          endingLineNumber = "2408"
-         landmarkName = "-autoZoomMap:animated:withMap:"
+         landmarkName = "-zoomMapToEntireRun:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3012,7 +2999,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1299"
          endingLineNumber = "1299"
-         landmarkName = "-tick"
+         landmarkName = "-didReceivePause:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3025,7 +3012,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1302"
          endingLineNumber = "1302"
-         landmarkName = "-tick"
+         landmarkName = "-didReceivePause:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3038,7 +3025,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "393"
          endingLineNumber = "393"
-         landmarkName = "-accelerometer:didAccelerate:"
+         landmarkName = "-wakeUp"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3077,7 +3064,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "748"
          endingLineNumber = "748"
-         landmarkName = "-startNewRun"
+         landmarkName = "-newRunAnimationLoop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3090,7 +3077,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "749"
          endingLineNumber = "749"
-         landmarkName = "-startNewRun"
+         landmarkName = "-newRunAnimationLoop"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3220,7 +3207,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "2720"
          endingLineNumber = "2720"
-         landmarkName = "-drawMapGhostPath:"
+         landmarkName = "-drawMapPath:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -3403,6 +3390,19 @@
          startingLineNumber = "377"
          endingLineNumber = "377"
          landmarkName = "-accelerometer:didAccelerate:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "RunnersCompass/Logger.m"
+         timestampString = "391737124.08674"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1217"
+         endingLineNumber = "1217"
+         landmarkName = "-tick"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
