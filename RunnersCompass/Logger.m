@@ -1918,9 +1918,7 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        
-        NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-        [dateFormatter setLocale:usLocale];
+        [dateFormatter setLocale:[NSLocale currentLocale]];
         
         if(run.name)
         {

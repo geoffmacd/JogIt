@@ -130,12 +130,8 @@
 -(void)reloadUnitLabels
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-    //[dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setDateFormat:@"EEE"];
-    
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     
     UserPrefs * prefs = [delegate getPrefs];
     NSString * distanceUnitText = [prefs getDistanceUnit];

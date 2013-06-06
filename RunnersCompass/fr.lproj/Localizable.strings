@@ -32,7 +32,7 @@
 "5mile" = "5 Mile";
 
 /* Climbed name for title or goal */
-"AscentionMetric" = "grimpé";
+"AscentionMetric" = "Grimpé";
 
 /* Cadence name for title or goal */
 "CadenceMetric" = "Cadence";
@@ -44,7 +44,7 @@
 "CountMetric" = "Nombre d'activités";
 
 /*  */
-"DescendMetric" = "descendu";
+"DescendMetric" = "Descendu";
 
 /*  */
 "StepsMetric" = "Compte d'étape";
@@ -62,7 +62,7 @@
 "CadenceUnit" = "étape/min";
 
 /* cancel word */
-"CancelWord" = "Résilier";
+"CancelWord" = "Annuler";
 
 /* Create goal in edit screen */
 "CreateGoalButton" = "Sauver";
@@ -242,7 +242,7 @@
 "JustGoRunTitle" = "";
 
 /* JustGoTargetButton */
-"JustGoTargetButton" = "De base";
+"JustGoTargetButton" = "Juste aller";
 
 /* shortform for km */
 "KmMetricUnitShort" = "Km";
@@ -288,13 +288,13 @@
 "PaceMetric" = "Rythme";
 
 /* PaceRunTargetButton */
-"PaceRunTargetButton" = "Cible de rythme";
+"PaceRunTargetButton" = "Cible de Rythme";
 
 /* Logger title for pace */
-"PaceTitle" = "Rythme moyenne";
+"PaceTitle" = "Rythme Moyenne";
 
 /* label for all time performance */
-"PerformanceAllTimeLabel" = "Sans précédent";
+"PerformanceAllTimeLabel" = "Sans Précédent";
 
 /* current month in performance */
 "PerformanceCurrentMonth" = "Courant";
@@ -324,13 +324,13 @@
 "SettingsWeekly" = "Groupe par Semaine";
 
 /* auto pause switch in settings */
-"SettingsAutoPause" = "Pause automatique";
+"SettingsAutoPause" = "Pause Automatique";
 
 /* birth date in settings */
 "SettingsBirth" = "Date de naissance";
 
 /* countdown  in settings */
-"SettingsCountdown" = "Retard du compte à rebours (s)";
+"SettingsCountdown" = "Retarder commencer(s)";
 
 /* full name settings */
 "SettingsFullName" = "Nom";
@@ -345,7 +345,7 @@
 "SettingsSharingHeader" = "Partager";
 
 /* show speed switch in settings */
-"SettingsShowSpeed" = "Afficher Speed";
+"SettingsShowSpeed" = "Afficher la vitesse";
 
 /* units switch in settings */
 "SettingsUnits" = "Unités métriques";
@@ -360,7 +360,7 @@
 "SettingsSpeech" = "Des signaux sonores";
 
 /* enable speech time in settings*/
-"SettingsSpeechTime" = "Dire le temps";
+"SettingsSpeechTime" = "Dire l'heure";
 
 /* enable speech distance in settings*/
 "SettingsSpeechDistance" = "Dire distance";
@@ -405,16 +405,16 @@
 "TargetInRunTitle" = "Cible";
 
 /* Time name for title or goal */
-"TimeMetric" = "Temp";
+"TimeMetric" = "Heure";
 
 /* TimeRunTargetButton */
 "TimeRunTargetButton" = "Cible de temps";
 
 /* Shortform units for time */
-"TimeShort" = "Temp";
+"TimeShort" = "heure";
 
 /* Logger title for time */
-"TimeTitle" = "Temp";
+"TimeTitle" = "Heure";
 
 /* button for weekly */
 "WeeklyButton" = "Semaine";
@@ -495,7 +495,7 @@
 "ManualCaloriesEntry" = "Calories";
 
 /* "time in manual run */
-"ManualTimeEntry" = "Temps (Minutes)";
+"ManualTimeEntry" = "Heure (Minutes)";
 
 /* "ManualRunButton*/
 "ManualRunButton" = "Saisie manuelle";

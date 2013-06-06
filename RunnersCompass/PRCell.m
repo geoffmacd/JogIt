@@ -38,9 +38,7 @@
     NSString * dateString;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    //dateFormatter.dateFormat = @"dd-MMM-yyyy";
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     dateString = [dateFormatter stringFromDate:furthestDateObj];
     [furthestDate setText:dateString];
     dateString = [dateFormatter stringFromDate:fastDateObj];

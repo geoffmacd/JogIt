@@ -23,8 +23,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    NSLocale *usLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [dateFormatter setLocale:usLocale];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     NSString * header = [NSString stringWithFormat:@"%@",[dateFormatter stringFromDate:runForCell.date]];
     [dateLabel setText:header];
     

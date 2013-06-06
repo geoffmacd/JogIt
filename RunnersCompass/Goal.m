@@ -450,7 +450,7 @@
             //calc avg pace
             avgPace = [value floatValue] / ((components.hour * 3600) + (components.minute * 60))  ; //to m/s
             progress = max / avgPace;
-            metricValueChange = [NSString stringWithFormat:@"%.1f %@ in %@", [RunEvent getDisplayDistance:[value floatValue] withMetric:metric], [tempPrefs getDistanceUnit], [RunEvent getTimeString:([value floatValue]/max)]];
+            metricValueChange = [NSString stringWithFormat:@"%.1f %@ %@ %@", [RunEvent getDisplayDistance:[value floatValue] withMetric:metric], [tempPrefs getDistanceUnit],  NSLocalizedString(@"LoggerShareMsg4", nil), [RunEvent getTimeString:([value floatValue]/max)]];
             break;
         case GoalTypeTotalDistance:
             progress = total / [value floatValue];

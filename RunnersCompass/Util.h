@@ -17,6 +17,8 @@
 +(UIColor*) blueColour;
 +(UIColor*) cellRedColour;
 
++(UIColor*) flatColorForCell:(NSInteger)indexFromInstallation;
+
 +(NSInteger)numPeriodsForRuns:(NSMutableArray*)runs withWeekly:(BOOL)weekly;
 
 NSDate *getFirstDayOfTheWeekFromDate(NSDate *givenDate);
