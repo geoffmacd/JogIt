@@ -16,7 +16,6 @@
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
 		67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0A16409B7700DD13C5 /* Foundation.framework */; };
 		67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0C16409B7700DD13C5 /* CoreGraphics.framework */; };
-		67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67236D1116409B7700DD13C5 /* InfoPlist.strings */; };
 		67236D1516409B7700DD13C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1416409B7700DD13C5 /* main.m */; };
 		67236D1916409B7700DD13C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D1816409B7700DD13C5 /* AppDelegate.m */; };
 		67236D2516409B7700DD13C5 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 67236D2416409B7700DD13C5 /* Menu.m */; };
@@ -304,7 +303,6 @@
 		67236D0A16409B7700DD13C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		67236D0C16409B7700DD13C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		67236D1016409B7700DD13C5 /* JogIt-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JogIt-Info.plist"; sourceTree = "<group>"; };
-		67236D1216409B7700DD13C5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67236D1416409B7700DD13C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67236D1616409B7700DD13C5 /* JogIt-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JogIt-Prefix.pch"; sourceTree = "<group>"; };
 		67236D1716409B7700DD13C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -807,7 +805,6 @@
 			children = (
 				6779C0F416EE3C55002BCAEC /* Localization */,
 				67236D1016409B7700DD13C5 /* JogIt-Info.plist */,
-				67236D1116409B7700DD13C5 /* InfoPlist.strings */,
 				67236D1416409B7700DD13C5 /* main.m */,
 				67236D1616409B7700DD13C5 /* JogIt-Prefix.pch */,
 			);
@@ -1525,7 +1522,6 @@
 			files = (
 				6794266817307DDE006C2D40 /* Montserrat-Bold.ttf in Resources */,
 				6794266917307DDE006C2D40 /* Montserrat-Regular.ttf in Resources */,
-				67236D1316409B7700DD13C5 /* InfoPlist.strings in Resources */,
 				67FC070516ACD4F400491C97 /* HierarchicalCell.xib in Resources */,
 				672AA39316B4C87E00B7DEE6 /* StartCell.xib in Resources */,
 				672AA50F16B7437100B7DEE6 /* Logger.xib in Resources */,
@@ -1794,14 +1790,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		67236D1116409B7700DD13C5 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				67236D1216409B7700DD13C5 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		6779C0F916EE3C81002BCAEC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
