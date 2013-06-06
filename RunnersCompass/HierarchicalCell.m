@@ -43,7 +43,7 @@
         
         [thumbnailImage setImage:associatedRun.thumbnail];
         [thumbnailImage.layer setBorderColor: [[UIColor lightGrayColor] CGColor]];
-        [thumbnailImage.layer setBorderWidth: 1.0];
+        //[thumbnailImage.layer setBorderWidth: 1.0];
         //corners to make map not look so square
         [thumbnailImage.layer setCornerRadius:5.0f];
         [thumbnailImage.layer setMasksToBounds:YES];
@@ -62,15 +62,12 @@
     //set fonts
     [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:16.0f]];
     [manualEntryLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
-    
     [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
     [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
     [paceLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
     [paceUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
     [calUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
     [minUnit setFont:[UIFont fontWithName:@"Montserrat-Regular" size:12.0f]];
-     
-    
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
