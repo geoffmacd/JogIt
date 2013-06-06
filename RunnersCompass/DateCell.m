@@ -481,7 +481,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
                          }];
     }
 
-    [delegate cellDidChangeHeight:self byTouch:false];
+    [delegate cellDidChangeHeight:self byTouch:true];
 }
 
 -(void)selectedRun:(id)sender
