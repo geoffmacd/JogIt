@@ -1917,10 +1917,10 @@
         //set title
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [dateFormatter setLocale:[NSLocale currentLocale]];
-        //NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        //[dateFormatter setCalendar:calendar];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        [dateFormatter setCalendar:calendar];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         
         if(run.name)
         {

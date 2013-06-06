@@ -128,7 +128,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [ordinalNumberFormatter setGrammaticalGender:TTTOrdinalNumberFormatterMaleGender];
     if([[prefs weekly] boolValue])
     {
-        NSDate *endPeriod = shiftDateByXdays(periodStart, 7);
+        NSDate *endPeriod = shiftDateByXdays(periodStart, 6);
         //shorten months
         [formatter setDateFormat:@"MMM"];
         header = [NSString stringWithFormat:@"%@ %@ - %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(endPeriod)]]];

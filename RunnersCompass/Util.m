@@ -66,8 +66,7 @@
 +(NSInteger)numPeriodsForRuns:(NSMutableArray*)runs withWeekly:(BOOL)weekly
 {
     NSInteger periods = 0;
-    NSDate *oldest = [self dateForPeriod:0 withWeekly:weekly];
-    NSDate *newest = [NSDate date];
+    NSDate *oldest = [NSDate date];
     
     //get oldest run
     for(RunEvent * oldRun in runs)
@@ -80,33 +79,38 @@
     
     if(weekly)
     {
-        NSDate *iWeek = newest;
+        //start at end of current week
+        NSDate *iWeek = shiftDateByXweeks(getFirstDayOfTheWeekFromDate([NSDate date]),1);
+        NSDate * curWeekDate = shiftDateByXweeks(getFirstDayOfTheWeekFromDate([NSDate date]),1);
         
         while([oldest timeIntervalSinceReferenceDate] < [iWeek timeIntervalSinceReferenceDate])
         {
             periods++;
             //shift date one week at a time until iWeek is less
-            iWeek = shiftDateByXweeks(newest, -periods);
+            iWeek = shiftDateByXweeks(curWeekDate, -periods);
         }
         
     }
     else
     {
-        NSDate *iMonth = newest;
+        NSDate *iMonth = shiftDateByXmonths(getMonthDateFromDate([NSDate date]),1);
+        NSDate * curMonthDate = shiftDateByXmonths(getMonthDateFromDate([NSDate date]),1);
         
         while([oldest timeIntervalSinceReferenceDate] < [iMonth timeIntervalSinceReferenceDate])
         {
             periods++;
             //shift date one month at a time until iWeek is less
-            iMonth = shiftDateByXmonths(newest, -periods);
+            iMonth = shiftDateByXmonths(curMonthDate, -periods);
         }
     }
     
-    //NSLog(@"%d periods found for %d runs", periods, [runs count]);
+    NSLog(@"%d periods found for %d runs", periods, [runs count]);
     
     //show at least two months
     if(periods == 1)
         return 2;
+    else if(periods < 1)
+        return 1;
     return periods;
 }
 
