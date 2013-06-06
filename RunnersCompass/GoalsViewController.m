@@ -256,11 +256,10 @@ static NSString * goalCellID = @"GoalCellPrototype";
     
     if(row >= [cells count])
     {
-        /*
         GoalCell * cell = (GoalCell*) [[[NSBundle mainBundle]loadNibNamed:@"GoalCell"
                                                                  owner:self
-         options:nil]objectAtIndex:0];*/
-        GoalCell * cell = (GoalCell * )[tableView dequeueReusableCellWithIdentifier:goalCellID];
+         options:nil]objectAtIndex:0];
+        //GoalCell * cell = (GoalCell * )[tableView dequeueReusableCellWithIdentifier:goalCellID];
         
         [cells addObject:cell];
         RunEvent * runForCell = [sortedRunsForGoal objectAtIndex:row];
