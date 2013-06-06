@@ -25,7 +25,7 @@
 
 @protocol DateCellDelegate <NSObject>
 
--(void)cellDidChangeHeight:(id) sender;
+-(void)cellDidChangeHeight:(id) sender byTouch:(BOOL)byTouch;
 -(void)selectedRun:(id)sender;
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;
@@ -33,7 +33,7 @@
 -(void)presentShareWithItems:(NSArray*)items;
 -(void)startDeleteRun;
 -(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell hideProgress:(BOOL)hideProg;
--(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row;
+-(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row byTouch:(BOOL)byTouch;
 
 
 @end

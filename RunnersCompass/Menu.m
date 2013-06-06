@@ -310,15 +310,18 @@ static NSString * dateCellID = @"DateCellPrototype";
 #pragma mark -
 #pragma mark DateCellDelegate
 
--(void) cellDidChangeHeight:(id) sender
+-(void) cellDidChangeHeight:(id) sender byTouch:(BOOL)byTouch
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
     
     //animate with row belows move down nicely
-    [MenuTable beginUpdates];
-    [MenuTable endUpdates];
+    if(byTouch)
+    {
+        [MenuTable beginUpdates];
+        [MenuTable endUpdates];
+    }
     [MenuTable reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
     
     
@@ -409,7 +412,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
--(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row
+-(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row byTouch:(BOOL)byTouch
 {
     if(expand)
     {
@@ -451,7 +454,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     }
     
     //scroll to this cell if expanding
-    if(expand)
+    if(expand && byTouch)
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:true];
 }
 
@@ -815,7 +818,11 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     expandState--;
     if(expandState < 0)
+    {
         expandState = 0;
+        
+        //shade button here in future
+    }
     else if(expandState > 1)//must collapse something
         expandState = 1;
     
@@ -830,7 +837,11 @@ static NSString * dateCellID = @"DateCellPrototype";
 {
     expandState++;
     if(expandState > 2)
+    {
         expandState = 2;
+        
+        //shade button here in future
+    }
     else if(expandState < 1)//has to at least expand something
         expandState = 1;
     

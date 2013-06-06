@@ -104,7 +104,7 @@
         }
     }
     
-    NSLog(@"%d periods found for %d runs", periods, [runs count]);
+    //NSLog(@"%d periods found for %d runs", periods, [runs count]);
     
     //show at least two months
     if(periods == 1)

@@ -15,7 +15,7 @@
 
 @protocol StartCellDelegate <NSObject>
 
--(void)cellDidChangeHeight:(id) sender;
+-(void)cellDidChangeHeight:(id) sender byTouch:(BOOL)byTouch;
 -(void)selectedNewRun:(RunEvent *) run;
 -(void)selectedRunInProgress:(BOOL)shouldDiscard;
 

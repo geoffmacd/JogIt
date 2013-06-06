@@ -100,7 +100,7 @@
     }
     
     if(delegate)
-        [delegate cellDidChangeHeight:self];
+        [delegate cellDidChangeHeight:self byTouch:animate];
     
 }
 

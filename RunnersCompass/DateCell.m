@@ -270,8 +270,8 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     if(delegate)
     {
-        [delegate cellDidChangeHeight:self];
-        [delegate dateCellDidExpand:expanded withRow:indexForColor];
+        [delegate cellDidChangeHeight:self byTouch:animate];
+        [delegate dateCellDidExpand:expanded withRow:indexForColor byTouch:animate];
     }
     
 }
@@ -356,7 +356,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //contact menu to tell it size has changed
     if(contactDel)
-        [delegate cellDidChangeHeight:self];
+        [delegate cellDidChangeHeight:self byTouch:true];
 
 }
 
@@ -481,7 +481,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
                          }];
     }
 
-    [delegate cellDidChangeHeight:self];
+    [delegate cellDidChangeHeight:self byTouch:false];
 }
 
 -(void)selectedRun:(id)sender
