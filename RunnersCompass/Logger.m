@@ -2601,7 +2601,8 @@
     {
         FinishAnnotation * lastAnnotation = [[FinishAnnotation alloc] init];
         lastAnnotation.mileName = NSLocalizedString(@"FinishFlagText", @"map annotation flag - finish");
-        lastAnnotation.paceString = [RunEvent getTimeString:run.time];
+        //lastAnnotation.paceString = [RunEvent getTimeString:run.time];
+        lastAnnotation.paceString = getTimeString([NSDate dateWithTimeInterval:run.time sinceDate:run.date]);
         //last object of pos not min or km
         CLLocation * last = [run.pos lastObject];
         lastAnnotation.mileCoord = last.coordinate;
