@@ -33,7 +33,7 @@
 -(void)presentShareWithItems:(NSArray*)items;
 -(void)startDeleteRun;
 -(void)didDeleteRun:(NSTimeInterval)runDate withCell:(id)datecell hideProgress:(BOOL)hideProg;
--(void)dateCellDidExpand:(BOOL)expand;
+-(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row;
 
 
 @end

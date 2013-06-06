@@ -409,17 +409,19 @@ static NSString * dateCellID = @"DateCellPrototype";
     [self presentViewController:activityController animated:YES completion:nil];
 }
 
--(void)dateCellDidExpand:(BOOL)expand
+-(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row
 {
     if(expand)
     {
         if(expandedCount == 0)
         {
             //fade all months grey
+            /*
             for(DateCell * oldCell in cells)
             {
-                //[AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor lightGrayColor]];
+                [AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor lightGrayColor]];
             }
+             */
             
             //expandState = 1;
         }
@@ -448,6 +450,9 @@ static NSString * dateCellID = @"DateCellPrototype";
         }
     }
     
+    //scroll to this cell if expanding
+    if(expand)
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:true];
 }
 
 
