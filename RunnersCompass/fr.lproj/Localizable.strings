@@ -202,42 +202,6 @@
 /* race name */
 "halfmarathonRace" = "Semi-marathon";
 
-/* month string */
-"JanMonth" = "January";
-
-/* month string */
-"JulyMonth" = "July";
-
-/* month string */
-"OctMonth" = "October";
-
-/* month string */
-"AprilMonth" = "April";
-
-/* month string */
-"FebMonth" = "February";
-
-/* month string */
-"MarMonth" = "March";
-
-/* month string */
-"MayMonth" = "May";
-
-/* month string */
-"JunMonth" = "June";
-
-/* month string */
-"AugMonth" = "August";
-
-/* month string */
-"SeptMonth" = "September";
-
-/* month string */
-"NovMonth" = "November";
-
-/* month string */
-"DecMonth" = "December";
-
 /* Default run title for just go */
 "JustGoRunTitle" = "";
 

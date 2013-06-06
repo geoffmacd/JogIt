@@ -210,6 +210,9 @@ int currentWeek(void) {
 NSString * getTimeString(NSDate * timeDate)
 {
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [timeFormatter setLocale:[NSLocale currentLocale]];
+    [timeFormatter setCalendar:calendar];
     [timeFormatter setDateFormat:@"hh:mm a"];
     NSString *dateString = [timeFormatter stringFromDate: timeDate];
     

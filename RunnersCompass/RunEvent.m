@@ -261,6 +261,8 @@
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setLocale:[NSLocale currentLocale]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [dateFormatter setCalendar:calendar];
     NSString * dateString = [dateFormatter stringFromDate:associatedRun.date];
     
     return dateString;

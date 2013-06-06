@@ -119,6 +119,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     NSString * header;
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [formatter setLocale:[NSLocale currentLocale]];
+    [formatter setCalendar:calendar];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
     TTTOrdinalNumberFormatter *ordinalNumberFormatter = [[TTTOrdinalNumberFormatter alloc] init];
     [ordinalNumberFormatter setLocale:[NSLocale currentLocale]];
     [ordinalNumberFormatter setGrammaticalGender:TTTOrdinalNumberFormatterMaleGender];
@@ -126,7 +130,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     {
         NSDate *endPeriod = shiftDateByXdays(periodStart, 7);
         //shorten months
-        [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setDateFormat:@"MMM"];
         header = [NSString stringWithFormat:@"%@ %@ - %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(endPeriod)]]];
     }

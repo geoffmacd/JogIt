@@ -39,6 +39,9 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setLocale:[NSLocale currentLocale]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [dateFormatter setCalendar:calendar];
+    
     dateString = [dateFormatter stringFromDate:furthestDateObj];
     [furthestDate setText:dateString];
     dateString = [dateFormatter stringFromDate:fastDateObj];

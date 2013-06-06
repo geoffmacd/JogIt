@@ -1919,6 +1919,8 @@
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         [dateFormatter setLocale:[NSLocale currentLocale]];
+        //NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        //[dateFormatter setCalendar:calendar];
         
         if(run.name)
         {

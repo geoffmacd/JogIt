@@ -129,6 +129,8 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"EEE"];
     [dateFormatter setLocale:[NSLocale currentLocale]];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    [dateFormatter setCalendar:calendar];
     
     UserPrefs * prefs = [delegate getPrefs];
     NSString * distanceUnitText = [prefs getDistanceUnit];

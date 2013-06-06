@@ -496,45 +496,16 @@
             {
                 NSString * tempLabel;
                 
-                switch(idx/4)
-                {
-                    case 1:
-                        tempLabel = NSLocalizedString(@"JanMonth", "month string");
-                        break;
-                    case 2:
-                        tempLabel = NSLocalizedString(@"FebMonth", "month string");
-                        break;
-                    case 3:
-                        tempLabel = NSLocalizedString(@"MarMonth", "month string");
-                        break;
-                    case 4:
-                        tempLabel = NSLocalizedString(@"AprilMonth", "month string");
-                        break;
-                    case 5:
-                        tempLabel = NSLocalizedString(@"MayMonth", "month string");
-                        break;
-                    case 6:
-                        tempLabel = NSLocalizedString(@"JunMonth", "month string");
-                        break;
-                    case 7:
-                        tempLabel = NSLocalizedString(@"JulyMonth", "month string");
-                        break;
-                    case 8:
-                        tempLabel = NSLocalizedString(@"AugMonth", "month string");
-                        break;
-                    case 9:
-                        tempLabel = NSLocalizedString(@"SeptMonth", "month string");
-                        break;
-                    case 10:
-                        tempLabel = NSLocalizedString(@"OctMonth", "month string");
-                        break;
-                    case 11:
-                        tempLabel = NSLocalizedString(@"NovMonth", "month string");
-                        break;
-                    case 12:
-                        tempLabel = NSLocalizedString(@"DecMonth", "month string");
-                        break;
-                }
+                NSDateComponents *toTimeComponents = [NSDateComponents new];
+                [toTimeComponents setMonth:(idx/4)];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                //shorten months
+                [formatter setDateStyle:NSDateFormatterMediumStyle];
+                [formatter setDateFormat:@"MMMM"];
+                [formatter setCalendar:calendar];
+                [formatter setLocale:[NSLocale currentLocale]];
+                tempLabel = [formatter stringFromDate:[calendar dateFromComponents:toTimeComponents]];
+                    
                 if(tempLabel)
                 {
                     CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:tempLabel textStyle:dateLabelTextStyle];
