@@ -32,7 +32,7 @@
 "5mile" = "5 Mile";
 
 /* Climbed name for title or goal */
-"AscentionMetric" = "Climbed";
+"AscentionMetric" = "grimpé";
 
 /* Cadence name for title or goal */
 "CadenceMetric" = "Cadence";
@@ -41,16 +41,16 @@
 "CaloriesMetric" = "Calories";
 
 /* */
-"CountMetric" = "Activity Count";
+"CountMetric" = "Nombre d'activités";
 
 /*  */
-"DescendMetric" = "Descended";
+"DescendMetric" = "descendu";
 
 /*  */
-"StepsMetric" = "Step Count";
+"StepsMetric" = "Compte d'étape";
 
 /* CaloriesRunTargetButton */
-"CaloriesRunTargetButton" = "Calorie Target";
+"CaloriesRunTargetButton" = "Cible de calories";
 
 /* Logger title for calories */
 "CaloriesTitle" = "Calories";
@@ -59,148 +59,148 @@
 "CalShortForm" = "Cal";
 
 /*  */
-"CadenceUnit" = "step/min";
+"CadenceUnit" = "étape/min";
 
 /* cancel word */
-"CancelWord" = "Cancel";
+"CancelWord" = "Résilier";
 
 /* Create goal in edit screen */
-"CreateGoalButton" = "Save";
+"CreateGoalButton" = "Sauver";
 
 /* header to describe create goal */
-"CreateGoalHeader" = "Create goal to accomplish";
+"CreateGoalHeader" = "Créer objectif à atteindre";
 
 /* Logger title for current pace */
-"CurrentPaceTitle" = "Current Pace";
+"CurrentPaceTitle" = "Rythme Actuel";
 
 /* Question for discarding goal */
-"DiscardCurrentGoal" = "Discard Current Goal?";
+"DiscardCurrentGoal" = "Jeter course actuel?";
 
 /* Question for discarding run */
-"DiscardCurrentRun" = "Discard Current Run?";
+"DiscardCurrentRun" = "Jeter course actuelle?";
 
 /* discard word */
-"DiscardWord" = "Discard";
+"DiscardWord" = "Jeter";
 
 /* Distance name for title or goal */
 "DistanceMetric" = "Distance";
 
 /* DistanceRunTargetButton */
-"DistanceRunTargetButton" = "Distance Target";
+"DistanceRunTargetButton" = "Cible à distance";
 
 /* Logger title for distance */
 "DistanceTitle" = "Distance";
 
 /* done button */
-"DoneButton" = "Done";
+"DoneButton" = "Fait";
 
 /* Logger finish button title */
-"FinishButton" = "Finish";
+"FinishButton" = "Fini";
 
 /* Word for finish in title */
-"FinishWord" = "Finish";
+"FinishWord" = "Fini";
 
 /* No comment provided by engineer. */
-"fullmarathon" = "Full Marathon";
+"fullmarathon" = "Plein Marathon";
 
 /* race name */
-"fullmarathonRace" = "Full Marathon";
+"fullmarathonRace" = "Plein Marathon";
 
 /* Logger title for ghost distance */
-"GhostDistanceTitle" = "Previous Run";
+"GhostDistanceTitle" = "Course précédente";
 
 /* Question for starting ghost run */
-"GhostRun" = "Race Against Yourself?";
+"GhostRun" = "Course contre soi-même?";
 
 /* word for starting ghost run */
-"GhostRunStart" = "Ghost Run";
+"GhostRunStart" = "Fantôme course";
 
 /* began date label for goal */
-"GoalBeganLabel" = "Start Date";
+"GoalBeganLabel" = "Date de Début";
 
 /* No goal for button */
-"GoalButtonWithNone" = "No Goal: Create One!";
+"GoalButtonWithNone" = "Pas de but: créer un!";
 
 /* count label for goal activites */
-"GoalCountLabel" = "Runs Completed";
+"GoalCountLabel" = "Fonctionne Terminé";
 
 /* goal descriptions */
-"GoalDescriptCalories" = "Weight Loss";
+"GoalDescriptCalories" = "La perte de poids";
 
 /* bad metric for goal description */
 "GoalDescriptionBadMetric" = "badgoal";
 
 /* goal descriptions */
-"GoalDescriptOneDistance" = "Complete Race";
+"GoalDescriptOneDistance" = "Course complète";
 
 /* goal descriptions */
-"GoalDescriptRace" = "Fastest Race";
+"GoalDescriptRace" = "Course la plus rapide";
 
 /* goal descriptions */
-"GoalDescriptTotalDistance" = "Total Distance";
+"GoalDescriptTotalDistance" = "Distance Totale";
 
 /* goal progress */
-"GoalprogressCalories" = "Fat Burned in Calories";
+"GoalprogressCalories" = "Graisse brûlée en Calories";
 
 /* bad metric for goal progress */
 "GoalprogressBadMetric" = "badgoal";
 
 /* goal progress */
-"GoalprogressOneDistance" = "Furthest Distance";
+"GoalprogressOneDistance" = "Le plus éloigné";
 
 /* goal progress */
-"GoalprogressRace" = "Fastest Race";
+"GoalprogressRace" = "Course la plus rapide";
 
 /* goal progress */
-"GoalprogressTotalDistance" = "Accumulated Distance";
+"GoalprogressTotalDistance" = "Distance Accumulée";
 
 /* bad metric for goal edit second edit */
 "GoalEditSecondChoiceBadMetric" = "badgoal";
 
 /* goal edit second dscrition for race */
-"GoalEditSecondChoiceRace" = "Time Target";
+"GoalEditSecondChoiceRace" = "Cible de temps";
 
 /* label for goal edit form */
-"GoalEndLabel" = "Goal Target Date";
+"GoalEndLabel" = "Objectif Date cible";
 
 /* bad metric for goal header in edit */
 "GoalHeaderBadMetric" = "badgoal";
 
 /* goal header descriptions for edit */
-"GoalHeaderDescriptCalories" = "Enter weightloss to be burned";
+"GoalHeaderDescriptCalories" = "Entrez perte de poids à brûler";
 
 /* goal header descriptions for edit */
-"GoalHeaderDescriptOneDistance" = "Enter race distance to complete";
+"GoalHeaderDescriptOneDistance" = "Entrez la distance de la course pour terminer";
 
 /* goal header descriptions for edit */
-"GoalHeaderDescriptRace" = "Enter target time for race";
+"GoalHeaderDescriptRace" = "Entrez le temps de cible pour la course";
 
 /* goal header descriptions for edit */
-"GoalHeaderDescriptTotalDistance" = "Enter cumulative distance";
+"GoalHeaderDescriptTotalDistance" = "Entrez la distance cumulative";
 
 /* bad goal type */
 "GoalNameBadGoalType" = "badgoal";
 
 /* label for goal edit form */
-"GoalStartLabel" = "Start Date";
+"GoalStartLabel" = "Date de début";
 
 /* target date label for goal */
-"GoalTargetLabel" = "Target Date";
+"GoalTargetLabel" = "Date cible";
 
 /* validation for dates being incorrect order */
-"GoalValidationDateError" = "Target date must be after Start";
+"GoalValidationDateError" = "Date cible doit être postérieure au début";
 
 /* validation for no time entered */
-"GoalValidationTimeError" = "Must select time target";
+"GoalValidationTimeError" = "Vous devez sélectionner la cible de temps";
 
 /* Word for Goal in title */
-"GoalWord" = "Goal";
+"GoalWord" = "Objectif";
 
 /* No comment provided by engineer. */
-"halfmarathon" = "Half Marathon";
+"halfmarathon" = "Semi-marathon";
 
 /* race name */
-"halfmarathonRace" = "Half Marathon";
+"halfmarathonRace" = "Semi-marathon";
 
 /* month string */
 "JanMonth" = "January";
@@ -242,7 +242,7 @@
 "JustGoRunTitle" = "";
 
 /* JustGoTargetButton */
-"JustGoTargetButton" = "Basic";
+"JustGoTargetButton" = "De base";
 
 /* shortform for km */
 "KmMetricUnitShort" = "Km";
@@ -257,16 +257,16 @@
 "KPHUnitShort" = "Kph";
 
 /* Logger title for last km */
-"LastKMTitle" = "Last Km";
+"LastKMTitle" = "Km dernier";
 
 /* Word for log in title */
-"LogWord" = "Log";
+"LogWord" = "Enregistrer";
 
 /* Word for Lose in title */
-"LoseWord" = "Lose";
+"LoseWord" = "Perdre";
 
 /* Label for low GPS signal */
-"LowSignalLabel" = "Low GPS Signal";
+"LowSignalLabel" = "Faible Signal GPS";
 
 /* shortform for mi */
 "MiImperialUnitShort" = "Mi";
@@ -276,154 +276,148 @@
 
 
 /* button for monthly */
-"MonthlyButton" = "Month";
+"MonthlyButton" = "Mois";
 
 /* shortform for mph */
 "MPHUnitShort" = "Mph";
 
 /* label describing no runs in menu */
-"NoRunsLabel" = "No runs • Add one!";
+"NoRunsLabel" = "Pas de courses • Ajouter un!";
 
 /* Pace name for title or goal */
-"PaceMetric" = "Pace";
+"PaceMetric" = "Rythme";
 
 /* PaceRunTargetButton */
-"PaceRunTargetButton" = "Pace Target";
+"PaceRunTargetButton" = "Cible de rythme";
 
 /* Logger title for pace */
-"PaceTitle" = "Avg Pace";
+"PaceTitle" = "Rythme moyenne";
 
 /* label for all time performance */
-"PerformanceAllTimeLabel" = "All-time";
+"PerformanceAllTimeLabel" = "Sans précédent";
 
 /* current month in performance */
-"PerformanceCurrentMonth" = "Current";
+"PerformanceCurrentMonth" = "Courant";
 
 /* current week in performance */
-"PerformanceCurrentWeek" = "Current";
+"PerformanceCurrentWeek" = "Courant";
 
 /* previous month in performance */
-"PerformancePreviousMonth" = "Previous";
+"PerformancePreviousMonth" = "Précédent";
 
 /* previous week in performance */
-"PerformancePreviousWeek" = "Previous";
+"PerformancePreviousWeek" = "Précédent";
 
 /* label for selected performance */
-"PerformanceSelectedLabel" = "Selected";
+"PerformanceSelectedLabel" = "Sélectionné";
 
 /* button for prediction view */
-"PredictButtonTitle" = "Predict Race Times";
+"PredictButtonTitle" = "Prévoir des temps de course";
 
 /* start cell title for runs in progress */
 "RunInProgressTitle" = "Courir en Cours";
 
 /* organize header in settings*/
-"SettingsOrganizeHeader" = "Organization";
+"SettingsOrganizeHeader" = "Organisation";
 
 /* organize by week*/
-"SettingsWeekly" = "Group by Week";
+"SettingsWeekly" = "Groupe par Semaine";
 
 /* auto pause switch in settings */
-"SettingsAutoPause" = "Auto Pause";
+"SettingsAutoPause" = "Pause automatique";
 
 /* birth date in settings */
-"SettingsBirth" = "Birthdate";
+"SettingsBirth" = "Date de naissance";
 
 /* countdown  in settings */
-"SettingsCountdown" = "Countdown Delay (s)";
-
-/* fb posting in settings */
-"SettingsFacebook" = "Facebook";
+"SettingsCountdown" = "Retard du compte à rebours (s)";
 
 /* full name settings */
-"SettingsFullName" = "Name";
+"SettingsFullName" = "Nom";
 
 /* measurement header in settings */
-"SettingsMeasurementHeader" = "Measurement Settings";
+"SettingsMeasurementHeader" = "Les réglages de mesure";
 
 /* personal header in settings */
-"SettingsPersonalHeader" = "Personal";
+"SettingsPersonalHeader" = "Personnel";
 
 /* sharing header in settings */
-"SettingsSharingHeader" = "Share";
+"SettingsSharingHeader" = "Partager";
 
 /* show speed switch in settings */
-"SettingsShowSpeed" = "Show Speed";
-
-/* twitter posting  in settings */
-"SettingsTwitter" = "Twitter";
+"SettingsShowSpeed" = "Afficher Speed";
 
 /* units switch in settings */
-"SettingsUnits" = "Metric Units";
+"SettingsUnits" = "Unités métriques";
 
 /* weight in settings */
-"SettingsWeight" = "Weight (lbs)";
+"SettingsWeight" = "Poids (lbs)";
 
 /* audio cues header in settings*/
-"SettingsAudioHeader" = "Audio Cue Settings";
+"SettingsAudioHeader" = "Paramètres de repère Audio";
 
 /* enable speech  in settings*/
-"SettingsSpeech" = "Audio Cues";
+"SettingsSpeech" = "Des signaux sonores";
 
 /* enable speech time in settings*/
-"SettingsSpeechTime" = "Say Time";
+"SettingsSpeechTime" = "Dire le temps";
 
 /* enable speech distance in settings*/
-"SettingsSpeechDistance" = "Say Distance";
+"SettingsSpeechDistance" = "Dire distance";
 
 /* enable speech pace in settings*/
-"SettingsSpeechPace" = "Say Average Pace";
+"SettingsSpeechPace" = "Dire rythme moyen";
 
 /* enable speech calories  in settings*/
-"SettingsSpeechCalories" = "Say Calories";
+"SettingsSpeechCalories" = "Dire calories";
 
 /* enable speech pace  in settings*/
-"SettingsSpeechCurPace" = "Say Current Pace";
+"SettingsSpeechCurPace" = "Dire rythme actuel";
 
 /* Title for start cell */
 "StartRunTitle" = "Ajouter Courir";
 
 /* Stride name for title or goal */
-"StrideMetric" = "Stride Length";
+"StrideMetric" = "Longueur de la foulée";
 
 /* bad metric for goal subtitle */
 "SubtitleBadMetric" = "badgoal";
 
 /* 3500cal/1lb fat for calories goal subtitle */
-"SubtitleGoalTypeCalories" = "3500 cal /1 lb fat";
+"SubtitleGoalTypeCalories" = "3500 cal /1 lb gras";
 
 /* nothing here for one distance goal */
 "SubtitleGoalTypeOneDistance" = "";
 
 /* nothing here for one race goal */
-"SubtitleGoalTypeRace" = "Must run at least this distance";
+"SubtitleGoalTypeRace" = "Doit courir au moins cette distance";
 
 /* nothing here for one total distance goal */
 "SubtitleGoalTypeTotalDistance" = "";
 
 /* Label for swipe to pause with a ghost run */
-"SwipeToPauseGhostLabel" = "Race against yourself";
+"SwipeToPauseGhostLabel" = "Course contre soi-même";
 
 /* Label for swipe to pause shaded view */
-"SwipeToPauseLabel" = "Swipe Left to Pause";
+"SwipeToPauseLabel" = "Balayez vers la gauche pour faire une pause";
 
 /* target word in title */
-"TargetInRunTitle" = "Target";
+"TargetInRunTitle" = "Cible";
 
 /* Time name for title or goal */
-"TimeMetric" = "Time";
+"TimeMetric" = "Temp";
 
 /* TimeRunTargetButton */
-"TimeRunTargetButton" = "Time Target";
+"TimeRunTargetButton" = "Cible de temps";
 
 /* Shortform units for time */
-"TimeShort" = "Time";
+"TimeShort" = "Temp";
 
 /* Logger title for time */
-"TimeTitle" = "Time";
+"TimeTitle" = "Temp";
 
 /* button for weekly */
-"WeeklyButton" = "Week";
+"WeeklyButton" = "Semaine";
 
 /* shortform for min/km*/
 "MinKmMetricUnitShort" = "min/Km";
@@ -432,67 +426,67 @@
 "MinMiImperialUnitShort" = "min/Mi";
 
 /* Logger title for speed*/
-"PaceTitleForSpeed" = "Avg Speed";
+"PaceTitleForSpeed" = "Vitesse moyenne";
 
 /* Logger title for current speed*/
-"CurrentPaceTitleForSpeed" = "Current Speed";
+"CurrentPaceTitleForSpeed" = "Vitesse actuelle";
 
 /* speed name for title or goal*/
-"SpeedMetric" = "Speed";
+"SpeedMetric" = "Vitesse";
 
 /* goal subtitle descriptions for edit*/
-"GoalSubtitleDescriptCalories" = "Lose weight by burning calories";
+"GoalSubtitleDescriptCalories" = "Perdre du poids en brûlant des calories";
 
 /* goal subtitle descriptions for edit*/
-"GoalSubtitleDescriptOneDistance" = "Complete a race distance";
+"GoalSubtitleDescriptOneDistance" = "Compléter une distance de course";
 
 /* goal header descriptions for edit*/
-"GoalSubtitleDescriptRace" = "Achieve a race time";
+"GoalSubtitleDescriptRace" = "Obtenir un temps de course";
 
 /* goal header descriptions for edit"*/
-"GoalSubtitleDescriptTotalDistance" = "Achieve a cumulative distance";
+"GoalSubtitleDescriptTotalDistance" = "Parvenir à une distance cumulative";
 
 /* bad metric for goal subtitle in edit*/
 "GoalSubtitleBadMetric" = "badgoalsubtitledescription";
 
 /* prcell furthest*/
-"prcellfurthest" = "Furthest Run";
+"prcellfurthest" = "Le plus éloigné terme";
 
 /* prcell fast*/
-"prcellfastest" = "Fastest Run";
+"prcellfastest" = "Courir le plus rapide";
 
 /* prcell long*/
-"prcelllongest" = "Longest Run";
+"prcelllongest" = "La plus longue piste";
 
 /* prcell cals*/
-"prcellcalories" = "Most Calories";
+"prcellcalories" = "La plupart des calories";
 
 /* prcell title*/
-"prcelltitle" = "Personal Records";
+"prcelltitle" = "Dossiers personnels";
 
 /* prcell subtitle*/
-"prcellsubtitle" = "All-time records for individual runs.";
+"prcellsubtitle" = "Records de tous les temps pour des courses individuelles.";
 
 /* rule title in prediction*/
-"ruletitle" = "Race Time Prediction";
+"ruletitle" = "Temps de course prédiction";
 
 /* subtitle in prediction*/
-"rulesubtitle" = "Uses Peter Riegel's formula  to predict race time based upon run history";
+"rulesubtitle" = "Utilise la formule de Peter Riegel de prédire le temps de course basé sur l'histoire de la course";
 
 /* rule1*/
-"rule1" = "1 . Uses Riegel's formula above for each run during period and selects fastest";
+"rule1" = "1 . Utilise la formule de Riegel ci-dessus pour chaque série au cours de la période et sélectionne le plus rapide";
 
 /* rule2*/
-"rule2" = "2 . Ignores runs with less than 1 km logged ";
+"rule2" = "2 . Ignore fonctionne avec moins de 1 km enregistrés";
 
 /* rule3*/
-"rule3" = "3 . Ignores ridiculous speeds such as when using the app in a car. (< 2 min/km)";
+"rule3" = "3 . Ignore des vitesses ridicules comme lors de l'utilisation de l'application dans une voiture. (<2 min / km)";
 
 /* header for manual run details */
-"ManualRunHeader" = "Enter details for manual entry";
+"ManualRunHeader" = "Entrez les détails de la saisie manuelle";
 
 /* run date for manual run */
-"ManualDate" = "Run Date";
+"ManualDate" = "Date exécuter";
 
 /* distance in manual run */
 "ManualDistanceentry" = "Distance";
@@ -501,190 +495,190 @@
 "ManualCaloriesEntry" = "Calories";
 
 /* "time in manual run */
-"ManualTimeEntry" = "Time (Minutes)";
+"ManualTimeEntry" = "Temps (Minutes)";
 
 /* "ManualRunButton*/
-"ManualRunButton" = "Manual Entry";
+"ManualRunButton" = "Saisie manuelle";
 
 /* manual run date validation*/
-"ManualRunDateValidation" = "Date cannot be in future";
+"ManualRunDateValidation" = "La date ne peut pas être dans l'avenir";
 
 /* "GoalCompleteLabel*/
-"GoalCompleteLabel" = "Goal Achieved";
+"GoalCompleteLabel" = "Objectif atteint";
 
 /* "notification longest run word*/
-"LongestRunDescription" = "Longest Run";
+"LongestRunDescription" = "La plus longue piste";
 
 /* "notification fastest run word*/
-"FastestRunDescription" = "Fastest Run";
+"FastestRunDescription" = "Run le plus rapide";
 
 /* "notification longest calories word*/
-"CaloriesRunDescription" = "Most Calories";
+"CaloriesRunDescription" = "La plupart des calories";
 
 /* "notification furthest calories word*/
-"FurthestRunDescription" = "Furthest Run";
+"FurthestRunDescription" = "Le plus éloigné terme";
 
 /* Word for in in title*/
-"InWord" = "in";
+"InWord" = "à";
 
 /* map annotation flag - start*/
-"StartFlagText" = "Start";
+"StartFlagText" = "Commencer";
 
 /* map annotation flag - finish*/
-"FinishFlagText" = "Finish";
+"FinishFlagText" = "Terminer";
 
 /* label too short goals"*/
-"TooShortLabel" = "Too Short";
+"TooShortLabel" = "Trop court";
 
 /* validation for distance being 0 or less*/
-"GoalValidationDistanceError" = "Distance must be greater than 0";
+"GoalValidationDistanceError" = "La distance doit être supérieure à 0";
 
 /* validation for no race*/
-"GoalValidationRaceError" = "Must select target race";
+"GoalValidationRaceError" = "Vous devez sélectionner la race cible";
 
 /* validation for no weight */
-"GoalValidationWeightError" = "Must select weight loss target";
+"GoalValidationWeightError" = "Vous devez sélectionner objectif de perte de poids";
 
 /* Label for target achieved" */
-"goalAchievedLabel" = "Target Achieved";
+"goalAchievedLabel" = "Objectif Atteint";
 
 /* minute word for speech */
 "SpeechMinute" = "MINUTE";
 
 /* km word for speech */
-"SpeechKM" = "KILOMETER";
+"SpeechKM" = "kilomètres";
 
 /* mile word for speech */
 "SpeechMile" = "MILE";
 
 /* begin run speech" */
-"SpeechIntro" = "BEGIN RUN";
+"SpeechIntro" = "commencer à courir";
 
 /* no speed word for speech */
-"SpeechNoSpeed" = "NO PACE";
+"SpeechNoSpeed" = "lenteur";
 
 /*seconds word for speech */
-"SpeechSecond" = "SECONDS";
+"SpeechSecond" = "secondes";
 
 /*kph word for speech  */
-"SpeechKPH" = "KILOMETERS PER HOUR";
+"SpeechKPH" = "Kilomètres par heure";
 
 /* pace per word for speech */
-"SpeechPacePer" = "MINUTES PER";
+"SpeechPacePer" = "minutes par";
 
 /* mph word for speech*/
-"SpeechMPH" = "MILES PER HOUR";
+"SpeechMPH" = "miles par heure";
 
 /* calorie word for speech */
 "SpeechCalorie" = "CALORIES";
 
 /*time word for speech*/
-"SpeechTime" = "TIME";
+"SpeechTime" = "heure";
 
 /*average word for speech*/
-"SpeechAvg" = "AVERAGE";
+"SpeechAvg" = "moyenne";
 
 /*current word for speech */
-"SpeechCurrent" = "CURRENT";
+"SpeechCurrent" = "actuel";
 
 /* autopause speech*/
-"SpeechAutopause" = "PAUSING RUN";
+"SpeechAutopause" = "pause course";
 
 /* resume speech*/
-"SpeechResume" = "RUN RESUMED";
+"SpeechResume" = "exécuter repris";
 
 /*title for goal */
-"InAppGoal" = "Track Goals";
+"InAppGoal" = "Objectifs de piste";
 
 /*bullet pt for goal */
-"InAppGoal1" = "• Track progress for your goal";
+"InAppGoal1" = "• Suivre les progrès réalisés pour atteindre votre objectif";
 
 /*bullet pt for goal */
-"InAppGoal2" = "• Complete a race, Weight loss, Fastest race, Distance";
+"InAppGoal2" = "• Terminez une course, perte de poids, plus rapide race, Distance";
 
 /*bullet pt for goal*/
-"InAppGoal3" = "• Advanced progress metrics";
+"InAppGoal3" = "• Indicateurs de progrès avancée";
 
 /*title for Predict */
-"InAppPredict" = "Predict Finish Times";
+"InAppPredict" = "Prédire les temps d'arrivée";
 
 /*bullet pt for Predict */
-"InAppPredict1" = "• Predict race times based on history";
+"InAppPredict1" = "• Prévoir des temps de course basé sur l'histoire";
 
 /*bullet pt for Predict */
-"InAppPredict2" = "• Historic predictions for past weeks or months";
+"InAppPredict2" = "• Prédictions historiques pendant des semaines ou des mois passés";
 
 /*bullet pt for Predict*/
-"InAppPredict3" = "• Uses Peter Riegel's formula  to predict race time";
+"InAppPredict3" = "• Utilise la formule de Peter Riegel de prédire le temps de course";
 
 /*title for Ghost */
-"InAppGhost" = "Ghost Runs";
+"InAppGhost" = "Fantôme Fonctionne";
 
 /*bullet pt for Ghost */
-"InAppGhost1" = "• Race against yourself on a previous run";
+"InAppGhost1" = "• Course contre vous-même sur une course précédente";
 
 /*bullet pt for Ghost */
-"InAppGhost2" = "• Compare speed against previous run";
+"InAppGhost2" = "• Comparer la vitesse contre la marche précédente";
 
 /*bullet pt for Ghost*/
-"InAppGhost3" = "• Plot both runs on map";
+"InAppGhost3" = "• Tracer les deux manches sur la carte";
 
 /*title for metrics */
-"InAppMetric" = "Additional Stats";
+"InAppMetric" = "Statistiques supplémentaires";
 
 /*bullet pt for Ghost */
-"InAppMetric1" = "• Adds additional performance stats";
+"InAppMetric1" = "• Ajoute les statistiques de performance supplémentaires";
 
 /*bullet pt for Ghost */
-"InAppMetric2" = "• Climbed, Descended, Steps, Cadence and Stride";
+"InAppMetric2" = "• Grimpé, est descendu, Marches, Cadence et Stride";
 
 /*bullet pt for Ghost*/
-"InAppMetric3" = "• Stats will be computed for entire history";
+"InAppMetric3" = "• Les statistiques seront calculés pour toute l'histoire";
 
 /*restore purchase word*/
-"SettingsRestorePurchase" = "Restore Purchase";
+"SettingsRestorePurchase" = "Restaurer achat";
 
 /*upgrade button*/
-"UpgradeButton" = "Upgrade App - ";
+"UpgradeButton" = "Améliorer app - ";
 
 /*description in upgrade header*/
-"UpgradeDescription" = "Upgrade to include all features";
+"UpgradeDescription" = "Mise à jour pour inclure toutes les caractéristiques";
 
 /*restore fail title*/
-"SettingsRestoreFailTitle" = "Could not restore!";
+"SettingsRestoreFailTitle" = "Impossible de restaurer!";
 
 /*restore fail*/
-"SettingsRestoreFail" = "Ensure you have purchased.";
+"SettingsRestoreFail" = "Vérifiez que vous avez acheté.";
 
 /*purchase fail*/
-"SettingsPurchaseFail" = "Could not purchase.";
+"SettingsPurchaseFail" = "Impossible d'acheter.";
 
 /*restore succes*/
-"SettingsRestoreSuccess" = "Purchase Restored";
+"SettingsRestoreSuccess" = "Achat restaurée";
 
 /*thank you on notification label*/
-"thankyou" = "Thank You";
+"thankyou" = "Merci";
 
 /*description on notification label*/
-"AppUpdated" = "Upgraded to full functionality";
+"AppUpdated" = "Mise à jour vers la pleine fonctionnalité";
 
 /* message to be sent with sharing */
-"LoggerShareMsg1" = "I ran";
+"LoggerShareMsg1" = "J'ai couru";
 
 /* message to be sent with sharing */
-"LoggerShareMsg2" = "with @Jog_It.";
+"LoggerShareMsg2" = "avec @Jog_It.";
 
 
 /* message to be sent with sharing */
-"LoggerShareMsg3" = "I ran";
+"LoggerShareMsg3" = "J'ai couru";
 
 /* message to be sent with sharing */
-"LoggerShareMsg4" = "in";
+"LoggerShareMsg4" = "en";
 
 /* # runs in date cell*/
-"DateCellRuns" = "runs";
+"DateCellRuns" = "court";
 
 /* singular run in date cell*/
-"DateCellRun" = "run";
+"DateCellRun" = "courir";
 
 
