@@ -454,8 +454,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     }
     
     //scroll to this cell if expanding
-    if(expand && byTouch)
-        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:true];
+    if(expand && byTouch && row == [cells count] - 1)
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
 }
 
 
