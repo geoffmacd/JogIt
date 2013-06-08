@@ -240,7 +240,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
             
         }
         
@@ -252,7 +252,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
             
         }
     }
@@ -335,6 +335,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
             tableHeight += 124;
     }
     
+    tableHeight += 4; //space to mask map better
     
     CGRect newFrame = self.frame;
     newFrame.size.height = tableHeight + 64;
@@ -467,7 +468,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         }
         else
         {
-            [UIView animateWithDuration:cellDropAnimationTime
+            [UIView animateWithDuration:dateCellAnimationExpand
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseOut
                              animations:^{
@@ -494,7 +495,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         }
         else
         {
-            [UIView animateWithDuration:cellContractAnimationTime
+            [UIView animateWithDuration:dateCellAnimationCollapse
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseIn
                              animations:^{

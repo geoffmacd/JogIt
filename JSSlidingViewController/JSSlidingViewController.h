@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define dropShadowXOffset 20.0f
-#define firstStageAnimationClose 0.25f
+#define firstStageAnimationClose 0.3f
 #define secondStageAnimationClose 0.1f
 #define bouncyOvershootX 10.0f
 #define pauseOvershootX 100.0f

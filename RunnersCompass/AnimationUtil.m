@@ -58,7 +58,7 @@
     [UIView commitAnimations];
 }
 
-+(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open openTime:(NSTimeInterval)openTime closeTime:(NSTimeInterval)closeTime
++(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open openTime:(NSTimeInterval)openTime closeTime:(NSTimeInterval)closeTime closeAnimation:(UIViewAnimationOptions)closeAnimation
 {
     
     if(open)
@@ -93,7 +93,7 @@
         
         [UIView animateWithDuration:closeTime
                          delay:0
-                         options:UIViewAnimationOptionCurveEaseIn
+                         options:closeAnimation 
                          animations:^{
                              [expandedView setFrame:rect];
                          }

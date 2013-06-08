@@ -169,7 +169,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
             
         }
         
@@ -180,7 +180,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
             
         }
     }

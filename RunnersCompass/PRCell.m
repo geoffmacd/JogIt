@@ -108,14 +108,14 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
         }
         
     }else{
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];

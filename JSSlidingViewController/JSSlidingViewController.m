@@ -288,7 +288,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     if (animated) {
         duration = firstStageAnimationClose;
     }
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
         _slidingScrollView.contentOffset = CGPointMake(_sliderOpeningWidth, 0);
     } completion:^(BOOL finished) {
         _animating = NO;
@@ -320,7 +320,7 @@ NSString * const JSSlidingViewControllerWillBeginDraggingNotification = @"JSSlid
     if (animated) {
         duration = firstStageAnimationClose;
     }
-    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseInOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
+    [UIView animateWithDuration:duration  delay:0 options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionOverrideInheritedCurve | UIViewAnimationOptionOverrideInheritedDuration animations:^{
     
         _slidingScrollView.contentOffset = CGPointMake(0, 0);
     } completion:^(BOOL finished) {

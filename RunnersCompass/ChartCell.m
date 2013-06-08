@@ -308,8 +308,8 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:scrollView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
-            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:scrollView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
+            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
         }
         
         if(!loadedGraph)
@@ -327,8 +327,8 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:scrollView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
-            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:scrollView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
+            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseIn];
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:0];

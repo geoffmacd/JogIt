@@ -69,7 +69,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseOut];
         }
         
     }else{
@@ -78,7 +78,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse closeAnimation:UIViewAnimationOptionCurveEaseOut];
             
         }
         
