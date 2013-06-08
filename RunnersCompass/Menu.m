@@ -328,6 +328,15 @@ static NSString * dateCellID = @"DateCellPrototype";
         [MenuTable endUpdates];
     }
     [MenuTable reloadData];
+    
+    //check if hierarchical cell expanded and changed accordingly
+    //any change will something has collapsed
+    if(expandState == 2 && byTouch)
+    {
+        expandState = 1;
+        [collapseBut setEnabled:true];
+        [expandBut setEnabled:true];
+    }
 
     
     //we will need to scroll to correct hierarchy cell if it is just off screen here
@@ -340,8 +349,6 @@ static NSString * dateCellID = @"DateCellPrototype";
     if(expand)
     {
         expandedCount++;
-        if(expandedCount > 2)
-            expandedCount = 2;
     }
     else
     {
@@ -365,6 +372,15 @@ static NSString * dateCellID = @"DateCellPrototype";
         {
             expandState = 1;
             [collapseBut setEnabled:true];
+            [expandBut setEnabled:true];
+        }
+    }
+    else if(expandState == 1)
+    {
+        if(!expand && expandedCount == 0)
+        {
+            expandState = 0;
+            [collapseBut setEnabled:false];
             [expandBut setEnabled:true];
         }
     }
@@ -823,6 +839,8 @@ static NSString * dateCellID = @"DateCellPrototype";
     if(expandState <= 0)
     {
         expandState = 0;
+        //reset count in case it goes to infinite
+        expandedCount = 0;
         
         //shade button
         [collapseBut setEnabled:false];
