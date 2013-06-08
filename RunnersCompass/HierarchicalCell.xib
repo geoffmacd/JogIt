@@ -166,6 +166,7 @@
 										<string key="NSFrame">{{248, 89}, {59, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -277,7 +278,7 @@
 										<reference key="IBUIFont" ref="393128828"/>
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
-									<object class="IBUILabel" id="596591382">
+									<object class="IBUILabel" id="1020825533">
 										<reference key="NSNextResponder" ref="245450979"/>
 										<int key="NSvFlags">290</int>
 										<string key="NSFrame">{{65, 11}, {100, 21}}</string>
@@ -308,7 +309,7 @@
 										<string key="NSFrame">{{16, 13}, {18, 18}}</string>
 										<reference key="NSSuperview" ref="245450979"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="596591382"/>
+										<reference key="NSNextKeyView" ref="1020825533"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -515,7 +516,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">distanceHeader</string>
 						<reference key="source" ref="438365395"/>
-						<reference key="destination" ref="596591382"/>
+						<reference key="destination" ref="1020825533"/>
 					</object>
 					<int key="connectionID">586</int>
 				</object>
@@ -573,7 +574,7 @@
 							<reference ref="174088637"/>
 							<reference ref="230533418"/>
 							<reference ref="18694754"/>
-							<reference ref="596591382"/>
+							<reference ref="1020825533"/>
 						</array>
 						<reference key="parent" ref="438365395"/>
 						<string key="objectName">HeaderView</string>
@@ -653,7 +654,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">584</int>
-						<reference key="object" ref="596591382"/>
+						<reference key="object" ref="1020825533"/>
 						<reference key="parent" ref="245450979"/>
 						<string key="objectName">distance header</string>
 					</object>

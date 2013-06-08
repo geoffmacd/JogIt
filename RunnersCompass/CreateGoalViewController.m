@@ -77,7 +77,7 @@
     else if(buttonIndex == 1)
     {
         //do nothing
-        
+        [table deselectRowAtIndexPath:[table indexPathForSelectedRow] animated:false];
     }
 }
 
@@ -147,9 +147,6 @@
         [vc setTempGoal:tempGoal];
         [self presentViewController:vc animated:true completion:nil];
     }
-    
-    
-    
     
 }
 
