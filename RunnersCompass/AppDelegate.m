@@ -59,13 +59,13 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
             }
         }];
     }
-    
-    //alert APPirater
-    [Appirater userDidSignificantEvent:YES];
-    
+
     //save to db
     if(runToSave)
     {
+        //alert APPirater
+        [Appirater userDidSignificantEvent:YES];
+        
         //creates all locations, run record and thumbnail
         [runToSave processRunForRecord];
     }
@@ -378,8 +378,8 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     
     //APPirater configure
     [Appirater setAppId:@"645670297"];
-    [Appirater setDaysUntilPrompt:10];//10 days
-    [Appirater setUsesUntilPrompt:15];//15 uses
+    [Appirater setDaysUntilPrompt:5];//5 days
+    [Appirater setUsesUntilPrompt:10];//10 uses
     [Appirater setSignificantEventsUntilPrompt:3]; //3 runs until prompt
     [Appirater setTimeBeforeReminding:5];//5 day wait after pressing remind later
     [Appirater setDebug:NO];

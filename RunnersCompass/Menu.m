@@ -751,8 +751,6 @@ static NSString * dateCellID = @"DateCellPrototype";
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    //NSLog(@"Button %d", buttonIndex);
-    
     //for discarding active run
     if(buttonIndex == 0)
     {
