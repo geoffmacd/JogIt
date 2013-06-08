@@ -582,6 +582,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         [self setCorrectFrames:true];
         
+        //if last run, lock and unexpand
+        if([runs count] == 0)
+            [self setExpand:false withAnimation:false];
+        
         [self getPeriodTotals];
         [self reloadUnitLabels];
         

@@ -104,10 +104,14 @@
 
 +(CGFloat)getDisplayDistance:(CGFloat)distanceToDisplayInM withMetric:(BOOL)metricForDisplay
 {
-    distanceToDisplayInM = distanceToDisplayInM / 1000;
+    //round to nearest m
+    distanceToDisplayInM = lroundf(distanceToDisplayInM);
+    
+    distanceToDisplayInM = distanceToDisplayInM / 1000.0;
     
     if(!metricForDisplay)
         distanceToDisplayInM = convertKMToMile * distanceToDisplayInM;
+    
     
     return distanceToDisplayInM;
 }
@@ -126,7 +130,7 @@
     }
     
     //need to transform to s/km
-    paceToFormat = 1000 / paceToFormat;
+    paceToFormat = 1000.0 / paceToFormat;
     
     //convert to min/mile if necessary
     if(!metricForDisplay)
@@ -143,12 +147,15 @@
             return @"--:--";
     }
     
+    //round pace to 2 decimals
+    paceToFormat = lroundf(paceToFormat);
+    
     NSString *stringToSetTime = @"";
     
     if(showSpeed)
     {
         //just convert to per hour from s/km or s/mi
-        CGFloat speed = 3600 / paceToFormat;
+        CGFloat speed = 3600.0 / paceToFormat;
         //set to one decimal place only 
         stringToSetTime = [NSString stringWithFormat:@"%.1f", speed];
     }
@@ -157,14 +164,14 @@
         //convert to per minute format
         NSInteger minutes,seconds;
         
-        minutes = paceToFormat/ 60;
-        seconds = paceToFormat - (minutes * 60);
+        minutes = paceToFormat/ 60.0;
+        seconds = paceToFormat - (minutes * 60.0);
         
         NSString * minuteTime;
         NSString * secondTime;
         
         if(minutes < 10)
-            minuteTime = [NSString stringWithFormat:@"%d", minutes];//minuteTime = [NSString stringWithFormat:@"0%d", minutes];
+            minuteTime = [NSString stringWithFormat:@"%d", minutes];
         else
             minuteTime = [NSString stringWithFormat:@"%d",minutes];
         
@@ -192,9 +199,12 @@
     if(paceToFormat > 3599)
         return @"--:--";
     
+    //round pace to 2 decimals
+    paceToFormat = lroundf(paceToFormat);
+    
     NSInteger minutes,seconds;
     
-    minutes = paceToFormat/ 60;
+    minutes = paceToFormat/ 60.0;
     seconds = paceToFormat - (minutes * 60);
     
     NSString * minuteTime;
@@ -279,7 +289,7 @@
     newRunRecord.shortname = shortname;
     newRunRecord.date = date;
     newRunRecord.distance = [NSNumber numberWithFloat:distance];
-    newRunRecord.calories = [NSNumber numberWithFloat:calories];
+    newRunRecord.calories = [NSNumber numberWithFloat:lroundf(calories)];
     newRunRecord.avgPace = [NSNumber numberWithDouble:avgPace];
     newRunRecord.steps = [NSNumber numberWithInt:steps];
     newRunRecord.time = [NSNumber numberWithDouble:time];

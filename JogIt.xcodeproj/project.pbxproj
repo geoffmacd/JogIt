@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6703F4E516B75F07006A8F88 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4E416B75F07006A8F88 /* Settings.xib */; };
 		6703F4EE16B75F64006A8F88 /* Menu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6703F4ED16B75F63006A8F88 /* Menu.xib */; };
+		6717307A176390A50073426F /* ManualRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 67173079176390A50073426F /* ManualRun.m */; };
 		6720617817177FFD00BDF810 /* LocationRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6720617717177FFD00BDF810 /* LocationRecord.m */; };
 		6720617A1717828D00BDF810 /* RunRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 672061791717828D00BDF810 /* RunRecord.m */; };
 		672152F616FA9B35003E15F8 /* settingsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F416FA9B35003E15F8 /* settingsicon.png */; };
@@ -293,6 +294,8 @@
 		6703F4E416B75F07006A8F88 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		6703F4ED16B75F63006A8F88 /* Menu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Menu.xib; sourceTree = "<group>"; };
 		6717306F176143CA0073426F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67173078176390A50073426F /* ManualRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManualRun.h; sourceTree = "<group>"; };
+		67173079176390A50073426F /* ManualRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManualRun.m; sourceTree = "<group>"; };
 		6720617617177FFD00BDF810 /* LocationRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationRecord.h; sourceTree = "<group>"; };
 		6720617717177FFD00BDF810 /* LocationRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationRecord.m; sourceTree = "<group>"; };
 		672061791717828D00BDF810 /* RunRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunRecord.m; sourceTree = "<group>"; };
@@ -1287,6 +1290,8 @@
 				67E544A0171B335A00D5C9DF /* Manual.xib */,
 				67E544A1171B335A00D5C9DF /* ManualVC.h */,
 				67E544A2171B335A00D5C9DF /* ManualVC.m */,
+				67173078176390A50073426F /* ManualRun.h */,
+				67173079176390A50073426F /* ManualRun.m */,
 			);
 			name = Manual;
 			sourceTree = "<group>";
@@ -1776,6 +1781,7 @@
 				6794268617309AFA006C2D40 /* TTTUnitOfInformationFormatter.m in Sources */,
 				6794268717309AFA006C2D40 /* TTTURLRequestFormatter.m in Sources */,
 				67A14270173788290021F944 /* Appirater.m in Sources */,
+				6717307A176390A50073426F /* ManualRun.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

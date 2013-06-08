@@ -10,6 +10,7 @@
 #import "UserPrefs.h"
 #import "RunEvent.h"
 #import "RunRecord.h"
+#import "ManualRun.h"
 
 @class FKFormModel;
 
@@ -25,7 +26,8 @@
 
 @property  FKFormModel *formModel;
 @property  UserPrefs *prefs;
-@property  RunRecord *manualRun;
+@property  RunRecord *manualRunRec;
+@property  ManualRun *manualRun;
 
 //delegate
 @property id <ManualVCDelegate>delegate;

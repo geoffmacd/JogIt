@@ -11,7 +11,7 @@
 
 @implementation ManualVC
 
-@synthesize formModel,prefs,manualRun,delegate;
+@synthesize formModel,prefs,manualRun, manualRunRec,delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,13 +33,28 @@
     
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
-    
+    /*
     //init run with todays date and no target
     manualRun = [RunRecord MR_createEntity];
+    //manualRun = [[RunRecord alloc] init];
     manualRun.name= NSLocalizedString(@"ManualRunTitle", @"Default run title for manual run");
     [manualRun setEventType:[NSNumber numberWithInt:EventTypeManual]];
     [manualRun setTargetMetric:[NSNumber numberWithInt:NoMetricType]];
     [manualRun setDate:[NSDate date]];//to today
+    
+    //set time
+    //[manualRun setTimeDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0]];
+     */
+    
+    
+    manualRun = [[ManualRun alloc] init];
+    [manualRun setName:NSLocalizedString(@"ManualRunTitle", @"Default run title for manual run")];
+    [manualRun setDate:[NSDate date]];//to today
+    [manualRun setTime:setDateToMidnite([NSDate date])];//to midnight for hour,minute,sec to be 0
+    [manualRun setCalories:0.0];
+    [manualRun setDistance:0.0];
+    
+    
     
     //miles or km
     NSString * titleForDistance = [NSString stringWithFormat:@"%@ (%@)", NSLocalizedString(@"ManualDistanceentry", @"distance in manual run"), [prefs getDistanceUnit]];
@@ -47,32 +62,41 @@
     [FKFormMapping mappingForClass:[RunRecord class] block:^(FKFormMapping *formMapping) {
         [formMapping sectionWithTitle:@"" identifier:@"saveButton"];
         
-        [formMapping buttonSave:NSLocalizedString(@"DoneButton", @"done button")  handler:^{
+        [formMapping buttonSave:NSLocalizedString(@"CreateGoalButton", @"save button")  handler:^{
             //NSLog(@"save pressed");
             
             //prevent future runs form being added
             if(!([manualRun.date compare:shiftDateByXdays([NSDate date],0)] == NSOrderedAscending))
                 return;
             
+            manualRunRec = [RunRecord MR_createEntity];
+            [manualRunRec setName:NSLocalizedString(@"ManualRunTitle", @"Default run title for manual run")];
+            [manualRunRec setEventType:[NSNumber numberWithInt:EventTypeManual]];
+            [manualRunRec setTargetMetric:[NSNumber numberWithInt:NoMetricType]];
+            [manualRunRec setCalories:[NSNumber numberWithFloat:manualRun.calories]];
+            [manualRunRec setDate:manualRun.date];
             //multiply distance by 1000x to get meters
-            manualRun.distance = [NSNumber numberWithDouble:[manualRun.distance doubleValue] * 1000];
-            
+            manualRunRec.distance = [NSNumber numberWithDouble:manualRun.distance * 1000];
             //convert from miles if necessary
             if(![[prefs metric] boolValue])
-                manualRun.distance = [NSNumber numberWithDouble:[manualRun.distance doubleValue] / convertKMToMile];
+                manualRunRec.distance = [NSNumber numberWithDouble:[manualRunRec.distance doubleValue] / convertKMToMile];
             
-            //time in minutes so multiply x60
-            manualRun.time = [NSNumber numberWithDouble:[manualRun.time doubleValue] * 60];
-                
+            //get time components
+            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
+            NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: manualRun.time];
+            //set time by components
+            manualRunRec.time = [NSNumber numberWithDouble:((components.hour * 3600) + (components.minute *60))];
             //calc pace
-            if([manualRun.time doubleValue] > 0)
-                manualRun.avgPace = [NSNumber numberWithDouble:[manualRun.distance doubleValue]/[manualRun.time doubleValue]];
+            if([manualRunRec.time doubleValue] > 0)
+            {
+                manualRunRec.avgPace = [NSNumber numberWithDouble:[manualRunRec.distance doubleValue]/[manualRunRec.time doubleValue]];
+            }
             
             //save to db
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
             
             //need to load actual event with record to pass it back to menu in same way as logger
-            RunEvent * runToPassToMenu = [[RunEvent alloc]initWithRecord:manualRun];
+            RunEvent * runToPassToMenu = [[RunEvent alloc]initWithRecord:manualRunRec];
             //pass run 
             [delegate manualRunToSave:runToPassToMenu];
             
@@ -100,8 +124,8 @@
         }];
         
         [formMapping mapAttribute:@"distance" title:titleForDistance  type:FKFormAttributeMappingTypeFloat];
+        [formMapping mapAttribute:@"time" title:NSLocalizedString(@"ManualTimeEntry", @"time in manual run")  type:FKFormAttributeMappingTypeTime];
         [formMapping mapAttribute:@"calories" title:NSLocalizedString(@"ManualCaloriesEntry", @"calories in manual run")  type:FKFormAttributeMappingTypeInteger];
-        [formMapping mapAttribute:@"time" title:NSLocalizedString(@"ManualTimeEntry", @"time in manual run")  type:FKFormAttributeMappingTypeInteger];
         
         
 
@@ -115,7 +139,7 @@
                      [delegate manualRunCancelled];
                      
                      //delete record everytime this closess
-                     [manualRun MR_deleteEntity];
+                     //[manualRunRec MR_deleteEntity];
                      
                      [self dismissViewControllerAnimated:true completion:nil];
                      
