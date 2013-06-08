@@ -665,6 +665,11 @@ static NSString * dateCellID = @"DateCellPrototype";
         {
             showFirstRun = true;
             [collapseBut setEnabled:true];
+            
+            if([runs count] == 1)
+            {
+                [expandBut setEnabled:false];
+            }
         }
         else
         {

@@ -243,10 +243,8 @@
     NSString * minuteTime;
     NSString * secondTime;
     NSString *stringToSetTime;
-    if(hours < 10)
-        hourTime = [NSString stringWithFormat:@"0%d", hours];
-    else
-        hourTime = [NSString stringWithFormat:@"%d",hours];
+    
+    hourTime = [NSString stringWithFormat:@"%d", hours];
     
     if(minutes < 10)
         minuteTime = [NSString stringWithFormat:@"0%d", minutes];
