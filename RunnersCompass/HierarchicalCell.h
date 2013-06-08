@@ -48,7 +48,6 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIView *headerView;
 @property (strong, nonatomic) IBOutlet UIImageView *folderImage;
 @property (strong, nonatomic) IBOutlet UIImageView *thumbnailImage;
-@property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *calUnit;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *calLabel;
@@ -57,6 +56,8 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UILabel *paceLabel;
 @property (strong, nonatomic) IBOutlet UIButton *garbageBut;
 @property (weak, nonatomic) IBOutlet UILabel *manualEntryLabel;
+@property (strong, nonatomic) IBOutlet UILabel *dateHeader;
+@property (strong, nonatomic) IBOutlet UILabel *distanceHeader;
 
 //delegate
 @property (weak, nonatomic) id <HierarchicalCellDelegate>delegate;

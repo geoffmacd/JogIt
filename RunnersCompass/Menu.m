@@ -666,6 +666,10 @@ static NSString * dateCellID = @"DateCellPrototype";
             showFirstRun = true;
             [collapseBut setEnabled:true];
         }
+        else
+        {
+            [collapseBut setEnabled:false];
+        }
         
         BOOL alreadyPresentedNotification = false;
         

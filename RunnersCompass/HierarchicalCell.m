@@ -12,7 +12,7 @@
 
 @synthesize folderImage;
 @synthesize thumbnailImage;
-@synthesize headerLabel;
+@synthesize distanceHeader,dateHeader;
 @synthesize expandedView;
 @synthesize headerView;
 @synthesize garbageBut;
@@ -60,7 +60,8 @@
     
     //set UI style
     //set fonts
-    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    [distanceHeader setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
+    [dateHeader setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     [manualEntryLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
     [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
@@ -142,8 +143,8 @@
     [ordinalNumberFormatter setLocale:[NSLocale currentLocale]];
     [ordinalNumberFormatter setGrammaticalGender:TTTOrdinalNumberFormatterMaleGender];
     
-    NSString * header = [NSString stringWithFormat:@"%.2f %@ • %@, %@", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText, [dateFormatter stringFromDate:associatedRun.date], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(associatedRun.date)]]];
-    [headerLabel setText:header];
+    [dateHeader setText:[NSString stringWithFormat:@"%@, %@", [dateFormatter stringFromDate:associatedRun.date], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(associatedRun.date)]]]];
+    [distanceHeader setText:[NSString stringWithFormat:@"%.2f %@ •", [RunEvent getDisplayDistance:associatedRun.distance withMetric:metricUnit],  distanceUnitText]];
     
     //Set units for localization/units
     [paceUnit setText:paceUnitText];
