@@ -13,7 +13,7 @@
 
 @synthesize MenuTable;
 @synthesize runInProgressAsFarAsICanTell;
-@synthesize settingsBut,performanceBut,goalsBut;
+@synthesize settingsBut,performanceBut,goalsBut,expandBut,collapseBut;
 @synthesize expandState;
 @synthesize delegate;
 
@@ -76,6 +76,9 @@ static NSString * dateCellID = @"DateCellPrototype";
     //allow menu table to scroll to top
     [MenuTable setScrollsToTop:true];
     
+    //disable collapse button since it will not do anything
+    [collapseBut setEnabled:false];
+    
     expandState = 0;
     expandedCount = 0;
     showFirstRun = false;
@@ -120,7 +123,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     {
         [start.recordImage setImage:[UIImage imageNamed:@"record.png"]];
     }
-    [AnimationUtil fadeView:start.recordImage duration:cellDropAnimationTime toVisible:true];
+    [AnimationUtil fadeView:start.recordImage duration:buttonFade toVisible:true];
     
 }
 
@@ -269,6 +272,8 @@ static NSString * dateCellID = @"DateCellPrototype";
         {
             [cell headerViewTap:nil];
             showFirstRun = false;
+            
+            [cell performSelector:@selector(openFirstRun) withObject:nil afterDelay:openFirstRunAfterDelay];
         }
         
         //NSLog(@"row %d requested - cache size: %d - creating %d...", row, [cells count], cell.indexForColor);
@@ -322,11 +327,51 @@ static NSString * dateCellID = @"DateCellPrototype";
         [MenuTable beginUpdates];
         [MenuTable endUpdates];
     }
-    [MenuTable reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
-    
+    [MenuTable reloadData];
+
     
     //we will need to scroll to correct hierarchy cell if it is just off screen here
     
+}
+
+
+-(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row byTouch:(BOOL)byTouch
+{
+    if(expand)
+    {
+        expandedCount++;
+        if(expandedCount > 2)
+            expandedCount = 2;
+    }
+    else
+    {
+        expandedCount--;
+        if(expandedCount < 0)
+            expandedCount = 0;
+    }
+    
+    if(expandState == 0)
+    {
+        if(expand)
+        {
+            expandState = 1;
+            [collapseBut setEnabled:true];
+            [expandBut setEnabled:true];
+        }
+    }
+    else if(expandState == 2)
+    {
+        if(!expand)
+        {
+            expandState = 1;
+            [collapseBut setEnabled:true];
+            [expandBut setEnabled:true];
+        }
+    }
+    
+    //scroll to this cell if expanding
+    if(expand && byTouch && row == [cells count] - 1)
+        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
 }
 
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture
@@ -411,53 +456,6 @@ static NSString * dateCellID = @"DateCellPrototype";
     UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
     [self presentViewController:activityController animated:YES completion:nil];
 }
-
--(void)dateCellDidExpand:(BOOL)expand withRow:(NSInteger)row byTouch:(BOOL)byTouch
-{
-    if(expand)
-    {
-        if(expandedCount == 0)
-        {
-            //fade all months grey
-            /*
-            for(DateCell * oldCell in cells)
-            {
-                [AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor lightGrayColor]];
-            }
-             */
-            
-            //expandState = 1;
-        }
-        
-        expandedCount++;
-        if(expandedCount > 2)
-            expandedCount = 2;
-    }
-    else
-    {
-        expandedCount--;
-        if(expandedCount < 0)
-            expandedCount = 0;
-        
-        if(expandedCount == 0)
-        {
-            //make them all white
-            /*
-            for(DateCell * oldCell in cells)
-            {
-                if(oldCell.headerLabel.textColor == [UIColor lightGrayColor])
-                    [AnimationUtil labelColorFade:oldCell.headerLabel withColor:[UIColor whiteColor]];
-            }
-            */
-            //expandState = 0;
-        }
-    }
-    
-    //scroll to this cell if expanding
-    if(expand && byTouch && row == [cells count] - 1)
-        [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
-}
-
 
 #pragma mark -
 #pragma mark Start Cell Delegate
@@ -627,6 +625,10 @@ static NSString * dateCellID = @"DateCellPrototype";
         
         //scroll to top
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:false];
+        
+        //enable expand/collapse
+        [collapseBut setEnabled:true];
+        [expandBut setEnabled:true];
     
         [cells removeAllObjects];
         [MenuTable reloadData];
@@ -814,15 +816,21 @@ static NSString * dateCellID = @"DateCellPrototype";
 
 - (IBAction)collapsePressed:(id)sender
 {
+    if(expandState == 2)
+        [expandBut setEnabled:true];
+    
     expandState--;
-    if(expandState < 0)
+    if(expandState <= 0)
     {
         expandState = 0;
         
-        //shade button here in future
+        //shade button
+        [collapseBut setEnabled:false];
     }
     else if(expandState > 1)//must collapse something
+    {
         expandState = 1;
+    }
     
     //collapse all cells
     for(DateCell * dateCell in cells)
@@ -833,15 +841,21 @@ static NSString * dateCellID = @"DateCellPrototype";
 
 - (IBAction)expandPressed:(id)sender
 {
+    if(expandState == 0)
+        [collapseBut setEnabled:true];
+    
     expandState++;
-    if(expandState > 2)
+    if(expandState >= 2)
     {
         expandState = 2;
         
         //shade button here in future
+        [expandBut setEnabled:false];
     }
     else if(expandState < 1)//has to at least expand something
+    {
         expandState = 1;
+    }
     
     //expand all cells
     for(DateCell * dateCell in cells)

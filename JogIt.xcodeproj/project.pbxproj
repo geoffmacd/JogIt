@@ -1074,10 +1074,6 @@
 		67B257D216EFF13A00CF337E /* Retina Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				6728ABAE17387E7200310F15 /* statsfull.png */,
-				6728ABAF17387E7200310F15 /* statsfull@2x.png */,
-				67A7D1721735755900365CE2 /* offswitch@2x.png */,
-				67A7D1731735755900365CE2 /* onswitch@2x.png */,
 				67B257D316EFF13A00CF337E /* add.png */,
 				67B257D416EFF13A00CF337E /* add@2x.png */,
 				67CFCCC2170281BB0028CF70 /* bigclock.png */,
@@ -1115,6 +1111,8 @@
 				67FE524817288CC400F5E186 /* lightgraybutton@2x.png */,
 				67F6D52016FA8CE100790A22 /* medal.png */,
 				67F6D52116FA8CE100790A22 /* medal@2x.png */,
+				67A7D1721735755900365CE2 /* offswitch@2x.png */,
+				67A7D1731735755900365CE2 /* onswitch@2x.png */,
 				67B257E116EFF13A00CF337E /* pause.png */,
 				67B257E216EFF13A00CF337E /* pause@2x.png */,
 				67FF65921724E1BC00A91E06 /* predictionfull.png */,
@@ -1135,6 +1133,8 @@
 				67CFCCB7170280B10028CF70 /* speed@2x.png */,
 				6747F6381720D99E00B23C58 /* startrunner.png */,
 				67E544AB171B66AC00D5C9DF /* startrunner@2x.png */,
+				6728ABAE17387E7200310F15 /* statsfull.png */,
+				6728ABAF17387E7200310F15 /* statsfull@2x.png */,
 				67B257EB16EFF13A00CF337E /* stopwatch.png */,
 				67B257EC16EFF13A00CF337E /* stopwatch@2x.png */,
 				67B257ED16EFF13A00CF337E /* triangle.png */,

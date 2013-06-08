@@ -12,7 +12,7 @@
 
 +(void)labelColorFade:(UILabel*)label withColor:(UIColor*)color
 {
-    [UIView transitionWithView:label duration:finishButtonFade options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    [UIView transitionWithView:label duration:buttonFade options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         [label setTextColor:color];
     } completion:nil];
 }
@@ -71,10 +71,7 @@
         rect.size.height = 48;
         
         [expandedView setFrame:rect];
-        
         [expandedView setHidden:!open];
-        
-        //expandedView.alpha = 0.5;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{
@@ -90,8 +87,6 @@
         CGRect correct = rect;
         rect.origin.y = 0;
         rect.size.height = 48;
-        
-        //expandedView.alpha = 1.0;
         
         [UIView animateWithDuration:cellDropAnimationTime
                          animations:^{

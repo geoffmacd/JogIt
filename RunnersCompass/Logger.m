@@ -1318,21 +1318,21 @@
         if(!inBackground)
         {
             [UIView transitionWithView:pauseImage
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 pauseImage.image = [UIImage imageNamed:@"whitepause.png"];
                             } completion:NULL];
             
             [UIView transitionWithView:statusBut
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 [statusBut setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
                             } completion:NULL];
             
             [UIView transitionWithView:finishBut
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 finishBut.alpha = 1.0f;
@@ -1370,7 +1370,7 @@
         if(!inBackground)
         {
             [UIView transitionWithView:pauseImage
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 pauseImage.image = [UIImage imageNamed:@"record.png"];
@@ -1378,7 +1378,7 @@
             
             
             [UIView transitionWithView:statusBut
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 [statusBut setImage:[UIImage imageNamed:@"record.png"] forState:UIControlStateNormal];
@@ -1386,7 +1386,7 @@
             
             
             [UIView transitionWithView:finishBut
-                              duration:finishButtonFade
+                              duration:buttonFade
                                options:UIViewAnimationOptionCurveLinear
                             animations:^{
                                 finishBut.alpha = 0.0f;

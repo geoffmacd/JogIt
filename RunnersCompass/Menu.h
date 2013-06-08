@@ -33,6 +33,7 @@
 
 #define loadTimeMinForProgress 300 //s , 5min
 #define PRMinDistanceRequirement 100 //m
+#define openFirstRunAfterDelay 0.1//s
 
 
 @protocol MenuViewControllerDelegate <NSObject>
@@ -77,6 +78,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *goalsBut;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *performanceBut;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *collapseBut;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *expandBut;
 
 
 //actions

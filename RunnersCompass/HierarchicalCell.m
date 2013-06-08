@@ -60,7 +60,7 @@
     
     //set UI style
     //set fonts
-    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:16.0f]];
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     [manualEntryLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:16.0f]];
     [timeLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
     [calLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:14.0f]];
@@ -243,6 +243,14 @@
     }
     
 }
+
+
+
+-(void)openFirstRun
+{
+    [self headerViewTap:nil];
+}
+
 
 
 - (IBAction)expandViewTap:(id)sender

@@ -46,7 +46,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     [expandedView setHidden:true];
     
     //set fonts
-    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Bold" size:18.0f]];
+    [headerLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:18.0f]];
     
     [distanceUnitLabel setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
     [distanceValue setFont:[UIFont fontWithName:@"Montserrat-Regular" size:13.0f]];
@@ -66,6 +66,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //set color according to index
     [headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
+    [expandedView setBackgroundColor:[Util flatColorForCell:indexForColor]];
+    [table setBackgroundColor:[Util flatColorForCell:indexForColor]];
+    [self setBackgroundColor:[Util flatColorForCell:indexForColor]];
+     
     
     //fix hack to ensure triangle is in correct orientation
     [folderImage setImage:[UIImage imageNamed:@"triangle.png"]];
@@ -360,6 +364,13 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 
 }
 
+-(void)openFirstRun
+{
+    HierarchicalCell * firstCell = [cells objectAtIndex:0];
+    
+    if(firstCell)
+        [firstCell headerViewTap:nil];
+}
 
 #pragma mark -
 #pragma mark Menu Table data source
@@ -391,6 +402,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         //configure color to match
         [cell.headerView setBackgroundColor:[Util flatColorForCell:indexForColor]];
         [cell.expandedView setBackgroundColor:[Util flatColorForCell:indexForColor]];
+        [cell setBackgroundColor:[Util flatColorForCell:indexForColor]];
         [cell setAssociated:[runs objectAtIndex:row]];
         
         return cell;
@@ -437,7 +449,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     //animate with row belows move down nicely
     [table beginUpdates];
     [table endUpdates];
-    [table reloadData];//needed to have user interaction on start cell if this is expanded, also removes white line issue
+    [table reloadData];
     
     
     HierarchicalCell * senderCell = sender;
@@ -456,13 +468,16 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         tableFrame.size.height += 124;
         
         [UIView animateWithDuration:cellDropAnimationTime
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
                              [table setFrame:tableFrame];
                              [expandedView setFrame:expandFrame];
                              [self setFrame:cellFrame];
                          }
                          completion:^(BOOL finished) {
-                         }];
+                         }
+         ];
     }
     else
     {
@@ -471,14 +486,17 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         expandFrame.size.height -= 124;
         tableFrame.size.height -= 124;
         
-        [UIView animateWithDuration:cellDropAnimationTime
+        [UIView animateWithDuration:cellContractAnimationTime
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn
                          animations:^{
                              [table setFrame:tableFrame];
                              [expandedView setFrame:expandFrame];
                              [self setFrame:cellFrame];
                          }
                          completion:^(BOOL finished) {
-                         }];
+                         }
+         ];
     }
 
     [delegate cellDidChangeHeight:self byTouch:true];
@@ -581,7 +599,10 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         }
     }
     else
+    {
         [self setExpand:!expanded withAnimation:true];
+
+    }
 }
 
 -(IBAction)shareButTap:(id)sender
