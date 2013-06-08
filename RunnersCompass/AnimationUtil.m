@@ -58,7 +58,7 @@
     [UIView commitAnimations];
 }
 
-+(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open
++(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open openTime:(NSTimeInterval)openTime closeTime:(NSTimeInterval)closeTime
 {
     
     if(open)
@@ -73,12 +73,15 @@
         [expandedView setFrame:rect];
         [expandedView setHidden:!open];
         
-        [UIView animateWithDuration:cellDropAnimationTime
+        [UIView animateWithDuration:openTime
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             //expandedView.alpha = 1.0;
                              [expandedView setFrame:correct];
                          }
                          completion:^(BOOL finished) {
+                             //ensure it is not hidden
+                             [expandedView setHidden:false];
                          }];
     }
     else{
@@ -88,17 +91,19 @@
         rect.origin.y = 0;
         rect.size.height = 48;
         
-        [UIView animateWithDuration:cellDropAnimationTime
+        [UIView animateWithDuration:closeTime
+                         delay:0
+                         options:UIViewAnimationOptionCurveEaseIn
                          animations:^{
-                             //expandedView.alpha = 0.5;
                              [expandedView setFrame:rect];
                          }
                          completion:^(BOOL finished) {
-                             [expandedView setHidden:!open];
+                             [expandedView setHidden:true];
                              [expandedView setFrame:correct];
                          }];
     }
 }
+
 +(void)shakeView:(UIView *)viewToShake
 {
     

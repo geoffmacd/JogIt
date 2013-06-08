@@ -166,7 +166,6 @@
 										<string key="NSFrame">{{248, 89}, {59, 18}}</string>
 										<reference key="NSSuperview" ref="941116554"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -372,6 +371,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<string key="NSHuggingPriority">{250, 227}</string>
 				<reference key="IBUIBackgroundColor" ref="478660138"/>
+				<bool key="IBUIClipsSubviews">YES</bool>
 				<reference key="IBUIGestureRecognizers" ref="0"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISelectionStyle">0</int>
@@ -751,16 +751,30 @@
 					<string key="className">MenuViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="calorieTapped:">id</string>
 						<string key="collapsePressed:">id</string>
+						<string key="distanceTapped:">id</string>
 						<string key="expandPressed:">id</string>
 						<string key="garbageTapped:">id</string>
 						<string key="goalsNavPressed:">id</string>
+						<string key="justGoTapped:">id</string>
+						<string key="manualTapped:">id</string>
+						<string key="paceTapped:">id</string>
 						<string key="performanceNavPressed:">id</string>
 						<string key="settingsNavPressed:">id</string>
+						<string key="timeTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="calorieTapped:">
+							<string key="name">calorieTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="collapsePressed:">
 							<string key="name">collapsePressed:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="distanceTapped:">
+							<string key="name">distanceTapped:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="expandPressed:">
@@ -775,6 +789,18 @@
 							<string key="name">goalsNavPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="justGoTapped:">
+							<string key="name">justGoTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="manualTapped:">
+							<string key="name">manualTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="paceTapped:">
+							<string key="name">paceTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="performanceNavPressed:">
 							<string key="name">performanceNavPressed:</string>
 							<string key="candidateClassName">id</string>
@@ -783,9 +809,15 @@
 							<string key="name">settingsNavPressed:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="timeTapped:">
+							<string key="name">timeTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="MenuTable">UITableView</string>
+						<string key="collapseBut">UIBarButtonItem</string>
+						<string key="expandBut">UIBarButtonItem</string>
 						<string key="goalsBut">UIBarButtonItem</string>
 						<string key="performanceBut">UIBarButtonItem</string>
 						<string key="settingsBut">UIBarButtonItem</string>
@@ -794,6 +826,14 @@
 						<object class="IBToOneOutletInfo" key="MenuTable">
 							<string key="name">MenuTable</string>
 							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="collapseBut">
+							<string key="name">collapseBut</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="expandBut">
+							<string key="name">expandBut</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="goalsBut">
 							<string key="name">goalsBut</string>

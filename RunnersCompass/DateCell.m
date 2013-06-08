@@ -225,23 +225,13 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [runsValue setHidden:true];
         [runsLabel setHidden:true];
     }
-    
-    /*
-    //for splash
-    [runsLabel setHidden:true];
-    [runsValue setHidden:true];
-    [distanceValue setHidden:true];
-    [distanceUnitLabel setHidden:true];
-    [headerLabel setHidden:true];
-    [folderImage setHidden:true];
-     */
 }
 
 
 -(void)setExpand:(BOOL)open withAnimation:(BOOL) animate
 {
     expanded = open;
-    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.00f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.0f;
     
     if(expanded){
         [AnimationUtil fadeView:shareBut duration:time toVisible:true];
@@ -250,7 +240,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
             
         }
         
@@ -262,7 +252,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
             
         }
     }
@@ -277,7 +267,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         [delegate cellDidChangeHeight:self byTouch:animate];
         [delegate dateCellDidExpand:expanded withRow:indexForColor byTouch:animate];
     }
-    
 }
 
 
@@ -440,15 +429,18 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 #pragma mark -
 #pragma mark HierarchicalCellDelegate
 
--(void)cellDidChangeHeight:(id) sender
+-(void)cellDidChangeHeight:(id) sender animated:(BOOL)animate
 {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
     
     //animate with row belows move down nicely
-    [table beginUpdates];
-    [table endUpdates];
+    if(animate)
+    {
+        [table beginUpdates];
+        [table endUpdates];
+    }
     [table reloadData];
     
     
@@ -467,39 +459,56 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         expandFrame.size.height += 124;
         tableFrame.size.height += 124;
         
-        [UIView animateWithDuration:cellDropAnimationTime
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                             [table setFrame:tableFrame];
-                             [expandedView setFrame:expandFrame];
-                             [self setFrame:cellFrame];
-                         }
-                         completion:^(BOOL finished) {
-                         }
-         ];
+        if(!animate)
+        {
+            [table setFrame:tableFrame];
+            [expandedView setFrame:expandFrame];
+            [self setFrame:cellFrame];
+        }
+        else
+        {
+            [UIView animateWithDuration:cellDropAnimationTime
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseOut
+                             animations:^{
+                                 [table setFrame:tableFrame];
+                                 [expandedView setFrame:expandFrame];
+                             }
+                             completion:^(BOOL finished) {
+                                 [self setFrame:cellFrame];
+                             }
+             ];
+        }
     }
     else
     {
-        
         cellFrame.size.height -= 124;
         expandFrame.size.height -= 124;
         tableFrame.size.height -= 124;
         
-        [UIView animateWithDuration:cellContractAnimationTime
-                              delay:0
-                            options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-                             [table setFrame:tableFrame];
-                             [expandedView setFrame:expandFrame];
-                             [self setFrame:cellFrame];
-                         }
-                         completion:^(BOOL finished) {
-                         }
-         ];
+        if(!animate)
+        {
+            [table setFrame:tableFrame];
+            [expandedView setFrame:expandFrame];
+            [self setFrame:cellFrame];
+        }
+        else
+        {
+            [UIView animateWithDuration:cellContractAnimationTime
+                                  delay:0
+                                options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 [table setFrame:tableFrame];
+                                 [expandedView setFrame:expandFrame];
+                             }
+                             completion:^(BOOL finished) {
+                                 [self setFrame:cellFrame];
+                             }
+             ];
+        }
     }
 
-    [delegate cellDidChangeHeight:self byTouch:true];
+    [delegate cellDidChangeHeight:self byTouch:animate];
 }
 
 -(void)selectedRun:(id)sender

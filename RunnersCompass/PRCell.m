@@ -108,14 +108,14 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:true];
+            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
         }
         
     }else{
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:false];
+            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];

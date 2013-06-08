@@ -53,14 +53,6 @@
     //time label
     [timeLabel setText:@""];
     [timeLabel setHidden:true];
-    
-    
-    /*
-    //for splash
-    [addRunButton setHidden:true];
-    [headerLabel setHidden:true];
-    [folderImage setHidden:true];
-     */
 }
 
 
@@ -68,7 +60,7 @@
 {
     
     expanded = open;
-    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.01f;
+    NSTimeInterval time = animate ? folderRotationAnimationTime : 0.0f;
     
     if(expanded){
         
@@ -77,10 +69,8 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true];
-        
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse];
         }
-        
         
     }else{
         
@@ -88,7 +78,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:startCellAnimationExpand closeTime:startCellAnimationCollapse];
             
         }
         
@@ -100,7 +90,9 @@
     }
     
     if(delegate)
+    {
         [delegate cellDidChangeHeight:self byTouch:animate];
+    }
     
 }
 

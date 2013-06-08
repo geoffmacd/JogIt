@@ -23,7 +23,7 @@
 
 @protocol HierarchicalCellDelegate <NSObject>
 
--(void)cellDidChangeHeight:(id)sender;
+-(void)cellDidChangeHeight:(id)sender animated:(BOOL)animate;
 -(void)selectedRun:(id)sender;
 -(void)updateGestureFailForCell:(UIGestureRecognizer*)cellGesture;
 -(UserPrefs*)getPrefs;

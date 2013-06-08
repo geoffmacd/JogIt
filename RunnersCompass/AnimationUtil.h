@@ -15,8 +15,18 @@
 // Our conversion definition
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
-#define cellDropAnimationTime 0.27f
-#define cellContractAnimationTime 0.35f
+#define cellDropAnimationTime 0.2f
+#define cellContractAnimationTime 0.4f
+
+#define hierarchicalCellAnimationExpand 0.2f
+#define hierarchicalCellAnimationCollapse 0.2f
+
+#define dateCellAnimationExpand 0.2f
+#define dateCellAnimationCollapse 0.4f
+
+#define startCellAnimationExpand 0.25f
+#define startCellAnimationCollapse 0.3f
+
 #define folderRotationAnimationTime 0.15f
 #define distanceToShake 3.0f
 #define shakeDuration 0.1f
@@ -28,7 +38,7 @@
 @interface AnimationUtil : NSObject
 
 + (void)fadeView:(UIView *)view duration:(NSTimeInterval)duration toVisible:(BOOL)visible;
-+(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open;
++(void) cellLayerAnimate:(UIView *) expandedView toOpen:(BOOL)open openTime:(NSTimeInterval)openTime closeTime:(NSTimeInterval)closeTime;
 + (void)rotateImage:(UIImageView *)image duration:(NSTimeInterval)duration
               curve:(int)curve degrees:(CGFloat)degrees;
 

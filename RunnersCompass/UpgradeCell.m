@@ -64,14 +64,14 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:true];
+            [AnimationUtil cellLayerAnimate:statView toOpen:true openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
         }
         
     }else{
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:statView toOpen:false];
+            [AnimationUtil cellLayerAnimate:statView toOpen:false openTime:dateCellAnimationExpand closeTime:dateCellAnimationCollapse];
         }
         
         [AnimationUtil rotateImage:folderImage duration:time curve:UIViewAnimationCurveEaseIn degrees:90];

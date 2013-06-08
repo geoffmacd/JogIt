@@ -169,7 +169,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:true];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:true openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
             
         }
         
@@ -180,7 +180,7 @@
         
         if(animate)
         {
-            [AnimationUtil cellLayerAnimate:expandedView toOpen:false];
+            [AnimationUtil cellLayerAnimate:expandedView toOpen:false openTime:hierarchicalCellAnimationExpand closeTime:hierarchicalCellAnimationCollapse];
             
         }
     }
@@ -191,7 +191,7 @@
     }
     
     if(delegate)
-        [delegate cellDidChangeHeight:self];
+        [delegate cellDidChangeHeight:self animated:animate];
     
 }
 

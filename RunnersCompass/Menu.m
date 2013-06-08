@@ -321,7 +321,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetCellDeletionModeAfterTouch"
                                                         object:nil];
     
-    //animate with row belows move down nicely
+    //animate only if touched
     if(byTouch)
     {
         [MenuTable beginUpdates];
@@ -370,7 +370,7 @@ static NSString * dateCellID = @"DateCellPrototype";
     }
     
     //scroll to this cell if expanding
-    if(expand && byTouch && row == [cells count] - 1)
+    if(expand && byTouch && (row == [cells count] - 1 || row == [cells count] -2))
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
 }
 
