@@ -78,6 +78,9 @@ static NSString * dateCellID = @"DateCellPrototype";
     
     //disable collapse button since it will not do anything
     [collapseBut setEnabled:false];
+    if([runs count] == 0)
+        [expandBut setEnabled:false];
+        
     
     expandState = 0;
     expandedCount = 0;
@@ -337,6 +340,9 @@ static NSString * dateCellID = @"DateCellPrototype";
         [collapseBut setEnabled:true];
         [expandBut setEnabled:true];
     }
+    
+    if([runs count] == 0)
+        [expandBut setEnabled:false];
 
     
     //we will need to scroll to correct hierarchy cell if it is just off screen here
@@ -384,6 +390,9 @@ static NSString * dateCellID = @"DateCellPrototype";
             [expandBut setEnabled:true];
         }
     }
+    
+    if([runs count] == 0)
+        [expandBut setEnabled:false];
     
     //scroll to this cell if expanding
     if(expand && byTouch && (row == [cells count] - 1 || row == [cells count] -2))
@@ -462,6 +471,9 @@ static NSString * dateCellID = @"DateCellPrototype";
         if([arrayToDeleteCells count])
             [MenuTable deleteRowsAtIndexPaths:arrayToDeleteCells withRowAnimation:UITableViewRowAnimationLeft];
     }
+    
+    if([runs count] == 0)
+        [expandBut setEnabled:false];
     
     [self analyzePRs];
 }
@@ -643,7 +655,6 @@ static NSString * dateCellID = @"DateCellPrototype";
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:false];
         
         //enable expand/collapse
-        [collapseBut setEnabled:true];
         [expandBut setEnabled:true];
     
         [cells removeAllObjects];
@@ -651,7 +662,10 @@ static NSString * dateCellID = @"DateCellPrototype";
         
         //expand first thing to show where it went if it was not manual
         if(finishedRun.eventType != EventTypeManual)
+        {
             showFirstRun = true;
+            [collapseBut setEnabled:true];
+        }
         
         BOOL alreadyPresentedNotification = false;
         
@@ -849,6 +863,9 @@ static NSString * dateCellID = @"DateCellPrototype";
     {
         expandState = 1;
     }
+    
+    if([runs count] == 0)
+        [expandBut setEnabled:false];
     
     //collapse all cells
     for(DateCell * dateCell in cells)

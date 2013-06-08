@@ -327,18 +327,18 @@ static NSString * cellID = @"HierarchicalCellPrototype";
 {
     
     //set table size
-    CGFloat tableHeight = [runs count] * 48; //48 each,unexpanded
+    CGFloat tableHeight = [runs count] * HierarchicalCellHeaderHeight; //44 each,unexpanded
     
     for(HierarchicalCell * cell in cells)
     {
         if(cell.expanded)
-            tableHeight += 124;
+            tableHeight += HierarchicalCellExpandHeight;
     }
     
-    tableHeight += 4; //space to mask map better
+    tableHeight += DateCellBottomMapPadding; //space to mask map better
     
     CGRect newFrame = self.frame;
-    newFrame.size.height = tableHeight + 64;
+    newFrame.size.height = tableHeight + DateCellHeightHeight;
     [self setFrame:newFrame];
     CGRect orgTableFrame = expandedView.frame;
     newFrame = orgTableFrame;
@@ -415,7 +415,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     if(row >= [cells count]){
         
-        height = 48.0f;
+        height = HierarchicalCellHeaderHeight;
     }
     else{
         
@@ -456,9 +456,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     if(didExpand)
     {
         
-        cellFrame.size.height += 124;
-        expandFrame.size.height += 124;
-        tableFrame.size.height += 124;
+        cellFrame.size.height += HierarchicalCellExpandHeight;
+        expandFrame.size.height += HierarchicalCellExpandHeight;
+        tableFrame.size.height += HierarchicalCellExpandHeight;
         
         if(!animate)
         {
@@ -483,9 +483,9 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     }
     else
     {
-        cellFrame.size.height -= 124;
-        expandFrame.size.height -= 124;
-        tableFrame.size.height -= 124;
+        cellFrame.size.height -= HierarchicalCellExpandHeight;
+        expandFrame.size.height -= HierarchicalCellExpandHeight;
+        tableFrame.size.height -= HierarchicalCellExpandHeight;
         
         if(!animate)
         {

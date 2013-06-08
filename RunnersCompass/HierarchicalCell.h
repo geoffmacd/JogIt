@@ -20,6 +20,9 @@
 // Our conversion definition
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 
+#define HierarchicalCellHeaderHeight 44
+#define HierarchicalCellExpandHeight 120
+#define DateCellHeightHeight 64
 
 @protocol HierarchicalCellDelegate <NSObject>
 

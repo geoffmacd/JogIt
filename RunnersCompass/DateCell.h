@@ -21,6 +21,7 @@
 // Our conversion definition
 #define DEGREES_TO_RADIANS(angle) (angle / 180.0 * M_PI)
 #define DeleteRunMinDistanceForProgress 5000
+#define DateCellBottomMapPadding    8
 
 
 @protocol DateCellDelegate <NSObject>
