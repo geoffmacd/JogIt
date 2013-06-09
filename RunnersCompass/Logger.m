@@ -601,7 +601,7 @@
             
             hours = run.time  / 3600;
             minutes = run.time / 60 - (hours*60);
-            seconds = run.time  - (minutes * 60) - (hours * 3600);
+            //seconds = run.time  - (minutes * 60) - (hours * 3600);
             
             NSString * hourTime = @"";
             NSString * minuteTime = @"";

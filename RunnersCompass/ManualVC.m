@@ -33,20 +33,7 @@
     
     self.formModel = [FKFormModel formTableModelForTableView:self.tableView
                                         navigationController:self.navigationController];
-    /*
-    //init run with todays date and no target
-    manualRun = [RunRecord MR_createEntity];
-    //manualRun = [[RunRecord alloc] init];
-    manualRun.name= NSLocalizedString(@"ManualRunTitle", @"Default run title for manual run");
-    [manualRun setEventType:[NSNumber numberWithInt:EventTypeManual]];
-    [manualRun setTargetMetric:[NSNumber numberWithInt:NoMetricType]];
-    [manualRun setDate:[NSDate date]];//to today
-    
-    //set time
-    //[manualRun setTimeDate:[NSDate dateWithTimeIntervalSinceReferenceDate:0]];
-     */
-    
-    
+
     manualRun = [[ManualRun alloc] init];
     [manualRun setName:NSLocalizedString(@"ManualRunTitle", @"Default run title for manual run")];
     [manualRun setDate:[NSDate date]];//to today

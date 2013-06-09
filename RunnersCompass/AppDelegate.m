@@ -380,7 +380,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     //APPirater configure
     [Appirater setAppId:@"645670297"];
     [Appirater setDaysUntilPrompt:5];//5 days
-    [Appirater setUsesUntilPrompt:10];//10 uses
+    [Appirater setUsesUntilPrompt:8];//8 uses
     [Appirater setSignificantEventsUntilPrompt:3]; //3 runs until prompt
     [Appirater setTimeBeforeReminding:5];//5 day wait after pressing remind later
     [Appirater setDebug:NO];
