@@ -121,7 +121,7 @@
 }
 
 - (IBAction)justGoTouched:(id)sender {
-    [justGoBut.layer setCornerRadius:5.0f];
+    [justGoBut.layer setCornerRadius:8.0f];
     [justGoBut.layer setMasksToBounds:true];
     
     [justGoBut.layer setBorderWidth:0.5f];
@@ -129,7 +129,7 @@
 }
 
 - (IBAction)distanceTouched:(id)sender {
-    [distanceBut.layer setCornerRadius:5.0f];
+    [distanceBut.layer setCornerRadius:8.0f];
     [distanceBut.layer setMasksToBounds:true];
     
     [distanceBut.layer setBorderWidth:0.5f];
@@ -137,7 +137,7 @@
 }
 
 - (IBAction)paceTouched:(id)sender {
-    [paceBut.layer setCornerRadius:5.0f];
+    [paceBut.layer setCornerRadius:8.0f];
     [paceBut.layer setMasksToBounds:true];
     
     [paceBut.layer setBorderWidth:0.5f];
@@ -145,7 +145,7 @@
 }
 
 - (IBAction)timeTouched:(id)sender {
-    [timeBut.layer setCornerRadius:5.0f];
+    [timeBut.layer setCornerRadius:8.0f];
     [timeBut.layer setMasksToBounds:true];
     
     [timeBut.layer setBorderWidth:0.5f];
@@ -153,7 +153,7 @@
 }
 
 - (IBAction)calorieTouched:(id)sender {
-    [caloriesBut.layer setCornerRadius:5.0f];
+    [caloriesBut.layer setCornerRadius:8.0f];
     [caloriesBut.layer setMasksToBounds:true];
     
     [caloriesBut.layer setBorderWidth:0.5f];
@@ -162,7 +162,7 @@
 
 - (IBAction)manualTouched:(id)sender
 {
-    [manualBut.layer setCornerRadius:5.0f];
+    [manualBut.layer setCornerRadius:8.0f];
     [manualBut.layer setMasksToBounds:true];
     
     [manualBut.layer setBorderWidth:0.5f];

@@ -706,7 +706,6 @@
 - (void)newRun:(RunEvent*)newRunTemplate animate:(BOOL)animate
 {
     //configure new run with that metric and value if their is one
-
     
     //load most recent run on startup, but not intended any other time
     RunEvent * loadRun = newRunTemplate;
@@ -734,6 +733,10 @@
 -(void)startNewRun
 {
     
+    //do not start if it has already discarded!
+    if(!run.live)
+        return;
+    
     //start run
     [shadeView setHidden:true];
     [shadeView setAlpha:1.0f];
@@ -748,7 +751,7 @@
 {
     //just the animation part
     
-    if(paused)
+    if(paused && run.live)
     {
         [UIView animateWithDuration:1.0
                          animations:^{

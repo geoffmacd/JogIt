@@ -34,6 +34,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     //prevent state collision with historical runs becoming live
     [self.backVC stopRun:true];
     self.backVC.paused = true;
+    [self.backVC.run setLive:false];
     
     //send run to menu to add it to list
     [self.frontVC finishedRun:runToSave];
@@ -46,11 +47,10 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
             //handle case where run is being deleted and logger view is not valid
             if(!runToSave)
             {
+                
                 //lock since user sliding to previous run is unintuitive
                 [self.viewController setLocked:true];
                 
-                //set live to be false to prevent badge number
-                [self.backVC.run setLive:false];
             }
             else{
                 //set run to be historical
