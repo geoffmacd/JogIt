@@ -503,8 +503,19 @@
 {
     self = [super init];
     if (self) {
-        shortname = NSLocalizedString(@"JustGoRunTitle", @"Default run title for just go");//no name for just go
-        //name not set
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setLocale:[NSLocale currentLocale]];
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        [dateFormatter setCalendar:calendar];
+        
+        //2012-06-03 Ghost Run
+        shortname = [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:associatedRunToGhost.date], NSLocalizedString(@"GhostRunTitle", @"ghost run")];
+        
+        //2012-06-03 Ghost * 2012-06-06
+        name = [NSString stringWithFormat:@"%@ %@", [dateFormatter stringFromDate:associatedRunToGhost.date], NSLocalizedString(@"GhostRunTitleShort", @"ghost")];
+        
         targetMetric = NoMetricType;
         metricGoal = 0.0f;
         eventType = EventTypeRun;

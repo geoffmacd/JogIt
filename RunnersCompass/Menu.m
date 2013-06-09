@@ -395,7 +395,7 @@ static NSString * dateCellID = @"DateCellPrototype";
         [expandBut setEnabled:false];
     
     //scroll to this cell if expanding
-    if(expand && byTouch && (row == [cells count] - 1 || row == [cells count] -2))
+    if(expand && byTouch && row == [cells count] - 1)
         [MenuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:true];
 }
 
@@ -783,7 +783,7 @@ static NSString * dateCellID = @"DateCellPrototype";
 -(void)updateTimeString:(NSString *)updatedTimeString
 {
     //update label
-    [start.timeLabel setText:updatedTimeString];
+    //[start.timeLabel setText:updatedTimeString];
     
 }
 

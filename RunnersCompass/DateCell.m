@@ -635,7 +635,7 @@ static NSString * cellID = @"HierarchicalCellPrototype";
     
     //log text message - I ran 47.2 km in May (2012)
     CGFloat distanceToShare = totalDistance/([[[delegate getPrefs] metric] boolValue] ? 1000 : (1000/convertKMToMile));
-    NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@ %@ %@", NSLocalizedString(@"LoggerShareMsg3", "message to be sent with sharing"), distanceToShare, [[delegate getPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg4", "message to be sent with sharing"),   headerLabel.text, NSLocalizedString(@"LoggerShareMsg2", "message to be sent with sharing")];
+    NSString * messageToSend = [NSString stringWithFormat:@"%@ %.1f %@ %@ %@ %@", NSLocalizedString(@"LoggerShareMsg3", "message to be sent with sharing"), distanceToShare, [[delegate getPrefs] getDistanceUnit], NSLocalizedString(@"LoggerShareMsg4", "message to be sent with sharing"),   headerLabel.text, NSLocalizedString(@"LoggerShareMsg5", "message to be sent with sharing")];
     
     //capture screenshot of entire month
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]) {

@@ -308,6 +308,9 @@
             }
         }
         
+        //unsleep step count
+        isSleeping = false;
+        
  
     }
     else if(inBackground)   //prepare to go into background
@@ -325,6 +328,9 @@
             {
                 [delegate pauseAnimation:nil];
             }
+            
+            //unsleep step count
+            isSleeping = false;
             
             accelerometerReadings = [NSMutableArray new];
             //add acelerometer to queue in background
@@ -913,7 +919,7 @@
                           destructiveButtonTitle:NSLocalizedString(@"GhostRunStart", @"word for starting ghost run")
                                otherButtonTitles:nil];
     
-    // Show the sheet in view
+    // Show the sheet in menu
     
     [sheet showInView:self.parentViewController.view];
 }
@@ -1048,12 +1054,15 @@
         //[self audioCue:SpeechIntro];
     }
     
+    //unsleep step count
+    isSleeping = false;
+    
     //init accelerometer
     [[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0 / AccelUpdateFreq];
     [[UIAccelerometer sharedAccelerometer] setDelegate:self];
     px = py = pz = 0;
     cMManager = [[CMMotionManager alloc] init];
-    [cMManager setAccelerometerUpdateInterval:(1/AccelUpdateFreq)];
+    [cMManager setAccelerometerUpdateInterval:(1.0/AccelUpdateFreq)];
 }
 
 
@@ -1927,11 +1936,12 @@
         
         if(run.name)
         {
-            //special name from target
+            //special name from target or ghost
             [runTitle setText:[NSString stringWithFormat:@"%@ • %@", run.name, [dateFormatter stringFromDate:run.date]]];
         }
         else
         {
+            //no name so create one out of distance
             [runTitle setText:[NSString stringWithFormat:@"%.2f %@ • %@", [RunEvent getDisplayDistance:run.distance withMetric:[curSettings.metric integerValue]], distanceUnitText, [dateFormatter stringFromDate:run.date]]];
         }
     }

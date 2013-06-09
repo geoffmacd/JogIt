@@ -20,6 +20,8 @@
 @synthesize timeBut,paceBut,caloriesBut,justGoBut,distanceBut;
 @synthesize expanded,locked,garbageBut,timeLabel,manualBut,recordImage;
 
+#pragma mark
+
 -(void)setup
 {
 

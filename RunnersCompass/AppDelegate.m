@@ -34,6 +34,7 @@ static NSString * upgradeID = @"io.geoffmacdonald.jogit.upgrade";
     //prevent state collision with historical runs becoming live
     [self.backVC stopRun:true];
     self.backVC.paused = true;
+    //set live to false regardless to prevent run from starting on timer
     [self.backVC.run setLive:false];
     
     //send run to menu to add it to list
