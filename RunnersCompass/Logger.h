@@ -62,8 +62,8 @@
 #define mapMinSpanForRun 0.005//degress
 #define mapSpanMultipler 1.04// 4 percent
 #define lowSignalPeriod 3//s for animation
-#define mapPathWidth 12.0//pixels
-#define mapIconPathWidth 10.0//pixels
+#define mapPathWidth 9.0//pixels
+#define mapIconPathWidth 7.0//pixels
 #define mapPathSize 10 //positions before new line
 #define paceSelectionOverrideTime 4 //s
 #define delayGoalAssessment 3 //s

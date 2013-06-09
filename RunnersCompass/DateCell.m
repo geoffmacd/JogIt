@@ -138,9 +138,6 @@ static NSString * cellID = @"HierarchicalCellPrototype";
         NSDate *endPeriod = shiftDateByXdays(periodStart, 6);
         //shorten months
         [formatter setDateFormat:@"MMM"];
-        /*
-        header = [NSString stringWithFormat:@"%@ %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]]];
-         */
         header = [NSString stringWithFormat:@"%d - %d %@",dayOfTheMonthFromDate(periodStart), dayOfTheMonthFromDate(endPeriod),[formatter stringFromDate:periodStart]];
         /*
         header = [NSString stringWithFormat:@"%@ %@ - %@",[formatter stringFromDate:periodStart], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(periodStart)]], [ordinalNumberFormatter stringFromNumber:[NSNumber numberWithInt:dayOfTheMonthFromDate(endPeriod)]]];

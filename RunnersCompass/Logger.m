@@ -1921,9 +1921,9 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
         [dateFormatter setLocale:[NSLocale currentLocale]];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
         [dateFormatter setCalendar:calendar];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
         
         if(run.name)
         {
