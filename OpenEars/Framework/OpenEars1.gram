@@ -1,0 +1,7 @@
+#JSGF V1.0;
+grammar samplegrammar;
+public <mygrammar1> = GO FORWARD |
+GO BACKWARD |
+TURN RIGHT |
+TURN LEFT |
+CHANGE MODEL;
