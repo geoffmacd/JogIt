@@ -94,9 +94,7 @@
 		6794268717309AFA006C2D40 /* TTTURLRequestFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6794268017309AFA006C2D40 /* TTTURLRequestFormatter.m */; };
 		6795A8381714DFAB00C0CE52 /* GoalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6795A8371714DFAB00C0CE52 /* GoalRecord.m */; };
 		6795A83D1714EE1700C0CE52 /* ThumbnailRecord.h in Sources */ = {isa = PBXBuildFile; fileRef = 6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */; };
-		67A1426F173788290021F944 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 67A1424F173788290021F944 /* .gitignore */; };
 		67A14270173788290021F944 /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A14251173788290021F944 /* Appirater.m */; };
-		67A14271173788290021F944 /* Appirater.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 67A14252173788290021F944 /* Appirater.podspec */; };
 		67A14272173788290021F944 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67A14254173788290021F944 /* AppiraterLocalizable.strings */; };
 		67A14273173788290021F944 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 67A14267173788290021F944 /* README.md */; };
 		67A142751737887F0021F944 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67A142741737887F0021F944 /* SystemConfiguration.framework */; };
@@ -417,10 +415,8 @@
 		6795A8371714DFAB00C0CE52 /* GoalRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoalRecord.m; sourceTree = "<group>"; };
 		6795A83B1714EE1600C0CE52 /* RunRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunRecord.h; sourceTree = "<group>"; };
 		6795A83C1714EE1600C0CE52 /* ThumbnailRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailRecord.h; sourceTree = "<group>"; };
-		67A1424F173788290021F944 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		67A14250173788290021F944 /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		67A14251173788290021F944 /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Appirater.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		67A14252173788290021F944 /* Appirater.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appirater.podspec; sourceTree = "<group>"; };
 		67A14253173788290021F944 /* AppiraterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppiraterDelegate.h; sourceTree = "<group>"; };
 		67A1425A173788290021F944 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		67A14267173788290021F944 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -723,11 +719,11 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67A1424E173788290021F944 /* appirater */,
 				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67B421BD1707D9DB006574CF /* Default-568h@2x.png */,
 				67B421B91707D9D1006574CF /* Default.png */,
 				67B421BB1707D9D7006574CF /* Default@2x.png */,
+				67A1424E173788290021F944 /* appirater */,
 				6794267217309AFA006C2D40 /* FormatterKit */,
 				67B2FCA116C5FDF9008694F1 /* FormKit */,
 				67236D0716409B7700DD13C5 /* Frameworks */,
@@ -953,10 +949,8 @@
 		67A1424E173788290021F944 /* appirater */ = {
 			isa = PBXGroup;
 			children = (
-				67A1424F173788290021F944 /* .gitignore */,
 				67A14250173788290021F944 /* Appirater.h */,
 				67A14251173788290021F944 /* Appirater.m */,
-				67A14252173788290021F944 /* Appirater.podspec */,
 				67A14253173788290021F944 /* AppiraterDelegate.h */,
 				67A14254173788290021F944 /* AppiraterLocalizable.strings */,
 				67A14267173788290021F944 /* README.md */,
@@ -1630,8 +1624,6 @@
 				672D13851733684C0060BAB6 /* progress-bar-fill.png in Resources */,
 				67A7D1741735755900365CE2 /* offswitch@2x.png in Resources */,
 				67A7D1751735755900365CE2 /* onswitch@2x.png in Resources */,
-				67A1426F173788290021F944 /* .gitignore in Resources */,
-				67A14271173788290021F944 /* Appirater.podspec in Resources */,
 				67A14272173788290021F944 /* AppiraterLocalizable.strings in Resources */,
 				67A14273173788290021F944 /* README.md in Resources */,
 				67A14279173831A70021F944 /* J5small.png in Resources */,
