@@ -1,10 +1,10 @@
-# ![JogIt](https://github.com/geoffmacd/JogIt/blob/master/J5small.png?raw=true) JogIt - GPS Run Tracker for iPhone
+# ![JogIt](https://github.com/geoffmacd/JogIt/blob/master/J5small.png?raw=true) JogIt - www.jogit.io
+
+<b>GPS Run Tracker for iPhone</b>
 
 
 
 I developed this app in the first half of 2013 for my own development. It is avaialable at https://itunes.apple.com/us/app/jogit/id645670297?mt=8
-
-
 
 
 
