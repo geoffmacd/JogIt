@@ -671,7 +671,7 @@
 		67FC06C216A1D15900491C97 /* RunEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunEvent.h; sourceTree = "<group>"; };
 		67FC070416ACD4F400491C97 /* HierarchicalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HierarchicalCell.xib; sourceTree = "<group>"; };
 		67FE524817288CC400F5E186 /* lightgraybutton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightgraybutton@2x.png"; sourceTree = "<group>"; };
-		67FE524A172A0E7100F5E186 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = "../../../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos/OpenEars.framework"; sourceTree = "<group>"; };
+		67FE524A172A0E7100F5E186 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
 		67FF657B1724D2F800A91E06 /* Upgrade.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upgrade.xib; sourceTree = "<group>"; };
 		67FF657C1724D2F800A91E06 /* UpgradeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeCell.h; sourceTree = "<group>"; };
 		67FF657D1724D2F800A91E06 /* UpgradeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeCell.m; sourceTree = "<group>"; };
@@ -1871,10 +1871,10 @@
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RunnersCompass/JogIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "JogIt/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "RunnersCompass/JogIt-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/JogIt/JogIt-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
@@ -1906,10 +1906,10 @@
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "RunnersCompass/JogIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "JogIt/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "RunnersCompass/JogIt-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/JogIt/JogIt-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
