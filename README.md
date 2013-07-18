@@ -14,6 +14,8 @@ I developed this app in the first half of 2013 for my own development. It is ful
 
 Dependencies:
 
+(getting around to using cocoapods)
+
 
 Appirater : https://github.com/arashpayan/appirater
 
