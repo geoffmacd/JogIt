@@ -4,7 +4,9 @@
 
 
 
-I developed this app in the first half of 2013 for my own development. It is avaialable at https://itunes.apple.com/us/app/jogit/id645670297?mt=8
+I developed this app in the first half of 2013 for my own development. It is fully featured with voice feedback, autopausing, graphical pace representation, map overlays, performance analytics, goals, personal records. Everything you would expect from RunKeeper without the web interface or heart rate monitor compatibility.
+
+It is avaialable at https://itunes.apple.com/us/app/jogit/id645670297?mt=8
 
 
 
