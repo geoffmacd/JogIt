@@ -1,22 +1,22 @@
-JogIt
-=====
+# ![JogIt](https://github.com/geoffmacd/JogIt/blob/master/J5small.png?raw=true) JogIt
 
 GPS Run Tracker for iPhone
-
-
 
 I developed this app in the first half of 2013 for my own development. It is avaialable at https://itunes.apple.com/us/app/jogit/id645670297?mt=8
 
 
 
+
+
 =====
+
 
 Dependencies:
 
 
+Appirater : https://github.com/arashpayan/appirater
 
-
-CorePlot : http://code.google.com/p/core-plot/
+CorePlot - 1.1 : http://code.google.com/p/core-plot/ - modified slightly
 
 FormKit : https://github.com/brunow/FormKit.m -  modified
 
@@ -30,8 +30,8 @@ MBProgressHUD : https://github.com/jdg/MBProgressHUD
 
 MJPopupViewController : https://github.com/martinjuhasz/MJPopupViewController
 
-MagicalRecord	: https://github.com/magicalpanda/MagicalRecord
+MagicalRecord	- 2.1 : https://github.com/magicalpanda/MagicalRecord
 
-OpenEars : http://www.politepix.com/openears/
+OpenEars - 1.2.5 : http://www.politepix.com/openears/
 
 Pickers: 	https://github.com/TimCinel/ActionSheetPicker - modified
