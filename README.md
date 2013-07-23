@@ -12,22 +12,13 @@ I developed this app in the first half of 2013 for my own development. It is ful
 =====
 
 
-Dependencies:
-
-(getting around to using cocoapods)
-
+Dependencies (Cocoapods):
 
 Appirater : https://github.com/arashpayan/appirater
 
-CorePlot - 1.1 : http://code.google.com/p/core-plot/ - modified slightly
-
-FormKit : https://github.com/brunow/FormKit.m -  modified
+CorePlot : http://code.google.com/p/core-plot/ 
 
 FormatterKit: https://github.com/mattt/FormatterKit 
-
-IAPHelper : https://github.com/saturngod/IAPHelper
-
-JSSlidingViewController : https://github.com/jaredsinclair/JSSlidingViewController - heavily modified
 
 MBProgressHUD : https://github.com/jdg/MBProgressHUD
 
@@ -35,6 +26,15 @@ MJPopupViewController : https://github.com/martinjuhasz/MJPopupViewController
 
 MagicalRecord	- 2.1 : https://github.com/magicalpanda/MagicalRecord
 
-OpenEars - 1.2.5 : http://www.politepix.com/openears/
+=====
+Other Dependencies:
+
+OpenEars - 1.2.5 : http://www.politepix.com/openears/ 
+
+IAPHelper : https://github.com/saturngod/IAPHelper
+
+FormKit : https://github.com/brunow/FormKit.m -  modified
+
+JSSlidingViewController : https://github.com/jaredsinclair/JSSlidingViewController - heavily modified
 
 Pickers: 	https://github.com/TimCinel/ActionSheetPicker - modified
