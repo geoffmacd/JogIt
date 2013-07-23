@@ -240,8 +240,6 @@
 		67F6D52316FA8CE100790A22 /* medal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52116FA8CE100790A22 /* medal@2x.png */; };
 		67F6D52616FA8D6800790A22 /* whitepause.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52416FA8D6800790A22 /* whitepause.png */; };
 		67F6D52716FA8D6800790A22 /* whitepause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52516FA8D6800790A22 /* whitepause@2x.png */; };
-		67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */; };
-		67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */; };
 		67F7CB93172397230008CEBF /* cmu07a.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB83172397230008CEBF /* cmu07a.dic */; };
 		67F7CB9C172397230008CEBF /* OpenEars1.dic in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8D172397230008CEBF /* OpenEars1.dic */; };
 		67F7CB9D172397230008CEBF /* OpenEars1.gram in Resources */ = {isa = PBXBuildFile; fileRef = 67F7CB8E172397230008CEBF /* OpenEars1.gram */; };
@@ -651,8 +649,6 @@
 		67F6D52116FA8CE100790A22 /* medal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "medal@2x.png"; sourceTree = "<group>"; };
 		67F6D52416FA8D6800790A22 /* whitepause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whitepause.png; sourceTree = "<group>"; };
 		67F6D52516FA8D6800790A22 /* whitepause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whitepause@2x.png"; sourceTree = "<group>"; };
-		67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontViewControllerDropShadow.png; path = JSSlidingViewController/frontViewControllerDropShadow.png; sourceTree = SOURCE_ROOT; };
-		67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frontViewControllerDropShadow@2x.png"; path = "JSSlidingViewController/frontViewControllerDropShadow@2x.png"; sourceTree = SOURCE_ROOT; };
 		67F7CB83172397230008CEBF /* cmu07a.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cmu07a.dic; sourceTree = "<group>"; };
 		67F7CB8D172397230008CEBF /* OpenEars1.dic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.dic; sourceTree = "<group>"; };
 		67F7CB8E172397230008CEBF /* OpenEars1.gram */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenEars1.gram; sourceTree = "<group>"; };
@@ -719,25 +715,21 @@
 		67236CF916409B7700DD13C5 = {
 			isa = PBXGroup;
 			children = (
-				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
 				67B421BD1707D9DB006574CF /* Default-568h@2x.png */,
 				67B421B91707D9D1006574CF /* Default.png */,
 				67B421BB1707D9D7006574CF /* Default@2x.png */,
-				67A1424E173788290021F944 /* appirater */,
-				6794267217309AFA006C2D40 /* FormatterKit */,
-				67B2FCA116C5FDF9008694F1 /* FormKit */,
-				67236D0716409B7700DD13C5 /* Frameworks */,
-				6747F64C1720EAD500B23C58 /* IAPHelper */,
 				67A1427A173831B10021F944 /* J5.png */,
 				67A14278173831A60021F944 /* J5small.png */,
-				67236D0E16409B7700DD13C5 /* JogIt */,
-				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
+				67C8E34416D1D4CF00E4DE11 /* CorePlot-CocoaTouch.xcodeproj */,
+				67A1424E173788290021F944 /* appirater */,
+				6794267217309AFA006C2D40 /* FormatterKit */,
+				67236D0716409B7700DD13C5 /* Frameworks */,
 				67AA3E4F170FD652004181AC /* MagicalRecord */,
 				672D7118171CDB280054E9EB /* MBProgressHUD */,
 				67E544B9171B9C7C00D5C9DF /* MJPopupViewController */,
 				67F7CB7F172395EF0008CEBF /* OpenEars */,
-				676CA81A16D70A5B00E4B121 /* Pickers */,
 				67236D0516409B7700DD13C5 /* Products */,
+				67236D0E16409B7700DD13C5 /* Src */,
 			);
 			sourceTree = "<group>";
 		};
@@ -770,9 +762,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		67236D0E16409B7700DD13C5 /* JogIt */ = {
+		67236D0E16409B7700DD13C5 /* Src */ = {
 			isa = PBXGroup;
 			children = (
+				67B2FCA116C5FDF9008694F1 /* FormKit */,
+				6747F64C1720EAD500B23C58 /* IAPHelper */,
+				676CA81A16D70A5B00E4B121 /* Pickers */,
+				672AA50616B73DAB00B7DEE6 /* JSSlidingViewController */,
 				67236D1716409B7700DD13C5 /* AppDelegate.h */,
 				67236D1816409B7700DD13C5 /* AppDelegate.m */,
 				67FC068316A10F0600491C97 /* Menu */,
@@ -787,7 +783,7 @@
 				67B257D216EFF13A00CF337E /* Retina Graphics */,
 				67236D0F16409B7700DD13C5 /* Supporting Files */,
 			);
-			path = JogIt;
+			path = Src;
 			sourceTree = "<group>";
 		};
 		67236D0F16409B7700DD13C5 /* Supporting Files */ = {
@@ -1078,8 +1074,6 @@
 				6794266B173080C8006C2D40 /* expand.png */,
 				67EA66D81718F72D00BA21FE /* formula.png */,
 				67EA66D91718F72D00BA21FE /* formula@2x.png */,
-				67F6D52816FA8DC500790A22 /* frontViewControllerDropShadow.png */,
-				67F6D52916FA8DC500790A22 /* frontViewControllerDropShadow@2x.png */,
 				67B257D716EFF13A00CF337E /* garbage.png */,
 				67B257D816EFF13A00CF337E /* garbage@2x.png */,
 				67B257D916EFF13A00CF337E /* ghost.png */,
@@ -1140,7 +1134,8 @@
 				6747F63B1720D99E00B23C58 /* whitespeed.png */,
 				6747F629171F92FF00B23C58 /* whitespeed@2x.png */,
 			);
-			path = "Retina Graphics";
+			name = "Retina Graphics";
+			path = Graphics;
 			sourceTree = SOURCE_ROOT;
 		};
 		67B2FCA116C5FDF9008694F1 /* FormKit */ = {
@@ -1558,8 +1553,6 @@
 				67F6D52316FA8CE100790A22 /* medal@2x.png in Resources */,
 				67F6D52616FA8D6800790A22 /* whitepause.png in Resources */,
 				67F6D52716FA8D6800790A22 /* whitepause@2x.png in Resources */,
-				67F6D52A16FA8DC500790A22 /* frontViewControllerDropShadow.png in Resources */,
-				67F6D52B16FA8DC500790A22 /* frontViewControllerDropShadow@2x.png in Resources */,
 				672152F616FA9B35003E15F8 /* settingsicon.png in Resources */,
 				672152F716FA9B35003E15F8 /* settingsicon@2x.png in Resources */,
 				67CFCCB9170280B10028CF70 /* calories@2x.png in Resources */,
@@ -1863,10 +1856,10 @@
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JogIt/JogIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "Src/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "$(SRCROOT)/JogIt/JogIt-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Src/JogIt-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
@@ -1898,10 +1891,10 @@
 					"\"$(SRCROOT)/../../Library/Developer/Xcode/DerivedData/OpenEars-gtzegqqzxrmdroedcizgxlvvgodn/Build/Products/Debug-iphoneos\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JogIt/JogIt-Prefix.pch";
+				GCC_PREFIX_HEADER = "Src/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				"HEADER_SEARCH_PATHS[arch=*]" = "CorePlot/framework/**";
-				INFOPLIST_FILE = "$(SRCROOT)/JogIt/JogIt-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Src/JogIt-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../Documents/FacebookSDK/FacebookSDK.framework/Versions/A\"",
