@@ -1,0 +1,39 @@
+PODS:
+  - Appirater (1.0.5)
+  - CorePlot (1.3)
+  - FormatterKit (1.2.0):
+    - FormatterKit/AddressFormatter
+    - FormatterKit/ArrayFormatter
+    - FormatterKit/LocationFormatter
+    - FormatterKit/OrdinalNumberFormatter
+    - FormatterKit/TimeIntervalFormatter
+    - FormatterKit/UnitOfInformationFormatter
+    - FormatterKit/URLRequestFormatter
+  - FormatterKit/AddressFormatter (1.2.0)
+  - FormatterKit/ArrayFormatter (1.2.0)
+  - FormatterKit/LocationFormatter (1.2.0)
+  - FormatterKit/OrdinalNumberFormatter (1.2.0)
+  - FormatterKit/TimeIntervalFormatter (1.2.0)
+  - FormatterKit/UnitOfInformationFormatter (1.2.0)
+  - FormatterKit/URLRequestFormatter (1.2.0)
+  - MagicalRecord (2.1)
+  - MBProgressHUD (0.7)
+  - MJPopupViewController (0.4)
+
+DEPENDENCIES:
+  - Appirater (~> 1.0.5)
+  - CorePlot (~> 1.3)
+  - FormatterKit (~> 1.2.0)
+  - MagicalRecord (~> 2.1)
+  - MBProgressHUD (~> 0.7)
+  - MJPopupViewController (~> 0.4)
+
+SPEC CHECKSUMS:
+  Appirater: 5addfe3fac0aa85209b553f894b6b0533152786f
+  CorePlot: af8307dd1fc013b3d8d97f54db8de0de6d57af84
+  FormatterKit: 5b570cf42e798b8e71bbefa8da3197e671a5643b
+  MagicalRecord: 64e7184c240087a45e9588a722eaf05b0ad837f7
+  MBProgressHUD: 1fd8591a2216d5dec6de24e09187bb03bcbe9946
+  MJPopupViewController: 4cd0badf3dae541017e0e16e2d2c7578d9224052
+
+COCOAPODS: 0.22.2
