@@ -29,8 +29,6 @@ MagicalRecord	- 2.1 : https://github.com/magicalpanda/MagicalRecord
 =====
 Other Dependencies:
 
-OpenEars - 1.2.5 : http://www.politepix.com/openears/ 
-
 IAPHelper : https://github.com/saturngod/IAPHelper
 
 FormKit : https://github.com/brunow/FormKit.m -  modified
