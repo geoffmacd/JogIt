@@ -1,0 +1,12 @@
+
+*.xcscheme
+
+JogIt.xcodeproj/xcuserdata/geoffmacdonald.xcuserdatad/xcschemes/xcschememanagement.plist
+
+JogIt.xcworkspace/xcshareddata/JogIt.xccheckout
+
+JogIt.xcworkspace/xcuserdata/geoffmacdonald.xcuserdatad/UserInterfaceState.xcuserstate
+
+JogIt.xcworkspace/xcuserdata/geoffmacdonald.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
+Pods/Pods.xcodeproj/xcuserdata/geoffmacdonald.xcuserdatad/xcschemes/xcschememanagement.plist
