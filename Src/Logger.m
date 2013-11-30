@@ -175,14 +175,11 @@
     justLoaded = true;
     
     
-    //open ears stuff
-    openEarsEventsObserver = [[OpenEarsEventsObserver alloc] init];
-	[openEarsEventsObserver setDelegate:self];
-    fliteController = [[FliteController alloc] init];
-    [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil];
-    slt = [[Slt alloc] init];
-    [self setupVoice];
+
     speechQueue = [[NSMutableArray alloc] initWithCapacity:5];
+    
+    _synthesizer = [[AVSpeechSynthesizer alloc] init];
+    [_synthesizer setDelegate:self];
     
 }
 
@@ -402,15 +399,6 @@
 #pragma mark - OpenEars Delegates
 
 
-- (void) setupVoice {
-    
-	fliteController.duration_stretch = 1.1; // Change the speed
-	fliteController.target_mean = 1.3; // Change the pitch
-    fliteController.target_stddev = 1.5; // Change the variance
-    
-    //max volume for voice
-    [fliteController.audioPlayer setVolume:1.0f];
-}
 
 -(void)speechForDistanceChange
 {
@@ -597,7 +585,7 @@
     {
         if(run.time < 3600000)
         {
-            NSInteger hours,minutes,seconds;
+            NSInteger hours,minutes;
             
             hours = run.time  / 3600;
             minutes = run.time / 60 - (hours*60);
@@ -644,7 +632,7 @@
             [speechQueue addObject:NSLocalizedString(@"SpeechIntro", "begin run speech") ];
             break;
         case SpeechMinute:
-            //[self speechForDistanceChange];
+            [self speechForDistanceChange];
             break;
         case SpeechKM:
         case SpeechMile:
@@ -658,13 +646,13 @@
             break;
     }
     
-    //remember if music was playinh 
-    MPMusicPlayerController * mp = [MPMusicPlayerController iPodMusicPlayer];
-    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
-    if(musicWasPlaying)
-        [mp pause];
-    
-    //make it start processing
+//    //remember if music was playinh 
+//    MPMusicPlayerController * mp = [MPMusicPlayerController iPodMusicPlayer];
+//    musicWasPlaying = ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying ? true : false);
+//    if(musicWasPlaying)
+//        [mp pause];
+//    
+//    //make it start processing
     [self sayNextSpeech];
 }
 
@@ -672,38 +660,31 @@
 {
     if([speechQueue count])
     {
-        [[AVAudioSession sharedInstance] setActive:YES withOptions:AVAudioSessionCategoryPlayback error:nil];
-        OSStatus propertySetError = 0;
-        UInt32 allowMixing = true;
-        propertySetError = AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryMixWithOthers, sizeof (allowMixing), &allowMixing);
-        [fliteController say:[speechQueue objectAtIndex:0] withVoice:slt];
-    }
-    else
-    {
-        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionCategoryPlayback error:nil];
-        if(musicWasPlaying)
-        {
-            MPMusicPlayerController * mp = [MPMusicPlayerController iPodMusicPlayer];
-            [mp play];
-            musicWasPlaying = false;
+
+        AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:[speechQueue objectAtIndex:0]];
+        if(utterance){
+            utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.6; // Tell it to me slowly
+            [_synthesizer speakUtterance:utterance];
         }
     }
 }
 
-- (void) fliteDidStartSpeaking {
-	//NSLog(@"Flite has started speaking"); // Log it.
-    
-}
+#pragma mark - AVSpeechSynthesizer
 
-- (void) fliteDidFinishSpeaking {
-	//NSLog(@"Flite has finished speaking"); // Log it.
-    
+-(void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance *)utterance{
+	NSLog(@".. has finished speaking"); // Log it.
+
     //dequeue item and play next one after duration
     if([speechQueue count])
     {
         [speechQueue removeObjectAtIndex:0];
         [self performSelector:@selector(sayNextSpeech) withObject:nil afterDelay:delaySpeech];//no delay now
     }
+}
+
+-(void)speechSynthesizer:(AVSpeechSynthesizer *)synthesizer didStartSpeechUtterance:(AVSpeechUtterance *)utterance{
+    
+	NSLog(@".. has started speaking");
 }
 
 #pragma mark - Loading runs
@@ -1051,7 +1032,7 @@
     //speech at start of run
     if(run.time == 0)
     {
-        //[self audioCue:SpeechIntro];
+        [self audioCue:SpeechIntro];
     }
     
     //unsleep step count
@@ -3600,7 +3581,7 @@
     [selectedPlot reloadData];
     
     //speech
-    //[self audioCue:SpeechMinute];
+    [self audioCue:SpeechMinute];
 }
 
 -(void)setupGraphForView:(CPTGraphHostingView *)hostingView withRange:(CPTPlotRange *)range

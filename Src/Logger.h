@@ -19,16 +19,11 @@
 #import "MBProgressHUD.h"
 #import "StartAnnotation.h"
 #import "FinishAnnotation.h"
-#import <OpenEars/OpenEarsEventsObserver.h>
-#import <OpenEars/FliteController.h>
-#import <OpenEars/LanguageModelGenerator.h>
-#import <OpenEars/OpenEarsLogging.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import <OpenEars/AudioSessionManager.h>
 #import "UpgradeVC.h"
-#import <Slt/Slt.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <CoreMotion/CoreMotion.h>
+#import <AVFoundation/AVFoundation.h>
 
 
 
@@ -102,7 +97,7 @@ typedef enum {
 
 
 
-@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,OpenEarsEventsObserverDelegate,AVAudioPlayerDelegate,UIAccelerometerDelegate,UpgradeVCDelegate>
+@interface LoggerViewController : UIViewController <JSSlidingViewControllerDelegate,CPTPlotDataSource,CPTBarPlotDelegate,UIScrollViewDelegate,UIActionSheetDelegate,CLLocationManagerDelegate,MKMapViewDelegate,UIAccelerometerDelegate,UpgradeVCDelegate,AVSpeechSynthesizerDelegate>
 {
     //for ghost run
     UIActionSheet *sheet;
@@ -198,9 +193,7 @@ typedef enum {
     BOOL justLoaded;
     
     //Open ears vars
-    Slt *slt;
-	OpenEarsEventsObserver *openEarsEventsObserver; // A class whose delegate methods which will allow us to stay informed of changes in the Flite and Pocketsphinx statuses.
-	FliteController *fliteController; // The controller for Flite (speech).
+
     NSMutableArray * speechQueue;
     CGFloat ipodVolume;
     BOOL musicWasPlaying;
@@ -230,6 +223,8 @@ typedef enum {
 @property BOOL paused;
 //APP IS IN BACKGROUND
 @property (setter = setInBackground:) BOOL inBackground;
+
+@property (strong) AVSpeechSynthesizer *synthesizer;
 
 
 //UI

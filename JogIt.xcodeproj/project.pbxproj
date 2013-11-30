@@ -15,8 +15,6 @@
 		672152F616FA9B35003E15F8 /* settingsicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F416FA9B35003E15F8 /* settingsicon.png */; };
 		672152F716FA9B35003E15F8 /* settingsicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 672152F516FA9B35003E15F8 /* settingsicon@2x.png */; };
 		6723446B179E3D550022B3A3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6723446A179E3D550022B3A3 /* libPods.a */; };
-		6723446E179E41D10022B3A3 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6723446D179E41D10022B3A3 /* OpenEars.framework */; };
-		67234470179E42180022B3A3 /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6723446F179E42180022B3A3 /* Slt.framework */; };
 		67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0816409B7700DD13C5 /* UIKit.framework */; };
 		67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0A16409B7700DD13C5 /* Foundation.framework */; };
 		67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67236D0C16409B7700DD13C5 /* CoreGraphics.framework */; };
@@ -234,9 +232,7 @@
 		672061791717828D00BDF810 /* RunRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunRecord.m; sourceTree = "<group>"; };
 		672152F416FA9B35003E15F8 /* settingsicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingsicon.png; sourceTree = "<group>"; };
 		672152F516FA9B35003E15F8 /* settingsicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settingsicon@2x.png"; sourceTree = "<group>"; };
-		6723446A179E3D550022B3A3 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Release-iphoneos/libPods.a"; sourceTree = "<group>"; };
-		6723446D179E41D10022B3A3 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = Frameworks/OpenEars.framework; sourceTree = "<group>"; };
-		6723446F179E42180022B3A3 /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Slt.framework; path = Frameworks/Slt.framework; sourceTree = "<group>"; };
+		6723446A179E3D550022B3A3 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Release-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		67236D0416409B7700DD13C5 /* JogIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JogIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67236D0816409B7700DD13C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67236D0A16409B7700DD13C5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -558,8 +554,6 @@
 				67236D0916409B7700DD13C5 /* UIKit.framework in Frameworks */,
 				67236D0B16409B7700DD13C5 /* Foundation.framework in Frameworks */,
 				67236D0D16409B7700DD13C5 /* CoreGraphics.framework in Frameworks */,
-				6723446E179E41D10022B3A3 /* OpenEars.framework in Frameworks */,
-				67234470179E42180022B3A3 /* Slt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,8 +586,6 @@
 		67236D0716409B7700DD13C5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6723446F179E42180022B3A3 /* Slt.framework */,
-				6723446D179E41D10022B3A3 /* OpenEars.framework */,
 				6723446A179E3D550022B3A3 /* libPods.a */,
 				6728ABB417388E5300310F15 /* CoreMotion.framework */,
 				67A14276173788860021F944 /* CFNetwork.framework */,
@@ -1469,11 +1461,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Geoff MacDonald (RC4EVJ8M3F)";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenEars/Framework\"",
-					"\"$(SRCROOT)/../../Desktop\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Src/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1499,11 +1487,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Geoffrey MacDonald";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/OpenEars/Framework\"",
-					"\"$(SRCROOT)/../../Desktop\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Src/JogIt-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
